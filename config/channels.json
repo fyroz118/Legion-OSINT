@@ -83,6 +83,78 @@
       "notes": "Verified public Telegram channel identifying itself as the official UN Office for the Coordination of Humanitarian Affairs in Ukraine; institutional statements remain claims about reported events, not automatic independent confirmation.",
       "source_class": "official_institutional",
       "monitoring_weight": "standard"
+    },
+    {
+      "username": "JamunaTelevisionOfficial",
+      "priority": "bangladesh",
+      "language": "bn",
+      "source_type": "national_news",
+      "source_affiliation": "privately_owned_bangladesh_newsroom",
+      "default_evidence_status": "UNVERIFIED",
+      "enabled": true,
+      "notes": "Jamuna Television public channel; recent public preview activity observed in November 2026. Newsroom claims remain leads until corroborated.",
+      "source_class": "independent_media",
+      "monitoring_weight": "high"
+    },
+    {
+      "username": "aljazeerabangla",
+      "priority": "bangladesh",
+      "language": "bn",
+      "source_type": "international_broadcaster",
+      "source_affiliation": "Al_Jazeera_Bangla",
+      "default_evidence_status": "UNVERIFIED",
+      "enabled": true,
+      "notes": "Al Jazeera Bangla public Telegram channel; international broadcaster perspective, corroborate event claims independently.",
+      "source_class": "independent_media",
+      "monitoring_weight": "standard"
+    },
+    {
+      "username": "Conflict_Watch_Bangla",
+      "priority": "south_asia",
+      "language": "bn",
+      "source_type": "conflict_news_aggregator",
+      "source_affiliation": "self_described_conflict_news_analysis_channel",
+      "default_evidence_status": "UNVERIFIED",
+      "enabled": true,
+      "notes": "Public conflict-news aggregator discovered through Telegram channel directory. Editorial independence, sourcing and political alignment are not independently established; use only as an unofficial lead source.",
+      "source_class": "unknown",
+      "monitoring_weight": "high"
+    },
+    {
+      "username": "UkraineNow",
+      "priority": "europe",
+      "language": "uk",
+      "source_type": "national_news_official_channel",
+      "source_affiliation": "Ukraine_NOW_public_information_channel",
+      "default_evidence_status": "UNVERIFIED",
+      "enabled": true,
+      "notes": "Large public Ukraine NOW channel; official/public-information claims are not independent confirmation. Preserve original Ukrainian text and corroborate.",
+      "source_class": "official_institutional",
+      "monitoring_weight": "standard"
+    },
+    {
+      "username": "UkraineNowenglish",
+      "priority": "europe",
+      "language": "en",
+      "source_type": "national_news_official_channel",
+      "source_affiliation": "Ukraine_NOW_English",
+      "default_evidence_status": "UNVERIFIED",
+      "enabled": true,
+      "notes": "English-language Ukraine NOW channel identifying itself as an official information source; treat statements as institutional claims, not independent verification.",
+      "source_class": "official_institutional",
+      "monitoring_weight": "standard"
+    },
+    {
+      "username": "KyivIndependent_official",
+      "priority": "europe",
+      "language": "en",
+      "source_type": "independent_national_news",
+      "source_affiliation": "The_Kyiv_Independent",
+      "default_evidence_status": "UNVERIFIED",
+      "enabled": true,
+      "notes": "Verified public channel of The Kyiv Independent; independent newsroom reporting remains subject to corroboration.",
+      "source_class": "independent_media",
+      "monitoring_weight": "standard"
     }
   ]
 }
