@@ -1,0 +1,16 @@
+{
+  "generated_at_utc": "2026-11-18T12:12:50.940389+00:00",
+  "discovery_method": "DuckDuckGo public HTML index queries for public t.me links",
+  "queries_attempted": 32,
+  "unique_candidates": 0,
+  "previews_checked": 0,
+  "query_errors": [],
+  "limitations": [
+    "Search-engine indexing is incomplete and ranking-biased.",
+    "This does not access Telegram global search or private channels.",
+    "Candidate discovery does not establish source identity, independence, reliability or current activity.",
+    "Only first 250 candidates have public preview checks in this run.",
+    "No candidate is automatically enabled in the active monitoring registry."
+  ],
+  "candidates": []
+}
