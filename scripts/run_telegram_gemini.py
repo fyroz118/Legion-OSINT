@@ -154,7 +154,7 @@ def main():
             "9. Source and Coverage Assessment", "10. Overall Intelligence Judgment"
         ]
         report = "\n\n".join(
-            f"## {section}\\nNo posts were collected from configured channels for this date. "
+            f"## {section}\nNo posts were collected from configured channels for this date. "
             "This is not evidence that no incidents occurred."
             for section in empty_sections
         )
