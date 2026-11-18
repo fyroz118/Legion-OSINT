@@ -8,13 +8,10 @@ on:
         required: true
         type: string
       posts_per_channel:
-        description: "Maximum recent messages per configured channel (global queries capped at 50 each)"
+        description: "Maximum public preview messages to inspect per configured channel"
         required: true
         type: choice
-        options:
-          - "100"
-          - "300"
-          - "500"
+        options: ["100", "300", "500"]
         default: "300"
 
 permissions:
@@ -29,41 +26,30 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-
       - name: Install dependencies
         run: pip install -r requirements.txt
-
-      - name: Validate requested date
+      - name: Validate
         env:
           REPORT_DATE: ${{ inputs.report_date }}
         run: |
-          python -m py_compile scripts/run_telegram_gemini.py scripts/export_telegram_session.py
+          python -m py_compile scripts/run_telegram_gemini.py
           python -c "import os; from datetime import datetime; datetime.strptime(os.environ['REPORT_DATE'], '%Y-%m-%d')"
-
-      - name: Collect Telegram posts and generate Gemini report
+      - name: Collect public Telegram previews and generate Gemini report
         env:
-          REPORT_DATE: ${{ inputs.report_date }}
           COLLECT_LIMIT_PER_CHANNEL: ${{ inputs.posts_per_channel }}
-          TELEGRAM_API_ID: ${{ secrets.TELEGRAM_API_ID }}
-          TELEGRAM_API_HASH: ${{ secrets.TELEGRAM_API_HASH }}
-          TELETHON_SESSION_STRING: ${{ secrets.TELETHON_SESSION_STRING }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_MODEL: gemini-2.5-flash
           DATABASE_PATH: ${{ runner.temp }}/legion_osint.sqlite3
-        run: python scripts/run_telegram_gemini.py "$REPORT_DATE"
-
+        run: python scripts/run_telegram_gemini.py "${{ inputs.report_date }}"
       - name: Upload report and evidence artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: legion-osint-telegram-gemini-${{ inputs.report_date }}
+          name: legion-osint-public-telegram-gemini-${{ inputs.report_date }}
           path: output/${{ inputs.report_date }}/
           if-no-files-found: warn
           retention-days: 14
