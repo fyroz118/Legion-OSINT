@@ -2,9 +2,9 @@
 
 ## Current execution mode
 
-The current on-demand GitHub Actions workflow uses **Telethon to collect posts from configured, accessible public Telegram channels** and **Gemini to analyse and synthesise the collected material**. It does not use Tavily, general web search, or direct collection from X, Facebook, YouTube or other platforms.
+The current on-demand GitHub Actions workflow uses **Telethon to collect from configured public Telegram channels and run event-keyword global searches across Telegram's publicly indexed chats**, then uses **Gemini to analyse and synthesise the collected material**. It does not use Tavily, general web search, or direct collection from X, Facebook, YouTube or other platforms.
 
-Telegram channels are a curated discovery set, not a representation of all Telegram. Coverage is limited to enabled entries in `config/channels.json`, the account's access, recent-message limits, and posts published on the requested date in Asia/Dhaka. Never claim global or comprehensive coverage from this source set.
+Configured Telegram channels are supplemented by global Telegram search terms. Global search may discover public posts outside the curated list, but only indexed and query-matched material; coverage is still not comprehensive. Collection is limited by account access, recent-message limits, global query caps and posts published on the requested date in Asia/Dhaka. Never claim global or comprehensive coverage.
 
 ## Reporting objective
 
@@ -48,7 +48,7 @@ Assess risk only from substantiated, contextual and aggregated evidence. Inflamm
 
 Prefer local journalists, eyewitness reporting, independent monitors, researchers, civil-society organisations and community sources as discovery leads. Maintain official and institutional sources as a parallel validation layer. Configured channel metadata is not proof of source reliability or independence.
 
-The current channel list is finite. Report which configured channels were accessible, which failed, how many messages were inspected, and the resulting number of date-matched posts. State that channels outside the configuration and other platforms were not searched.
+The current channel list is finite. Report which configured channels were accessible, which failed, which global search terms were attempted, query failures, message limits and the resulting number of date-matched posts. State that Telegram global search is incomplete and other platforms were not searched.
 
 ## Integrity and safety rules
 
