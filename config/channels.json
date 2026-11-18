@@ -133,18 +133,6 @@
       "monitoring_weight": "standard"
     },
     {
-      "username": "UkraineNowenglish",
-      "priority": "europe",
-      "language": "en",
-      "source_type": "national_news_official_channel",
-      "source_affiliation": "Ukraine_NOW_English",
-      "default_evidence_status": "UNVERIFIED",
-      "enabled": true,
-      "notes": "English-language Ukraine NOW channel identifying itself as an official information source; treat statements as institutional claims, not independent verification.",
-      "source_class": "official_institutional",
-      "monitoring_weight": "standard"
-    },
-    {
       "username": "KyivIndependent_official",
       "priority": "europe",
       "language": "en",
@@ -154,6 +142,30 @@
       "enabled": true,
       "notes": "Verified public channel of The Kyiv Independent; independent newsroom reporting remains subject to corroboration.",
       "source_class": "independent_media",
+      "monitoring_weight": "standard"
+    },
+    {
+      "username": "United24media",
+      "priority": "europe",
+      "language": "en",
+      "source_type": "independent_national_news",
+      "source_affiliation": "UNITED24Media",
+      "default_evidence_status": "UNVERIFIED",
+      "enabled": true,
+      "notes": "Verified public UNITED24Media channel. Ukraine-focused newsroom perspective; claims remain subject to independent corroboration.",
+      "source_class": "independent_media",
+      "monitoring_weight": "standard"
+    },
+    {
+      "username": "AJEnglishNews",
+      "priority": "global",
+      "language": "en",
+      "source_type": "international_news_broadcaster",
+      "source_affiliation": "self_identifies_as_Al_Jazeera_English",
+      "default_evidence_status": "UNVERIFIED",
+      "enabled": true,
+      "notes": "Public channel self-identifying as Al Jazeera English. Account authenticity/official affiliation not independently established in this registry; treat as unknown-source lead until reviewed.",
+      "source_class": "unknown",
       "monitoring_weight": "standard"
     }
   ]
