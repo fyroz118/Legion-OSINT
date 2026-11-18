@@ -14,7 +14,7 @@ bot.sendMessage("Your Telegram user ID: " + str(u) + "\nAdd this number to OWNER
 Command: start
 ---
 if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
-    bot.sendMessage("Legion-OSINT private intelligence assistant is online.\nUse /help for commands.\nAll Telegram posts are unverified source leads until independently assessed.")
+    bot.sendMessage("Legion-OSINT private intelligence assistant is online.\nUse /help for commands.\nPublic Telegram and RSS/Atom items are unverified source leads until independently assessed.")
 else:
     bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
 ---
@@ -22,7 +22,7 @@ else:
 Command: help
 ---
 if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
-    bot.sendMessage("/status — collection freshness and counts\n/daily — latest public Telegram posts\n/bangladesh — Bangladesh posts\n/search <terms> — search the current feed\n/leads — recent source leads\n/briefs — individual source briefs\n/coverage — channel collection diagnostics\n/report — analyst-approved incident report\\n/digest — latest unverified source-post digest\n/reviewqueue — unreviewed source posts\n/reviewlead ID | reviewed|rejected|duplicate | source_class | rationale\n/candidates — recent event-news leads for analyst screening\n/incidentdraft POST_ID | INCIDENT_ID | COUNTRY | CATEGORY | DESCRIPTION\n/incidentqueue — incident drafts and inclusion status\n/approveincident INCIDENT_ID | approved|rejected | rationale\n/linklead POST_ID | INCIDENT_ID | lead|corroboration|contradiction\n/alerts_on — enable two-hourly alerts\n/alerts_off — disable alerts\n/ask and /research — not connected yet\n\nSource integrity: posts remain UNVERIFIED; publication time is not incident time; reposts are not independent corroboration. Approval permits report inclusion only and does not verify an event.")
+    bot.sendMessage("/status — Telegram and RSS collection freshness/counts\n/daily — latest public Telegram posts\n/news — latest public RSS/Atom news headlines\n/bangladesh — Bangladesh source posts\n/search <terms> — search Telegram and RSS source leads\n/leads — recent source leads\n/briefs — individual source briefs\n/coverage — Telegram channel and RSS publisher diagnostics\n/report — analyst-approved incident report\n/digest — latest unverified source-post digest\n/reviewqueue — unreviewed source posts\n/reviewlead ID | reviewed|rejected|duplicate | source_class | rationale\n/candidates — recent event-news leads for analyst screening\n/incidentdraft POST_ID | INCIDENT_ID | COUNTRY | CATEGORY | DESCRIPTION\n/incidentqueue — incident drafts and inclusion status\n/approveincident INCIDENT_ID | approved|rejected | rationale\n/linklead POST_ID | INCIDENT_ID | lead|corroboration|contradiction\n/alerts_on — enable two-hourly alerts\n/alerts_off — disable alerts\n/ask and /research — not connected yet\n\nSource integrity: posts remain UNVERIFIED; publication time is not incident time; reposts are not independent corroboration. Approval permits report inclusion only and does not verify an event.")
 else:
     bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
 ---
@@ -38,7 +38,13 @@ if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
             data = response.json()
             posts = data.get("posts", [])
             summary = data.get("summary", {})
-            bot.sendMessage("LEGION-OSINT STATUS\nSnapshot: " + str(summary.get("generated_at", data.get("generated_at", "unknown"))) + "\nReporting date: " + str(summary.get("report_date", "unknown")) + "\nConfigured public channels: " + str(summary.get("configured_channels", 0)) + "\nPosts in feed: " + str(summary.get("posts_in_snapshot", len(posts))) + "\nCollection errors: " + str(summary.get("collection_errors", 0)) + "\nMethod: public Telegram preview pages only. This is not comprehensive Telegram monitoring.")
+            tg_channels = summary.get("configured_telegram_channels", summary.get("configured_channels", 0))
+            rss_sources = summary.get("configured_rss_sources", 0)
+            tg_posts = summary.get("telegram_posts_in_snapshot", summary.get("posts_in_snapshot", len(posts)))
+            rss_posts = summary.get("rss_articles_in_snapshot", 0)
+            tg_errors = summary.get("telegram_collection_errors", summary.get("collection_errors", 0))
+            rss_errors = summary.get("rss_source_errors", 0)
+            bot.sendMessage("LEGION-OSINT STATUS\nSnapshot: " + str(summary.get("generated_at", data.get("generated_at", "unknown"))) + "\nReporting date: " + str(summary.get("report_date", "unknown")) + "\nTelegram channels: " + str(tg_channels) + " | Telegram posts: " + str(tg_posts) + " | Telegram errors: " + str(tg_errors) + "\nRSS publishers: " + str(rss_sources) + " | RSS articles: " + str(rss_posts) + " | RSS errors: " + str(rss_errors) + "\nMethod: public Telegram previews + configured public RSS/Atom headlines/excerpts. Coverage is finite, not comprehensive.")
     except Exception:
         bot.sendMessage("Could not read the collection feed. Check the GitHub Actions collection workflow and TBC Error Logs.")
 else:
@@ -55,10 +61,9 @@ if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
         else:
             data = response.json()
             posts = data.get("posts", [])
-            summary = data.get("summary", {})
             selected = []
             for post in posts:
-                if True:
+                if post.get("platform", "Telegram") == "Telegram":
                     selected.append(post)
                 if len(selected) >= 8:
                     break
@@ -68,10 +73,41 @@ if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
                 lines = ["LATEST PUBLIC TELEGRAM POSTS", "All records: UNVERIFIED source leads."]
                 for post in selected:
                     snippet = " ".join(str(post.get("text", "")).split())[:260]
-                    lines.append("\n" + str(post.get("channel_username", "unknown")) + " | " + str(post.get("published_at") or "publication time unknown") + "\n" + snippet + "\n" + str(post.get("source_url", "")))
+                    lines.append("\n" + str(post.get("publisher_name") or post.get("channel_username", "unknown")) + " | Telegram | " + str(post.get("published_at") or "publication time unknown") + "\n" + snippet + "\n" + str(post.get("source_url", "")))
                 bot.sendMessage("\n".join(lines)[:3900], disable_web_page_preview=True)
     except Exception:
         bot.sendMessage("Feed unavailable. Try again later.")
+else:
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: news
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    try:
+        response = HTTP.get(FEED_URL)
+        if response.status_code != 200:
+            bot.sendMessage("The public collection feed is temporarily unavailable. Try again later.")
+        else:
+            data = response.json()
+            posts = data.get("posts", [])
+            selected = []
+            for post in posts:
+                if post.get("platform") == "RSS/Atom" or post.get("source_type") == "public_rss_article":
+                    selected.append(post)
+                if len(selected) >= 10:
+                    break
+            if not selected:
+                bot.sendMessage("LATEST RSS/ATOM NEWS\nNo recent feed articles in the current snapshot.")
+            else:
+                lines = ["LATEST RSS/ATOM NEWS — UNVERIFIED SOURCE LEADS"]
+                for post in selected:
+                    publisher = post.get("publisher_name") or post.get("channel_username", "unknown")
+                    snippet = " ".join(str(post.get("text", "")).split())[:260]
+                    lines.append("\n" + str(publisher) + " | " + str(post.get("published_at") or "publication time unknown") + "\n" + snippet + "\n" + str(post.get("source_url", "")))
+                bot.sendMessage("\n".join(lines)[:3900], disable_web_page_preview=True)
+    except Exception:
+        bot.sendMessage("RSS news feed unavailable. Try again later.")
 else:
     bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
 ---
@@ -99,7 +135,7 @@ if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
                 lines = ["BANGLADESH SOURCE LEADS", "All records: UNVERIFIED source leads."]
                 for post in selected:
                     snippet = " ".join(str(post.get("text", "")).split())[:260]
-                    lines.append("\n" + str(post.get("channel_username", "unknown")) + " | " + str(post.get("published_at") or "publication time unknown") + "\n" + snippet + "\n" + str(post.get("source_url", "")))
+                    lines.append("\n" + str(post.get("publisher_name") or post.get("channel_username", "unknown")) + " | " + str(post.get("platform", "Telegram")) + " | " + str(post.get("published_at") or "publication time unknown") + "\n" + snippet + "\n" + str(post.get("source_url", "")))
                 bot.sendMessage("\n".join(lines)[:3900], disable_web_page_preview=True)
     except Exception:
         bot.sendMessage("Feed unavailable. Try again later.")
@@ -130,7 +166,7 @@ if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
                 lines = ["RECENT SOURCE LEADS", "All records: UNVERIFIED source leads."]
                 for post in selected:
                     snippet = " ".join(str(post.get("text", "")).split())[:260]
-                    lines.append("\n" + str(post.get("channel_username", "unknown")) + " | " + str(post.get("published_at") or "publication time unknown") + "\n" + snippet + "\n" + str(post.get("source_url", "")))
+                    lines.append("\n" + str(post.get("publisher_name") or post.get("channel_username", "unknown")) + " | " + str(post.get("platform", "Telegram")) + " | " + str(post.get("published_at") or "publication time unknown") + "\n" + snippet + "\n" + str(post.get("source_url", "")))
                 bot.sendMessage("\n".join(lines)[:3900], disable_web_page_preview=True)
     except Exception:
         bot.sendMessage("Feed unavailable. Try again later.")
@@ -161,7 +197,7 @@ if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
                 lines = ["INDIVIDUAL SOURCE BRIEFS", "All records: UNVERIFIED source leads."]
                 for post in selected:
                     snippet = " ".join(str(post.get("text", "")).split())[:260]
-                    lines.append("\n" + str(post.get("channel_username", "unknown")) + " | " + str(post.get("published_at") or "publication time unknown") + "\n" + snippet + "\n" + str(post.get("source_url", "")))
+                    lines.append("\n" + str(post.get("publisher_name") or post.get("channel_username", "unknown")) + " | " + str(post.get("platform", "Telegram")) + " | " + str(post.get("published_at") or "publication time unknown") + "\n" + snippet + "\n" + str(post.get("source_url", "")))
                 bot.sendMessage("\n".join(lines)[:3900], disable_web_page_preview=True)
     except Exception:
         bot.sendMessage("Feed unavailable. Try again later.")
@@ -217,7 +253,7 @@ if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
                 summary = data.get("summary", {})
                 matches = []
                 for post in posts:
-                    haystack = (str(post.get("text", "")) + " " + str(post.get("channel_username", ""))).lower()
+                    haystack = (str(post.get("text", "")) + " " + str(post.get("channel_username", "")) + " " + str(post.get("publisher_name", "")) + " " + str(post.get("platform", ""))).lower()
                     if query in haystack:
                         matches.append(post)
                     if len(matches) >= 10:
@@ -227,7 +263,7 @@ if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
                 else:
                     lines = ["SEARCH RESULTS — UNVERIFIED SOURCE LEADS"]
                     for post in matches:
-                        lines.append("\n" + str(post.get("channel_username", "")) + " | " + str(post.get("published_at") or "unknown") + "\n" + " ".join(str(post.get("text", "")).split())[:250] + "\n" + str(post.get("source_url", "")))
+                        lines.append("\n" + str(post.get("publisher_name") or post.get("channel_username", "")) + " | " + str(post.get("platform", "Telegram")) + " | " + str(post.get("published_at") or "unknown") + "\n" + " ".join(str(post.get("text", "")).split())[:250] + "\n" + str(post.get("source_url", "")))
                     bot.sendMessage("\n".join(lines)[:3900], disable_web_page_preview=True)
         except Exception:
             bot.sendMessage("Feed unavailable. Try again later.")
@@ -244,12 +280,19 @@ if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
             bot.sendMessage("The public collection feed is temporarily unavailable. Try again later.")
         else:
             data = response.json()
-            posts = data.get("posts", [])
             summary = data.get("summary", {})
             diagnostics = summary.get("channel_diagnostics", {})
-            lines = ["COLLECTION COVERAGE — " + str(summary.get("report_date", "unknown")), "Configured: " + str(summary.get("configured_channels", 0)) + " | Errors: " + str(summary.get("collection_errors", 0)), "Preview-only collection; missing posts do not mean no events occurred."]
-            for name, detail in list(diagnostics.items())[:25]:
-                lines.append(str(name) + ": " + str(detail)[:180])
+            rss_diagnostics = summary.get("rss_source_diagnostics", {})
+            lines = ["COLLECTION COVERAGE — " + str(summary.get("report_date", "unknown")),
+                "Telegram channels: " + str(summary.get("configured_telegram_channels", summary.get("configured_channels", 0))) + " | Telegram errors: " + str(summary.get("telegram_collection_errors", summary.get("collection_errors", 0))),
+                "RSS publishers: " + str(summary.get("configured_rss_sources", 0)) + " | RSS errors: " + str(summary.get("rss_source_errors", 0)),
+                "Telegram uses public previews; RSS uses public headlines/excerpts. Missing posts do not mean no events occurred."]
+            lines.append("\nTELEGRAM CHANNELS")
+            for name, detail in list(diagnostics.items())[:15]:
+                lines.append(str(name) + ": " + str(detail)[:140])
+            lines.append("\nRSS PUBLISHERS")
+            for name, detail in list(rss_diagnostics.items())[:10]:
+                lines.append(str(name) + ": " + str(detail)[:140])
             bot.sendMessage("\n".join(lines)[:3900])
     except Exception:
         bot.sendMessage("Coverage diagnostics unavailable.")
@@ -313,7 +356,7 @@ if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
             else:
                 lines = ["SOURCE REVIEW QUEUE — these are posts, not unique incidents."]
                 for post in pending:
-                    lines.append("\nID: " + str(post.get("id", "")) + "\n" + str(post.get("channel_username", "")) + " | " + str(post.get("published_at") or "unknown") + "\n" + " ".join(str(post.get("text", "")).split())[:180] + "\n" + str(post.get("source_url", "")))
+                    lines.append("\nID: " + str(post.get("id", "")) + "\n" + str(post.get("publisher_name") or post.get("channel_username", "")) + " | " + str(post.get("platform", "Telegram")) + " | " + str(post.get("published_at") or "unknown") + "\n" + " ".join(str(post.get("text", "")).split())[:180] + "\n" + str(post.get("source_url", "")))
                 bot.sendMessage("\n".join(lines)[:3900], disable_web_page_preview=True)
     except Exception:
         bot.sendMessage("Review queue unavailable.")
@@ -603,9 +646,9 @@ if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
                     global_items.append(post)
                 if len(bd) >= 5 and len(global_items) >= 5:
                     break
-            lines = ["LEGION-OSINT PUBLIC-SOURCE DIGEST — " + str(summary.get("report_date", "unknown")), "DRAFT SNAPSHOT ONLY. Not a verified incident report. Empty sections do not indicate absence of events.", "Feed generated: " + str(summary.get("generated_at", "unknown")), "Configured channels: " + str(summary.get("configured_channels", 0)) + " | Collection errors: " + str(summary.get("collection_errors", 0)), "\nBANGLADESH SOURCE LEADS"]
+            lines = ["LEGION-OSINT PUBLIC-SOURCE DIGEST — " + str(summary.get("report_date", "unknown")), "DRAFT SNAPSHOT ONLY. Not a verified incident report. Empty sections do not indicate absence of events.", "Feed generated: " + str(summary.get("generated_at", "unknown")), "Telegram channels: " + str(summary.get("configured_telegram_channels", summary.get("configured_channels", 0))) + " | RSS publishers: " + str(summary.get("configured_rss_sources", 0)) + " | RSS errors: " + str(summary.get("rss_source_errors", 0)), "\nBANGLADESH SOURCE LEADS"]
             for post in bd:
-                lines.append("- " + " ".join(str(post.get("text", "")).split())[:180] + " | " + str(post.get("source_url", "")))
+                lines.append("- " + str(post.get("publisher_name") or post.get("channel_username", "unknown")) + " (" + str(post.get("platform", "Telegram")) + "): " + " ".join(str(post.get("text", "")).split())[:180] + " | " + str(post.get("source_url", "")))
             lines.append("\nOTHER REGIONAL SOURCE LEADS")
             for post in global_items:
                 lines.append("- " + " ".join(str(post.get("text", "")).split())[:180] + " | " + str(post.get("source_url", "")))
