@@ -31,7 +31,7 @@ REGION_QUERIES = [
     ("East and Southeast Asia", "en+zh+id+th+my+ko", "East Southeast Asia local journalist eyewitness protest political violence communal unrest", "East Southeast Asia government police ASEAN UN official security statement", "Asia rumour viral claim alleged clash attack unverified"),
     ("Americas", "en+es+pt", "Americas local journalists eyewitness political violence protest communal unrest police incident", "Americas government police OAS UN official security incident statement", "Americas rumour viral claim alleged attack election violence unverified"),
     ("Global", "en+local", "independent journalists eyewitness civil society monitors emerging conflict incident report", "UN agencies international organizations official global security humanitarian update", "global rumour watch unverified claims viral footage conflict protest alleged incident"),
-    ("Global misinformation", "en+bn+ar+hi+es", "fact check debunk recycled footage misinformation conflict protest violence social media", "official fact check election commission public safety misinformation advisory", "viral rumour unverified allegation recycled video false claim fact check"),
+    ("Global misinformation", "en+bn+ar+hi+es", "fact check debunk recycled footage misinformation conflict protest violence social media", "independent newsroom fact check public safety misinformation investigation", "viral rumour unverified allegation recycled video false claim fact check"),
 ]
 
 def build_query_plan(report_date, max_queries=None):
