@@ -35,8 +35,11 @@ Give greater discovery attention to unofficial public sources (local journalists
 - /search <terms> — search stored post text
 - /ask <question> — Gemini Q&A over stored records
 - /report YYYY-MM-DD — ten-section draft from the reviewed incident ledger; not live research
+- /research YYYY-MM-DD — date-scoped public-web discovery (requires TAVILY_API_KEY)
+- /leads YYYY-MM-DD — candidate links saved from research
+- /coverage YYYY-MM-DD — query success/failure and result counts
 
-Important: The ten-section research/reporting workflow is a specification and foundation, not yet a fully automated capability. The current bot does not search the open web or all X, Facebook, YouTube and Telegram content. A research/search provider and platform-specific authorized adapters are still required. No live collection, report automation, cloud deployment or 24/7 uptime is claimed.
+The public-web research adapter uses Tavily date filters and stores search results as unverified leads. It does not directly search all X, Facebook, YouTube or Telegram content, and provider date filters do not prove incident dates. See RESEARCH_ADAPTER.md. The ten-section report still requires analyst-reviewed incident-ledger entries; search leads are not automatically promoted to incidents. No live provider search, cloud deployment or 24/7 uptime is claimed until credentials and runtime deployment are configured and tested.
 
 ## Setup and deployment
 See CLOUD_DEPLOYMENT.md. Keep credentials in a private environment only; never commit .env, Telegram session files or API keys. A first-time Telethon user-session authorization requires secure interactive login on the host.
