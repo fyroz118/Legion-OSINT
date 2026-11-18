@@ -258,7 +258,7 @@ def search_url(provider, query):
     raise ValueError(provider)
 
 def search_page(provider, query):
-    page = get(search_url(provider, query), timeout=25)
+    page = get(search_url(provider, query), timeout=12)
     lowered = page.lower()
     blocked_markers = {
         "duckduckgo": ("anomaly-modal", "bots use duckduckgo", "select all squares"),
@@ -344,7 +344,7 @@ def main():
     for source in DIRECTORY_SOURCES:
         directory_stats["pages_attempted"] += 1
         try:
-            page = get(source["url"], timeout=25)
+            page = get(source["url"], timeout=10)
             usernames = extract_directory_candidates(page, source["url"])
             if usernames:
                 directory_stats["pages_with_candidates"] += 1
@@ -383,6 +383,10 @@ def main():
     for region, language, query in QUERIES:
         for provider in ("duckduckgo", "bing", "google"):
             stats = provider_stats[provider]
+            if (stats["queries_with_links"] == 0 and
+                    (len(stats["errors"]) >= 3 or stats.get("empty_query_count", 0) >= 8)):
+                stats["skipped_after_circuit_breaker"] = stats.get("skipped_after_circuit_breaker", 0) + 1
+                continue
             stats["queries_attempted"] += 1
             try:
                 usernames, page_bytes, status = search_page(provider, query)
