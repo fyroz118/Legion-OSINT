@@ -43,7 +43,9 @@ jobs:
       - name: Validate requested date
         env:
           REPORT_DATE: ${{ inputs.report_date }}
-        run: python -c "import os; from datetime import datetime; datetime.strptime(os.environ['REPORT_DATE'], '%Y-%m-%d')"
+        run: |
+          python -m py_compile scripts/run_telegram_gemini.py scripts/export_telegram_session.py
+          python -c "import os; from datetime import datetime; datetime.strptime(os.environ['REPORT_DATE'], '%Y-%m-%d')"
 
       - name: Collect Telegram posts and generate Gemini report
         env:
