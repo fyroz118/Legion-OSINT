@@ -1,13 +1,10 @@
-"""Date-scoped public-web research adapter (Tavily).
-
-Search results are discovery leads only. This module never upgrades verification status
-or creates incident records automatically.
-"""
+"""Date-scoped public-web research adapter. Results are leads, never automatic verification."""
 import json
 import os
 import urllib.error
 import urllib.request
 from datetime import datetime, timezone
+from email.utils import parsedate_to_datetime
 from app.database import connect
 
 API_URL = "https://api.tavily.com/search"
@@ -17,20 +14,19 @@ DEFAULT_MAX_QUERIES = 12
 def build_query_plan(report_date, max_queries=None):
     datetime.strptime(report_date, "%Y-%m-%d")
     limit = max(1, min(int(max_queries or os.getenv("RESEARCH_MAX_QUERIES", DEFAULT_MAX_QUERIES)), 20))
-    date_phrase = f'"{report_date}"'
     planned = [
-        ("Bangladesh", "bn+en", f'Bangladesh political violence protest clash arrest mobilisation {date_phrase}'),
-        ("Bangladesh", "bn", f'বাংলাদেশ সহিংসতা সংঘর্ষ বিক্ষোভ হামলা নিহত আহত {date_phrase}'),
-        ("Bangladesh", "bn+en", f'বাংলাদেশ সাম্প্রদায়িক হামলা সংখ্যালঘু মব violence {date_phrase}'),
-        ("Bangladesh", "bn+en", f'বাংলাদেশ শ্রমিক আন্দোলন আইনশৃঙ্খলা সীমান্ত ঘটনা {date_phrase}'),
-        ("Bangladesh", "bn+en", f'Bangladesh misinformation fact check viral claim incident {date_phrase}'),
-        ("South Asia", "en+local", f'South Asia political violence communal unrest border incident {date_phrase}'),
-        ("MENA", "en+local", f'Middle East North Africa conflict civilian security protest incident {date_phrase}'),
-        ("Europe", "en+local", f'Europe political violence communal unrest protest security incident {date_phrase}'),
-        ("Sub-Saharan Africa", "en+local", f'Africa conflict communal violence coup protest displacement incident {date_phrase}'),
-        ("East and Southeast Asia", "en+local", f'East Southeast Asia unrest political violence security incident {date_phrase}'),
-        ("Americas", "en+local", f'Americas political violence communal unrest protest security incident {date_phrase}'),
-        ("Global", "en+local", f'fact check misinformation recycled video conflict violence protest {date_phrase}'),
+        ("Bangladesh", "bn+en", "Bangladesh political violence protest clash arrest mobilisation"),
+        ("Bangladesh", "bn", "বাংলাদেশ সহিংসতা সংঘর্ষ বিক্ষোভ হামলা নিহত আহত"),
+        ("Bangladesh", "bn+en", "বাংলাদেশ সাম্প্রদায়িক হামলা সংখ্যালঘু মব violence"),
+        ("Bangladesh", "bn+en", "বাংলাদেশ শ্রমিক আন্দোলন আইনশৃঙ্খলা সীমান্ত ঘটনা"),
+        ("Bangladesh", "bn+en", "Bangladesh misinformation fact check viral claim incident"),
+        ("South Asia", "en+local", "South Asia political violence communal unrest border incident"),
+        ("MENA", "en+ar", "Middle East North Africa conflict civilian security protest incident اشتباكات عنف سياسي احتجاجات"),
+        ("Europe", "en+fr", "Europe political violence communal unrest protest security incident violences politiques manifestations"),
+        ("Sub-Saharan Africa", "en+fr", "Africa conflict communal violence coup protest displacement incident violences communautaires conflit déplacement"),
+        ("East and Southeast Asia", "en+id+th", "East Southeast Asia unrest political violence security incident kekerasan politik bentrokan unjuk rasa ความรุนแรงทางการเมือง"),
+        ("Americas", "en+es+pt", "Americas political violence communal unrest protest security incident violencia política disturbios protestas violência política"),
+        ("Global", "en+local", "fact check misinformation recycled video conflict violence protest"),
     ]
     return [
         {"report_date": report_date, "region": region, "language_scope": language,
@@ -68,6 +64,7 @@ def _call_tavily(query, report_date, max_results=5):
         "max_results": max(1, min(int(max_results), 10)),
         "start_date": report_date, "end_date": report_date,
         "include_answer": False, "include_raw_content": False, "include_images": False,
+        "include_published_date": True, "filter_by_published_date": False,
     }
     request = urllib.request.Request(
         API_URL, data=json.dumps(payload).encode("utf-8"),
@@ -82,6 +79,19 @@ def _call_tavily(query, report_date, max_results=5):
         raise RuntimeError(f"Tavily HTTP {exc.code}: {body}") from exc
     except urllib.error.URLError as exc:
         raise RuntimeError(f"Tavily connection failed: {exc.reason}") from exc
+
+
+def _publication_date_matches(value, report_date):
+    if not value:
+        return True
+    try:
+        parsed = datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+    except ValueError:
+        try:
+            parsed = parsedate_to_datetime(str(value))
+        except (TypeError, ValueError, OverflowError):
+            return True
+    return parsed.date().isoformat() == report_date
 
 
 def run_research(report_date, max_queries=None, max_results=5, search_fn=None):
@@ -100,6 +110,12 @@ def run_research(report_date, max_queries=None, max_results=5, search_fn=None):
         try:
             response = search_fn(item["query"], report_date, max_results=max_results)
             results = response.get("results", []) if isinstance(response, dict) else []
+            results = [
+                result for result in results
+                if _publication_date_matches(
+                    result.get("published_date") or result.get("publishedDate"), report_date
+                )
+            ]
             saved = 0
             with connect() as db:
                 for result in results:
