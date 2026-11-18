@@ -49,3 +49,6 @@ This is not a validated intelligence product and does not guarantee comprehensiv
 
 ## Beginner Android setup
 See [ANDROID_SETUP.md](ANDROID_SETUP.md) for a step-by-step Pydroid 3 guide. The repository also includes `app/setup_check.py` and `run_preflight.py` for a local configuration check. The checker reports whether required settings are present but never prints their values.
+
+## Cloud deployment
+A Docker-based split deployment (private Telegram bot + scheduled collector) is provided in [CLOUD_DEPLOYMENT.md](CLOUD_DEPLOYMENT.md), with `Dockerfile` and `docker-compose.yml`. Persistent storage is required for the SQLite database and Telethon session. First-time Telethon authorization requires a secure interactive terminal; a bot token alone cannot authorize the user-session collector.
