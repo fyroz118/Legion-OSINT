@@ -11,7 +11,31 @@
       "real-time tactical targeting or granular live military movement feeds",
       "channels promoting violence or providing operational instructions"
     ],
-    "bias_review": "Record whether a source is independent, state-affiliated, partisan, advocacy-based, or unclear. Subscriber count is not credibility."
+    "bias_review": "Record whether a source is independent, state-affiliated, partisan, advocacy-based, or unclear. Subscriber count is not credibility.",
+    "source_mix": {
+      "target_attention": {
+        "unofficial": 70,
+        "official_and_institutional": 30
+      },
+      "note": "These percentages guide discovery and analyst attention, not truth scoring or evidence status. Independent newsrooms are tracked separately from government/institutional official sources.",
+      "unofficial_priority": [
+        "local_journalists",
+        "eyewitnesses",
+        "independent_osint_researchers",
+        "civil_society_monitors",
+        "humanitarian_observers",
+        "community_reporters",
+        "independent_fact_checkers"
+      ],
+      "official_parallel": [
+        "government_agencies",
+        "police_and_emergency_services",
+        "military_and_border_agencies",
+        "election_commissions",
+        "international_organizations",
+        "humanitarian_agencies"
+      ]
+    }
   },
   "enabled_sources": [
     {
@@ -28,7 +52,9 @@
       "affiliation": "independent_investigative_group",
       "assessment": "Specialist investigative OSINT publisher; strong for investigations and verification methods, not a comprehensive breaking-news feed.",
       "status": "enabled",
-      "evidence_default": "UNVERIFIED"
+      "evidence_default": "UNVERIFIED",
+      "source_class": "unofficial",
+      "monitoring_weight": "high"
     },
     {
       "username": "BNONews",
@@ -44,7 +70,9 @@
       "affiliation": "independent_news_service",
       "assessment": "Broad breaking-news coverage; use as an early lead and corroborate with primary sources and independent reporting.",
       "status": "enabled",
-      "evidence_default": "UNVERIFIED"
+      "evidence_default": "UNVERIFIED",
+      "source_class": "independent_media",
+      "monitoring_weight": "standard"
     },
     {
       "username": "bdnews24telegram",
@@ -61,7 +89,9 @@
       "affiliation": "newsroom",
       "assessment": "Established Bangladeshi news publisher. Public preview showed an owner-inactivity warning; verify collector access and current posting cadence.",
       "status": "enabled_with_monitoring_note",
-      "evidence_default": "UNVERIFIED"
+      "evidence_default": "UNVERIFIED",
+      "source_class": "independent_media",
+      "monitoring_weight": "standard"
     },
     {
       "username": "prothomaloonline",
@@ -77,7 +107,9 @@
       "affiliation": "newsroom",
       "assessment": "Public Telegram channel identifying itself as Prothom Alo's official channel.",
       "status": "enabled",
-      "evidence_default": "UNVERIFIED"
+      "evidence_default": "UNVERIFIED",
+      "source_class": "independent_media",
+      "monitoring_weight": "standard"
     },
     {
       "username": "RumorScanner",
@@ -93,7 +125,9 @@
       "affiliation": "independent_fact_checking_initiative",
       "assessment": "Public channel identifies itself as a Bangladeshi independent fact-checking initiative. Treat individual fact-checks as sourced claims and inspect their cited evidence.",
       "status": "enabled",
-      "evidence_default": "UNVERIFIED"
+      "evidence_default": "UNVERIFIED",
+      "source_class": "unofficial",
+      "monitoring_weight": "high"
     },
     {
       "username": "TheDailyStar",
@@ -109,7 +143,9 @@
       "affiliation": "newsroom",
       "assessment": "Public Telegram channel for The Daily Star Bangladesh.",
       "status": "enabled",
-      "evidence_default": "UNVERIFIED"
+      "evidence_default": "UNVERIFIED",
+      "source_class": "independent_media",
+      "monitoring_weight": "standard"
     }
   ],
   "review_queue": [
@@ -125,7 +161,9 @@
       ],
       "type": "defence_and_geopolitical_updates",
       "status": "manual_review_required",
-      "reason": "Public page confirmed, but coverage can include granular military and weapons information. Not enabled for automated ingestion."
+      "reason": "Public page confirmed, but coverage can include granular military and weapons information. Not enabled for automated ingestion.",
+      "source_class": "unofficial_candidate",
+      "monitoring_weight": "high"
     },
     {
       "username": "molfar_global",
@@ -141,7 +179,9 @@
       ],
       "type": "investigative_osint",
       "status": "manual_review_required",
-      "reason": "Surfaced in a third-party catalogue; direct identity and current public access require confirmation."
+      "reason": "Surfaced in a third-party catalogue; direct identity and current public access require confirmation.",
+      "source_class": "unofficial_candidate",
+      "monitoring_weight": "high"
     }
   ],
   "discovery_references": [
