@@ -137,8 +137,8 @@ class ResearchTests(unittest.TestCase):
         from app.research import suggest_duplicate_candidates, get_research_leads
         def fake_search(query, report_date, max_results=10):
             return {"results": [
-                {"title": "Protesters gather outside district office", "url": "https://a.example.org/story", "published_date": report_date},
-                {"title": "Protesters gather outside district offices", "url": "https://b.example.org/story", "published_date": report_date},
+                {"title": "Protesters gather outside district office today", "url": "https://a.example.org/story", "published_date": report_date},
+                {"title": "Protesters gather outside district office today update", "url": "https://b.example.org/story", "published_date": report_date},
             ]}
         run_research("2026-11-18", max_queries=1, search_fn=fake_search)
         before = len(get_research_leads("2026-11-18"))
