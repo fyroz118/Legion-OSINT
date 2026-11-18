@@ -20,7 +20,7 @@ class PreviewParser(HTMLParser):
         self.posts, self.cur, self.text_depth = [], None, 0
     def handle_starttag(self, tag, attrs):
         a = dict(attrs); classes = set((a.get("class") or "").split())
-        if tag == "div" and "tgme_widget_message" in classes and a.get("data-post"):
+        if tag == "div" and a.get("data-post"):
             if self.cur: self.posts.append(self.cur)
             self.cur = {"data_post": a["data-post"], "parts": [], "published_at": None}
         if self.cur:
