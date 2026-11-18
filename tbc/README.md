@@ -23,7 +23,7 @@ This is an import-ready TPY command package reconstructed from the current Legio
 
 ## Commands included
 
-`/myid`, `/start`, `/help`, `/status`, `/daily`, `/bangladesh`, `/search`, `/leads`, `/briefs`, `/coverage`, `/report`, `/reviewqueue`, `/reviewlead`, `/candidates`, `/incidentdraft`, `/incidentqueue`, `/approveincident`, `/linklead`, `/ask`, `/research`, `/alerts_on`, `/alerts_off`, and internal scheduled command `alert_poll`.
+`/myid`, `/start`, `/help`, `/status`, `/daily`, `/bangladesh`, `/search`, `/leads`, `/briefs`, `/coverage`, `/report`, `/digest`, `/reviewqueue`, `/reviewlead`, `/candidates`, `/incidentdraft`, `/incidentqueue`, `/approveincident`, `/linklead`, `/ask`, `/research`, `/alerts_on`, `/alerts_off`, and internal scheduled command `alert_poll`.
 
 ## Current boundaries
 
@@ -31,7 +31,7 @@ This is an import-ready TPY command package reconstructed from the current Legio
 - The repository is public. The feed is therefore public too; do not place private records in it.
 - Analyst review and incident workflow data are stored in TBC bot storage, not synchronized back to the existing SQLite database. Export/backup for that TBC storage must be validated separately.
 - `/ask` and `/research` explicitly report that their external engines are not yet connected; they do not invent results.
-- The daily `/report` is an evidence digest, not the former ten-section analyst-approved incident report.
+- `/report` lists only analyst-approved incident records; approval is not verification. `/digest` is a separate unverified public-source digest. The full former ten-section report engine is not yet connected to TBC.
 - The configured Telegram source list remains finite. The 1,000+ channel target is not achieved or claimed.
 - Collection is still public preview-only. It is not Telegram global search and does not access private groups.
 
