@@ -105,39 +105,6 @@
       "source_identity_status": "directory_or_public_profile_lead_unverified"
     },
     {
-      "username": "albd1949",
-      "region": "Bangladesh",
-      "language": "bn",
-      "discovery_notes": "Public page and Telegram Register identify this as Bangladesh Awami League's channel; party-affiliated actor source, not independent corroboration. Confirm live identity/activity again during review.",
-      "seed_source_url": "https://t.me/s/albd1949",
-      "candidate_category": "political_actor_candidate",
-      "source_class": "political_actor_candidate",
-      "source_affiliation": "Bangladesh_Awami_League_association_claimed",
-      "source_identity_status": "directory_or_public_profile_lead_unverified"
-    },
-    {
-      "username": "bnpbd_org",
-      "region": "Bangladesh",
-      "language": "bn",
-      "discovery_notes": "Listed by TG Market as Bangladesh Nationalist Party-BNP; party-affiliated actor source. Verify the live public preview and operator identity before review approval.",
-      "seed_source_url": "https://tgmarket.io/countries/bd/news",
-      "candidate_category": "political_actor_candidate",
-      "source_class": "political_actor_candidate",
-      "source_affiliation": "Bangladesh_Nationalist_Party_association_publicly_identified",
-      "source_identity_status": "directory_or_public_profile_lead_unverified"
-    },
-    {
-      "username": "bjiofficial",
-      "region": "Bangladesh",
-      "language": "bn",
-      "discovery_notes": "Public channel identifies itself as Bangladesh Jamaat-e-Islami; party-affiliated actor source, not independent corroboration. Verify current public preview during review.",
-      "seed_source_url": "https://tgscope.io/topics/politics/bangladesh",
-      "candidate_category": "political_actor_candidate",
-      "source_class": "political_actor_candidate",
-      "source_affiliation": "Bangladesh_Jamaat_e_Islami_association_claimed",
-      "source_identity_status": "directory_or_public_profile_lead_unverified"
-    },
-    {
       "username": "bjpupitcell",
       "region": "India",
       "language": "hi",
@@ -191,17 +158,6 @@
       "source_class": "political_actor_candidate",
       "source_affiliation": "Indian_National_Congress_association_unverified",
       "source_identity_status": "directory_or_public_profile_lead_unverified"
-    },
-    {
-      "username": "newsboxbangla",
-      "region": "Bangladesh",
-      "language": "bn",
-      "candidate_category": "media_candidate",
-      "source_class": "media_candidate",
-      "source_affiliation": "unassessed",
-      "source_identity_status": "directory_listed_unverified",
-      "discovery_notes": "TG Market lists this as a Bangladesh news channel. Publisher identity, editorial standards, repost ratio and current activity require review.",
-      "seed_source_url": "https://tgmarket.io/countries/bd/news"
     },
     {
       "username": "channelelias",
@@ -292,17 +248,6 @@
       "seed_source_url": "https://tgmarket.io/countries/mm/news"
     },
     {
-      "username": "theirrawaddy",
-      "region": "Myanmar",
-      "language": "my",
-      "candidate_category": "media_candidate",
-      "source_class": "media_candidate",
-      "source_affiliation": "publisher_claimed_The_Irrawaddy",
-      "source_identity_status": "directory_listed_unverified",
-      "discovery_notes": "TG Market Myanmar news directory lists The Irrawaddy Burmese channel. Verify official cross-links and recent activity before approval.",
-      "seed_source_url": "https://tgmarket.io/countries/mm/news"
-    },
-    {
       "username": "peoplemediamyanmar",
       "region": "Myanmar",
       "language": "my",
@@ -355,28 +300,6 @@
       "source_affiliation": "publisher_claimed_Mizzima",
       "source_identity_status": "directory_listed_unverified",
       "discovery_notes": "TG Market Myanmar news directory lists Mizzima TV. Confirm this exact channel through publisher-controlled sources.",
-      "seed_source_url": "https://tgmarket.io/countries/mm/news"
-    },
-    {
-      "username": "dvbtvnews",
-      "region": "Myanmar",
-      "language": "my",
-      "candidate_category": "media_candidate",
-      "source_class": "media_candidate",
-      "source_affiliation": "publisher_claimed_DVB",
-      "source_identity_status": "directory_listed_unverified",
-      "discovery_notes": "TG Market Myanmar news directory lists DVB TV News. Confirm official publisher links and review for duplicate syndicated content.",
-      "seed_source_url": "https://tgmarket.io/countries/mm/news"
-    },
-    {
-      "username": "bbcnewsburmese",
-      "region": "Myanmar",
-      "language": "my",
-      "candidate_category": "media_candidate",
-      "source_class": "media_candidate",
-      "source_affiliation": "BBC_Burmese_association_claimed",
-      "source_identity_status": "directory_listed_unverified",
-      "discovery_notes": "TG Market Myanmar news directory lists BBC News Burmese. Verify official BBC cross-link to this exact Telegram username before treating as authentic.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news"
     },
     {
