@@ -1,0 +1,65 @@
+name: Run Legion-OSINT on demand
+
+on:
+  workflow_dispatch:
+    inputs:
+      report_date:
+        description: "Reporting date in Asia/Dhaka (YYYY-MM-DD)"
+        required: true
+        type: string
+      max_queries:
+        description: "Search volume (higher volume uses more Tavily credits)"
+        required: true
+        type: choice
+        options:
+          - "60"
+          - "100"
+        default: "60"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: legion-osint-manual-run
+  cancel-in-progress: false
+
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install research dependencies
+        run: pip install -r requirements.txt
+
+      - name: Validate requested date and runner
+        env:
+          REPORT_DATE: ${{ inputs.report_date }}
+        run: |
+          python -m py_compile scripts/run_on_demand.py
+          python -c "import os; from datetime import datetime; datetime.strptime(os.environ['REPORT_DATE'], '%Y-%m-%d')"
+
+      - name: Run one-shot public-web research
+        env:
+          TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
+          RESEARCH_MAX_QUERIES: ${{ inputs.max_queries }}
+          DATABASE_PATH: ${{ runner.temp }}/legion_osint.sqlite3
+          REPORT_OUTPUT_DIR: output
+          REPORT_DATE: ${{ inputs.report_date }}
+        run: python scripts/run_on_demand.py "$REPORT_DATE" "$RESEARCH_MAX_QUERIES"
+
+      - name: Upload reports and source registers
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: legion-osint-${{ inputs.report_date }}
+          path: output/${{ inputs.report_date }}/
+          if-no-files-found: warn
+          retention-days: 14
