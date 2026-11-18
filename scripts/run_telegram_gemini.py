@@ -213,7 +213,7 @@ def main():
         for r in rows:
             report+=f"- {r.get('published_at')} | @{r.get('channel_username')} | {r.get('text','')} | {r.get('source_url')}\n"
     header=(f"# Legion-OSINT Daily Intelligence Report — {day}\n\n**Method:** configured public Telegram preview pages + "+("Gemini synthesis." if not gemini_error else "evidence-preservation fallback; Gemini unavailable.")+" "
-      f"**Timezone:** Asia/Dhaka. **All claims require independent verification.**\n**Posts:** {len(rows)}; **Gemini analysed:** {len(analysis)} (max 300); **channels:** {len(channels)}.\n\n")
+      f"**Timezone:** Asia/Dhaka. **All claims require independent verification.**\n**Posts:** {len(rows)}; **Gemini successfully analysed:** {gemini_posts_successfully_analysed} of {len(analysis)} submitted (max 300); **channels:** {len(channels)}.\n\n")
     (out/"daily_intelligence_report.md").write_text(header+report,encoding="utf-8")
     summary={"report_date":day,"timezone":"Asia/Dhaka","configured_channels":[c["username"] for c in channels],
       "channel_registry":[{"username":c["username"],"region":c.get("priority","global"),"language":c.get("language","unknown"),"source_class":c.get("source_class","unknown"),"source_affiliation":c.get("source_affiliation","unassessed")} for c in channels],
