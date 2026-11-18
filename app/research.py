@@ -311,6 +311,10 @@ def review_lead(lead_id, status, source_class=None, analyst_note=None,
 
 def link_reviewed_lead_to_incident(lead_id, incident_id, source_role="lead", independence_group=None):
     """Attach reviewed provenance to an existing incident; never creates an incident."""
+    if source_role not in {"lead", "corroboration", "contradiction"}:
+        raise ValueError("source_role must be lead, corroboration or contradiction")
+    if source_role in {"corroboration", "contradiction"} and not independence_group:
+        raise ValueError("independence_group is required for corroboration/contradiction sources")
     from app.incidents import add_incident_source, initialize_incident_tables
     initialize_research_tables()
     initialize_incident_tables()
@@ -333,6 +337,7 @@ def link_reviewed_lead_to_incident(lead_id, incident_id, source_role="lead", ind
             "source_url": row["source_url"], "source_name": row["title"],
             "source_class": row["source_class"], "source_type": "public_web",
             "published_at": row["published_date"], "source_role": source_role,
+            "independence_group": independence_group,
             "claim_summary": row["snippet"]
         }
     add_incident_source(incident_id, source)
