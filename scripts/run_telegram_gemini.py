@@ -126,6 +126,13 @@ def main():
             f"REPORT DATE {report_date} Asia/Dhaka. POSTS:\n{evidence}"
         )
         batch_summaries.append(gemini_text(client, model, prompt))
+    coverage_context = json.dumps({
+        "configured_channels": [ch.get("username") for ch in channels],
+        "messages_collected_this_run": collected,
+        "maximum_recent_messages_inspected_per_channel": limit,
+        "channel_access_errors": errors,
+        "report_date_timezone": "Asia/Dhaka"
+    }, ensure_ascii=False)
     synthesis_prompt = (
         "Prepare Legion-OSINT's complete 10-section daily report using ONLY the analyst notes below. "
         "The report date is " + report_date + " (Asia/Dhaka). Sections must be: "
@@ -141,6 +148,8 @@ def main():
         "and that only configured channels were collected. Do not give tactical details or identify private individuals. "
         "Rhetoric alone does not establish imminent violence. Keep every material claim linked to its original URL. "
         "If there are no verified facts, say so clearly.\n\n"
+        "Exact collection coverage metadata (report access failures honestly; do not imply unlisted channels were searched):\n"
+        + coverage_context + "\n\nANALYST NOTES:\n"
         + "\n\n--- BATCH ---\n\n".join(batch_summaries)
     )
     if analysis_rows:
