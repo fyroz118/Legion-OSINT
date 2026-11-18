@@ -6,10 +6,10 @@
   "handling": "All 40 user-supplied display names are retained as baseline reference sources. Public usernames are added only when matched to a public Telegram preview or reputable public directory. Name-only unresolved records remain in the baseline with null username; all newly discovered usernames are unreviewed and disabled for collection pending analyst review.",
   "counts": {
     "total_names": 40,
-    "username_matched": 35,
+    "username_matched": 40,
     "active_or_existing": 4,
-    "newly_added_to_candidate_pool": 20,
-    "username_unresolved": 5
+    "newly_added_to_candidate_pool": 25,
+    "username_unresolved": 0
   },
   "entries": [
     {
@@ -40,9 +40,10 @@
     },
     {
       "display_name": "STRRIKEMAP",
-      "username": null,
-      "status": "USERNAME_UNRESOLVED",
-      "notes": "Display name only; exact public handle not established."
+      "username": "strikemap",
+      "status": "NEW_CANDIDATE",
+      "source_url": "https://t.me/strikemap",
+      "notes": "User supplied exact channel URL; public Telegram preview confirms STRIKEMAP, a conflict-intelligence aggregator focused on Iran, Israel, Lebanon and the Middle East, describing AI-enrichment from 50+ sources. Aggregated claims require provenance checks and independent corroboration."
     },
     {
       "display_name": "Muslim Ummah",
@@ -84,9 +85,10 @@
     },
     {
       "display_name": "ECHO | ایکو",
-      "username": null,
-      "status": "USERNAME_UNRESOLVED",
-      "notes": "Exact public handle not established."
+      "username": "Echo2e",
+      "status": "NEW_CANDIDATE",
+      "source_url": "https://t.me/Echo2e",
+      "notes": "Exact public URL supplied by user. Public preview/indexing did not independently establish channel identity or editorial role; retain as an unverified user-supplied source lead pending analyst review."
     },
     {
       "display_name": "Middle East Spectator — MES",
@@ -222,15 +224,17 @@
     },
     {
       "display_name": "PoliticaGR - Geopolitics",
-      "username": null,
-      "status": "USERNAME_UNRESOLVED",
-      "notes": "Exact public handle not established."
+      "username": "PoliticsGR",
+      "status": "NEW_CANDIDATE",
+      "source_url": "https://t.me/PoliticsGR",
+      "notes": "User supplied exact channel URL; public Telegram preview identifies PoliticsGR as a geopolitical analysis channel publishing maps, election polls, infographics and analysis, and explicitly describes an illiberal/nationalist perspective in public directory metadata. Classify as viewpoint/analyst source, not neutral or independent confirmation."
     },
     {
       "display_name": "সত্যের সন্ধান",
-      "username": null,
-      "status": "USERNAME_UNRESOLVED",
-      "notes": "Exact public handle not established."
+      "username": "SomvabboSotto",
+      "status": "NEW_CANDIDATE",
+      "source_url": "https://t.me/SomvabboSotto",
+      "notes": "Exact public URL supplied by user. Public preview/indexing did not independently establish channel identity, operator or editorial role; retain as an unverified user-supplied Bangladesh-language source lead pending analyst review."
     },
     {
       "display_name": "Revan M",
@@ -254,9 +258,10 @@
     },
     {
       "display_name": "News Box Bangla 2.0",
-      "username": null,
-      "status": "USERNAME_UNRESOLVED",
-      "notes": "Related display name does not establish whether it is a separate channel."
+      "username": "newsboxbangla02",
+      "status": "NEW_CANDIDATE",
+      "source_url": "https://t.me/newsboxbangla02",
+      "notes": "User supplied exact URL; public Telegram search result shows posts on the established News Box Bangla channel forwarding content attributed to @newsboxbangla02. This suggests a related or backup feed but does not independently prove common ownership; keep separate and verify relationship."
     },
     {
       "display_name": "INB বাংলা",
