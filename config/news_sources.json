@@ -22,7 +22,8 @@
       "source_class": "independent_media",
       "source_affiliation": "Bangladesh_digital_newsroom",
       "monitoring_weight": "high",
-      "enabled": true
+      "enabled": false,
+      "disable_reason": "The configured endpoint currently returns an HTML page rather than a parseable RSS/Atom document; keep disabled until a valid public feed endpoint is confirmed."
     },
     {
       "source_id": "jagonews24_rss",
@@ -77,6 +78,17 @@
       "source_class": "independent_media",
       "source_affiliation": "Shan_regional_independent_newsroom",
       "monitoring_weight": "high",
+      "enabled": true
+    },
+    {
+      "source_id": "bd24live_rss",
+      "publisher_name": "BD24Live.com",
+      "feed_url": "https://www.bd24live.com/feed",
+      "priority_region": "bangladesh",
+      "language": "bn",
+      "source_class": "independent_media",
+      "source_affiliation": "Bangladesh_digital_newsroom",
+      "monitoring_weight": "standard",
       "enabled": true
     }
   ]
