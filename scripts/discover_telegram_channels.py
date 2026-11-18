@@ -208,6 +208,34 @@ def self_test():
 def main():
     OUT.mkdir(exist_ok=True)
     found = {}
+    seed_path = OUT / "seed_candidates.json"
+    seed_candidates = []
+    if seed_path.exists():
+        try:
+            seed_candidates = json.loads(seed_path.read_text(encoding="utf-8")).get("candidates", [])
+        except Exception:
+            seed_candidates = []
+    for seed in seed_candidates:
+        username = str(seed.get("username", "")).strip().lstrip("@")
+        if not re.fullmatch(r"[A-Za-z][A-Za-z0-9_]{3,31}", username):
+            continue
+        key = username.lower()
+        row = found.setdefault(key, {
+            "username": username,
+            "candidate_url": "https://t.me/" + username,
+            "discovery_regions": [],
+            "discovery_languages": [],
+            "discovery_queries": [],
+            "discovery_providers": [],
+        })
+        for field, value in (("discovery_regions", seed.get("region", "Bangladesh")),
+                             ("discovery_languages", seed.get("language", "bn")),
+                             ("discovery_queries", "TG Market public Bangladesh news directory"),
+                             ("discovery_providers", "tgmarket_public_directory")):
+            if value and value not in row[field]:
+                row[field].append(value)
+        row["discovery_notes"] = seed.get("discovery_notes", "Directory listing only; identity, role and reliability unverified.")
+        row["seed_source_url"] = seed.get("seed_source_url", "https://tgmarket.io/countries/bd/news")
     provider_stats = {name: {"queries_attempted": 0, "queries_with_links": 0,
                              "links_found": 0, "errors": []}
                       for name in ("duckduckgo", "bing", "google")}
@@ -261,7 +289,7 @@ def main():
         row["last_seen_utc"] = now
         for field in ("discovery_regions", "discovery_languages", "discovery_queries", "discovery_providers"):
             row[field] = sorted(set(previous.get(field, [])) | set(row.get(field, [])))
-        for field in ("title", "description", "accessible", "source_class", "source_affiliation"):
+        for field in ("title", "description", "accessible", "source_class", "source_affiliation", "discovery_notes", "seed_source_url"):
             if field in previous:
                 row[field] = previous[field]
         prior[key] = row
@@ -303,6 +331,7 @@ def main():
         "providers_returning_telegram_links": providers_with_success,
         "total_query_errors": total_query_errors,
         "new_candidates_this_run": len(found),
+        "directory_seed_candidates_loaded": len(seed_candidates),
         "unique_candidates": len(candidates),
         "previews_checked_this_run": min(MAX_PREVIEW_CHECKS, len(candidates)),
         "limitations": limitations,
