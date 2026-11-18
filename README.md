@@ -82,3 +82,24 @@ Review workflow records:
 Approval is only permission to include an incident record in the report. It does not upgrade `verification_status`, confidence, or factual certainty. The report builder includes only `APPROVED` workflow records; `DRAFT` and `REJECTED` records are excluded. Rumours must remain explicitly labelled as unverified. Do not approve an item merely because multiple outlets repeat the same original claim.
 
 Existing incident rows are migrated into the workflow as `DRAFT` on first initialization, so prior records are not silently published.
+
+
+## On-demand mode (no VPS required)
+
+The recommended mode for occasional use is the manual GitHub Actions workflow. It starts an ephemeral runner only when requested and stops when the job finishes; no always-on bot, DigitalOcean Droplet, Telethon login session, or Gemini key is needed for this public-web research path.
+
+1. In the repository, open **Settings → Secrets and variables → Actions → New repository secret**.
+2. Add `TAVILY_API_KEY` as a repository secret. Never put the key in source files, workflow inputs, issues, or chat.
+3. Open **Actions → Run Legion-OSINT on demand → Run workflow**.
+4. Enter the reporting date in `YYYY-MM-DD` (Asia/Dhaka) and choose 60 or 100 queries. A 100-query run can use up to 100 basic Tavily credits.
+5. When the workflow finishes, download the `legion-osint-YYYY-MM-DD` artifact.
+
+The artifact contains:
+- `preliminary_daily_report.md` — ten-section preliminary discovery report. It is explicitly not a verified intelligence assessment.
+- `individual_source_briefs.md` — individual source-lead briefs, including rumour labels.
+- `source_leads.csv` — sortable source register.
+- `research_summary.json` — query outcomes and coverage metadata.
+
+The on-demand workflow uses Tavily public-web search only. It does not start the Telegram command bot or Telethon collector, and it does not provide persistent analyst-review state between runs. Every result is an unverified lead; manual corroboration remains necessary. GitHub retains the artifact for 14 days. Tavily API credits/plan limits still apply. GitHub-hosted runner availability and repository Actions settings also apply.
+
+The VPS instructions below remain an optional path only if continuous Telegram collection or an always-available Telegram bot is wanted later.
