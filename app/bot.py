@@ -46,18 +46,22 @@ async def start(update, context):
 async def help_cmd(update, context):
     if await gate(update):
         await update.message.reply_text(
-            "/status — database status\n"
-            "/daily — recent collected Telegram posts\n"
-            "/bangladesh — recent Bangladesh posts\n"
-            "/search <terms> — search collected text\n"
-            "/ask <question> — ask Gemini about stored records\n"
-            "/research YYYY-MM-DD — run expanded public-web discovery (default 60 queries)\n"
-            "/briefs YYYY-MM-DD [limit] — display individual source-lead briefs (default 60, max 100)\n"
-            "/leads YYYY-MM-DD — show stored candidate links\n"
-            "/coverage YYYY-MM-DD — show regional query coverage and failures\n"
-            "/reviewqueue YYYY-MM-DD — analyst review queue with one-tap decisions\n"
-            "/candidates YYYY-MM-DD [limit] — conservative event candidates and duplicate suggestions\n"
-            "/reviewlead ID reviewed|rejected|duplicate [source_class] [duplicate_ID] — record review\n            /linklead LEAD_ID INCIDENT_ID [lead|corroboration|contradiction] — link reviewed provenance\n            /report YYYY-MM-DD — consolidated ten-section draft from reviewed incident ledger"
+            "/status — database status\\n"
+            "/daily — recent collected Telegram posts\\n"
+            "/bangladesh — recent Bangladesh posts\\n"
+            "/search <terms> — search collected text\\n"
+            "/ask <question> — ask Gemini about stored records\\n"
+            "/research YYYY-MM-DD — run public-web discovery (default 60 queries)\\n"
+            "/briefs YYYY-MM-DD [limit] — individual source-lead briefs\\n"
+            "/coverage YYYY-MM-DD — regional query coverage and failures\\n"
+            "/reviewqueue YYYY-MM-DD — analyst source-review queue\\n"
+            "/reviewlead ID reviewed|rejected|duplicate [source_class] [duplicate_ID] — review a lead\\n"
+            "/candidates YYYY-MM-DD [limit] — conservative candidates and duplicate suggestions\\n"
+            "/incidentdraft LEAD_ID INCIDENT_ID COUNTRY CATEGORY SOURCE_GROUP description words... — create DRAFT\\n"
+            "/incidentqueue YYYY-MM-DD — list DRAFT/APPROVED/REJECTED incidents\\n"
+            "/approveincident INCIDENT_ID approved|rejected rationale words... — analyst inclusion decision\\n"
+            "/linklead LEAD_ID INCIDENT_ID [lead|corroboration|contradiction] — attach reviewed source\\n"
+            "/report YYYY-MM-DD — report only explicitly APPROVED incidents"
         )
 
 
