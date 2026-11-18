@@ -18,7 +18,7 @@ Set these as environment variables in the hosting provider's private service set
 - `GEMINI_MODEL=gemini-2.5-flash`
 - `TAVILY_API_KEY` (required only for `/research`; keep it private)
 - `TAVILY_SEARCH_DEPTH=basic`
-- `RESEARCH_MAX_QUERIES=12`
+- `RESEARCH_MAX_QUERIES=60`
 - `DATABASE_PATH=/app/data/legion_osint.sqlite3`
 - `TELETHON_SESSION_PATH=/app/data/legion_osint_user`
 - `COLLECT_INTERVAL_MINUTES=60`
@@ -45,7 +45,7 @@ If the hosting provider does not provide a secure interactive terminal, do not a
 
 ## Source configuration
 
-Before starting the collector, replace the placeholder in `config/channels.json` with a short, reviewed allowlist of accessible public channels. Begin with 2–5 sources. Respect platform rules and access controls; do not collect private groups or bypass restrictions.
+The Telegram collector's configured public-channel list is only one supplementary source layer. It does not define global report coverage; the event-led public-web research adapter is separate. Add only reviewed, lawfully accessible public channels, and respect platform rules and access controls.
 
 ## Operational checks
 
@@ -53,7 +53,7 @@ Before starting the collector, replace the placeholder in `config/channels.json`
 - Collector: inspect host logs for successful collection and rate-limit messages.
 - Database: verify new records are stored and de-duplicated.
 - Gemini: use `/ask` only after records have been collected.
-- Public-web research: set `TAVILY_API_KEY`, then test `/research YYYY-MM-DD`, `/leads YYYY-MM-DD` and `/coverage YYYY-MM-DD`. This uses date-scoped news search and does not provide direct access to every social platform.
+- Public-web research: set `TAVILY_API_KEY`, then test `/research YYYY-MM-DD`, `/briefs YYYY-MM-DD 60`, `/leads YYYY-MM-DD` and `/coverage YYYY-MM-DD`. The default is 60 queries (up to 100) and up to 10 results per query; 60 basic queries may consume up to 60 search credits. Rumour-watch results remain unverified. This is not universal access to every social platform.
 - Back up the persistent volume securely.
 
 ## Important limits
