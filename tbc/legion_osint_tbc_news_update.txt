@@ -9,7 +9,7 @@ else:
 Command: help
 ---
 if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
-    bot.sendMessage("/status — Telegram and RSS collection freshness/counts\n/daily — latest public Telegram posts\n/news — latest public RSS/Atom news headlines\n/bangladesh — Bangladesh source posts\n/search <terms> — search Telegram and RSS source leads\n/leads — recent source leads\n/briefs — individual source briefs\n/coverage — Telegram channel and RSS publisher diagnostics\n/report — analyst-approved incident report\n/digest — latest unverified source-post digest\n/reviewqueue — unreviewed source posts\n/reviewlead ID | reviewed|rejected|duplicate | source_class | rationale\n/candidates — recent event-news leads for analyst screening\n/incidentdraft POST_ID | INCIDENT_ID | COUNTRY | CATEGORY | DESCRIPTION\n/incidentqueue — incident drafts and inclusion status\n/approveincident INCIDENT_ID | approved|rejected | rationale\n/linklead POST_ID | INCIDENT_ID | lead|corroboration|contradiction\n/alerts_on — enable two-hourly alerts\n/alerts_off — disable alerts\n/ask and /research — not connected yet\n\nSource integrity: posts remain UNVERIFIED; publication time is not incident time; reposts are not independent corroboration. Approval permits report inclusion only and does not verify an event.")
+    bot.sendMessage("/status — Telegram and RSS collection freshness/counts\n/daily — latest public Telegram posts\n/news — latest public RSS/Atom news headlines\n/bangladesh — Bangladesh source posts\n/search <words> — all words must match text, source, region or classification\n/leads — recent source leads\n/briefs — individual source briefs\n/coverage — Telegram channel and RSS publisher diagnostics\n/report — analyst-approved incident report\n/digest — latest unverified source-post digest\n/reviewqueue — unreviewed source posts\n/reviewlead ID | reviewed|rejected|duplicate | source_class | rationale\n/candidates — recent event-news leads for analyst screening\n/incidentdraft POST_ID | INCIDENT_ID | COUNTRY | CATEGORY | DESCRIPTION\n/incidentqueue — incident drafts and inclusion status\n/approveincident INCIDENT_ID | approved|rejected | rationale\n/linklead POST_ID | INCIDENT_ID | lead|corroboration|contradiction\n/alerts_on — enable two-hourly alerts\n/alerts_off — disable alerts\n/ask and /research — not connected yet\n\nSource integrity: posts remain UNVERIFIED; publication time is not incident time; reposts are not independent corroboration. Approval permits report inclusion only and does not verify an event.")
 else:
     bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
 ---
@@ -195,31 +195,39 @@ else:
 Command: search
 ---
 if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
-    query = str(params or "").strip().lower()
-    if not query or query == "none":
-        bot.sendMessage("Usage: /search <terms>")
+    raw_query = str(params or "").strip().lower()
+    if not raw_query or raw_query == "none":
+        bot.sendMessage("Usage: /search <words>\nExamples: /search Bangladesh protest | /search Hindustan | /search independent_media")
     else:
         try:
+            query = raw_query.strip('"').strip("'")
+            terms = [term for term in query.split() if term]
             response = HTTP.get(FEED_URL)
             if response.status_code != 200:
                 bot.sendMessage("The public collection feed is temporarily unavailable. Try again later.")
             else:
                 data = response.json()
                 posts = data.get("posts", [])
-                summary = data.get("summary", {})
                 matches = []
                 for post in posts:
-                    haystack = (str(post.get("text", "")) + " " + str(post.get("channel_username", "")) + " " + str(post.get("publisher_name", "")) + " " + str(post.get("platform", ""))).lower()
-                    if query in haystack:
+                    fields = [
+                        post.get("text", ""), post.get("channel_username", ""),
+                        post.get("publisher_name", ""), post.get("platform", ""),
+                        post.get("source_class", ""), post.get("source_type", ""),
+                        post.get("source_affiliation", ""), post.get("priority_region", ""),
+                        post.get("language", "")
+                    ]
+                    haystack = " ".join(str(value or "") for value in fields).lower()
+                    if all(term in haystack for term in terms):
                         matches.append(post)
-                    if len(matches) >= 10:
+                    if len(matches) >= 8:
                         break
                 if not matches:
-                    bot.sendMessage("No matching posts in the latest snapshot.")
+                    bot.sendMessage("No matching posts in the latest collected snapshot. This searches collected records only, not all Telegram posts.")
                 else:
-                    lines = ["SEARCH RESULTS — UNVERIFIED SOURCE LEADS"]
+                    lines = ["SEARCH RESULTS — UNVERIFIED SOURCE LEADS", "All search terms matched; results are from the latest collected snapshot."]
                     for post in matches:
-                        lines.append("\n" + str(post.get("publisher_name") or post.get("channel_username", "")) + " | " + str(post.get("platform", "Telegram")) + " | " + str(post.get("published_at") or "unknown") + "\n" + " ".join(str(post.get("text", "")).split())[:250] + "\n" + str(post.get("source_url", "")))
+                        lines.append("\n" + str(post.get("publisher_name") or post.get("channel_username", "")) + " | " + str(post.get("platform", "Telegram")) + " | " + str(post.get("published_at") or "unknown") + "\n" + " ".join(str(post.get("text", "")).split())[:230] + "\n" + str(post.get("source_url", "")))
                     bot.sendMessage("\n".join(lines)[:3900], disable_web_page_preview=True)
         except Exception:
             bot.sendMessage("Feed unavailable. Try again later.")
