@@ -9,7 +9,7 @@ else:
 Command: help
 ---
 if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
-    bot.sendMessage("/status — Telegram and RSS collection freshness/counts\n/daily — latest public Telegram posts\n/date YYYY-MM-DD [page] — browse daily Telegram + RSS/Atom archive\n/news — latest public RSS/Atom news headlines\n/bangladesh — Bangladesh source posts\n/search <words> — all words must match text, source, region or classification\n/leads — recent source leads\n/briefs — individual source briefs\n/coverage — Telegram channel and RSS publisher diagnostics\n/report — analyst-approved incident report\n/digest — latest unverified source-post digest\n/reviewqueue — unreviewed source posts\n/reviewlead ID | reviewed|rejected|duplicate | source_class | rationale\n/candidates — recent event-news leads for analyst screening\n/incidentdraft POST_ID | INCIDENT_ID | COUNTRY | CATEGORY | DESCRIPTION\n/incidentqueue — incident drafts and inclusion status\n/approveincident INCIDENT_ID | approved|rejected | rationale\n/linklead POST_ID | INCIDENT_ID | lead|corroboration|contradiction\n/alerts_on — enable two-hourly alerts\n/alerts_off — disable alerts\n/ask and /research — not connected yet\n\nSource integrity: posts remain UNVERIFIED; publication time is not incident time; reposts are not independent corroboration. Approval permits report inclusion only and does not verify an event.")
+    bot.sendMessage("/status — Telegram and RSS collection freshness/counts\n/daily — latest public Telegram posts\n/date YYYY-MM-DD [page] — browse daily Telegram + RSS/Atom archive\n/news — latest public RSS/Atom news headlines\n/bangladesh — Bangladesh source posts\n/search <words> — all words must match text, source, region or classification\n/leads — recent source leads\n/briefs — individual source briefs\n/coverage — Telegram channel and RSS publisher diagnostics\n/report — analyst-approved incident report\n/digest — latest unverified source-post digest\n/reviewqueue — unreviewed source posts\n/reviewlead ID | reviewed|rejected|duplicate | source_class | rationale\n/candidates — discovered channels awaiting review\n/discover — latest autonomous discovery results\n/discovery_status — discovery run status\n/addchannel USERNAME — approve candidate\n/rejectchannel USERNAME — reject candidate\n/incidentdraft POST_ID | INCIDENT_ID | COUNTRY | CATEGORY | DESCRIPTION\n/incidentqueue — incident drafts and inclusion status\n/approveincident INCIDENT_ID | approved|rejected | rationale\n/linklead POST_ID | INCIDENT_ID | lead|corroboration|contradiction\n/alerts_on — enable two-hourly alerts\n/alerts_off — disable alerts\n/ask and /research — not connected yet\n\nSource integrity: posts remain UNVERIFIED; publication time is not incident time; reposts are not independent corroboration. Approval permits report inclusion only and does not verify an event.")
 else:
     bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
 ---
@@ -68,73 +68,7 @@ else:
     bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
 ---
 
-
-Command: date
----
-if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
-    parts = str(params or "").strip().split()
-    raw_date = parts[0] if parts else ""
-    valid_date = len(raw_date) == 10 and raw_date[4] == "-" and raw_date[7] == "-" and (raw_date[:4] + raw_date[5:7] + raw_date[8:]).isdigit() and len(parts) <= 2
-    if valid_date:
-        year = int(raw_date[:4])
-        month = int(raw_date[5:7])
-        day = int(raw_date[8:10])
-        leap = year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
-        month_days = [31, 29 if leap else 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-        valid_date = year >= 1 and month >= 1 and month <= 12 and day >= 1 and day <= month_days[month - 1]
-    if not valid_date:
-        bot.sendMessage("Usage: /date YYYY-MM-DD [page]\nExample: /date 2026-11-18 2")
-    else:
-        try:
-            page = int(parts[1]) if len(parts) == 2 and parts[1].isdigit() else (1 if len(parts) == 1 else 0)
-            if page < 1:
-                bot.sendMessage("Invalid page. Use a positive page number, for example /date 2026-11-18 2.")
-            else:
-                archive_url = "https://raw.githubusercontent.com/fyroz118/Legion-OSINT/main/docs/feed/archive/" + raw_date + ".json"
-                response = HTTP.get(archive_url)
-                if response.status_code == 404:
-                    bot.sendMessage("No daily archive is available for " + raw_date + ". Archives begin after this feature is deployed; older dates cannot be reconstructed automatically.")
-                elif response.status_code != 200:
-                    bot.sendMessage("The daily archive is temporarily unavailable. Try again later.")
-                else:
-                    data = response.json()
-                    posts = data.get("posts", [])
-                    summary = data.get("summary", {})
-                    timezone_name = str(summary.get("archive_timezone") or summary.get("timezone") or "Asia/Dhaka")
-                    posts.sort(key=lambda item: str(item.get("published_at") or ""))
-                    page_size = 20
-                    total_pages = max(1, (len(posts) + page_size - 1) // page_size)
-                    if page > total_pages:
-                        bot.sendMessage("Page " + str(page) + " does not exist. Available pages: 1-" + str(total_pages) + ".")
-                    elif not posts:
-                        bot.sendMessage("The archive for " + raw_date + " currently contains no dated source posts.")
-                    else:
-                        selected = posts[(page - 1) * page_size:page * page_size]
-                        lines = ["LEGION-OSINT — DAILY NEWS ARCHIVE: " + raw_date, "Timezone: " + timezone_name + " | Total records: " + str(len(posts)), "Page " + str(page) + "/" + str(total_pages) + " | Records on this page: " + str(len(selected)), "Telegram + RSS/Atom public-source leads. UNVERIFIED; multiple posts may refer to the same event."]
-                        for post in selected:
-                            publisher = str(post.get("publisher_name") or post.get("channel_username") or "Unknown source")
-                            platform = str(post.get("platform") or "Telegram")
-                            stamp = str(post.get("published_at") or "time unknown")
-                            body = " ".join(str(post.get("text") or "").split())[:190]
-                            url = str(post.get("source_url") or "")
-                            lines.append("\n" + stamp + " | " + publisher + " | " + platform + "\n" + body + "\n" + url)
-                        chunks = []
-                        current = "\n".join(lines[:4])
-                        for item in lines[4:]:
-                            if len(current) + len(item) + 1 > 3800:
-                                chunks.append(current)
-                                current = "CONTINUED — " + raw_date + " | PAGE " + str(page)
-                            current += "\n" + item
-                        if current:
-                            chunks.append(current)
-                        for chunk in chunks[:6]:
-                            bot.sendMessage(chunk, disable_web_page_preview=True)
-                        if page < total_pages:
-                            bot.sendMessage("More records: /date " + raw_date + " " + str(page + 1))
-        except Exception:
-            bot.sendMessage("Date archive retrieval failed. Try again later.")
-else:
-    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+Command: news
 ---
 if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
     try:
@@ -394,3 +328,174 @@ if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
 else:
     bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
 ---
+
+Command: date
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    parts = str(params or "").strip().split()
+    raw_date = parts[0] if parts else ""
+    valid_date = len(raw_date) == 10 and raw_date[4] == "-" and raw_date[7] == "-" and (raw_date[:4] + raw_date[5:7] + raw_date[8:]).isdigit() and len(parts) <= 2
+    if valid_date:
+        year = int(raw_date[:4])
+        month = int(raw_date[5:7])
+        day = int(raw_date[8:10])
+        leap = year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
+        month_days = [31, 29 if leap else 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+        valid_date = year >= 1 and month >= 1 and month <= 12 and day >= 1 and day <= month_days[month - 1]
+    if not valid_date:
+        bot.sendMessage("Usage: /date YYYY-MM-DD [page]\nExample: /date 2026-11-18 2")
+    else:
+        try:
+            page = int(parts[1]) if len(parts) == 2 and parts[1].isdigit() else (1 if len(parts) == 1 else 0)
+            if page < 1:
+                bot.sendMessage("Invalid page. Use a positive page number, for example /date 2026-11-18 2.")
+            else:
+                archive_url = "https://raw.githubusercontent.com/fyroz118/Legion-OSINT/main/docs/feed/archive/" + raw_date + ".json"
+                response = HTTP.get(archive_url)
+                if response.status_code == 404:
+                    bot.sendMessage("No daily archive is available for " + raw_date + ". Archives begin after this feature is deployed; older dates cannot be reconstructed automatically.")
+                elif response.status_code != 200:
+                    bot.sendMessage("The daily archive is temporarily unavailable. Try again later.")
+                else:
+                    data = response.json()
+                    posts = data.get("posts", [])
+                    summary = data.get("summary", {})
+                    timezone_name = str(summary.get("archive_timezone") or summary.get("timezone") or "Asia/Dhaka")
+                    posts.sort(key=lambda item: str(item.get("published_at") or ""))
+                    page_size = 20
+                    total_pages = max(1, (len(posts) + page_size - 1) // page_size)
+                    if page > total_pages:
+                        bot.sendMessage("Page " + str(page) + " does not exist. Available pages: 1-" + str(total_pages) + ".")
+                    elif not posts:
+                        bot.sendMessage("The archive for " + raw_date + " currently contains no dated source posts.")
+                    else:
+                        selected = posts[(page - 1) * page_size:page * page_size]
+                        lines = ["LEGION-OSINT — DAILY NEWS ARCHIVE: " + raw_date, "Timezone: " + timezone_name + " | Total records: " + str(len(posts)), "Page " + str(page) + "/" + str(total_pages) + " | Records on this page: " + str(len(selected)), "Telegram + RSS/Atom public-source leads. UNVERIFIED; multiple posts may refer to the same event."]
+                        for post in selected:
+                            publisher = str(post.get("publisher_name") or post.get("channel_username") or "Unknown source")
+                            platform = str(post.get("platform") or "Telegram")
+                            stamp = str(post.get("published_at") or "time unknown")
+                            body = " ".join(str(post.get("text") or "").split())[:190]
+                            url = str(post.get("source_url") or "")
+                            lines.append("\n" + stamp + " | " + publisher + " | " + platform + "\n" + body + "\n" + url)
+                        chunks = []
+                        current = "\n".join(lines[:4])
+                        for item in lines[4:]:
+                            if len(current) + len(item) + 1 > 3800:
+                                chunks.append(current)
+                                current = "CONTINUED — " + raw_date + " | PAGE " + str(page)
+                            current += "\n" + item
+                        if current:
+                            chunks.append(current)
+                        for chunk in chunks[:6]:
+                            bot.sendMessage(chunk, disable_web_page_preview=True)
+                        if page < total_pages:
+                            bot.sendMessage("More records: /date " + raw_date + " " + str(page + 1))
+        except Exception:
+            bot.sendMessage("Date archive retrieval failed. Try again later.")
+else:
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: discovery_status
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    try:
+        url = "https://raw.githubusercontent.com/fyroz118/Legion-OSINT/main/discovery/latest.json"
+        response = HTTP.get(url)
+        if response.status_code != 200:
+            bot.sendMessage("Discovery report unavailable. The scheduled discovery workflow may not have completed yet.")
+        else:
+            d = response.json()
+            bot.sendMessage("LEGION-OSINT DISCOVERY STATUS\nGenerated: " + str(d.get("generated_at", "unknown")) + "\nNew discoveries: " + str(d.get("new_channels_found", 0)) + "\nAuto-activated: " + str(len(d.get("auto_activated", []))) + "\nAwaiting review: " + str(len(d.get("review_required", []))) + "\nScreening errors: " + str(len(d.get("errors", []))) + "\nMethod: public search-index RSS + public Telegram previews. Not global Telegram search.")
+    except Exception:
+        bot.sendMessage("Could not read discovery status. Try again after the next scheduled run.")
+else:
+    bot.sendMessage("Access denied.")
+---
+
+Command: discover
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    try:
+        response = HTTP.get("https://raw.githubusercontent.com/fyroz118/Legion-OSINT/main/discovery/latest.json")
+        if response.status_code != 200:
+            bot.sendMessage("No discovery report is available yet.")
+        else:
+            d = response.json()
+            found = d.get("discoveries", [])
+            lines = ["LEGION-OSINT — LATEST DISCOVERY RUN", "New: " + str(d.get("new_channels_found", 0)) + " | Auto-activated: " + str(len(d.get("auto_activated", []))) + " | Review: " + str(len(d.get("review_required", []))), "All discoveries are source leads, not verified news."]
+            for x in found[:12]:
+                lines.append("\n@" + str(x.get("username", "")) + " | " + str(x.get("region", "unknown")) + " | " + str(x.get("candidate_category", "unknown")) + " | " + str(x.get("review_status", "UNREVIEWED_CANDIDATE")) + "\n" + str(x.get("seed_source_url", "")))
+            bot.sendMessage("\n".join(lines)[:3900], disable_web_page_preview=True)
+    except Exception:
+        bot.sendMessage("Discovery report unavailable.")
+else:
+    bot.sendMessage("Access denied.")
+---
+
+Command: candidates
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    try:
+        response = HTTP.get("https://raw.githubusercontent.com/fyroz118/Legion-OSINT/main/discovery/seed_candidates.json")
+        if response.status_code != 200:
+            bot.sendMessage("Candidate registry unavailable.")
+        else:
+            data = response.json()
+            items = data.get("candidates", [])
+            pending = [x for x in items if x.get("review_status") == "UNREVIEWED_CANDIDATE" and not x.get("enabled_for_collection", False)]
+            lines = ["LEGION-OSINT — REVIEW QUEUE", "Pending candidates: " + str(len(pending)), "Approve: /addchannel USERNAME | Reject: /rejectchannel USERNAME"]
+            for x in pending[:15]:
+                lines.append("\n@" + str(x.get("username", "")) + " | " + str(x.get("region", "unknown")) + " | " + str(x.get("candidate_category", "unknown")) + "\n" + str(x.get("seed_source_url", "")))
+            bot.sendMessage("\n".join(lines)[:3900], disable_web_page_preview=True)
+    except Exception:
+        bot.sendMessage("Candidate registry unavailable.")
+else:
+    bot.sendMessage("Access denied.")
+---
+
+Command: addchannel
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    username = str(params or "").strip().lstrip("@")
+    if not username or not username.replace("_", "").isalnum():
+        bot.sendMessage("Usage: /addchannel USERNAME\nThis approves a candidate already in the discovery registry.")
+    elif not GITHUB_TOKEN:
+        bot.sendMessage("GitHub decision token is not configured. Add GITHUB_TOKEN to the TBC environment before using this command.")
+    else:
+        try:
+            url = "https://api.github.com/repos/fyroz118/Legion-OSINT/dispatches"
+            payload = {"event_type": "channel_approve", "client_payload": {"username": username, "decision": "approve"}}
+            response = HTTP.post(url, headers={"Accept": "application/vnd.github+json", "Authorization": "Bearer " + GITHUB_TOKEN, "X-GitHub-Api-Version": "2022-11-28"}, json=payload)
+            if response.status_code == 204:
+                bot.sendMessage("Approval request submitted for @" + username + ". GitHub Actions will add it if it exists in the candidate registry. Check /discovery_status and /coverage after the workflow completes.")
+            else:
+                bot.sendMessage("GitHub rejected the approval request. Check token permissions and TBC Error Logs. HTTP " + str(response.status_code))
+        except Exception:
+            bot.sendMessage("Could not submit approval. Check GITHUB_TOKEN permissions and TBC HTTP support.")
+else:
+    bot.sendMessage("Access denied.")
+---
+
+Command: rejectchannel
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    username = str(params or "").strip().lstrip("@")
+    if not username or not username.replace("_", "").isalnum():
+        bot.sendMessage("Usage: /rejectchannel USERNAME")
+    elif not GITHUB_TOKEN:
+        bot.sendMessage("GitHub decision token is not configured. Add GITHUB_TOKEN to the TBC environment.")
+    else:
+        try:
+            url = "https://api.github.com/repos/fyroz118/Legion-OSINT/dispatches"
+            payload = {"event_type": "channel_reject", "client_payload": {"username": username, "decision": "reject"}}
+            response = HTTP.post(url, headers={"Accept": "application/vnd.github+json", "Authorization": "Bearer " + GITHUB_TOKEN, "X-GitHub-Api-Version": "2022-11-28"}, json=payload)
+            if response.status_code == 204:
+                bot.sendMessage("Rejection request submitted for @" + username + ". The candidate will remain in the registry as rejected and will not be activated.")
+            else:
+                bot.sendMessage("GitHub rejected the request. Check token permissions. HTTP " + str(response.status_code))
+        except Exception:
+            bot.sendMessage("Could not submit rejection. Check GITHUB_TOKEN permissions and TBC HTTP support.")
+else:
+    bot.sendMessage("Access denied.")
