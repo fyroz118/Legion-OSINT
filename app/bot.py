@@ -40,9 +40,9 @@ async def help_cmd(update, context):
             "/bangladesh — recent Bangladesh posts\n"
             "/search <terms> — search collected text\n"
             "/ask <question> — ask Gemini about stored records\n"
-            "/report YYYY-MM-DD — draft report from incident ledger\\n"
-            "/research YYYY-MM-DD — search public web for dated leads\\n"
-            "/leads YYYY-MM-DD — show stored candidate links\\n"
+            "/report YYYY-MM-DD — draft report from incident ledger\n"
+            "/research YYYY-MM-DD — search public web for dated leads\n"
+            "/leads YYYY-MM-DD — show stored candidate links\n"
             "/coverage YYYY-MM-DD — show query coverage and failures"
         )
 
@@ -96,9 +96,9 @@ async def research_cmd(update, context):
         try:
             result = await asyncio.to_thread(run_research, report_date)
             await update.message.reply_text(
-                f"Research complete for {report_date}.\\n"
-                f"Queries: {result['queries_succeeded']}/{result['queries_attempted']} succeeded.\\n"
-                f"Unique candidate links: {result['unique_leads_for_date']}.\\n"
+                f"Research complete for {report_date}.\n"
+                f"Queries: {result['queries_succeeded']}/{result['queries_attempted']} succeeded.\n"
+                f"Unique candidate links: {result['unique_leads_for_date']}.\n"
                 "These are unverified discovery leads. Use /leads and /coverage for review."
             )
         except ValueError:
@@ -122,12 +122,12 @@ async def leads_cmd(update, context):
         parts = []
         for row in rows:
             parts.append(
-                f"[{row['region']}] {row.get('title') or 'Untitled result'}\\n"
-                f"Published: {row.get('published_date') or 'unknown'} | Score: {row.get('relevance_score') or 'n/a'}\\n"
-                f"{row['source_url']}\\n"
+                f"[{row['region']}] {row.get('title') or 'Untitled result'}\n"
+                f"Published: {row.get('published_date') or 'unknown'} | Score: {row.get('relevance_score') or 'n/a'}\n"
+                f"{row['source_url']}\n"
                 f"{(row.get('snippet') or '')[:280]}"
             )
-        body = "\\n\\n".join(parts)
+        body = "\n\n".join(parts)
         for start in range(0, len(body), 3800):
             await update.message.reply_text(body[start:start + 3800], disable_web_page_preview=True)
 
@@ -144,11 +144,11 @@ async def coverage_cmd(update, context):
         if not rows:
             await update.message.reply_text("No research coverage log for that date.")
             return
-        body = "\\n".join(
+        body = "\n".join(
             f"{row['region']}: {row['status']} — {row['query_count']} query(s), {row['result_count'] or 0} result(s)"
             for row in rows
         )
-        await update.message.reply_text(f"Research coverage — {context.args[0]}\\n{body}")
+        await update.message.reply_text(f"Research coverage — {context.args[0]}\n{body}")
 
 async def report_cmd(update, context):
     if await gate(update):
