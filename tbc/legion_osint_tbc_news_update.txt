@@ -407,7 +407,7 @@ if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
             bot.sendMessage("Discovery report unavailable. The scheduled discovery workflow may not have completed yet.")
         else:
             d = response.json()
-            bot.sendMessage("LEGION-OSINT DISCOVERY STATUS\nGenerated: " + str(d.get("generated_at", "unknown")) + "\nNew discoveries: " + str(d.get("new_channels_found", 0)) + "\nAuto-activated: " + str(len(d.get("auto_activated", []))) + "\nAwaiting review: " + str(len(d.get("review_required", []))) + "\nScreening errors: " + str(len(d.get("errors", []))) + "\nMethod: public search-index RSS + public Telegram previews. Not global Telegram search.")
+            bot.sendMessage("LEGION-OSINT DISCOVERY STATUS\nGenerated: " + str(d.get("generated_at", "unknown")) + "\nNew discoveries: " + str(d.get("new_channels_found", 0)) + "\nAuto-activated: " + str(len(d.get("auto_activated", []))) + "\nLegacy/exception review queue: " + str(len(d.get("review_required", []))) + "\nScreening errors: " + str(len(d.get("errors", []))) + "\nPolicy: FULL AUTOMATIC activation of every accessible public channel preview, regardless of political/community/unknown classification. Not global Telegram search.")
     except Exception:
         bot.sendMessage("Could not read discovery status. Try again after the next scheduled run.")
 else:
@@ -424,7 +424,7 @@ if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
         else:
             d = response.json()
             found = d.get("discoveries", [])
-            lines = ["LEGION-OSINT — LATEST DISCOVERY RUN", "New: " + str(d.get("new_channels_found", 0)) + " | Auto-activated: " + str(len(d.get("auto_activated", []))) + " | Review: " + str(len(d.get("review_required", []))), "All discoveries are source leads, not verified news."]
+            lines = ["LEGION-OSINT — LATEST DISCOVERY RUN", "New: " + str(d.get("new_channels_found", 0)) + " | Auto-activated: " + str(len(d.get("auto_activated", []))) + " | Legacy review queue: " + str(len(d.get("review_required", []))), "All discoveries are source leads, not verified news."]
             for x in found[:12]:
                 lines.append("\n@" + str(x.get("username", "")) + " | " + str(x.get("region", "unknown")) + " | " + str(x.get("candidate_category", "unknown")) + " | " + str(x.get("review_status", "UNREVIEWED_CANDIDATE")) + "\n" + str(x.get("seed_source_url", "")))
             bot.sendMessage("\n".join(lines)[:3900], disable_web_page_preview=True)
@@ -445,7 +445,7 @@ if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
             data = response.json()
             items = data.get("candidates", [])
             pending = [x for x in items if x.get("review_status") == "UNREVIEWED_CANDIDATE" and not x.get("enabled_for_collection", False)]
-            lines = ["LEGION-OSINT — REVIEW QUEUE", "Pending candidates: " + str(len(pending)), "Approve: /addchannel USERNAME | Reject: /rejectchannel USERNAME"]
+            lines = ["LEGION-OSINT — LEGACY / EXCEPTION REVIEW QUEUE", "Pending candidates: " + str(len(pending)), "New accessible discoveries are auto-added. Manual override: /addchannel USERNAME | /rejectchannel USERNAME"]
             for x in pending[:15]:
                 lines.append("\n@" + str(x.get("username", "")) + " | " + str(x.get("region", "unknown")) + " | " + str(x.get("candidate_category", "unknown")) + "\n" + str(x.get("seed_source_url", "")))
             bot.sendMessage("\n".join(lines)[:3900], disable_web_page_preview=True)
