@@ -510,23 +510,25 @@ else:
 Command: alerts_on
 ---
 if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
-    try:
-        response = HTTP.get(FEED_URL)
-        if response.status_code != 200:
-            bot.sendMessage("The public collection feed is temporarily unavailable. Try again later.")
-        else:
-            data = response.json()
-            posts = data.get("posts", [])
-            summary = data.get("summary", {})
-            seen = []
-            for post in posts:
-                seen.append(str(post.get("id", "")))
-            User.saveData("legion_alerts_enabled", True)
-            User.saveData("legion_alert_seen", seen[:1800])
-            Bot.runCommandAfter(7200, "alert_poll")
-            bot.sendMessage("Proactive alerts enabled. I will check the latest public-source snapshot every two hours. Existing posts are marked seen, so activation will not flood you with old records.")
-    except Exception:
-        bot.sendMessage("Could not initialise alerts because the public feed is unavailable.")
+    if User.getData("legion_alerts_enabled"):
+        bot.sendMessage("Proactive alerts are already enabled. Use /alerts_off then /alerts_on only if you need to restart the schedule.")
+    else:
+        try:
+            response = HTTP.get(FEED_URL)
+            if response.status_code != 200:
+                bot.sendMessage("The public collection feed is temporarily unavailable. Try again later.")
+            else:
+                data = response.json()
+                posts = data.get("posts", [])
+                seen = []
+                for post in posts:
+                    seen.append(str(post.get("id", "")))
+                User.saveData("legion_alerts_enabled", True)
+                User.saveData("legion_alert_seen", seen[:1800])
+                Bot.runCommandAfter(7200, "alert_poll")
+                bot.sendMessage("Proactive alerts enabled. I will check the latest public-source snapshot every two hours. Existing posts are marked seen, so activation will not flood you with old records.")
+        except Exception:
+            bot.sendMessage("Could not initialise alerts because the public feed is unavailable.")
 else:
     bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
 ---
