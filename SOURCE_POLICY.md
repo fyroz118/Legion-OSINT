@@ -75,3 +75,9 @@ For every candidate, verify the exact public Telegram username/page, operator or
 ## Coverage limitation
 
 Telegram has no universal public directory of all channels. Public availability does not imply reliability, and Telegram-only monitoring will miss important events. The registry is a reviewed, evolving sample—not a claim of comprehensive global coverage. Reports must be cross-checked against independent newsrooms, official statements, humanitarian data, and incident datasets.
+
+## Additional official institutional source enabled
+
+- [OCHA Ukraine](https://t.me/OCHA_Ukraine): verified public channel identifying itself as the official UN Office for the Coordination of Humanitarian Affairs in Ukraine. Its updates are primary institutional statements; they do not independently verify every underlying event claim.
+
+The official-source layer remains geographically incomplete. Add country and regional institutions only after direct channel identity verification; never substitute lookalike or unofficial aggregator channels.
