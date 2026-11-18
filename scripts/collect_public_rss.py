@@ -89,7 +89,7 @@ def parse_feed(xml_bytes):
     except ET.ParseError:
         # Some publisher feeds contain stray control characters or bare ampersands.
         repaired = xml_bytes.decode("utf-8-sig", "replace")
-        repaired = re.sub(r"[\\x00-\\x08\\x0b\\x0c\\x0e-\\x1f]", "", repaired)
+        repaired = re.sub(r"[\x00-\x08\x0b\x0c\x0e-\x1f]", "", repaired)
         repaired = re.sub(r"&(?!#(?:x[0-9a-fA-F]+|[0-9]+);|(?:amp|lt|gt|quot|apos);)", "&amp;", repaired)
         root = ET.fromstring(repaired)
     entries = [node for node in root.iter() if local_name(node.tag) in ("item", "entry")]
