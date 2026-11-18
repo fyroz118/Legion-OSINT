@@ -5,7 +5,7 @@ that an event or claim is verified.
 """
 from datetime import datetime, timezone
 from app.database import connect
-from app.incidents import upsert_incident, add_incident_source, get_report_incidents
+from app.incidents import (initialize_incident_tables, upsert_incident,\n                            add_incident_source, get_report_incidents)
 from app.research import initialize_research_tables
 
 
