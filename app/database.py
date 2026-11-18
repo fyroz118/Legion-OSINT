@@ -11,6 +11,8 @@ SOURCE_COLUMNS = {
     "source_type": "TEXT NOT NULL DEFAULT 'unknown'",
     "source_affiliation": "TEXT NOT NULL DEFAULT 'unknown'",
     "monitoring_weight": "TEXT NOT NULL DEFAULT 'standard'",
+    "publisher_name": "TEXT NOT NULL DEFAULT ''",
+    "platform": "TEXT NOT NULL DEFAULT 'Telegram'",
 }
 
 
@@ -50,13 +52,14 @@ def insert_post(p):
         db.execute("""INSERT OR IGNORE INTO posts
         (channel_username, channel_id, message_id, published_at, collected_at, text,
          source_url, language, priority_region, evidence_status, source_class,
-         source_type, source_affiliation, monitoring_weight)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'UNVERIFIED', ?, ?, ?, ?)""",
+         source_type, source_affiliation, monitoring_weight, publisher_name, platform)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'UNVERIFIED', ?, ?, ?, ?, ?, ?)""",
         (p["channel_username"], p.get("channel_id"), str(p["message_id"]),
          p.get("published_at"), p["collected_at"], p["text"], p.get("source_url"),
          p.get("language", "unknown"), p.get("priority_region", "global"),
          p.get("source_class", "unknown"), p.get("source_type", "unknown"),
-         p.get("source_affiliation", "unknown"), p.get("monitoring_weight", "standard")))
+         p.get("source_affiliation", "unknown"), p.get("monitoring_weight", "standard"),
+         p.get("publisher_name", ""), p.get("platform", "Telegram")))
 
 
 def search_posts(query="", region=None, limit=30, source_class=None):
