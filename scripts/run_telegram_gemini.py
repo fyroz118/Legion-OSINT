@@ -106,10 +106,11 @@ def main():
                    "", (r.get("text") or "").replace("\n", " ")[:2500], ""]
     (out / "individual_source_briefs.md").write_text("\n".join(briefs), encoding="utf-8")
 
-    client = genai.Client(api_key=key)
-    model = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
-    batch_summaries = []
     analysis_rows = rows[:300]
+    if analysis_rows:
+        client = genai.Client(api_key=key)
+        model = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+    batch_summaries = []
     for start in range(0, len(analysis_rows), 20):
         batch = analysis_rows[start:start+20]
         evidence = "\n\n".join(
