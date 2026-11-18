@@ -36,7 +36,7 @@ async def start(update, context):
     if await gate(update):
         await update.message.reply_text(
             "Legion-OSINT private assistant.\n"
-            "Commands: /status /daily /bangladesh /search /ask /research /briefs /leads /coverage /report /help"
+            "Commands: /status /daily /bangladesh /search /ask /research /briefs /leads /coverage /reviewqueue /candidates /reviewlead /linklead /report /help"
         )
 
 
