@@ -5,7 +5,7 @@ drafts, private identifiers and credentials are never published.
 """
 import csv
 import json
-from datetime import datetime, timezone
+from datetime import datetime, timezone, date
 from zoneinfo import ZoneInfo
 from pathlib import Path
 
