@@ -1,3 +1,38 @@
+# Legion-OSINT deployment options
+
+## Recommended: on-demand mode without a VPS
+
+**A continuously running server is not required** for occasional public-web research. Use the manual GitHub Actions workflow at `.github/workflows/on-demand-research.yml`. It starts an ephemeral hosted runner when manually triggered and terminates after exporting the report artifacts.
+
+### One-time setup
+
+1. Open the repository's **Settings → Secrets and variables → Actions**.
+2. Create a repository secret named `TAVILY_API_KEY` and store the Tavily key there. Do not put secrets in workflow inputs, source files, issues, or chat.
+3. No DigitalOcean account, server, Telegram API credentials, Gemini key, BotFather token, or Telethon session is required for this mode.
+
+### Each research session
+
+1. Open **Actions → Run Legion-OSINT on demand → Run workflow**.
+2. Enter the reporting date as `YYYY-MM-DD` in Asia/Dhaka time.
+3. Choose 60 queries for the standard run or 100 for expanded discovery.
+4. Start the workflow and wait for completion.
+5. Download the `legion-osint-YYYY-MM-DD` artifact from the completed run.
+
+The artifact includes a ten-section preliminary discovery report, individual source briefs, a CSV lead register, and a JSON coverage summary. Results are still unverified source leads. The report deliberately does not pretend that search snippets are verified incidents or that a complete early-warning assessment has been performed.
+
+### Limits and costs
+
+- Tavily API credits and plan limits still apply: up to 60 or 100 basic search requests respectively, if every query executes.
+- Search provider indexing is not universal access to Telegram, X, Facebook or YouTube.
+- No persistent Telegram bot, scheduled collector, interactive analyst review queue, or saved incident ledger runs in this mode.
+- GitHub Actions artifacts are retained for 14 days by this workflow; download and retain important outputs securely.
+- The runner is temporary. Its local SQLite database is not a persistent cross-run database.
+- Do not claim live monitoring, comprehensive coverage, incident verification, or 24/7 uptime.
+
+## Optional: persistent VPS mode
+
+Use the DigitalOcean deployment instructions below only if continuous Telegram collection or an always-available Telegram bot becomes necessary.
+
 # Legion-OSINT cloud deployment
 
 ## Selected deployment target
@@ -101,3 +136,4 @@ Do not describe the service as operational until all checks below have passed on
 - Record a 24-hour pilot with uptime, failed jobs, source coverage, memory use, database growth, and provider/API costs.
 
 A green GitHub Actions run validates repository code and tests only; it does not prove that any VPS, Telegram account, Gemini key, Tavily key, or live data source works.
+
