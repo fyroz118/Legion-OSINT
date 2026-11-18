@@ -1,0 +1,33 @@
+name: Legion-OSINT owner channel decisions
+
+on:
+  repository_dispatch:
+    types: [channel_approve, channel_reject]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: legion-osint-channel-decisions
+  cancel-in-progress: false
+
+jobs:
+  decision:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Apply owner decision
+        env:
+          GITHUB_EVENT_PATH: ${{ github.event_path }}
+        run: python scripts/apply_discovery_decision.py
+      - name: Commit decision
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add config/channels.json discovery/seed_candidates.json
+          git commit -m "Apply owner decision to discovered Telegram channel"
+          git pull --rebase origin main
+          git push origin HEAD:main
