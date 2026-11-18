@@ -2,7 +2,7 @@ name: Discover Telegram channel candidates
 
 on:
   schedule:
-    - cron: "15 2 * * *" # Daily at 08:15 Asia/Dhaka
+    - cron: "17 * * * *" # Every hour at minute 17 UTC; offset avoids top-of-hour load
   workflow_dispatch:
     inputs:
       run_note:
