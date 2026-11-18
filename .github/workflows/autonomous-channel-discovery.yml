@@ -1,0 +1,51 @@
+name: Legion-OSINT autonomous public channel discovery
+
+on:
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: legion-osint-channel-discovery
+  cancel-in-progress: false
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Discover and screen public Telegram channels
+        run: python scripts/discover_public_telegram.py
+      - name: Validate registries
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          active=json.loads(Path("config/channels.json").read_text())
+          seed=json.loads(Path("discovery/seed_candidates.json").read_text())
+          names=[x["username"].lower() for x in active["channels"]]
+          assert len(names)==len(set(names)), "duplicate active channel usernames"
+          assert all(x.get("enabled") is True for x in active["channels"])
+          assert all(x.get("enabled_for_collection") is False for x in seed["candidates"] if x.get("review_status")=="UNREVIEWED_CANDIDATE")
+          json.loads(Path("discovery/latest.json").read_text())
+          print("Registry validation passed:",len(names),"active channels;",len(seed["candidates"]),"candidates")
+          PY
+      - name: Publish discovery results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add config/channels.json discovery/seed_candidates.json discovery/latest.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Run autonomous public Telegram source discovery"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
