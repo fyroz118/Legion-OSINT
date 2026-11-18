@@ -90,6 +90,8 @@ def main():
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "collection_methods": [telegram_summary.get("collection_method"), rss_summary.get("collection_method")],
         "configured_telegram_channels": len(channels),
+        "configured_channels": len(channels),  # backward-compatible TBC status/coverage field
+        "channels_with_diagnostics": len(diagnostics),
         "telegram_channels_with_diagnostics": len(diagnostics),
         "telegram_posts_in_snapshot": sum(1 for p in posts if p["platform"] == "Telegram"),
         "configured_rss_sources": len(rss_summary.get("configured_sources") or []),
@@ -97,6 +99,7 @@ def main():
         "rss_articles_in_snapshot": sum(1 for p in posts if p["platform"] == "RSS/Atom"),
         "posts_in_snapshot": len(posts),
         "telegram_collection_errors": len(errors),
+        "collection_errors": len(errors),  # backward-compatible TBC status/coverage field
         "rss_source_errors": sum(1 for d in rss_diagnostics.values() if d.get("status") == "error"),
         "channel_diagnostics": diagnostics,
         "rss_source_diagnostics": rss_diagnostics,
