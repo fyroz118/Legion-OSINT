@@ -80,6 +80,33 @@ QUERIES = [
     ("Ukraine/Russia","uk","site:t.me Харків Херсон Запоріжжя місцевий журналіст"),
     ("Ukraine/Russia","ru","site:t.me независимый местный корреспондент Украина Россия"),
     ("Global","en","site:t.me independent local newsroom eyewitness public monitor conflict"),
+
+    # Political-party and movement source discovery: candidates are actor sources,
+    # not neutral reporting or independent corroboration.
+    ("Bangladesh","bn","site:t.me বাংলাদেশ আওয়ামী লীগ অফিসিয়াল টেলিগ্রাম চ্যানেল"),
+    ("Bangladesh","bn","site:t.me বাংলাদেশ বিএনপি অফিসিয়াল টেলিগ্রাম চ্যানেল"),
+    ("Bangladesh","bn","site:t.me বাংলাদেশ জামায়াতে ইসলামী টেলিগ্রাম চ্যানেল"),
+    ("Bangladesh","bn","site:t.me বাংলাদেশ ছাত্রশিবির ছাত্রদল ছাত্রলীগ টেলিগ্রাম"),
+    ("Bangladesh","en","site:t.me Bangladesh Awami League BNP Jamaat political party channel"),
+    ("Bangladesh","en","site:t.me Bangladesh political party media cell student wing"),
+    ("India","hi","site:t.me भाजपा आधिकारिक टेलीग्राम चैनल"),
+    ("India","hi","site:t.me कांग्रेस पार्टी आधिकारिक टेलीग्राम चैनल"),
+    ("India","en","site:t.me BJP Bharatiya Janata Party state unit Telegram"),
+    ("India","en","site:t.me Indian National Congress state unit Telegram"),
+    ("India","en","site:t.me Aam Aadmi Party CPI CPI(M) political party Telegram"),
+    ("India","bn","site:t.me পশ্চিমবঙ্গ বিজেপি তৃণমূল কংগ্রেস সিপিআইএম টেলিগ্রাম"),
+    ("India","mr","site:t.me महाराष्ट्र भाजपा कांग्रेस शिवसेना टेलीग्राम"),
+    ("India","ta","site:t.me தமிழ்நாடு திமுக அதிமுக பாஜக காங்கிரஸ் Telegram"),
+    ("India","ml","site:t.me കേരളം ബിജെപി കോൺഗ്രസ് സിപിഎം ടെലിഗ്രാം"),
+    ("India","en","site:t.me India political reporter election monitor civil society"),
+    ("South Asia","en","site:t.me South Asia political party student wing movement channel"),
+    ("Global","en","site:t.me political party official media cell public channel"),
+    ("Global","en","site:t.me opposition party supporters activist public channel"),
+    ("Global","en","site:t.me election observer civic monitor public channel"),
+    ("Global","ar","site:t.me حزب سياسي قناة رسمية أخبار محلية"),
+    ("Global","es","site:t.me partido político canal oficial noticias locales"),
+    ("Global","fr","site:t.me parti politique canal officiel actualités locales"),
+
 ]
 
 class AnchorParser(HTMLParser):
