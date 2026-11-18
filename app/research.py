@@ -89,6 +89,8 @@ def run_research(report_date, max_queries=None, max_results=5, search_fn=None):
     datetime.strptime(report_date, "%Y-%m-%d")
     initialize_research_tables()
     queries = build_query_plan(report_date, max_queries=max_queries)
+    if search_fn is None and not os.getenv("TAVILY_API_KEY", "").strip():
+        raise RuntimeError("TAVILY_API_KEY is not configured")
     search_fn = search_fn or _call_tavily
     summary = {"report_date": report_date, "provider": "tavily", "queries_attempted": 0,
                "queries_succeeded": 0, "leads_saved": 0, "errors": []}
