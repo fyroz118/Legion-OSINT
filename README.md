@@ -6,7 +6,7 @@ Bangladesh-priority, global public-source OSINT reporting. The on-demand workflo
 
 - Bangladesh first, then South Asia, MENA and other regions represented in configured public channels.
 - Ten-section daily report, individual source-post briefs, CSV evidence register and JSON coverage summary.
-- Target 50+ source briefs when configured channels expose enough relevant posts; never pad counts or treat multiple posts as unique incidents.
+- Target 50+ source briefs when configured channels expose enough relevant posts; never pad counts or treat multiple posts as unique incidents. The configured Telegram registry has been expanded to 13 channels across Bangladesh, South Asia and Ukraine/international coverage; channel activity and editorial reliability vary.
 - Independent/local reporting receives attention, with official/institutional channels retained as a parallel source layer.
 - Rumours and allegations remain clearly labelled UNVERIFIED RUMOUR.
 - Reporting timezone: Asia/Dhaka (UTC+6).
@@ -40,7 +40,7 @@ No Telegram developer portal, Telegram login, API ID/hash, session string, local
 
 The collector reads enabled usernames in [config/channels.json](config/channels.json) using public Telegram preview pages (`https://t.me/s/<channel>`). It attempts bounded pagination up to the selected cap and stops when it reaches dates earlier than the reporting date.
 
-**This mode does not authenticate to Telegram and cannot use Telegram global search.** It covers only the finite configured channel list and whatever history Telegram exposes through public previews. It does not directly search X, Facebook, YouTube or general news websites. Pagination, historical availability, media extraction and rate limits may vary. 50+ briefs cannot be guaranteed; missing posts do not mean no incidents occurred.
+**This mode does not authenticate to Telegram and cannot use Telegram global search.** It covers only the finite configured channel list and whatever history Telegram exposes through public previews. It does not directly search X, Facebook, YouTube or general news websites. Pagination, historical availability, media extraction and rate limits may vary. The collector records per-channel preview dates, date-matched counts and stop reasons to distinguish inactive/stale previews from parser failures. Gemini transient 429/5xx service failures receive bounded exponential-backoff retries before the evidence-preservation fallback is used. 50+ briefs cannot be guaranteed; missing posts do not mean no incidents occurred.
 
 ## Verification and safety
 
