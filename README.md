@@ -34,6 +34,7 @@ Give greater discovery attention to unofficial public sources (local journalists
 - /bangladesh — recent Bangladesh posts
 - /search <terms> — search stored post text
 - /ask <question> — Gemini Q&A over stored records
+- /report YYYY-MM-DD — ten-section draft from the reviewed incident ledger; not live research
 
 Important: The ten-section research/reporting workflow is a specification and foundation, not yet a fully automated capability. The current bot does not search the open web or all X, Facebook, YouTube and Telegram content. A research/search provider and platform-specific authorized adapters are still required. No live collection, report automation, cloud deployment or 24/7 uptime is claimed.
 
