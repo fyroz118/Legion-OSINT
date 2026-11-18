@@ -1,6 +1,7 @@
 """Render a clearly labelled report draft from reviewed incident-ledger entries."""
 from datetime import datetime
 from app.incidents import get_report_incidents
+from app.research import get_research_coverage, get_research_leads
 
 SECTIONS = [
     "Executive Summary", "Bangladesh Intelligence Report",
@@ -52,8 +53,16 @@ def build_report_draft(report_date):
             lines.append("Review district/upazila coverage, delayed reporting and conflicting accounts before publication.")
         elif section == "Source and Coverage Assessment":
             source_count = sum(len(x["sources"]) for x in incidents)
-            lines.append(f"Ledger records: {len(incidents)}. Attached source records: {source_count}.")
-            lines.append("Live platform access, languages searched, geographic coverage and inaccessible sources have not been assessed by this draft generator.")
+            lines.append(f"Ledger records: {len(incidents)}. Attached incident-source records: {source_count}.")
+            leads = get_research_leads(report_date, limit=1000)
+            coverage = get_research_coverage(report_date)
+            lines.append(f"Public-web discovery leads saved: {len(leads)}.")
+            if coverage:
+                for row in coverage:
+                    lines.append(f"- {row['region']}: {row['status']} — {row['query_count']} query(s), {row['result_count'] or 0} result(s).")
+            else:
+                lines.append("No public-web research coverage log exists for this date.")
+            lines.append("This audit covers only configured search-provider queries. It does not establish direct access to X, Facebook, YouTube or all Telegram content; local-language coverage beyond configured queries remains incomplete.")
         else:
             lines.append("No analyst narrative has been entered. Research and review this section before publication.")
         lines.append("")
