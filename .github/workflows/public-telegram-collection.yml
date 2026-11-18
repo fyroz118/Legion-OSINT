@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: legion-osint-scheduled-collection
@@ -18,6 +18,8 @@ jobs:
     timeout-minutes: 55
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
@@ -28,10 +30,22 @@ jobs:
           COLLECT_LIMIT_PER_CHANNEL: "100"
           PYTHONUNBUFFERED: "1"
         run: python scripts/collect_public_telegram.py
-      - name: Publish collection for the Telegram bot
+      - name: Build bounded public-source feed for TBC
+        run: python scripts/publish_tbc_feed.py
+      - name: Publish collection artifact for audit and fallback
         uses: actions/upload-artifact@v4
         with:
           name: legion-osint-public-telegram-latest
           path: output/*/
           if-no-files-found: error
           retention-days: 7
+      - name: Publish read-only TBC feed snapshot
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/feed/latest.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Publish latest public Telegram feed snapshot"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
