@@ -218,6 +218,8 @@ def main():
     summary = {"report_date": report_date, "timezone": "Asia/Dhaka", "configured_channels": len(channels),
                "posts_collected_this_run": collected, "posts_for_report_date_in_database": len(rows),
                "posts_in_gemini_analysis": len(analysis_rows),
+               "global_telegram_search_queries": GLOBAL_TELEGRAM_QUERIES,
+               "global_search_result_cap_per_query": min(limit, 50),
                "channel_errors": errors, "verification": "Gemini-assisted; no automatic independent verification",
                "coverage_limit": "Configured accessible public channels plus incomplete Telegram global search; not all Telegram content"}
     (out / "collection_summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
