@@ -33,6 +33,8 @@ class PublishTbcFeedTests(unittest.TestCase):
             self.assertEqual({p["platform"] for p in payload["posts"]}, {"Telegram", "RSS/Atom"})
             self.assertTrue(all(p["evidence_status"] == "UNVERIFIED" for p in payload["posts"]))
             self.assertEqual(payload["summary"]["configured_rss_sources"], 1)
+            self.assertEqual(payload["summary"]["configured_channels"], 1)
+            self.assertEqual(payload["summary"]["collection_errors"], 0)
             self.assertNotIn("analyst_decisions", payload)
 
     def test_rejects_non_https_source_urls(self):
