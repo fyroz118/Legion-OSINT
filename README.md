@@ -12,12 +12,11 @@ A Bangladesh-priority, global OSINT monitoring and evidence-led intelligence rep
 See MASTER_PROMPT.md for the full specification.
 
 ## Architecture
-- Public-web search adapter (Tavily) for event/theme-led discovery.
-- Curated public Telegram collector (Telethon) as one additional source layer, not a channel whitelist defining all coverage.
-- Private Telegram command bot.
-- SQLite post, research-lead and incident/evidence ledgers.
-- Gemini-assisted Q&A grounded in collected records; Gemini is not an autonomous fact-checker.
-- Docker deployment scaffold for a persistent Linux host.
+- On-demand Telethon collection from configured, accessible public Telegram channels.
+- Gemini-assisted batch analysis and synthesis into a ten-section daily report.
+- Individual Telegram post briefs, CSV evidence register and JSON collection summary.
+- SQLite evidence store; optional private Telegram command bot remains separate.
+- No Tavily or public-web search provider is used by the on-demand workflow.
 
 ## Commands
 - /status — stored Telegram post count and source mix
@@ -25,10 +24,7 @@ See MASTER_PROMPT.md for the full specification.
 - /bangladesh — recent Bangladesh Telegram posts
 - /search <terms> — search collected post text
 - /ask <question> — ask Gemini about stored records
-- /research YYYY-MM-DD — expanded date-scoped public-web discovery (default 60 queries)
-- /briefs YYYY-MM-DD [limit] — up to 100 individual source-lead briefs (default 60)
-- /leads YYYY-MM-DD — candidate source links
-- /coverage YYYY-MM-DD — regional query success/failure and result counts
+- /briefs YYYY-MM-DD [limit] — stored public-web source leads from the legacy research module, if any
 - /reviewqueue YYYY-MM-DD — retrieve unreviewed leads with one-tap review/reject controls
 - /candidates YYYY-MM-DD [limit] — extract conservative unverified event candidates and title-similarity suggestions
 - /reviewlead ID reviewed|rejected|duplicate [source_class] [duplicate_ID] — record an explicit decision
