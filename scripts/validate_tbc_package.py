@@ -4,6 +4,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PACKAGE = ROOT / "tbc" / "legion_osint_tbc_import.json"
+TXT_PACKAGE = ROOT / "tbc" / "legion_osint_tbc_import.txt"
 
 
 def main():
@@ -24,6 +25,30 @@ def main():
     missing = required.difference(names)
     if missing:
         raise SystemExit("Missing TBC commands: " + ", ".join(sorted(missing)))
+
+    parsed_txt = []
+    txt_lines = TXT_PACKAGE.read_text(encoding="utf-8").splitlines()
+    index = 0
+    while index < len(txt_lines):
+        if not txt_lines[index].strip():
+            index += 1
+            continue
+        if not txt_lines[index].startswith("Command: "):
+            raise SystemExit("Unexpected line in TBC TXT import package.")
+        name = txt_lines[index][9:].strip()
+        if index + 1 >= len(txt_lines) or txt_lines[index + 1] != "---":
+            raise SystemExit("Missing opening command fence in TBC TXT package.")
+        index += 2
+        code_lines = []
+        while index < len(txt_lines) and txt_lines[index] != "---":
+            code_lines.append(txt_lines[index])
+            index += 1
+        if index >= len(txt_lines):
+            raise SystemExit("Missing closing command fence in TBC TXT package.")
+        parsed_txt.append({"command": name, "code": "\\n".join(code_lines)})
+        index += 1
+    if parsed_txt != commands:
+        raise SystemExit("JSON and TXT TBC import packages do not match.")
 
     for item in commands:
         name, code = item["command"], item["code"]
