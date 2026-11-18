@@ -1,8 +1,7 @@
 name: Legion-OSINT personal Telegram bot
 
 on:
-  schedule:
-    - cron: "*/5 * * * *"
+  # Manual-only fallback. Do not run while Telebot Creator is active.
   workflow_dispatch:
 
 permissions:
