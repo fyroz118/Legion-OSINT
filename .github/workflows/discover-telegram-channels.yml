@@ -1,0 +1,39 @@
+name: Discover Telegram channel candidates
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_note:
+        description: "Optional discovery note (for example: Bangladesh-first expansion)"
+        required: false
+        type: string
+        default: "Global discovery; Bangladesh priority"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: legion-osint-channel-discovery
+  cancel-in-progress: false
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Validate discovery script
+        run: python -m py_compile scripts/discover_telegram_channels.py
+      - name: Discover public Telegram channel candidates
+        run: python scripts/discover_telegram_channels.py
+      - name: Upload candidate registry
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: legion-osint-telegram-discovery
+          path: discovery/
+          if-no-files-found: warn
+          retention-days: 30
