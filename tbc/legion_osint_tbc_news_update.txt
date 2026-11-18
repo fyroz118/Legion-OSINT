@@ -360,12 +360,14 @@ if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
                 else:
                     archive_url = "https://raw.githubusercontent.com/fyroz118/Legion-OSINT/main/docs/feed/archive/" + raw_date + ".json"
                     response = HTTP.get(archive_url)
+                    is_fallback = False
                     if response.status_code == 200:
                         data = response.json()
                         posts = data.get("posts", [])
                         summary = data.get("summary", {})
                         timezone_name = str(summary.get("archive_timezone") or summary.get("timezone") or "Asia/Dhaka")
                     elif response.status_code == 404 and raw_date == str(latest.get("summary", {}).get("report_date") or ""):
+                        is_fallback = True
                         data = latest
                         posts = data.get("posts", [])
                         summary = data.get("summary", {})
@@ -378,7 +380,8 @@ if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
                         bot.sendMessage("The daily archive is temporarily unavailable. Try again later.")
                         posts = None
                     if posts is not None:
-                        posts = [p for p in posts if str(p.get("published_at") or "").startswith(raw_date) or raw_date == str(summary.get("report_date") or "") and response.status_code == 404]
+                        if is_fallback:
+                            posts = [p for p in posts if str(p.get("published_at") or "").startswith(raw_date)]
                         posts.sort(key=lambda item: str(item.get("published_at") or ""))
                         if not posts:
                             bot.sendMessage("No archived records found for " + raw_date + ". Older dates cannot be reconstructed if no archive was created on that date.")
