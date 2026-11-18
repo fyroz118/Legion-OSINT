@@ -1,5 +1,19 @@
 # Legion-OSINT cloud deployment
 
+## Selected deployment target
+
+The deployment target is **DigitalOcean Droplet, Singapore region, Ubuntu 24.04 LTS**. Start with the Basic Droplet plan of **1 vCPU, 2 GiB RAM, 50 GiB SSD, 2,000 GiB outbound transfer: USD $12/month** at the published list price. This is a modest pilot size for the two low-volume Python services; monitor memory and upgrade to 4 GiB if the collector, database, or research runs show resource pressure. Taxes, account-specific pricing and any optional backups are additional. Confirm the final checkout price before creating the server.
+
+- Provider: https://www.digitalocean.com/
+- Droplet pricing: https://www.digitalocean.com/pricing/droplets
+- Create in Singapore for a nearby regional location; this is a practical latency choice, not a guarantee of the best route from every Bangladesh ISP.
+- Use Ubuntu 24.04 LTS, regular Basic Droplet, 2 GiB RAM.
+- Add an SSH public key during creation. Prefer key-only SSH; do not enable password login.
+- Do not open inbound application ports. The Telegram bot uses outbound polling; collector and research use outbound connections.
+
+**No server has been purchased or provisioned.** Provisioning requires the account owner to create the Droplet and accept its billing. Do not send provider passwords, API tokens, SSH private keys, Telegram login codes, or session files in chat.
+
+
 The recommended production shape is a persistent Linux host running two Docker services:
 - `bot`: private Telegram Bot API interface.
 - `collector`: scheduled Telethon collection worker.
@@ -59,3 +73,31 @@ The Telegram collector's configured public-channel list is only one supplementar
 ## Important limits
 
 This is a self-hosted starter, not a validated intelligence product. Collection coverage depends on the reviewed channel allowlist and Telegram access. Gemini can summarize records but cannot independently verify them. Do not infer imminent violence from rhetoric alone. Keep reports aggregate and avoid private-person profiling, doxxing, or sensitive operational details.
+
+
+## First server hardening checklist
+
+Before running the application:
+1. Update Ubuntu packages.
+2. Permit SSH in the firewall before enabling it; then allow only SSH and enable UFW. No inbound ports are required for the bot or collector.
+3. Keep SSH key authentication enabled and password authentication disabled.
+4. Install Docker Engine and the Docker Compose plugin from Docker's official Ubuntu instructions.
+5. Clone this public repository into a dedicated directory and create `.env` from `.env.example`; set permissions to owner-only (`chmod 600 .env`).
+6. Keep Docker volumes on persistent disk. Never put `.env`, Telegram session files, SQLite files, or backups in Git.
+7. Configure automated security updates and a tested off-host backup of the persistent `legion_data` volume. Encrypt backups and restrict access.
+
+Official Docker installation guide: https://docs.docker.com/engine/install/ubuntu/
+
+## Deployment acceptance gate
+
+Do not describe the service as operational until all checks below have passed on the actual VPS:
+- `docker compose config` succeeds without printing or exposing secret values.
+- Telethon one-time authorization succeeds in the VPS terminal and the session persists after a container restart.
+- Both containers remain running after restart; inspect logs for collection and polling errors.
+- An authorized private Telegram account can use `/start`, `/status`, and `/help`.
+- A small, low-cost Tavily research test succeeds; check credit consumption before running the default 60-query session.
+- Review a test lead, create a draft, attach a genuinely independent source, approve the incident, and verify that only approved incidents appear in the report.
+- Restore a backup into a separate test volume and verify the database opens.
+- Record a 24-hour pilot with uptime, failed jobs, source coverage, memory use, database growth, and provider/API costs.
+
+A green GitHub Actions run validates repository code and tests only; it does not prove that any VPS, Telegram account, Gemini key, Tavily key, or live data source works.
