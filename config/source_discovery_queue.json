@@ -1,0 +1,97 @@
+{
+  "queue_version": 1,
+  "purpose": "Regional discovery leads for manual review. Candidate handles are not approved for ingestion.",
+  "review_rules": [
+    "Confirm the exact public Telegram username and operator identity from first-party or independently corroborated sources.",
+    "Assess recent activity, language, regional relevance, corrections history, sourcing transparency and known affiliation.",
+    "Reject channels that publish doxxing, private-person targeting, operational violence instructions or granular real-time tactical movements.",
+    "Do not enable a candidate until review is documented in source_registry.json and config/channels.json."
+  ],
+  "candidates": [
+    {
+      "username": "Faytuks_Network",
+      "url": "https://t.me/Faytuks_Network",
+      "name": "Faytuks Network",
+      "coverage": [
+        "global",
+        "Europe",
+        "MENA",
+        "Indo-Pacific"
+      ],
+      "languages": [
+        "en"
+      ],
+      "source_class": "unofficial_candidate",
+      "type": "independent_breaking_news_and_security_updates",
+      "status": "manual_review_required",
+      "discovery_basis": "Listed in a third-party Telegram channel catalogue; direct operator identity and recent activity still need review.",
+      "risk_note": "Screen for unverified claims and operationally sensitive conflict detail."
+    },
+    {
+      "username": "LebanonOSINT",
+      "url": "https://t.me/LebanonOSINT",
+      "name": "Lebanon News & OSINT",
+      "coverage": [
+        "Lebanon",
+        "MENA"
+      ],
+      "languages": [
+        "en"
+      ],
+      "source_class": "unofficial_candidate",
+      "type": "regional_osint_and_news",
+      "status": "manual_review_required",
+      "discovery_basis": "Listed in a third-party Telegram channel catalogue; verify exact public page, operator and activity.",
+      "risk_note": "Do not ingest granular real-time tactical or targeting information."
+    },
+    {
+      "username": "conflictm",
+      "url": "https://t.me/conflictm",
+      "name": "Conflict Monitor",
+      "coverage": [
+        "global"
+      ],
+      "languages": [
+        "en"
+      ],
+      "source_class": "unofficial_candidate",
+      "type": "independent_conflict_monitoring",
+      "status": "manual_review_required",
+      "discovery_basis": "Third-party Telegram index describes an independent research initiative; index also reports recent silence/reincarnation, so continuity and current activity require verification.",
+      "risk_note": "Check source ownership changes and historical post continuity."
+    },
+    {
+      "username": "OSINTLive",
+      "url": "https://t.me/OSINTLive",
+      "name": "OSINT",
+      "coverage": [
+        "global"
+      ],
+      "languages": [
+        "en"
+      ],
+      "source_class": "unofficial_candidate",
+      "type": "aggregated_osint_updates",
+      "status": "manual_review_required",
+      "discovery_basis": "Listed in a third-party channel catalogue; identity, sourcing standards and current activity unverified.",
+      "risk_note": "Aggregation and reposts must not count as independent corroboration."
+    }
+  ],
+  "references": [
+    {
+      "name": "TGScope OSINT catalogue",
+      "url": "https://tgscope.io/topics/osint",
+      "note": "Discovery only; catalogue entries are not a reliability endorsement."
+    },
+    {
+      "name": "ChatCrawler OSINT Telegram directory",
+      "url": "https://chatcrawler.app/c/t/it/osint/channels?lang=en",
+      "note": "Discovery only; candidate details and channel identities require independent confirmation."
+    },
+    {
+      "name": "TG.ME Conflict Monitor profile",
+      "url": "https://tg.me/conflictm",
+      "note": "Third-party page includes a continuity/activity warning; do not treat as current verified identity."
+    }
+  ]
+}
