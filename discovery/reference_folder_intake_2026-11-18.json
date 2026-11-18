@@ -6,10 +6,10 @@
   "handling": "All 40 user-supplied display names are retained as baseline reference sources. Public usernames are added only when matched to a public Telegram preview or reputable public directory. Name-only unresolved records remain in the baseline with null username; all newly discovered usernames are unreviewed and disabled for collection pending analyst review.",
   "counts": {
     "total_names": 40,
-    "username_matched": 32,
+    "username_matched": 35,
     "active_or_existing": 4,
-    "newly_added_to_candidate_pool": 17,
-    "username_unresolved": 8
+    "newly_added_to_candidate_pool": 20,
+    "username_unresolved": 5
   },
   "entries": [
     {
@@ -46,9 +46,10 @@
     },
     {
       "display_name": "Muslim Ummah",
-      "username": null,
-      "status": "USERNAME_UNRESOLVED",
-      "notes": "Display name only; multiple possible matches."
+      "username": "MuslimUmmahWorld",
+      "status": "BASELINE_USERNAME_MATCHED",
+      "notes": "A public channel named Muslim Ummah / Worldwide Muslim Ummah Update exists at this handle, but multiple similarly named channels exist; identity match to the user's folder remains provisional.",
+      "evidence_url": "https://t.me/MuslimUmmahWorld"
     },
     {
       "display_name": "Intel Slava",
@@ -101,9 +102,10 @@
     },
     {
       "display_name": "Enemy Watch - Official",
-      "username": null,
-      "status": "USERNAME_UNRESOLVED",
-      "notes": "Exact public handle not established."
+      "username": "enemywatch",
+      "status": "BASELINE_USERNAME_MATCHED",
+      "notes": "Exact public Telegram title/username match; self-description uses adversarial framing and exposes alleged enemies/infiltrators. Treat as advocacy/viewpoint source; claims require independent corroboration.",
+      "evidence_url": "https://t.me/enemywatch"
     },
     {
       "display_name": "Mediterranean Man",
@@ -206,9 +208,10 @@
     },
     {
       "display_name": "The Outpost",
-      "username": null,
-      "status": "USERNAME_UNRESOLVED",
-      "notes": "Exact public handle not established."
+      "username": "outpostosint",
+      "status": "BASELINE_USERNAME_MATCHED",
+      "notes": "Telemetrio profile matches The Outpost and describes military affairs, diplomacy, military history and intelligence topics. Public directory match; verify exact channel preview before collection.",
+      "evidence_url": "https://t.me/outpostosint"
     },
     {
       "display_name": "Resistance News - Urdu",
