@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-18T17:18:43.177624+00:00",
+  "generated_at_utc": "2026-11-18T21:29:15.451711+00:00",
   "discovery_method": "Public web-index search plus public Telegram directory pages (TG Market, TGScope, Telemetrio) and unreviewed seed leads",
   "queries_attempted_per_provider": 84,
   "directory_diagnostics": {
@@ -53,18 +53,18 @@
       "errors": [
         {
           "query": "site:t.me/s/ বাংলাদেশ জেলা সংবাদ সাংবাদিক",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
+          "error": "URLError",
+          "detail": "<urlopen error _ssl.c:1001: The handshake operation timed out>"
         },
         {
           "query": "site:t.me বাংলাদেশ স্থানীয় সংবাদ জেলা প্রতিনিধি",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
+          "error": "URLError",
+          "detail": "<urlopen error _ssl.c:1001: The handshake operation timed out>"
         },
         {
           "query": "site:t.me বাংলাদেশ মানবাধিকার পর্যবেক্ষক",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
+          "error": "URLError",
+          "detail": "<urlopen error _ssl.c:1001: The handshake operation timed out>"
         }
       ],
       "skipped_after_circuit_breaker": 81
