@@ -18,7 +18,7 @@ def main():
         ".env", "myid", "start", "help", "status", "daily", "bangladesh",
         "search", "leads", "briefs", "coverage", "report", "reviewqueue",
         "reviewlead", "candidates", "incidentdraft", "incidentqueue",
-        "approveincident", "linklead", "ask", "research", "alerts_on",
+        "approveincident", "linklead", "ask", "research", "digest", "alerts_on",
         "alerts_off", "alert_poll"
     }
     missing = required.difference(names)
