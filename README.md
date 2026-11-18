@@ -36,6 +36,10 @@ No Telegram developer portal, Telegram login, API ID/hash, session string, local
 - `telegram_posts.csv` — evidence register.
 - `collection_summary.json` — counts, page totals and channel errors.
 
+## Expand the source network
+
+The active registry is intentionally kept separate from unreviewed discoveries. To contribute a large source list, follow [CHANNEL_LIST_INTAKE.md](CHANNEL_LIST_INTAKE.md) and upload a TXT/CSV of public Telegram channel links. Unreviewed candidates are staged first; they are not automatically treated as reliable or enabled. A 1,000+ candidate pool is a discovery target, not a promise of 1,000 channels being active or fetched in every run.
+
 ## Coverage limitations
 
 The collector reads enabled usernames in [config/channels.json](config/channels.json) using public Telegram preview pages (`https://t.me/s/<channel>`). It attempts bounded pagination up to the selected cap and stops when it reaches dates earlier than the reporting date.
