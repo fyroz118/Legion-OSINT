@@ -6,12 +6,15 @@ drafts, private identifiers and credentials are never published.
 import csv
 import json
 from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "output"
 DEST = ROOT / "docs" / "feed" / "latest.json"
-MAX_POSTS = 1800  # Bound the public feed; collection workflow publishes from main only.
+ARCHIVE_DIR = ROOT / "docs" / "feed" / "archive"
+MAX_POSTS = 1800
+MAX_ARCHIVE_POSTS = 5000  # Bound the public feed; collection workflow publishes from main only.
 MAX_TEXT = 3000
 
 
@@ -114,7 +117,58 @@ def main():
     temporary = DEST.with_suffix(".tmp")
     temporary.write_text(json.dumps(payload, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     temporary.replace(DEST)
-    print(json.dumps({"feed": str(DEST), "posts": len(posts), "telegram_posts": summary["telegram_posts_in_snapshot"], "rss_articles": summary["rss_articles_in_snapshot"], "telegram_errors": len(errors), "rss_errors": summary["rss_source_errors"], "generated_at": summary["generated_at"]}, ensure_ascii=False))
+
+    # Maintain a per-day archive by merging each scheduled collection run.
+    # This preserves posts collected earlier in the same day instead of
+    # replacing the archive with only the newest two-hour collection window.
+    report_date = str(summary.get("report_date") or "")
+    timezone_name = str(summary.get("timezone") or "Asia/Dhaka")
+    try:
+        date.fromisoformat(report_date)
+        archive_path = ARCHIVE_DIR / (report_date + ".json")
+        archived_posts = {}
+        if archive_path.exists():
+            try:
+                previous = json.loads(archive_path.read_text(encoding="utf-8"))
+                for item in previous.get("posts", []):
+                    if item.get("id"):
+                        archived_posts[item["id"]] = item
+            except (OSError, ValueError, TypeError):
+                print("Warning: previous daily archive could not be read; rebuilding from current collection.")
+        try:
+            local_tz = ZoneInfo(timezone_name)
+        except Exception:
+            local_tz = ZoneInfo("Asia/Dhaka")
+        for item in posts:
+            stamp = str(item.get("published_at") or "").strip()
+            if not stamp:
+                continue
+            try:
+                parsed_stamp = datetime.fromisoformat(stamp.replace("Z", "+00:00"))
+                if parsed_stamp.tzinfo is None:
+                    parsed_stamp = parsed_stamp.replace(tzinfo=timezone.utc)
+                item_day = parsed_stamp.astimezone(local_tz).date().isoformat()
+            except (ValueError, TypeError, OverflowError):
+                continue
+            if item_day == report_date:
+                archived_posts[item["id"]] = item
+        day_posts = sorted(archived_posts.values(), key=lambda item: item.get("published_at") or "")[-MAX_ARCHIVE_POSTS:]
+        archive_summary = dict(summary)
+        archive_summary.update({
+            "archive_date": report_date,
+            "archive_timezone": timezone_name,
+            "archive_posts": len(day_posts),
+            "archive_notice": "Daily rolling archive merged from scheduled public-source collection runs. Coverage is bounded by public preview/RSS access and collector limits; this is not a complete record of all posts or news."
+        })
+        archive_payload = {"schema_version": 1, "generated_at": summary["generated_at"], "summary": archive_summary, "posts": day_posts}
+        ARCHIVE_DIR.mkdir(parents=True, exist_ok=True)
+        archive_tmp = archive_path.with_suffix(".tmp")
+        archive_tmp.write_text(json.dumps(archive_payload, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+        archive_tmp.replace(archive_path)
+    except ValueError:
+        raise SystemExit("Invalid report_date; refusing to publish a daily archive.")
+
+    print(json.dumps({"feed": str(DEST), "posts": len(posts), "daily_archive": str(archive_path), "daily_archive_posts": len(day_posts), "telegram_posts": summary["telegram_posts_in_snapshot"], "rss_articles": summary["rss_articles_in_snapshot"], "telegram_errors": len(errors), "rss_errors": summary["rss_source_errors"], "generated_at": summary["generated_at"]}, ensure_ascii=False))
 
 
 if __name__ == "__main__":
