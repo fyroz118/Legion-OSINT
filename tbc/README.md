@@ -11,7 +11,7 @@ This is an import-ready TPY command package reconstructed from the current Legio
 
 ## First-time TBC setup
 
-1. In TBC, open the existing `@legion_osint_bot` and use **Manage → Import Commands**. Import `legion_osint_tbc_import.json`. Do not choose the option to remove old commands; merge/update only.
+1. In TBC, open the existing `@legion_osint_bot` and use **Manage → Import Commands**. Import `legion_osint_tbc_import.json` (or `legion_osint_tbc_import.txt` if you prefer the plain-text format). Do not choose the option to remove old commands; merge/update only.
 2. Open the special `.env` command and set `OWNER_IDS` to a list containing your own numeric Telegram user ID. Initially it is empty by design:
    ```python
    OWNER_IDS = [123456789]
