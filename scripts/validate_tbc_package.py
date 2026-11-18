@@ -20,7 +20,7 @@ def main():
         "search", "leads", "briefs", "coverage", "report", "reviewqueue",
         "reviewlead", "candidates", "incidentdraft", "incidentqueue",
         "approveincident", "linklead", "ask", "research", "digest", "alerts_on",
-        "alerts_off", "alert_poll"
+        "alerts_off", "alert_poll", "news"
     }
     missing = required.difference(names)
     if missing:
@@ -49,6 +49,12 @@ def main():
         index += 1
     if parsed_txt != commands:
         raise SystemExit("JSON and TXT TBC import packages do not match.")
+
+    update_package_path = ROOT / "tbc" / "legion_osint_tbc_news_update.json"
+    update_commands = json.loads(update_package_path.read_text(encoding="utf-8")).get("commands", [])
+    update_names = [item.get("command") for item in update_commands]
+    if "news" not in update_names or ".env" in update_names:
+        raise SystemExit("The partial RSS-aware TBC update must include /news and exclude .env.")
 
     for item in commands:
         name, code = item["command"], item["code"]
