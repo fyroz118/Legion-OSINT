@@ -33,7 +33,9 @@ No Telegram developer portal, Telegram login, API ID/hash, session string, local
 
 - `daily_intelligence_report.md` — Gemini-assisted ten-section report.
 - `individual_source_briefs.md` — one brief per collected post.
-- `telegram_posts.csv` — evidence register.
+- `telegram_posts.csv` — Telegram evidence register.
+- `news_articles.csv` — public RSS/Atom headlines and excerpts.
+- `news_collection_summary.json` — publisher-level feed diagnostics.
 - `collection_summary.json` — counts, page totals and channel errors.
 
 ## Expand the source network
