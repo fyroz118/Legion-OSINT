@@ -80,6 +80,13 @@ def set_incident_workflow_status(incident_id, status, approval_note=None):
         exists = db.execute("SELECT 1 FROM incidents WHERE incident_id=?", (incident_id,)).fetchone()
         if not exists:
             raise ValueError("Incident not found")
+        if status == "APPROVED":
+            evidence = db.execute(
+                "SELECT COUNT(*) AS n FROM incident_sources WHERE incident_id=? AND source_class!='unknown'",
+                (incident_id,)
+            ).fetchone()["n"]
+            if evidence < 1:
+                raise ValueError("At least one source with an analyst-assigned class is required before approval")
         db.execute("""INSERT INTO incident_workflow
             (incident_id, status, approval_note, created_at, updated_at)
             VALUES (?, ?, ?, ?, ?)
