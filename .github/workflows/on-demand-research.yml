@@ -8,7 +8,7 @@ on:
         required: true
         type: string
       posts_per_channel:
-        description: "Maximum recent messages to inspect per configured channel"
+        description: "Maximum recent messages per configured channel (global queries capped at 50 each)"
         required: true
         type: choice
         options:
