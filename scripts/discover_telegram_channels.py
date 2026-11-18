@@ -428,9 +428,9 @@ def main():
         previous = prior.get(key, {})
         row["first_seen_utc"] = previous.get("first_seen_utc", now)
         row["last_seen_utc"] = now
-        for field in ("discovery_regions", "discovery_languages", "discovery_queries", "discovery_providers"):
+        for field in ("discovery_regions", "discovery_languages", "discovery_queries", "discovery_providers", "directory_source_urls"):
             row[field] = sorted(set(previous.get(field, [])) | set(row.get(field, [])))
-        for field in ("title", "description", "accessible", "source_class", "source_affiliation", "discovery_notes", "seed_source_url"):
+        for field in ("title", "description", "accessible", "source_class", "source_affiliation", "candidate_category", "source_identity_status", "discovery_notes", "seed_source_url", "directory_source_urls"):
             if field in previous:
                 row[field] = previous[field]
         prior[key] = row
@@ -486,7 +486,7 @@ def main():
         json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     fields = ["username", "candidate_url", "title", "description", "accessible",
               "source_class", "source_affiliation", "candidate_category", "source_identity_status", "review_status", "enabled_for_collection",
-              "discovery_regions", "discovery_languages", "discovery_queries", "discovery_providers", "discovery_notes", "seed_source_url"]
+              "discovery_regions", "discovery_languages", "discovery_queries", "discovery_providers", "discovery_notes", "seed_source_url", "directory_source_urls"]
     with (OUT / "telegram_channel_candidates.csv").open("w", newline="", encoding="utf-8-sig") as handle:
         writer = csv.DictWriter(handle, fieldnames=fields, extrasaction="ignore")
         writer.writeheader()
