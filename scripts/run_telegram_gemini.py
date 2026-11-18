@@ -116,7 +116,7 @@ def main():
           "- Source class: unknown; not independently assessed","- Status: UNVERIFIED",f"- Source: {r['source_url']}","",
           (r.get("text") or "").replace("\n"," ")[:2500],""]
     (out/"individual_source_briefs.md").write_text("\n".join(briefs),encoding="utf-8")
-    analysis=rows[:300]; notes=[]; client=None; model=os.getenv("GEMINI_MODEL","gemini-2.5-flash")
+    analysis=rows[:300]; notes=[]; client=None; model=os.getenv("GEMINI_MODEL","gemini-3.8-flash")
     if analysis:
         client=genai.Client(api_key=key)
         for start in range(0,len(analysis),20):
