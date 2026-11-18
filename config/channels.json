@@ -1021,6 +1021,66 @@
       "monitoring_weight": "standard",
       "baseline_reference": true,
       "baseline_display_name": "Intel Republic"
+    },
+    {
+      "username": "MIB_India",
+      "priority": "south_asia",
+      "language": "en",
+      "source_type": "government_information_and_broadcasting",
+      "source_affiliation": "Government_of_India_Ministry_of_Information_and_Broadcasting",
+      "default_evidence_status": "UNVERIFIED",
+      "enabled": true,
+      "notes": "Official Telegram channel of India's Ministry of Information and Broadcasting. Government-originated statements and public-information posts; attribute claims to the ministry and seek independent reporting for contested events.",
+      "source_class": "official_government",
+      "monitoring_weight": "standard"
+    },
+    {
+      "username": "rusembbd",
+      "priority": "bangladesh",
+      "language": "en",
+      "source_type": "diplomatic_mission_official_information",
+      "source_affiliation": "Embassy_of_the_Russian_Federation_in_Bangladesh",
+      "default_evidence_status": "UNVERIFIED",
+      "enabled": true,
+      "notes": "Official Telegram channel of the Russian Embassy in Bangladesh. Diplomatic statements and embassy communications; preserve as state-originated perspective, not independent confirmation.",
+      "source_class": "official_government",
+      "monitoring_weight": "standard"
+    },
+    {
+      "username": "Irna_en",
+      "priority": "mena",
+      "language": "en",
+      "source_type": "national_news_agency",
+      "source_affiliation": "Islamic_Republic_News_Agency_IRNA",
+      "default_evidence_status": "UNVERIFIED",
+      "enabled": true,
+      "notes": "Official English Telegram channel of Iran's national news agency IRNA, linked to en.irna.ir. State news-agency perspective; attribute official claims and independently corroborate contested facts.",
+      "source_class": "official_media",
+      "monitoring_weight": "standard"
+    },
+    {
+      "username": "tassagency_en",
+      "priority": "europe",
+      "language": "en",
+      "source_type": "national_news_agency",
+      "source_affiliation": "TASS_Russian_News_Agency",
+      "default_evidence_status": "UNVERIFIED",
+      "enabled": true,
+      "notes": "Official English Telegram channel of TASS. Russian state news-agency perspective; attribute government and conflict claims, preserve source provenance, and seek independent corroboration.",
+      "source_class": "official_media",
+      "monitoring_weight": "standard"
+    },
+    {
+      "username": "anadoluagency_en",
+      "priority": "global",
+      "language": "en",
+      "source_type": "national_news_agency",
+      "source_affiliation": "Anadolu_Agency",
+      "default_evidence_status": "UNVERIFIED",
+      "enabled": true,
+      "notes": "Official English Telegram account of Anadolu Agency, linked to its official social accounts. Turkish public news-agency perspective; attribute claims and corroborate independently.",
+      "source_class": "official_media",
+      "monitoring_weight": "standard"
     }
   ]
 }
