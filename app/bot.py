@@ -46,21 +46,21 @@ async def start(update, context):
 async def help_cmd(update, context):
     if await gate(update):
         await update.message.reply_text(
-            "/status — database status\\n"
-            "/daily — recent collected Telegram posts\\n"
-            "/bangladesh — recent Bangladesh posts\\n"
-            "/search <terms> — search collected text\\n"
-            "/ask <question> — ask Gemini about stored records\\n"
-            "/research YYYY-MM-DD — run public-web discovery (default 60 queries)\\n"
-            "/briefs YYYY-MM-DD [limit] — individual source-lead briefs\\n"
-            "/coverage YYYY-MM-DD — regional query coverage and failures\\n"
-            "/reviewqueue YYYY-MM-DD — analyst source-review queue\\n"
-            "/reviewlead ID reviewed|rejected|duplicate [source_class] [duplicate_ID] — review a lead\\n"
-            "/candidates YYYY-MM-DD [limit] — conservative candidates and duplicate suggestions\\n"
-            "/incidentdraft LEAD_ID INCIDENT_ID COUNTRY CATEGORY SOURCE_GROUP description words... — create DRAFT\\n"
-            "/incidentqueue YYYY-MM-DD — list DRAFT/APPROVED/REJECTED incidents\\n"
-            "/approveincident INCIDENT_ID approved|rejected rationale words... — analyst inclusion decision\\n"
-            "/linklead LEAD_ID INCIDENT_ID [lead|corroboration|contradiction] — attach reviewed source\\n"
+            "/status — database status\n"
+            "/daily — recent collected Telegram posts\n"
+            "/bangladesh — recent Bangladesh posts\n"
+            "/search <terms> — search collected text\n"
+            "/ask <question> — ask Gemini about stored records\n"
+            "/research YYYY-MM-DD — run public-web discovery (default 60 queries)\n"
+            "/briefs YYYY-MM-DD [limit] — individual source-lead briefs\n"
+            "/coverage YYYY-MM-DD — regional query coverage and failures\n"
+            "/reviewqueue YYYY-MM-DD — analyst source-review queue\n"
+            "/reviewlead ID reviewed|rejected|duplicate [source_class] [duplicate_ID] — review a lead\n"
+            "/candidates YYYY-MM-DD [limit] — conservative candidates and duplicate suggestions\n"
+            "/incidentdraft LEAD_ID INCIDENT_ID COUNTRY CATEGORY SOURCE_GROUP description words... — create DRAFT\n"
+            "/incidentqueue YYYY-MM-DD — list DRAFT/APPROVED/REJECTED incidents\n"
+            "/approveincident INCIDENT_ID approved|rejected rationale words... — analyst inclusion decision\n"
+            "/linklead LEAD_ID INCIDENT_ID [lead|corroboration|contradiction] — attach reviewed source\n"
             "/report YYYY-MM-DD — report only explicitly APPROVED incidents"
         )
 
@@ -411,9 +411,9 @@ async def incidentqueue_cmd(update, context):
     if not rows:
         await update.message.reply_text("No incident workflow records for that date.")
         return
-    body = "\\n\\n".join(
-        f"{row['incident_id']} | {row['status']} | {row['verification_status']}\\n"
-        f"{row['country']} | {row['category']}\\n{row['description']}"
+    body = "\n\n".join(
+        f"{row['incident_id']} | {row['status']} | {row['verification_status']}\n"
+        f"{row['country']} | {row['category']}\n{row['description']}"
         for row in rows
     )
     await update.message.reply_text(body[:3900])
