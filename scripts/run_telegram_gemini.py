@@ -116,6 +116,16 @@ def main():
           "- Source class: unknown; not independently assessed","- Status: UNVERIFIED",f"- Source: {r['source_url']}","",
           (r.get("text") or "").replace("\n"," ")[:2500],""]
     (out/"individual_source_briefs.md").write_text("\n".join(briefs),encoding="utf-8")
+    posts_by_channel={}
+    for row in rows:
+        posts_by_channel[row.get("channel_username","unknown")]=posts_by_channel.get(row.get("channel_username","unknown"),0)+1
+    coverage=json.dumps({
+        "report_date":day,"timezone":"Asia/Dhaka","configured_channels":[c["username"] for c in channels],
+        "pages_fetched_per_channel":page_counts,"posts_by_channel":posts_by_channel,
+        "total_posts_for_date":len(rows),"collection_errors":errors,
+        "collection_method":"unauthenticated public Telegram preview pages only",
+        "limitations":["No Telegram global search","No authenticated/private channel access","No X, Facebook, YouTube or general news-site collection"]
+    },ensure_ascii=False,indent=2)
     analysis=rows[:300]; notes=[]; client=None; model=os.getenv("GEMINI_MODEL","gemini-3.8-flash")
     gemini_error=None
     if analysis:
