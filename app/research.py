@@ -351,3 +351,59 @@ def exact_title_groups(report_date):
             continue
         groups.setdefault(normalized, []).append(lead)
     return [items for items in groups.values() if len(items) > 1]
+
+
+def extract_event_candidates(report_date, limit=100):
+    """Create conservative candidate records from lead metadata; never infer missing event facts."""
+    leads = get_research_leads(report_date, limit=limit)
+    candidates = []
+    for lead in leads:
+        candidates.append({
+            "candidate_id": f"LEAD-{lead['id']}",
+            "lead_id": lead["id"],
+            "report_date": report_date,
+            "region": lead.get("region") or "Unknown",
+            "title": lead.get("title") or "Untitled public-source lead",
+            "summary": lead.get("snippet") or "No source snippet supplied.",
+            "source_url": lead.get("source_url"),
+            "publication_date": lead.get("published_date"),
+            "claim_type": lead.get("claim_type") or "EVENT_NEWS",
+            "source_class": lead.get("source_class") or "unknown",
+            "review_status": lead.get("review_status") or "UNREVIEWED",
+            "candidate_status": "UNVERIFIED_CANDIDATE",
+            "incident_date": None,
+            "location": None,
+            "actors": None,
+            "verification_status": "UNVERIFIED",
+            "extraction_basis": "source title and snippet only; no independent event extraction"
+        })
+    return candidates
+
+
+def suggest_duplicate_candidates(report_date, threshold=0.72, limit=100):
+    """Suggest similar lead-title pairs for human review; never merge or label duplicates."""
+    import re
+    from itertools import combinations
+
+    candidates = extract_event_candidates(report_date, limit=limit)
+    def tokens(value):
+        return set(re.findall(r"[a-z0-9]+", (value or "").lower()))
+    suggestions = []
+    for left, right in combinations(candidates, 2):
+        if left["source_url"] == right["source_url"]:
+            continue
+        if left["region"] != right["region"]:
+            continue
+        a, b = tokens(left["title"]), tokens(right["title"])
+        if not a or not b:
+            continue
+        score = len(a & b) / len(a | b)
+        if score >= float(threshold):
+            suggestions.append({
+                "lead_id_a": left["lead_id"], "lead_id_b": right["lead_id"],
+                "title_a": left["title"], "title_b": right["title"],
+                "region": left["region"], "similarity": round(score, 3),
+                "decision": "HUMAN_REVIEW_REQUIRED",
+                "note": "Title similarity is a lead only; distinct events may have similar titles."
+            })
+    return sorted(suggestions, key=lambda item: item["similarity"], reverse=True)
