@@ -33,7 +33,8 @@
         "military_and_border_agencies",
         "election_commissions",
         "international_organizations",
-        "humanitarian_agencies"
+        "humanitarian_agencies",
+        "United_Nations_humanitarian_coordination_offices"
       ]
     }
   },
@@ -145,6 +146,25 @@
       "status": "enabled",
       "evidence_default": "UNVERIFIED",
       "source_class": "independent_media",
+      "monitoring_weight": "standard"
+    },
+    {
+      "username": "OCHA_Ukraine",
+      "url": "https://t.me/OCHA_Ukraine",
+      "name": "OCHA Ukraine",
+      "language": [
+        "uk",
+        "en"
+      ],
+      "coverage": [
+        "Ukraine"
+      ],
+      "type": "humanitarian_coordination",
+      "affiliation": "United Nations Office for the Coordination of Humanitarian Affairs",
+      "assessment": "Public Telegram page displays the verified check and identifies the channel as OCHA's official Ukraine office channel. Primary institutional source for humanitarian coordination updates; corroborate event claims independently.",
+      "status": "enabled",
+      "evidence_default": "UNVERIFIED",
+      "source_class": "official_institutional",
       "monitoring_weight": "standard"
     }
   ],
