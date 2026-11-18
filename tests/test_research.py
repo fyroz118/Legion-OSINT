@@ -115,5 +115,38 @@ class ResearchTests(unittest.TestCase):
             review_lead(lead_id, "DUPLICATE")
 
 
+    def test_candidate_extraction_does_not_invent_incident_fields(self):
+        from app.research import extract_event_candidates
+        def fake_search(query, report_date, max_results=10):
+            return {"results": [{
+                "title": "Demonstrators gather outside district office",
+                "url": "https://candidate.example.org/report",
+                "content": "A local outlet reports a gathering; details remain unclear.",
+                "published_date": report_date,
+            }]}
+        run_research("2026-11-18", max_queries=1, search_fn=fake_search)
+        candidate = extract_event_candidates("2026-11-18")[0]
+        self.assertEqual(candidate["candidate_status"], "UNVERIFIED_CANDIDATE")
+        self.assertEqual(candidate["verification_status"], "UNVERIFIED")
+        self.assertIsNone(candidate["incident_date"])
+        self.assertIsNone(candidate["location"])
+        self.assertIsNone(candidate["actors"])
+        self.assertEqual(candidate["source_url"], "https://candidate.example.org/report")
+
+    def test_duplicate_suggestions_never_merge_leads(self):
+        from app.research import suggest_duplicate_candidates, get_research_leads
+        def fake_search(query, report_date, max_results=10):
+            return {"results": [
+                {"title": "Protesters gather outside district office", "url": "https://a.example.org/story", "published_date": report_date},
+                {"title": "Protesters gather outside district offices", "url": "https://b.example.org/story", "published_date": report_date},
+            ]}
+        run_research("2026-11-18", max_queries=1, search_fn=fake_search)
+        before = len(get_research_leads("2026-11-18"))
+        suggestions = suggest_duplicate_candidates("2026-11-18")
+        self.assertEqual(len(suggestions), 1)
+        self.assertEqual(suggestions[0]["decision"], "HUMAN_REVIEW_REQUIRED")
+        self.assertEqual(len(get_research_leads("2026-11-18")), before)
+
+
 if __name__ == "__main__":
     unittest.main()
