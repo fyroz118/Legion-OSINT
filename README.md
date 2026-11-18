@@ -45,7 +45,7 @@ GitHub Actions starts a temporary runner only when manually triggered. It collec
 
 ## Sources and coverage
 
-The collector reads only enabled channels in [config/channels.json](config/channels.json) that the authorised Telegram account can access. The list is a curated source set, not universal Telegram coverage. It inspects only the most recent configured number of messages per channel and keeps posts published on the requested Dhaka date. Expand the channel list only with reviewed, lawfully accessible public sources.
+The collector reads enabled channels in [config/channels.json](config/channels.json) and also runs event-keyword global searches across Telegram's publicly indexed chats (Bangladesh/Bangla, South Asia and major conflict regions). Configured channel collection is capped by the selected recent-message limit; global searches inspect up to 50 results per query. Telegram global search is useful for discovery beyond the allowlist, but it is indexed, query-dependent and not exhaustive. Only public messages with usable public links are retained. All results are restricted to the requested Dhaka reporting date.
 
 The current workflow does not search X, Facebook, YouTube, news websites or all public Telegram channels. It cannot guarantee that 50 posts will be available on every date. A source post is not a unique incident.
 
