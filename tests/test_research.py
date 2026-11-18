@@ -46,7 +46,7 @@ class ResearchTests(unittest.TestCase):
         def fake_search(query, report_date, max_results=5):
             return {"results": [
                 {"title": "In-window", "url": "https://news.example.org/in", "published_date": "2026-11-18T12:00:00Z"},
-                {"title": "Out-of-window", "url": "https://news.example.org/out", "published_date": "2026-11-17T23:00:00Z"},
+                {"title": "Out-of-window", "url": "https://news.example.org/out", "published_date": "2026-11-17T16:00:00Z"},
                 {"title": "Undated", "url": "https://news.example.org/unknown"},
             ]}
         run_research("2026-11-18", max_queries=1, search_fn=fake_search)
