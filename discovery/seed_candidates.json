@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "source_directory": "https://tgmarket.io/countries/bd/news",
+  "source_directory_observed": "2026-11-18",
+  "notice": "These are discovery leads from a public directory category listing, not endorsed or verified sources. Subscriber/category labels are directory metadata only. All candidates remain UNREVIEWED_CANDIDATE and disabled for collection until manual source review.",
+  "candidates": [
+    {
+      "username": "genzbds",
+      "region": "Bangladesh",
+      "language": "bn",
+      "discovery_notes": "Directory-listed as a Bangladesh news channel using the Gen Z label. Actual operator, editorial role, affiliation and sourcing are unverified; may be an actor or movement channel."
+    },
+    {
+      "username": "studentsagainstdiscrimination",
+      "region": "Bangladesh",
+      "language": "bn",
+      "discovery_notes": "Directory-listed student movement channel. Treat as an actor-originated source for statements and mobilisation, not independent incident corroboration."
+    },
+    {
+      "username": "antiquotadu",
+      "region": "Bangladesh",
+      "language": "bn",
+      "discovery_notes": "Directory-listed anti-quota/student movement channel. Relationship to other similarly named channels and current operator are unverified."
+    },
+    {
+      "username": "antiquotaandolonbd",
+      "region": "Bangladesh",
+      "language": "bn",
+      "discovery_notes": "Directory-listed student movement channel. Treat as an actor-originated source; verify identity and activity before any monitoring decision."
+    },
+    {
+      "username": "studentandolon",
+      "region": "Bangladesh",
+      "language": "bn",
+      "discovery_notes": "Directory-listed Bangla politics/student-movement channel. Operator, affiliation and source provenance are unverified."
+    },
+    {
+      "username": "bringingjusticetoyou_bangladesh",
+      "region": "Bangladesh",
+      "language": "bn",
+      "discovery_notes": "Directory-listed as a justice-focused Bangladesh news channel. Possible advocacy/civil-society source; organisation and editorial independence are unverified."
+    },
+    {
+      "username": "bwdns",
+      "region": "Bangladesh",
+      "language": "bn",
+      "discovery_notes": "Directory-listed defence-news channel. Likely specialist aggregation/commentary; trace claims to original sources and assess political alignment."
+    },
+    {
+      "username": "TimesOf_Bangladesh",
+      "region": "Bangladesh",
+      "language": "bn",
+      "discovery_notes": "Directory-listed news channel. Publisher identity, editorial standards, activity and original reporting are unverified."
+    },
+    {
+      "username": "Nucleus71official",
+      "region": "Bangladesh",
+      "language": "bn",
+      "discovery_notes": "Directory-listed as an official channel but the organisation and account authenticity are unverified. Treat as an actor source until independently identified."
+    },
+    {
+      "username": "basherkella",
+      "region": "Bangladesh",
+      "language": "bn",
+      "discovery_notes": "Directory-listed political/news channel. Potentially partisan actor-originated content; do not treat as independent media or corroboration."
+    }
+  ]
+}
