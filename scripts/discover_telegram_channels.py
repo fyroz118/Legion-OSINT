@@ -120,20 +120,43 @@ def main():
         except Exception as e:
             query_errors.append({"query":q,"error":type(e).__name__,"detail":str(e)[:160]})
         time.sleep(1.2)
-    # Verify a bounded sample of discovered public previews; discovery is not endorsement.
-    candidates=sorted(found.values(),key=lambda x:(-len(x["discovery_queries"]),x["username"].lower()))
+    # Merge discoveries into a persistent candidate pool; never auto-enable a source.
+    registry_path=OUT/"telegram_channel_candidates.json"
+    prior={}
+    if registry_path.exists():
+        try:
+            for item in json.loads(registry_path.read_text(encoding="utf-8")).get("candidates",[]):
+                prior[item["username"].lower()]=item
+        except Exception:
+            prior={}
+    now=datetime.now(timezone.utc).isoformat()
+    for key,row in found.items():
+        previous=prior.get(key,{})
+        row["first_seen_utc"]=previous.get("first_seen_utc",now)
+        row["last_seen_utc"]=now
+        for field in ("discovery_regions","discovery_languages","discovery_queries"):
+            row[field]=sorted(set(previous.get(field,[])) | set(row.get(field,[])))
+        for field in ("title","description","accessible","source_class","source_affiliation","review_status","enabled_for_collection"):
+            if field in previous: row[field]=previous[field]
+        prior[key]=row
+    candidates=sorted(prior.values(),key=lambda x:(-len(x.get("discovery_queries",[])),x["username"].lower()))
+    # Recheck up to 250 candidates on each run, including previously discovered sources.
     for row in candidates[:250]:
         meta=inspect_preview(row["username"])
         row.update(meta)
-        row["source_class"]="unknown"
-        row["source_affiliation"]="unassessed"
+        row["source_class"]=row.get("source_class") or "unknown"
+        row["source_affiliation"]=row.get("source_affiliation") or "unassessed"
         row["review_status"]="UNREVIEWED_CANDIDATE"
         row["enabled_for_collection"]=False
         time.sleep(.25)
     for row in candidates[250:]:
-        row.update({"accessible":None,"title":"","description":"","source_class":"unknown",
-                    "source_affiliation":"unassessed","review_status":"UNREVIEWED_CANDIDATE",
-                    "enabled_for_collection":False})
+        row.setdefault("accessible",None)
+        row.setdefault("title","")
+        row.setdefault("description","")
+        row["source_class"]=row.get("source_class") or "unknown"
+        row["source_affiliation"]=row.get("source_affiliation") or "unassessed"
+        row["review_status"]="UNREVIEWED_CANDIDATE"
+        row["enabled_for_collection"]=False
     stamp=datetime.now(timezone.utc).isoformat()
     payload={"generated_at_utc":stamp,"discovery_method":"DuckDuckGo public HTML index queries for public t.me links",
       "queries_attempted":len(QUERIES),"unique_candidates":len(candidates),
