@@ -31,6 +31,16 @@ class PublicRssTests(unittest.TestCase):
         self.assertEqual(stable_id("publisher", item), stable_id("publisher", item))
         self.assertTrue(stable_id("publisher", item).startswith("publisher:"))
 
+
+    def test_recovers_unescaped_ampersand_in_feed_text(self):
+        xml = b'''<rss><channel><item><title>Workers &amp; police</title>
+        <link>https://example.org/amp</link><guid>amp-1</guid>
+        <pubDate>Wed, 18 Nov 2026 10:00:00 GMT</pubDate>
+        <description>Workers & police response</description></item></channel></rss>'''
+        items = parse_feed(xml)
+        self.assertEqual(len(items), 1)
+        self.assertIn("Workers", items[0]["summary"])
+
     def test_invalid_date_is_not_fabricated(self):
         self.assertIsNone(parse_datetime("not-a-date"))
 
