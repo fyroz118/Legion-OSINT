@@ -155,7 +155,7 @@ async def briefs_cmd(update, context):
         focus = row.get("source_focus") or "unknown"
         claim = row.get("claim_type") or "EVENT_NEWS"
         rendered.append(
-            f"BRIEF {index:02d} | {claim}\\n"
+            f"BRIEF {index:02d} | {claim}" + (" — UNVERIFIED RUMOUR" if claim == "RUMOUR_WATCH" else "") + "\\n"
             f"Region: {row.get('region') or 'Unknown'}\\n"
             f"Source: {title}\\n"
             f"Published: {row.get('published_date') or 'Unknown'}\\n"
