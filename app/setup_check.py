@@ -43,9 +43,8 @@ def main():
         if not present:
             absent.append(key)
 
-    allowed = os.getenv("TELEGRAM_ALLOWED_USER_IDS", "")
-    if allowed and "1569000384" not in {x.strip() for x in allowed.split(",")}:
-        print("[WARNING] The configured allowlist does not include your Telegram user ID.")
+    if not os.getenv("TELEGRAM_ALLOWED_USER_IDS", "").strip():
+        print("[WARNING] Bot access is not restricted until your numeric user ID is configured.")
 
     channel_file = ROOT / "config" / "channels.json"
     print(f"[{'OK' if channel_file.exists() else 'MISSING'}] config/channels.json")
@@ -58,7 +57,7 @@ def main():
     if not missing and not absent:
         print("Basic local configuration looks complete. This is not a live connection test.")
         print("Next: run the collector once, then start the bot.")
-    print("\nNo API key, hash, or bot token has been displayed.")
+    print("\nNo API key, hash, bot token, or account ID has been displayed.")
 
 if __name__ == "__main__":
     main()
