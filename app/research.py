@@ -311,8 +311,9 @@ def review_lead(lead_id, status, source_class=None, analyst_note=None,
 
 def link_reviewed_lead_to_incident(lead_id, incident_id, source_role="lead"):
     """Attach reviewed provenance to an existing incident; never creates an incident."""
-    from app.incidents import add_incident_source
+    from app.incidents import add_incident_source, initialize_incident_tables
     initialize_research_tables()
+    initialize_incident_tables()
     with connect() as db:
         row = db.execute(
             "SELECT * FROM research_leads WHERE id=?", (int(lead_id),)
