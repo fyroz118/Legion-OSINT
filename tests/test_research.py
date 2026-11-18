@@ -113,7 +113,7 @@ class ResearchTests(unittest.TestCase):
         ))
         sources = get_report_incidents("2026-11-18")[0]["sources"]
         self.assertEqual(len(sources), 2)
-        self.assertEqual(sources[1]["independence_group"], "independent-outlet-b")
+        corroboration = next(source for source in sources if source["source_role"] == "corroboration")\n        self.assertEqual(corroboration["independence_group"], "independent-outlet-b")
 
     def test_duplicate_decision_requires_existing_other_lead(self):
         from app.research import review_lead
