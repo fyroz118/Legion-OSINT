@@ -23,3 +23,9 @@ jobs:
         run: python scripts/validate_project.py
       - name: Run database regression tests
         run: python -m unittest discover -s tests -v
+      - name: Validate Docker Compose configuration
+        run: |
+          cp .env.example .env
+          docker compose config --quiet
+      - name: Build application image
+        run: docker build --tag legion-osint:ci .
