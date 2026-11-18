@@ -34,6 +34,18 @@ jobs:
           restore-keys: |
             legion-osint-bot-
 
+      - name: Download latest scheduled Telegram collection
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p data/incoming
+          RUN_ID=$(gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/public-telegram-collection.yml/runs?branch=main&status=success&per_page=1" --jq '.workflow_runs[0].id // empty')
+          if [ -n "$RUN_ID" ]; then
+            gh run download "$RUN_ID" --repo "$GITHUB_REPOSITORY" --name legion-osint-public-telegram-latest --dir data/incoming
+          else
+            echo "No successful scheduled collection run exists yet; bot will start with its existing database."
+          fi
+
       - name: Install bot dependencies
         run: pip install -r requirements.txt
 
