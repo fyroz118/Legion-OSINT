@@ -3,13 +3,13 @@
   "title": "Telegram reference-folder intake",
   "source": "User-provided channel names transcribed from Telegram folder video",
   "captured_at": "2026-11-18",
-  "handling": "Display names supplied by user. A username is included only where a public Telegram preview or existing Legion-OSINT registry entry was matched. Name-only entries remain unresolved and must not be guessed or enabled. All newly mapped sources are discovery leads, not verified facts.",
+  "handling": "All 40 user-supplied display names are retained as baseline reference sources. Public usernames are added only when matched to a public Telegram preview or reputable public directory. Name-only unresolved records remain in the baseline with null username; all newly discovered usernames are unreviewed and disabled for collection pending analyst review.",
   "counts": {
     "total_names": 40,
-    "new_public_username_matches": 11,
-    "already_active": 3,
-    "already_in_candidate_pool": 1,
-    "username_unresolved": 25
+    "username_matched": 32,
+    "active_or_existing": 4,
+    "newly_added_to_candidate_pool": 17,
+    "username_unresolved": 8
   },
   "entries": [
     {
@@ -26,15 +26,17 @@
     },
     {
       "display_name": "Grandmasters of Geopolitics",
-      "username": null,
-      "status": "USERNAME_UNRESOLVED",
-      "notes": "Display name only; exact public handle not established."
+      "username": "geo_grandmasters",
+      "status": "BASELINE_USERNAME_MATCHED",
+      "notes": "Public channel index and Telegram preview identify the exact title and handle; viewpoint-specific geopolitical commentary.",
+      "evidence_url": "https://t.me/geo_grandmasters"
     },
     {
       "display_name": "India Sentinel Network",
-      "username": null,
-      "status": "USERNAME_UNRESOLVED",
-      "notes": "Display name only; exact public handle not established."
+      "username": "isnreport",
+      "status": "BASELINE_USERNAME_MATCHED",
+      "notes": "Public preview identifies ISN as a digital news network covering global and Indian affairs, OSINT and political developments.",
+      "evidence_url": "https://t.me/isnreport"
     },
     {
       "display_name": "STRRIKEMAP",
@@ -50,9 +52,10 @@
     },
     {
       "display_name": "Intel Slava",
-      "username": null,
-      "status": "USERNAME_UNRESOLVED",
-      "notes": "Likely similarly named channels exist; exact match not confirmed."
+      "username": "IntelSlava",
+      "status": "BASELINE_USERNAME_MATCHED",
+      "notes": "Public Telegram preview identifies Intel Slava as a Russian news aggregator covering conflicts and geopolitics; perspective-specific aggregator.",
+      "evidence_url": "https://t.me/IntelSlava"
     },
     {
       "display_name": "WarCabinet",
@@ -104,9 +107,10 @@
     },
     {
       "display_name": "Mediterranean Man",
-      "username": null,
-      "status": "USERNAME_UNRESOLVED",
-      "notes": "Exact public handle not established."
+      "username": "medmannews",
+      "status": "BASELINE_USERNAME_MATCHED",
+      "notes": "Public Telegram preview matches the exact channel; mixed news, commentary and personal posts.",
+      "evidence_url": "https://t.me/medmannews"
     },
     {
       "display_name": "DD Geopolitics",
@@ -128,9 +132,10 @@
     },
     {
       "display_name": "The American Majority",
-      "username": null,
-      "status": "USERNAME_UNRESOLVED",
-      "notes": "Exact public handle not established."
+      "username": "americanmajority",
+      "status": "BASELINE_USERNAME_MATCHED",
+      "notes": "Public Telegram index identifies The American Majority; geopolitics/philosophy commentary. Distinguish from unrelated similarly named forex-signal channel.",
+      "evidence_url": "https://t.me/americanmajority"
     },
     {
       "display_name": "ResistanceTrench mirror",
@@ -140,21 +145,24 @@
     },
     {
       "display_name": "Tasawwuf - تصوف",
-      "username": null,
-      "status": "USERNAME_UNRESOLVED",
-      "notes": "Exact public handle not established."
+      "username": "TasawwufOfficial",
+      "status": "BASELINE_USERNAME_MATCHED",
+      "notes": "Telegram Register exact title match; self-description says non-political, non-profit awareness initiative. Not a conflict/news source by default.",
+      "evidence_url": "https://t.me/TasawwufOfficial"
     },
     {
       "display_name": "Asia Brief",
-      "username": null,
-      "status": "USERNAME_UNRESOLVED",
-      "notes": "Multiple possible matches; exact public handle not established."
+      "username": "asiabrief",
+      "status": "BASELINE_USERNAME_MATCHED",
+      "notes": "Telegram Register exact title match; politics/activism classification is model-assigned and should be treated as tentative.",
+      "evidence_url": "https://t.me/asiabrief"
     },
     {
       "display_name": "Voice of India",
-      "username": null,
-      "status": "USERNAME_UNRESOLVED",
-      "notes": "Multiple possible matches; exact public handle not established."
+      "username": "bharat_voice",
+      "status": "BASELINE_USERNAME_MATCHED",
+      "notes": "Telegram Register exact title match; self-description includes Indian affairs, geopolitics and opinion.",
+      "evidence_url": "https://t.me/bharat_voice"
     },
     {
       "display_name": "INTEL SAGE (Intel Monk)",
@@ -164,27 +172,31 @@
     },
     {
       "display_name": "Hindustani Beast",
-      "username": null,
-      "status": "USERNAME_UNRESOLVED",
-      "notes": "Exact public handle not established."
+      "username": "Hindustanibeast",
+      "status": "BASELINE_USERNAME_MATCHED",
+      "notes": "Telegram index exact title/handle match; strongly nationalist slogan in profile. Preserve viewpoint classification; verify claims independently.",
+      "evidence_url": "https://t.me/Hindustanibeast"
     },
     {
       "display_name": "World War Report | Middle East Gaza",
-      "username": null,
-      "status": "USERNAME_UNRESOLVED",
-      "notes": "Exact public handle not established."
+      "username": "worldwarreport",
+      "status": "BASELINE_USERNAME_MATCHED",
+      "notes": "TG Market profile matches title; Bangla conflict-news aggregator with last post recorded 14 Nov 2026.",
+      "evidence_url": "https://t.me/worldwarreport"
     },
     {
       "display_name": "World24x7hr",
-      "username": null,
-      "status": "USERNAME_UNRESOLVED",
-      "notes": "Exact public handle not established."
+      "username": "world24x7hr",
+      "status": "BASELINE_USERNAME_MATCHED",
+      "notes": "Telegram preview matches exact title and handle; global news feed.",
+      "evidence_url": "https://t.me/world24x7hr"
     },
     {
       "display_name": "Times of Era",
-      "username": null,
-      "status": "USERNAME_UNRESOLVED",
-      "notes": "Exact public handle not established."
+      "username": "TimesOfEra",
+      "status": "BASELINE_USERNAME_MATCHED",
+      "notes": "Telegram Register lists exact channel title and handle; verify current editorial identity and activity.",
+      "evidence_url": "https://t.me/TimesOfEra"
     },
     {
       "display_name": "Conflict Watch Bangla - CWB",
@@ -200,9 +212,10 @@
     },
     {
       "display_name": "Resistance News - Urdu",
-      "username": null,
-      "status": "USERNAME_UNRESOLVED",
-      "notes": "Exact public handle not established."
+      "username": "ResistanceNewsUrdu",
+      "status": "BASELINE_USERNAME_MATCHED",
+      "notes": "Telegram preview matches exact title/handle; self-description focuses on resistance-axis updates in West Asia.",
+      "evidence_url": "https://t.me/ResistanceNewsUrdu"
     },
     {
       "display_name": "PoliticaGR - Geopolitics",
@@ -218,15 +231,17 @@
     },
     {
       "display_name": "Revan M",
-      "username": null,
-      "status": "USERNAME_UNRESOLVED",
-      "notes": "Exact public handle not established."
+      "username": "relentl",
+      "status": "BASELINE_USERNAME_MATCHED",
+      "notes": "TG Market profile matches Revan M and describes an independent security analyst; last post recorded 24 Jun 2026, so stale/inactive status needs review.",
+      "evidence_url": "https://t.me/relentl"
     },
     {
       "display_name": "DOAM বাংলা",
-      "username": null,
-      "status": "USERNAME_UNRESOLVED",
-      "notes": "Exact public handle not established."
+      "username": "doamuslimsbangla",
+      "status": "BASELINE_USERNAME_MATCHED",
+      "notes": "Telegram Register lists exact title and handle; treat as advocacy/community actor source, not neutral corroboration.",
+      "evidence_url": "https://t.me/doamuslimsbangla"
     },
     {
       "display_name": "News Box Bangla",
@@ -242,15 +257,17 @@
     },
     {
       "display_name": "INB বাংলা",
-      "username": null,
-      "status": "USERNAME_UNRESOLVED",
-      "notes": "Exact public handle not established."
+      "username": "inb19",
+      "status": "BASELINE_USERNAME_MATCHED",
+      "notes": "Public Telegram preview identifies International News Broadcasting Bangla; preserve its editorial/religious framing and corroborate.",
+      "evidence_url": "https://t.me/inb19"
     },
     {
       "display_name": "Intel Republic",
-      "username": null,
-      "status": "USERNAME_UNRESOLVED",
-      "notes": "Exact public handle not established."
+      "username": "Intel_Republic12",
+      "status": "BASELINE_USERNAME_MATCHED",
+      "notes": "Telegram channel index lists Intel Republic @Intel_Republic12 among channels linked from Rerum Novarum; exact title/handle match, further preview review required.",
+      "evidence_url": "https://t.me/Intel_Republic12"
     }
   ]
 }
