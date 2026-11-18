@@ -143,7 +143,21 @@ def main():
         "If there are no verified facts, say so clearly.\n\n"
         + "\n\n--- BATCH ---\n\n".join(batch_summaries)
     )
-    report = gemini_text(client, model, synthesis_prompt)
+    if analysis_rows:
+        report = gemini_text(client, model, synthesis_prompt)
+    else:
+        empty_sections = [
+            "1. Executive Summary", "2. Bangladesh Intelligence Report",
+            "3. International Conflict and Security", "4. Communal and Social Violence",
+            "5. Political Developments", "6. Misinformation and Information Operations",
+            "7. Incident Register", "8. Early-Warning Assessment",
+            "9. Source and Coverage Assessment", "10. Overall Intelligence Judgment"
+        ]
+        report = "\\n\\n".join(
+            f"## {section}\\nNo posts were collected from configured channels for this date. "
+            "This is not evidence that no incidents occurred."
+            for section in empty_sections
+        )
     header = (f"# Legion-OSINT Daily Intelligence Report — {report_date}\n\n"
               "**Method:** on-demand collection from configured accessible public Telegram channels, "
               "followed by Gemini-assisted synthesis.\n"
