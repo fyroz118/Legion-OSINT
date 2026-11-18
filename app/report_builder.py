@@ -1,6 +1,6 @@
 """Render a clearly labelled report draft from reviewed incident-ledger entries."""
 from datetime import datetime
-from app.incidents import get_report_incidents
+from app.incident_workflow import get_approved_report_incidents, get_incident_workflow_queue
 from app.research import get_research_coverage, get_research_leads
 
 SECTIONS = [
@@ -18,13 +18,13 @@ def _cell(value):
 
 def build_report_draft(report_date):
     datetime.strptime(report_date, "%Y-%m-%d")
-    incidents = get_report_incidents(report_date)
+    incidents = get_approved_report_incidents(report_date)\n    workflow = get_incident_workflow_queue(report_date)
     lines = [
         f"# Legion-OSINT Daily Intelligence Report — {report_date}", "",
         "**Reporting timezone:** Asia/Dhaka (UTC+6)",
-        "**Status:** DRAFT FROM INCIDENT LEDGER — not a live web-researched or independently verified report.",
+        "**Status:** DRAFT FROM ANALYST-APPROVED INCIDENT LEDGER — approval permits report inclusion but does not mean verification.",
         "",
-        "This draft contains only incidents already entered in the local evidence ledger. Empty sections are not evidence that no events occurred.", "",
+        "This draft contains only incident records explicitly approved for report inclusion. Draft/rejected incidents are excluded. Empty sections are not evidence that no events occurred.", "",
     ]
     for section in SECTIONS:
         lines.extend([f"## {section}", ""])
@@ -53,7 +53,7 @@ def build_report_draft(report_date):
             lines.append("Review district/upazila coverage, delayed reporting and conflicting accounts before publication.")
         elif section == "Source and Coverage Assessment":
             source_count = sum(len(x["sources"]) for x in incidents)
-            lines.append(f"Ledger records: {len(incidents)}. Attached incident-source records: {source_count}.")
+            lines.append(f"Approved incident records: {len(incidents)}. Attached incident-source records: {source_count}.\n            lines.append(f\"Workflow records for date: {len(workflow)} (DRAFT/APPROVED/REJECTED).\")")
             leads = get_research_leads(report_date, limit=1000)
             coverage = get_research_coverage(report_date)
             lines.append(f"Public-web discovery leads saved: {len(leads)}.")
@@ -90,7 +90,7 @@ def build_report_draft(report_date):
         lines.append("")
     lines.extend([
         "## Publication gate", "",
-        "- Do not publish until event dates, source independence, original links, conflicting claims and coverage gaps have been reviewed.",
-        "- This draft generator does not search the internet, extract incidents automatically, verify claims or establish comprehensive coverage.",
+        "- Analyst approval is an inclusion decision, not a verification label. Review event dates, source independence, original links, contradictions and coverage gaps before external publication.\n        - Rumour-watch claims should remain visibly labelled UNVERIFIED RUMOUR; approval must never erase that label.",
+        "- This generator does not search the internet, extract incidents automatically, verify claims or establish comprehensive coverage.\n        - Only APPROVED workflow records appear; DRAFT and REJECTED records are excluded.",
     ])
     return "\n".join(lines)
