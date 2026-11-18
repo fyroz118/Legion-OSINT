@@ -33,6 +33,21 @@ class ReportDraftTests(unittest.TestCase):
         self.assertIn("A demonstration reported by a public source.", report)
         self.assertIn("Bangladesh", report)
 
+    def test_report_discloses_review_state_and_analyst_source_classes(self):
+        from app.research import run_research, review_lead, get_research_leads
+        def fake_search(query, report_date, max_results=10):
+            return {"results": [{
+                "title": "Independent report on a public event",
+                "url": "https://independent.example.org/event",
+                "content": "A report requiring corroboration.",
+                "published_date": report_date,
+            }]}
+        run_research("2026-11-18", max_queries=1, search_fn=fake_search)
+        lead_id = get_research_leads("2026-11-18")[0]["id"]
+        review_lead(lead_id, "REVIEWED", source_class="independent_media")
+        report = build_report_draft("2026-11-18")
+        self.assertIn("Analyst review status: REVIEWED: 1", report)
+        self.assertIn("independent_media: 1", report)
 
 if __name__ == "__main__":
     unittest.main()
