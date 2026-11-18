@@ -49,3 +49,8 @@ The public feed now combines Telegram preview posts with RSS/Atom headlines and 
 ## Search behaviour
 
 The `/search` command searches only the latest published collection snapshot. It matches every supplied word (AND matching) across post text, channel/publisher name, platform, source classification, affiliation, region and language. Example: `/search Bangladesh protest`. Results are limited to eight records per reply and remain unverified source leads. This is not Telegram global search and cannot retrieve posts absent from the collection snapshot.
+
+
+## Date-based news retrieval
+
+Import the updated command package to add `/date YYYY-MM-DD`. It filters records in the current published feed snapshot by their publication date, using the feed timezone (normally Asia/Dhaka), and returns matching Telegram and RSS/Atom source records in chronological order. Output is split into messages and capped at six messages per request. It does not query Telegram globally or reconstruct a complete historical archive; records absent from the current snapshot cannot be retrieved by this command. Results are unverified source leads, not verified incidents.
