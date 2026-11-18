@@ -54,3 +54,30 @@ The `/search` command searches only the latest published collection snapshot. It
 ## Date-based news retrieval
 
 Import the updated command package to add `/date YYYY-MM-DD`. The collection workflow maintains a daily archive at `docs/feed/archive/YYYY-MM-DD.json`, merging each scheduled run so earlier posts from the same day are retained. The bot fetches that date-specific archive and returns Telegram plus RSS/Atom source records in chronological order, using the feed timezone (normally Asia/Dhaka). Each request returns a page of up to 20 records; use the next-page command shown by the bot to browse the entire day's archive. Archives begin only after this feature is deployed; older dates cannot be reconstructed automatically. Collection remains bounded by public Telegram previews, RSS/Atom access and configured collector limits. Results are unverified source leads, not verified incidents.
+
+## Autonomous public Telegram channel discovery (hybrid)
+
+The repository now includes a scheduled discovery backend:
+- `scripts/discover_public_telegram.py` searches public search-index RSS results for public Telegram channel links, then inspects unauthenticated `t.me/s/<username>` previews.
+- `.github/workflows/autonomous-channel-discovery.yml` runs every 6 hours and can also be started manually from GitHub Actions.
+- New channels are deduplicated against both active and candidate registries.
+- Conservative automatic activation is limited to channels whose public preview shows a verification marker, newsroom-like identity signals, and at least one external link. These are screening signals, not proof of independence; activated sources remain subject to monitoring and all posts remain UNVERIFIED.
+- Political-party, activist, community, unknown-operator and uncertain sources stay in the candidate queue for owner review.
+- This is not Telegram global search. It uses public search-index results and public previews only; coverage is incomplete and search engines may return no Telegram results.
+
+### New TBC commands
+
+Import the updated `tbc/legion_osint_tbc_news_update.json` or `.txt` package using Manage → Import Commands (merge/update). New commands:
+- `/discover` — latest discovery run and new channels.
+- `/discovery_status` — discovery counts, timestamp and errors.
+- `/candidates` — pending review queue.
+- `/addchannel USERNAME` — owner approval of a candidate already in the queue.
+- `/rejectchannel USERNAME` — owner rejection; keeps an audit record.
+
+### TBC GitHub decision token
+
+The two decision commands submit GitHub `repository_dispatch` events. Configure a dedicated GitHub fine-grained token in TBC's environment as `GITHUB_TOKEN`, restricted to this public repository with **Contents: read and write** permission. Do not put the token in command source, chat messages, or GitHub files. If TBC does not expose environment variables or its HTTP client does not support `HTTP.post(..., headers=..., json=...)`, the read-only discovery commands still work, but approvals must be made through the repository until the TBC runtime integration is adjusted.
+
+Approval workflow: `.github/workflows/channel-discovery-decisions.yml`. It only approves usernames already present in `discovery/seed_candidates.json`; it cannot add arbitrary channel names. Approval enables collection but does not verify source identity or event claims.
+
+The discovery report is published at `docs` path `discovery/latest.json` and the candidate queue remains in `discovery/seed_candidates.json`. Scheduled collection is triggered by the resulting change to `config/channels.json`.
