@@ -12,7 +12,9 @@
       "candidate_category": "political_movement_candidate",
       "source_class": "political_movement_candidate",
       "source_affiliation": "movement_or_supporter_network_unassessed",
-      "source_identity_status": "directory_or_public_profile_lead_unverified"
+      "source_identity_status": "directory_or_public_profile_lead_unverified",
+      "political_baseline": true,
+      "baseline_group": "discovered_political_channels"
     },
     {
       "username": "studentsagainstdiscrimination",
@@ -22,7 +24,9 @@
       "candidate_category": "political_movement_candidate",
       "source_class": "political_movement_candidate",
       "source_affiliation": "Bangladesh_student_movement_association_claimed",
-      "source_identity_status": "directory_or_public_profile_lead_unverified"
+      "source_identity_status": "directory_or_public_profile_lead_unverified",
+      "political_baseline": true,
+      "baseline_group": "discovered_political_channels"
     },
     {
       "username": "antiquotadu",
@@ -32,7 +36,9 @@
       "candidate_category": "political_movement_candidate",
       "source_class": "political_movement_candidate",
       "source_affiliation": "Bangladesh_student_movement_association_claimed",
-      "source_identity_status": "directory_or_public_profile_lead_unverified"
+      "source_identity_status": "directory_or_public_profile_lead_unverified",
+      "political_baseline": true,
+      "baseline_group": "discovered_political_channels"
     },
     {
       "username": "antiquotaandolonbd",
@@ -42,7 +48,9 @@
       "candidate_category": "political_movement_candidate",
       "source_class": "political_movement_candidate",
       "source_affiliation": "Bangladesh_student_movement_association_claimed",
-      "source_identity_status": "directory_or_public_profile_lead_unverified"
+      "source_identity_status": "directory_or_public_profile_lead_unverified",
+      "political_baseline": true,
+      "baseline_group": "discovered_political_channels"
     },
     {
       "username": "studentandolon",
@@ -52,7 +60,9 @@
       "candidate_category": "political_movement_candidate",
       "source_class": "political_movement_candidate",
       "source_affiliation": "student_movement_affiliation_unassessed",
-      "source_identity_status": "directory_or_public_profile_lead_unverified"
+      "source_identity_status": "directory_or_public_profile_lead_unverified",
+      "political_baseline": true,
+      "baseline_group": "discovered_political_channels"
     },
     {
       "username": "bringingjusticetoyou_bangladesh",
@@ -102,7 +112,9 @@
       "candidate_category": "political_actor_candidate",
       "source_class": "political_actor_candidate",
       "source_affiliation": "partisan_affiliation_unassessed",
-      "source_identity_status": "directory_or_public_profile_lead_unverified"
+      "source_identity_status": "directory_or_public_profile_lead_unverified",
+      "political_baseline": true,
+      "baseline_group": "discovered_political_channels"
     },
     {
       "username": "bjpupitcell",
@@ -113,7 +125,9 @@
       "candidate_category": "political_actor_candidate",
       "source_class": "political_actor_candidate",
       "source_affiliation": "BJP_Uttar_Pradesh_IT_Cell_association_claimed",
-      "source_identity_status": "directory_or_public_profile_lead_unverified"
+      "source_identity_status": "directory_or_public_profile_lead_unverified",
+      "political_baseline": true,
+      "baseline_group": "discovered_political_channels"
     },
     {
       "username": "bjpforgujarat",
@@ -124,7 +138,9 @@
       "candidate_category": "political_actor_candidate",
       "source_class": "political_actor_candidate",
       "source_affiliation": "BJP_Gujarat_association_claimed",
-      "source_identity_status": "directory_or_public_profile_lead_unverified"
+      "source_identity_status": "directory_or_public_profile_lead_unverified",
+      "political_baseline": true,
+      "baseline_group": "discovered_political_channels"
     },
     {
       "username": "KarnatakaBJP",
@@ -135,7 +151,9 @@
       "candidate_category": "political_actor_candidate",
       "source_class": "political_actor_candidate",
       "source_affiliation": "BJP_Karnataka_association_claimed",
-      "source_identity_status": "directory_or_public_profile_lead_unverified"
+      "source_identity_status": "directory_or_public_profile_lead_unverified",
+      "political_baseline": true,
+      "baseline_group": "discovered_political_channels"
     },
     {
       "username": "BJP4Keralam",
@@ -146,7 +164,9 @@
       "candidate_category": "political_actor_candidate",
       "source_class": "political_actor_candidate",
       "source_affiliation": "BJP_Keralam_association_claimed",
-      "source_identity_status": "directory_or_public_profile_lead_unverified"
+      "source_identity_status": "directory_or_public_profile_lead_unverified",
+      "political_baseline": true,
+      "baseline_group": "discovered_political_channels"
     },
     {
       "username": "Congress_officials",
@@ -157,7 +177,9 @@
       "candidate_category": "political_actor_candidate",
       "source_class": "political_actor_candidate",
       "source_affiliation": "Indian_National_Congress_association_unverified",
-      "source_identity_status": "directory_or_public_profile_lead_unverified"
+      "source_identity_status": "directory_or_public_profile_lead_unverified",
+      "political_baseline": true,
+      "baseline_group": "discovered_political_channels"
     },
     {
       "username": "channelelias",
@@ -179,7 +201,9 @@
       "source_affiliation": "political_affiliation_unassessed",
       "source_identity_status": "directory_listed_unverified",
       "discovery_notes": "TG Market/TGScope list this as a Bangladesh political/news channel. Treat as an actor-originated or partisan source unless independent editorial status is established.",
-      "seed_source_url": "https://tgmarket.io/countries/bd/news"
+      "seed_source_url": "https://tgmarket.io/countries/bd/news",
+      "political_baseline": true,
+      "baseline_group": "discovered_political_channels"
     },
     {
       "username": "drshafiqofficial",
@@ -190,7 +214,9 @@
       "source_affiliation": "Bangladesh_Jamaat_e_Islami_leadership_association_claimed",
       "source_identity_status": "directory_listed_unverified",
       "discovery_notes": "TGScope lists this as Dr Shafiqur Rahman's channel and describes him as Jamaat-e-Islami leader. Actor statement source, not independent corroboration; verify current public identity.",
-      "seed_source_url": "https://tgscope.io/telegram-channels-by-country/bangladesh"
+      "seed_source_url": "https://tgscope.io/telegram-channels-by-country/bangladesh",
+      "political_baseline": true,
+      "baseline_group": "discovered_political_channels"
     },
     {
       "username": "bangladeshislamichhatrashibir",
@@ -201,7 +227,9 @@
       "source_affiliation": "student_political_organization_association_claimed",
       "source_identity_status": "directory_listed_unverified",
       "discovery_notes": "TGScope lists a Bangladesh Islami Chhatrashibir channel. Treat as an organizational actor source; verify official ownership and public preview.",
-      "seed_source_url": "https://tgscope.io/telegram-channels-by-country/bangladesh"
+      "seed_source_url": "https://tgscope.io/telegram-channels-by-country/bangladesh",
+      "political_baseline": true,
+      "baseline_group": "discovered_political_channels"
     },
     {
       "username": "khitthitnews",
@@ -718,7 +746,9 @@
       "source_affiliation": "Telugu_Desam_Party_claimed_verified_by_Telemetrio",
       "source_identity_status": "directory_listed_unverified",
       "discovery_notes": "Telemetrio channel profile identifies this as the official TDP broadcast account and displayed a Telegram verification mark. Party-originated statements are actor evidence, not independent corroboration.",
-      "seed_source_url": "https://telemetr.io/en/channels/1152818678-jai_tdp"
+      "seed_source_url": "https://telemetr.io/en/channels/1152818678-jai_tdp",
+      "political_baseline": true,
+      "baseline_group": "discovered_political_channels"
     },
     {
       "username": "cpimkerala",
@@ -729,7 +759,9 @@
       "source_affiliation": "CPI_M_Kerala_affiliation_claimed",
       "source_identity_status": "directory_listed_unverified",
       "discovery_notes": "Telemetrio catalog lists CPIM Kerala. Verify party ownership and exact public preview; treat as party-originated source.",
-      "seed_source_url": "https://telemetr.io/en/channels/1175566518-cpimkerala"
+      "seed_source_url": "https://telemetr.io/en/channels/1175566518-cpimkerala",
+      "political_baseline": true,
+      "baseline_group": "discovered_political_channels"
     },
     {
       "username": "itwingdmk",
@@ -740,7 +772,9 @@
       "source_affiliation": "DMK_IT_Wing_affiliation_claimed",
       "source_identity_status": "directory_listed_unverified",
       "discovery_notes": "Telemetrio catalog identifies DMK IT Wing. Party communication/actor source; verify official ownership and assess campaign messaging separately from reporting.",
-      "seed_source_url": "https://telemetr.io/en/channels/1837346134-itwingdmk"
+      "seed_source_url": "https://telemetr.io/en/channels/1837346134-itwingdmk",
+      "political_baseline": true,
+      "baseline_group": "discovered_political_channels"
     },
     {
       "username": "aamaadmiparty",
@@ -751,7 +785,9 @@
       "source_affiliation": "Aam_Aadmi_Party_affiliation_claimed",
       "source_identity_status": "directory_listed_unverified",
       "discovery_notes": "Telemetrio catalog lists an Aam Aadmi Party channel. Confirm party-controlled cross-links and treat statements as actor-originated.",
-      "seed_source_url": "https://telemetr.io/en/channels/1237723764-aamaadmiparty"
+      "seed_source_url": "https://telemetr.io/en/channels/1237723764-aamaadmiparty",
+      "political_baseline": true,
+      "baseline_group": "discovered_political_channels"
     },
     {
       "username": "drabhishekverma_news",
@@ -762,7 +798,9 @@
       "source_affiliation": "ShivSena_NDA_role_claimed",
       "source_identity_status": "directory_listed_unverified",
       "discovery_notes": "Telemetrio profile describes this channel operator as a Shiv Sena (NDA) national coordinator. This is an individual political actor source, not a party headquarters channel.",
-      "seed_source_url": "https://telemetr.io/en/channels/1415837480-drabhishekverma_news"
+      "seed_source_url": "https://telemetr.io/en/channels/1415837480-drabhishekverma_news",
+      "political_baseline": true,
+      "baseline_group": "discovered_political_channels"
     },
     {
       "username": "pib_factcheck",
@@ -799,7 +837,9 @@
       "source_affiliation": "Bhim_Army_association_claimed",
       "source_identity_status": "directory_listed_unverified",
       "discovery_notes": "Telemetrio India politics directory lists Bhim Army Official. Treat as a movement/advocacy actor source; verify official ownership and avoid using it as neutral corroboration.",
-      "seed_source_url": "https://telemetr.io/en/channels/1196828389-bheem_army"
+      "seed_source_url": "https://telemetr.io/en/channels/1196828389-bheem_army",
+      "political_baseline": true,
+      "baseline_group": "discovered_political_channels"
     },
     {
       "username": "osint613",
@@ -1265,6 +1305,66 @@
       "enabled_for_collection": false,
       "baseline_reference": true,
       "baseline_display_name": "The Outpost"
+    },
+    {
+      "username": "DigitalVHP",
+      "region": "India",
+      "language": "hi",
+      "candidate_category": "political_organisation_actor_candidate",
+      "source_class": "political_organisation_actor_candidate",
+      "source_affiliation": "Vishva_Hindu_Parishad_official_channel",
+      "source_identity_status": "Telegram_verified_and_links_to_vhp_org",
+      "discovery_notes": "Official VHP channel; Telegram-verified and links to vhp.org and VHP social accounts. Organisational actor source, not independent corroboration.",
+      "seed_source_url": "https://t.me/DigitalVHP",
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
+      "political_baseline": true,
+      "baseline_group": "discovered_political_channels"
+    },
+    {
+      "username": "NationalJusticeParty",
+      "region": "India",
+      "language": "en",
+      "candidate_category": "political_party_actor_candidate",
+      "source_class": "political_party_actor_candidate",
+      "source_affiliation": "self_described_official_party_update_channel",
+      "source_identity_status": "public_preview_matches_channel_description",
+      "discovery_notes": "Self-described official party update channel. Treat as actor-originated content; inspect posts and independently verify claims. Public preview contains at least one repost with a racial slur; do not amplify it.",
+      "seed_source_url": "https://t.me/s/NationalJusticeParty",
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
+      "political_baseline": true,
+      "baseline_group": "discovered_political_channels"
+    },
+    {
+      "username": "cpimllib",
+      "region": "India",
+      "language": "en",
+      "candidate_category": "political_party_actor_candidate",
+      "source_class": "political_party_actor_candidate",
+      "source_affiliation": "Communist_Party_of_India_Marxist_Leninist_Liberation",
+      "source_identity_status": "Telegram_verified_and_links_to_party_websites",
+      "discovery_notes": "Telegram-verified official CPI(ML) Liberation channel; links to cpiml.org and liberation.org.in. Party-originated statements are actor evidence, not independent corroboration.",
+      "seed_source_url": "https://t.me/s/cpimllib",
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
+      "political_baseline": true,
+      "baseline_group": "discovered_political_channels"
+    },
+    {
+      "username": "thecockroachchannel",
+      "region": "India",
+      "language": "hi",
+      "candidate_category": "political_party_and_movement_actor_candidate",
+      "source_class": "political_party_and_movement_actor_candidate",
+      "source_affiliation": "self_described_official_Cockroach_Janta_Party_channel",
+      "source_identity_status": "public_preview_matches_self_description",
+      "discovery_notes": "Self-described official party channel, with political commentary, protest coverage and mobilisation posts. Treat as an actor/supporter source; verify event claims independently.",
+      "seed_source_url": "https://t.me/s/thecockroachchannel",
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
+      "political_baseline": true,
+      "baseline_group": "discovered_political_channels"
     }
   ],
   "references": [
