@@ -1365,6 +1365,66 @@
       "enabled_for_collection": false,
       "political_baseline": true,
       "baseline_group": "discovered_political_channels"
+    },
+    {
+      "username": "strikemap",
+      "region": "Middle East",
+      "language": "en",
+      "discovery_notes": "User supplied exact channel URL; public Telegram preview confirms STRIKEMAP, a conflict-intelligence aggregator focused on Iran, Israel, Lebanon and the Middle East, describing AI-enrichment from 50+ sources. Aggregated claims require provenance checks and independent corroboration.",
+      "candidate_category": "conflict_osint_aggregator_candidate",
+      "source_class": "conflict_osint_aggregator_candidate",
+      "source_affiliation": "independent_aggregator_claimed",
+      "source_identity_status": "user_supplied_url_not_independently_verified",
+      "reference_folder_baseline": true,
+      "baseline_group": "reference_folder_missed_username_matches"
+    },
+    {
+      "username": "Echo2e",
+      "region": "Global",
+      "language": "und",
+      "discovery_notes": "Exact public URL supplied by user. Public preview/indexing did not independently establish channel identity or editorial role; retain as an unverified user-supplied source lead pending analyst review.",
+      "candidate_category": "unclassified_public_source_candidate",
+      "source_class": "unclassified_public_source_candidate",
+      "source_affiliation": "unassessed",
+      "source_identity_status": "user_supplied_url_not_independently_verified",
+      "reference_folder_baseline": true,
+      "baseline_group": "reference_folder_missed_username_matches"
+    },
+    {
+      "username": "PoliticsGR",
+      "region": "Europe / Global",
+      "language": "en",
+      "discovery_notes": "User supplied exact channel URL; public Telegram preview identifies PoliticsGR as a geopolitical analysis channel publishing maps, election polls, infographics and analysis, and explicitly describes an illiberal/nationalist perspective in public directory metadata. Classify as viewpoint/analyst source, not neutral or independent confirmation.",
+      "candidate_category": "geopolitical_commentary_candidate",
+      "source_class": "geopolitical_commentary_candidate",
+      "source_affiliation": "illiberal_nationalist_perspective_self_described_or_directory_reported",
+      "source_identity_status": "public_preview_and_directory_match",
+      "reference_folder_baseline": true,
+      "baseline_group": "reference_folder_missed_username_matches"
+    },
+    {
+      "username": "SomvabboSotto",
+      "region": "Bangladesh",
+      "language": "bn",
+      "discovery_notes": "Exact public URL supplied by user. Public preview/indexing did not independently establish channel identity, operator or editorial role; retain as an unverified user-supplied Bangladesh-language source lead pending analyst review.",
+      "candidate_category": "unclassified_bangladesh_language_source_candidate",
+      "source_class": "unclassified_bangladesh_language_source_candidate",
+      "source_affiliation": "unassessed",
+      "source_identity_status": "user_supplied_url_not_independently_verified",
+      "reference_folder_baseline": true,
+      "baseline_group": "reference_folder_missed_username_matches"
+    },
+    {
+      "username": "newsboxbangla02",
+      "region": "Bangladesh",
+      "language": "bn",
+      "discovery_notes": "User supplied exact URL; public Telegram search result shows posts on the established News Box Bangla channel forwarding content attributed to @newsboxbangla02. This suggests a related or backup feed but does not independently prove common ownership; keep separate and verify relationship.",
+      "candidate_category": "bangladesh_news_or_commentary_candidate",
+      "source_class": "bangladesh_news_or_commentary_candidate",
+      "source_affiliation": "possible_related_or_backup_feed_unconfirmed",
+      "source_identity_status": "user_supplied_url_and_forward_reference_lead",
+      "reference_folder_baseline": true,
+      "baseline_group": "reference_folder_missed_username_matches"
     }
   ],
   "references": [
