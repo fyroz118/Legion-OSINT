@@ -8,7 +8,7 @@ from telegram.ext import Application, CommandHandler
 from app.database import initialize, count_posts, search_posts, source_mix_counts
 from app.gemini_assistant import ask
 from app.report_builder import build_report_draft
-from app.research import run_research, get_research_leads, get_research_coverage
+from app.research import (run_research, get_research_leads, get_research_coverage,\n                          review_queue, review_lead, link_reviewed_lead_to_incident)
 
 load_dotenv()
 TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "")
@@ -49,7 +49,7 @@ async def help_cmd(update, context):
             "/briefs YYYY-MM-DD [limit] — display individual source-lead briefs (default 60, max 100)\n"
             "/leads YYYY-MM-DD — show stored candidate links\n"
             "/coverage YYYY-MM-DD — show regional query coverage and failures\n"
-            "/report YYYY-MM-DD — consolidated ten-section draft from reviewed incident ledger"
+            "/reviewqueue YYYY-MM-DD — analyst review queue\n            /reviewlead ID reviewed|rejected|duplicate [source_class] [duplicate_ID] — record review\n            /linklead LEAD_ID INCIDENT_ID [lead|corroboration|contradiction] — link reviewed provenance\n            /report YYYY-MM-DD — consolidated ten-section draft from reviewed incident ledger"
         )
 
 
@@ -221,6 +221,73 @@ async def coverage_cmd(update, context):
         await update.message.reply_text(f"Research coverage — {context.args[0]}\n{body}")
 
 
+async def reviewqueue_cmd(update, context):
+    if not await gate(update):
+        return
+    if len(context.args) != 1:
+        await update.message.reply_text("Usage: /reviewqueue YYYY-MM-DD")
+        return
+    try:
+        rows = review_queue(context.args[0], limit=50)
+    except ValueError:
+        await update.message.reply_text("Invalid date. Use YYYY-MM-DD.")
+        return
+    if not rows:
+        await update.message.reply_text("No unreviewed leads for that date.")
+        return
+    await update.message.reply_text("Review queue: each item is an unverified lead, not an established incident.")
+    for row in rows:
+        title = (row.get("title") or "Untitled").replace("<", "‹").replace(">", "›")
+        snippet = " ".join((row.get("snippet") or "").split())[:260]
+        msg = (f"Lead ID: {row['id']} | {row['region']} | {row['claim_type']}\n"
+               f"{title}\n{snippet}\nSource: {row['source_url']}\n"
+               "Review with /reviewlead ID reviewed|rejected|duplicate [source_class] [duplicate_lead_id]")
+        await update.effective_message.reply_text(msg[:3500], disable_web_page_preview=True)
+
+
+async def reviewlead_cmd(update, context):
+    if not await gate(update):
+        return
+    if len(context.args) < 2 or len(context.args) > 4:
+        await update.message.reply_text(
+            "Usage: /reviewlead ID reviewed|rejected|duplicate [source_class] [duplicate_lead_id]\n"
+            "Source classes: unofficial, independent_media, civil_society, official_media, "
+            "official_government, intergovernmental, research_academic, other, unknown"
+        )
+        return
+    try:
+        lead_id = int(context.args[0])
+        status_value = context.args[1].upper()
+        source_class = context.args[2] if len(context.args) >= 3 else None
+        duplicate_of = int(context.args[3]) if len(context.args) == 4 else None
+        review_lead(lead_id, status_value, source_class=source_class,
+                    duplicate_of=duplicate_of)
+    except (ValueError, TypeError) as exc:
+        await update.message.reply_text(f"Review not saved: {exc}")
+        return
+    await update.message.reply_text(
+        f"Lead {lead_id} marked {status_value}. This does not verify the underlying claim "
+        "or create an incident record."
+    )
+
+
+async def linklead_cmd(update, context):
+    if not await gate(update):
+        return
+    if len(context.args) not in (2, 3):
+        await update.message.reply_text("Usage: /linklead LEAD_ID EXISTING_INCIDENT_ID [lead|corroboration|contradiction]")
+        return
+    try:
+        link_reviewed_lead_to_incident(
+            int(context.args[0]), context.args[1],
+            context.args[2] if len(context.args) == 3 else "lead"
+        )
+    except (ValueError, TypeError) as exc:
+        await update.message.reply_text(f"Link not saved: {exc}")
+        return
+    await update.message.reply_text("Reviewed source provenance linked to the existing incident.")
+
+
 async def report_cmd(update, context):
     if await gate(update):
         if len(context.args) != 1:
@@ -260,7 +327,7 @@ def main():
         ("start", start), ("help", help_cmd), ("status", status),
         ("daily", daily), ("bangladesh", bangladesh),
         ("search", search_cmd), ("ask", ask_cmd), ("report", report_cmd),
-        ("research", research_cmd), ("briefs", briefs_cmd), ("leads", leads_cmd), ("coverage", coverage_cmd)
+        ("research", research_cmd), ("briefs", briefs_cmd), ("leads", leads_cmd), ("coverage", coverage_cmd),\n        ("reviewqueue", reviewqueue_cmd), ("reviewlead", reviewlead_cmd), ("linklead", linklead_cmd)
     ]:
         app.add_handler(CommandHandler(name, fn))
     app.run_polling(drop_pending_updates=True)
