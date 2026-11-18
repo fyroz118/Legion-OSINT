@@ -107,7 +107,7 @@ def initialize_research_tables():
             "claim_type": "TEXT NOT NULL DEFAULT 'EVENT_NEWS'",
             "source_class": "TEXT NOT NULL DEFAULT 'unknown'",
             "review_status": "TEXT NOT NULL DEFAULT 'UNREVIEWED'",
-            "publication_date_dhaka": "TEXT",
+            "publication_date_dhaka": "TEXT",\n            "analyst_note": "TEXT",\n            "duplicate_of": "INTEGER",\n            "reviewed_at": "TEXT",
         }
         for name, declaration in migrations.items():
             if name not in columns:
