@@ -108,7 +108,9 @@ def initialize_research_tables():
             "source_class": "TEXT NOT NULL DEFAULT 'unknown'",
             "review_status": "TEXT NOT NULL DEFAULT 'UNREVIEWED'",
             "publication_date_dhaka": "TEXT",
-            "analyst_note": "TEXT",\n            "duplicate_of": "INTEGER",\n            "reviewed_at": "TEXT",
+            "analyst_note": "TEXT",
+            "duplicate_of": "INTEGER",
+            "reviewed_at": "TEXT",
         }
         for name, declaration in migrations.items():
             if name not in columns:
