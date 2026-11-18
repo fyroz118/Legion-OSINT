@@ -6,6 +6,7 @@ from telegram.constants import ChatType
 from telegram.ext import Application, CommandHandler
 from app.database import initialize, count_posts, search_posts, source_mix_counts
 from app.gemini_assistant import ask
+from app.report_builder import build_report_draft
 
 load_dotenv()
 TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "")
@@ -37,7 +38,8 @@ async def help_cmd(update, context):
             "/daily — recent collected global posts\n"
             "/bangladesh — recent Bangladesh posts\n"
             "/search <terms> — search collected text\n"
-            "/ask <question> — ask Gemini about stored records"
+            "/ask <question> — ask Gemini about stored records\n"
+            "/report YYYY-MM-DD — draft report from incident ledger"
         )
 
 async def status(update, context):
@@ -78,6 +80,20 @@ async def search_cmd(update, context):
         else:
             await display(update, query=q)
 
+
+async def report_cmd(update, context):
+    if await gate(update):
+        if len(context.args) != 1:
+            await update.message.reply_text("Usage: /report YYYY-MM-DD")
+            return
+        try:
+            report = build_report_draft(context.args[0])
+        except ValueError:
+            await update.message.reply_text("Invalid date. Use YYYY-MM-DD.")
+            return
+        for start in range(0, len(report), 3800):
+            await update.message.reply_text(report[start:start + 3800], disable_web_page_preview=True)
+
 async def ask_cmd(update, context):
     if await gate(update):
         q = " ".join(context.args).strip()
@@ -101,7 +117,7 @@ def main():
     for name, fn in [
         ("start", start), ("help", help_cmd), ("status", status),
         ("daily", daily), ("bangladesh", bangladesh),
-        ("search", search_cmd), ("ask", ask_cmd)
+        ("search", search_cmd), ("ask", ask_cmd), ("report", report_cmd)
     ]:
         app.add_handler(CommandHandler(name, fn))
     app.run_polling(drop_pending_updates=True)
