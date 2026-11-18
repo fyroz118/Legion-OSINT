@@ -11,7 +11,7 @@ from app.gemini_assistant import ask
 from app.report_builder import build_report_draft
 from app.research import (run_research, get_research_leads, get_research_coverage,
                           review_queue, review_lead, link_reviewed_lead_to_incident,
-                          extract_event_candidates, suggest_duplicate_candidates)
+                          extract_event_candidates, suggest_duplicate_candidates)\nfrom app.incident_workflow import (create_incident_draft_from_lead,\n                                   set_incident_workflow_status,\n                                   get_incident_workflow_queue)
 
 load_dotenv()
 TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "")
@@ -36,7 +36,7 @@ async def start(update, context):
     if await gate(update):
         await update.message.reply_text(
             "Legion-OSINT private assistant.\n"
-            "Commands: /status /daily /bangladesh /search /ask /research /briefs /leads /coverage /reviewqueue /candidates /reviewlead /linklead /report /help"
+            "Commands: /status /daily /bangladesh /search /ask /research /briefs /leads /coverage /reviewqueue /candidates /reviewlead /incidentdraft /incidentqueue /approveincident /linklead /report /help"
         )
 
 
@@ -364,6 +364,75 @@ async def linklead_cmd(update, context):
     await update.message.reply_text("Reviewed source provenance linked to the existing incident.")
 
 
+async def incidentdraft_cmd(update, context):
+    if not await gate(update):
+        return
+    if len(context.args) < 6:
+        await update.message.reply_text(
+            "Usage: /incidentdraft LEAD_ID INCIDENT_ID COUNTRY CATEGORY SOURCE_GROUP description words...\n"
+            "Use underscores for multiword country/category/source-group values. The lead must already be REVIEWED and classified."
+        )
+        return
+    try:
+        lead_id = int(context.args[0])
+        incident_id, country, category, source_group = context.args[1:5]
+        description = " ".join(context.args[5:])
+        create_incident_draft_from_lead(
+            lead_id, incident_id, country.replace("_", " "),
+            category, description, independence_group=source_group
+        )
+    except (ValueError, TypeError) as exc:
+        await update.message.reply_text(f"Incident draft not created: {exc}")
+        return
+    await update.message.reply_text(
+        f"Incident {incident_id} created as DRAFT with its reviewed source attached. "
+        "It remains UNVERIFIED and is excluded from /report until separately approved."
+    )
+
+
+async def incidentqueue_cmd(update, context):
+    if not await gate(update):
+        return
+    if len(context.args) != 1:
+        await update.message.reply_text("Usage: /incidentqueue YYYY-MM-DD")
+        return
+    try:
+        rows = get_incident_workflow_queue(context.args[0])
+    except ValueError:
+        await update.message.reply_text("Invalid date. Use YYYY-MM-DD.")
+        return
+    if not rows:
+        await update.message.reply_text("No incident workflow records for that date.")
+        return
+    body = "\\n\\n".join(
+        f"{row['incident_id']} | {row['status']} | {row['verification_status']}\\n"
+        f"{row['country']} | {row['category']}\\n{row['description']}"
+        for row in rows
+    )
+    await update.message.reply_text(body[:3900])
+
+
+async def approveincident_cmd(update, context):
+    if not await gate(update):
+        return
+    if len(context.args) < 3 or context.args[1].lower() not in {"approved", "rejected"}:
+        await update.message.reply_text(
+            "Usage: /approveincident INCIDENT_ID approved|rejected rationale words..."
+        )
+        return
+    try:
+        status_value = context.args[1].upper()
+        rationale = " ".join(context.args[2:])
+        set_incident_workflow_status(context.args[0], status_value, rationale)
+    except (ValueError, TypeError) as exc:
+        await update.message.reply_text(f"Decision not saved: {exc}")
+        return
+    await update.message.reply_text(
+        f"Incident {context.args[0]} marked {status_value}. This is an inclusion decision only; "
+        "it does not upgrade verification or confidence."
+    )
+
+
 async def report_cmd(update, context):
     if await gate(update):
         if len(context.args) != 1:
@@ -404,7 +473,7 @@ def main():
         ("daily", daily), ("bangladesh", bangladesh),
         ("search", search_cmd), ("ask", ask_cmd), ("report", report_cmd),
         ("research", research_cmd), ("briefs", briefs_cmd), ("leads", leads_cmd), ("coverage", coverage_cmd),
-        ("reviewqueue", reviewqueue_cmd), ("candidates", candidates_cmd), ("reviewlead", reviewlead_cmd), ("linklead", linklead_cmd)
+        ("reviewqueue", reviewqueue_cmd), ("candidates", candidates_cmd), ("reviewlead", reviewlead_cmd),\n        ("incidentdraft", incidentdraft_cmd), ("incidentqueue", incidentqueue_cmd),\n        ("approveincident", approveincident_cmd), ("linklead", linklead_cmd)
     ]:
         app.add_handler(CommandHandler(name, fn))
     app.add_handler(CallbackQueryHandler(review_button_callback, pattern=r"^leadreview:[0-9]+:(REVIEWED|REJECTED)$"))
