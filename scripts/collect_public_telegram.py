@@ -35,7 +35,7 @@ def main():
         print(f"@{channel['username']}: {len(found)} posts for {day}; pages={page_count}; stop={diagnostic['stop_reason']}", flush=True)
     fields = ["channel_username","channel_id","message_id","published_at","collected_at","text",
               "source_url","language","priority_region","source_class","source_type",
-              "source_affiliation","monitoring_weight"]
+              "source_affiliation","monitoring_weight","publisher_name","platform"]
     with (out / "telegram_posts.csv").open("w", newline="", encoding="utf-8-sig") as f:
         writer = csv.DictWriter(f, fieldnames=fields)
         writer.writeheader()
