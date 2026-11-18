@@ -232,7 +232,7 @@ def directory_username(href):
             name = bits[1].lstrip("@")
             return name if re.fullmatch(r"[A-Za-z][A-Za-z0-9_]{3,31}", name) else None
         if host.endswith("telemetr.io") and "channels" in bits:
-            match = re.search(r"\\d+-([A-Za-z][A-Za-z0-9_]{3,31})$", bits[-1])
+            match = re.search(r"\d+-([A-Za-z][A-Za-z0-9_]{3,31})$", bits[-1])
             return match.group(1) if match else None
     except Exception:
         return None
@@ -295,6 +295,9 @@ def self_test():
         actual = channel_username(url)
         assert actual == expected, (url, actual, expected)
     assert extract_candidates('<a href="https://t.me/example_channel">x</a>') == {"example_channel"}
+    assert directory_username("https://tgmarket.io/c/example_channel") == "example_channel"
+    assert directory_username("https://telemetr.io/en/channels/12345-example_channel") == "example_channel"
+    assert extract_directory_candidates('<a href="https://tgmarket.io/c/example_channel">x</a>') == {"example_channel"}
     print("Discovery parser self-tests passed.")
 
 def main():
