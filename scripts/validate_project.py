@@ -13,7 +13,7 @@ for path in (ROOT / "app").glob("*.py"):
         errors.append(f"Python syntax error in {path.relative_to(ROOT)}: {exc}")
 
 for relative in ("config/channels.json", "config/keywords.json", "config/source_registry.json",
-                 "config/source_discovery_queue.json"):
+                 "config/source_discovery_queue.json", "config/research.json"):
     path = ROOT / relative
     try:
         json.loads(path.read_text(encoding="utf-8"))
