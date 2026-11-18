@@ -1194,6 +1194,51 @@
       "enabled_for_collection": false,
       "baseline_reference": true,
       "baseline_display_name": "Intel Republic"
+    },
+    {
+      "username": "MuslimUmmahWorld",
+      "region": "Global",
+      "language": "en",
+      "candidate_category": "religious_news_aggregator_candidate",
+      "source_class": "religious_news_aggregator_candidate",
+      "source_affiliation": "reference_folder_source_identity_or_affiliation_unassessed",
+      "source_identity_status": "public_directory_match_requires_manual_identity_confirmation",
+      "discovery_notes": "A public channel named Muslim Ummah / Worldwide Muslim Ummah Update exists at this handle, but multiple similarly named channels exist; identity match to the user's folder remains provisional.",
+      "seed_source_url": "https://t.me/MuslimUmmahWorld",
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
+      "baseline_reference": true,
+      "baseline_display_name": "Muslim Ummah"
+    },
+    {
+      "username": "enemywatch",
+      "region": "Global/MENA",
+      "language": "en",
+      "candidate_category": "geopolitical_advocacy_commentary_candidate",
+      "source_class": "geopolitical_advocacy_commentary_candidate",
+      "source_affiliation": "reference_folder_source_identity_or_affiliation_unassessed",
+      "source_identity_status": "public_directory_match_requires_manual_identity_confirmation",
+      "discovery_notes": "Exact public Telegram title/username match; self-description uses adversarial framing and exposes alleged enemies/infiltrators. Treat as advocacy/viewpoint source; claims require independent corroboration.",
+      "seed_source_url": "https://t.me/enemywatch",
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
+      "baseline_reference": true,
+      "baseline_display_name": "Enemy Watch - Official"
+    },
+    {
+      "username": "outpostosint",
+      "region": "Global",
+      "language": "en",
+      "candidate_category": "military_affairs_commentary_candidate",
+      "source_class": "military_affairs_commentary_candidate",
+      "source_affiliation": "reference_folder_source_identity_or_affiliation_unassessed",
+      "source_identity_status": "public_directory_match_requires_manual_identity_confirmation",
+      "discovery_notes": "Telemetrio profile matches The Outpost and describes military affairs, diplomacy, military history and intelligence topics. Public directory match; verify exact channel preview before collection.",
+      "seed_source_url": "https://t.me/outpostosint",
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
+      "baseline_reference": true,
+      "baseline_display_name": "The Outpost"
     }
   ],
   "references": [
