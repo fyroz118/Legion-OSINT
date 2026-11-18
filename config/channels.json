@@ -1105,6 +1105,18 @@
       "notes": "Official English Telegram channel of Emirates News Agency (WAM), the UAE's national news agency. Public channel identifies itself as the agency's official feed and links stories to wam.ae. Attribute official and state-originated claims; independently corroborate contested events.",
       "source_class": "official_media",
       "monitoring_weight": "standard"
+    },
+    {
+      "username": "mizzimatv",
+      "priority": "myanmar",
+      "language": "my",
+      "source_type": "national_independent_news",
+      "source_affiliation": "Mizzima_independent_Myanmar_newsroom",
+      "default_evidence_status": "UNVERIFIED",
+      "enabled": true,
+      "notes": "Public verified Mizzima News Telegram channel with recent public posts; Myanmar independent newsroom reporting. Attribute claims to Mizzima and corroborate incident details, locations and casualty figures.",
+      "source_class": "independent_media",
+      "monitoring_weight": "high"
     }
   ]
 }
