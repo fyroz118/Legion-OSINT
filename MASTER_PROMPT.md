@@ -4,7 +4,7 @@
 
 The on-demand workflow reads **public Telegram web preview pages** for the finite channel list in `config/channels.json`, then uses **Gemini** to organise and synthesise evidence. No Telegram account session, Telegram API ID/hash, Telegram global search, Tavily or general web search is used.
 
-Collection is limited to the 13 configured public channels in `config/channels.json` and whatever history Telegram exposes through public preview pages at run time. The expanded registry prioritises Bangladesh and adds South Asian conflict monitoring plus Ukrainian official and independent media. Pagination is bounded. Per-channel diagnostics record parsed preview posts, timestamps, report-date matches, preview date range and stop reason. The workflow does not directly search X, Facebook, YouTube or news websites. Never claim comprehensive platform or global coverage.
+Collection is limited to the 41 configured public channels in `config/channels.json` and whatever history Telegram exposes through public preview pages at run time. The registry prioritises Bangladesh and adds sources from Myanmar, Ukraine, the Middle East, Europe, East/Southeast Asia, Sri Lanka, Ethiopia and Latin America. It includes independent newsrooms, official/institutional publishers, political-party actor channels and unverified OSINT/commentary aggregators. Source metadata describes the publisher or perspective; it is not a reliability score. Pagination is bounded. Per-channel diagnostics record parsed preview posts, timestamps, report-date matches, preview date range and stop reason. The workflow does not directly search X, Facebook, YouTube or news websites. Never claim comprehensive platform or global coverage.
 
 ## Reporting objective
 
@@ -41,7 +41,7 @@ Assess risk only from substantiated, contextual and aggregated evidence. Inflamm
 
 ## Source priorities and coverage disclosure
 
-Prefer local journalists, eyewitness reporting, independent monitors, researchers, civil-society organisations and community sources as discovery leads. Maintain official/institutional sources as a parallel validation layer. Configured channel metadata is not proof of reliability or independence.
+Prefer local journalists, eyewitness reporting, independent monitors, researchers, civil-society organisations and community sources as discovery leads. Maintain official/institutional sources as a parallel validation layer. Political-party channels are actor-originated sources: monitor statements and mobilisation, but never count them as independent corroboration. Aggregators and partisan commentary channels must be traced to their original source. Configured channel metadata is not proof of reliability or independence.
 
 Report which configured public previews were accessible, page counts, channel errors, requested caps and date-matched post counts. State that Telegram global search and other platforms were not searched and public-preview history may be incomplete.
 
