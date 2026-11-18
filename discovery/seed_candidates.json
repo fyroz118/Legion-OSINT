@@ -786,7 +786,9 @@
       "discovery_notes": "Telemetrio India politics directory lists INTEL SAGE. Review authorship, sourcing, repost patterns and political alignment; do not assume independent OSINT standards.",
       "seed_source_url": "https://telemetr.io/en/catalog/india/politics",
       "baseline_reference": true,
-      "baseline_display_name": "INTEL SAGE (Intel Monk)"
+      "baseline_display_name": "INTEL SAGE (Intel Monk)",
+      "enabled_for_collection": false,
+      "status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "bheem_army",
