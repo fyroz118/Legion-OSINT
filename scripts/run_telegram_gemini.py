@@ -50,13 +50,16 @@ def fetch_page(username, before=None):
 
 def collect_channel(ch, report_date, cap):
     username = ch["username"].lstrip("@"); seen=set(); posts=[]; errors=[]; before=None; pages=0
+    diagnostic={"parsed_preview_posts":0,"posts_with_timestamp":0,"posts_on_report_date":0,"earliest_preview_date":None,"latest_preview_date":None,"stop_reason":None}
     target = datetime.strptime(report_date, "%Y-%m-%d").date()
     while pages < MAX_PAGES and len(seen) < cap:
         try: batch = fetch_page(username, before)
         except Exception as e:
             errors.append({"channel":username,"error":type(e).__name__,"detail":str(e)[:200]}); break
         pages += 1
-        if not batch: break
+        if not batch:
+            diagnostic["stop_reason"]="empty_preview_page"; break
+        diagnostic["parsed_preview_posts"] += len(batch)
         ids=[]; dates=[]; fresh=0
         for item in batch:
             m = re.fullmatch(r"([^/]+)/([0-9]+)", item.get("data_post",""))
@@ -66,9 +69,11 @@ def collect_channel(ch, report_date, cap):
             seen.add((user,mid)); fresh += 1
             rawdate=item.get("published_at")
             if not rawdate: continue
+            diagnostic["posts_with_timestamp"] += 1
             try: published=datetime.fromisoformat(rawdate.replace("Z","+00:00")).astimezone(TZ)
             except ValueError: continue
             dates.append(published.date())
+            if published.date() == target: diagnostic["posts_on_report_date"] += 1
             if published.date() != target: continue
             body=" ".join(item["parts"]).strip() or "[No extractable text; possibly media-only]"
             posts.append({"channel_username":user,"channel_id":None,"message_id":mid,
@@ -77,12 +82,25 @@ def collect_channel(ch, report_date, cap):
               "language":ch.get("language","unknown"),"priority_region":ch.get("priority","global"),
               "source_class":"unknown","source_type":"public_telegram_preview",
               "source_affiliation":"unassessed","monitoring_weight":ch.get("monitoring_weight","standard")})
-        if not ids or fresh == 0 or len(seen) >= cap: break
-        if dates and min(dates) < target: break
+        if dates:
+            all_dates=[d.isoformat() for d in dates]
+            diagnostic["earliest_preview_date"]=min(all_dates)
+            diagnostic["latest_preview_date"]=max(all_dates)
+        if not ids:
+            diagnostic["stop_reason"]="no_message_ids"; break
+        if fresh == 0:
+            diagnostic["stop_reason"]="no_new_message_ids"; break
+        if len(seen) >= cap:
+            diagnostic["stop_reason"]="channel_cap_reached"; break
+        if dates and min(dates) < target:
+            diagnostic["stop_reason"]="preview_reached_dates_before_reporting_day"; break
         nxt=min(ids)
-        if before == nxt: break
+        if before == nxt:
+            diagnostic["stop_reason"]="pagination_id_did_not_advance"; break
         before=nxt; time.sleep(.4)
-    return posts, errors, pages
+    if diagnostic["stop_reason"] is None:
+        diagnostic["stop_reason"]="maximum_pages_reached" if pages >= MAX_PAGES else "collection_finished"
+    return posts, errors, pages, diagnostic
 
 def gemini_text(client, model, prompt):
     response=client.models.generate_content(model=model, contents=prompt)
@@ -96,10 +114,11 @@ def main():
     cap=max(1,min(int(os.getenv("COLLECT_LIMIT_PER_CHANNEL","300")),1000))
     config=json.loads(Path("config/channels.json").read_text(encoding="utf-8"))
     channels=[c for c in config.get("channels",[]) if c.get("username") and c.get("enabled",True)]
-    initialize(); posts=[]; errors=[]; page_counts={}
+    initialize(); posts=[]; errors=[]; page_counts={}; channel_diagnostics={}
     for ch in channels:
-        found, failed, pages=collect_channel(ch,day,cap)
+        found, failed, pages, diagnostic=collect_channel(ch,day,cap)
         posts.extend(found); errors.extend(failed); page_counts[ch["username"]]=pages
+        channel_diagnostics[ch["username"]]=diagnostic
         for p in found: insert_post(p)
     rows=[r for r in search_posts(limit=10000) if r.get("source_type")=="public_telegram_preview"
       and r.get("published_at") and datetime.fromisoformat(r["published_at"]).astimezone(TZ).date().isoformat()==day]
@@ -121,7 +140,7 @@ def main():
         posts_by_channel[row.get("channel_username","unknown")]=posts_by_channel.get(row.get("channel_username","unknown"),0)+1
     coverage=json.dumps({
         "report_date":day,"timezone":"Asia/Dhaka","configured_channels":[c["username"] for c in channels],
-        "pages_fetched_per_channel":page_counts,"posts_by_channel":posts_by_channel,
+        "pages_fetched_per_channel":page_counts,"channel_diagnostics":channel_diagnostics,"posts_by_channel":posts_by_channel,
         "total_posts_for_date":len(rows),"collection_errors":errors,
         "collection_method":"unauthenticated public Telegram preview pages only",
         "limitations":["No Telegram global search","No authenticated/private channel access","No X, Facebook, YouTube or general news-site collection"]
@@ -178,7 +197,7 @@ def main():
     (out/"daily_intelligence_report.md").write_text(header+report,encoding="utf-8")
     summary={"report_date":day,"timezone":"Asia/Dhaka","configured_channels":[c["username"] for c in channels],
       "posts_collected":len(posts),"posts_for_date":len(rows),"posts_in_gemini_analysis":len(analysis),
-      "pages_fetched_per_channel":page_counts,"channel_errors":errors,"gemini_error":gemini_error,
+      "pages_fetched_per_channel":page_counts,"channel_diagnostics":channel_diagnostics,"channel_errors":errors,"gemini_error":gemini_error,
       "method":"public Telegram previews; no session/global search",
       "coverage_limit":"finite configured public channels only; no other platforms"}
     (out/"collection_summary.json").write_text(json.dumps(summary,ensure_ascii=False,indent=2),encoding="utf-8")
