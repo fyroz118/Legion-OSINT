@@ -32,6 +32,8 @@ class DatabaseTests(unittest.TestCase):
             "source_type": "local_journalist",
             "source_affiliation": "independent",
             "monitoring_weight": "high",
+            "publisher_name": "Local Reporter",
+            "platform": "Telegram",
         }
 
     def test_insert_and_count(self):
@@ -56,6 +58,8 @@ class DatabaseTests(unittest.TestCase):
         self.assertEqual(row["source_class"], "unofficial")
         self.assertEqual(row["source_type"], "local_journalist")
         self.assertEqual(row["monitoring_weight"], "high")
+        self.assertEqual(row["publisher_name"], "Local Reporter")
+        self.assertEqual(row["platform"], "Telegram")
 
     def test_source_mix_counts(self):
         database.insert_post(self.sample())
@@ -82,7 +86,7 @@ class DatabaseTests(unittest.TestCase):
         database.initialize()
         with sqlite3.connect(legacy_path) as db:
             cols = {row[1] for row in db.execute("PRAGMA table_info(posts)")}
-        self.assertTrue({"source_class", "source_type", "source_affiliation", "monitoring_weight"} <= cols)
+        self.assertTrue({"source_class", "source_type", "source_affiliation", "monitoring_weight", "publisher_name", "platform"} <= cols)
 
 
 if __name__ == "__main__":
