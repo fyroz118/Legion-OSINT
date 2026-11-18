@@ -1,6 +1,6 @@
 # Legion-OSINT
 
-Bangladesh-priority, global public-source OSINT reporting. The on-demand workflow collects from **configured public Telegram channel preview pages** and uses **Gemini** to organise evidence and draft the report. It does not require a Telegram account session, Telegram API credentials, a VPS or Tavily.
+Bangladesh-priority, global public-source OSINT reporting. The collection workflow gathers public Telegram preview posts plus public RSS/Atom headlines and excerpts. The on-demand Gemini workflow can organise collected evidence and draft the report. It does not require a Telegram account session, Telegram API credentials, a VPS or Tavily.
 
 ## Reporting model
 
@@ -42,9 +42,9 @@ The active registry is intentionally kept separate from unreviewed discoveries. 
 
 ## Coverage limitations
 
-The collector reads enabled usernames in [config/channels.json](config/channels.json) using public Telegram preview pages (`https://t.me/s/<channel>`). It attempts bounded pagination up to the selected cap and stops when it reaches dates earlier than the reporting date.
+The Telegram collector reads enabled usernames in [config/channels.json](config/channels.json) using public Telegram preview pages (`https://t.me/s/<channel>`). A separate RSS/Atom collector reads the public feeds listed in [config/news_sources.json](config/news_sources.json), collecting only headlines and short feed excerpts. It attempts bounded pagination up to the selected cap and stops when it reaches dates earlier than the reporting date.
 
-**This mode does not authenticate to Telegram and cannot use Telegram global search.** It covers only the finite configured channel list and whatever history Telegram exposes through public previews. It does not directly search X, Facebook, YouTube or general news websites. Pagination, historical availability, media extraction and rate limits may vary. The collector records per-channel preview dates, date-matched counts and stop reasons to distinguish inactive/stale previews from parser failures. Configured source class, affiliation, language, region and editorial notes are carried into the evidence CSV and individual briefs. Gemini transient 429/5xx service failures receive bounded exponential-backoff retries before the evidence-preservation fallback is used. 50+ briefs cannot be guaranteed; missing posts do not mean no incidents occurred.
+**This mode does not authenticate to Telegram and cannot use Telegram global search.** It covers only the finite configured channel list and whatever history Telegram exposes through public previews. It does not directly search X, Facebook or YouTube. RSS/Atom coverage is limited to the explicitly configured feeds; it is not a general web crawler or a full-article scraper. Pagination, historical availability, media extraction and rate limits may vary. The collector records per-channel preview dates, date-matched counts and stop reasons to distinguish inactive/stale previews from parser failures. Configured source class, affiliation, language, region and editorial notes are carried into the evidence CSV and individual briefs. Gemini transient 429/5xx service failures receive bounded exponential-backoff retries before the evidence-preservation fallback is used. 50+ briefs cannot be guaranteed; missing posts do not mean no incidents occurred.
 
 ## Verification and safety
 
@@ -66,3 +66,10 @@ Use [Discover Telegram channel candidates](../../actions/workflows/discover-tele
 The workflow now runs **hourly at minute 17 UTC** (minute 17 each hour in Bangladesh time as well) and can also be started manually. It performs syntax and parser self-tests before network discovery. Provider errors, empty result pages and blocked/challenge pages are recorded separately. If every provider yields zero Telegram links and there is no existing registry, the run fails visibly rather than reporting an empty discovery as success.
 
 **Important:** this is public web-index discovery, not Telegram's authenticated global channel search. Search indexes are incomplete and biased, and automated requests may be blocked. Candidates are labelled `UNREVIEWED_CANDIDATE`, source class/affiliation remain unknown or unassessed, and `enabled_for_collection=false`. No candidate is auto-promoted to `config/channels.json`. A 1,000+ candidate pool is a target, not a guarantee. Directory listings and social links are leads; verify identity, language, region, activity and editorial relationship before approval.
+
+
+## Public news-feed collection
+
+The scheduled collection workflow now runs two independent collectors: (1) configured public Telegram preview pages and (2) configured public RSS/Atom feeds. The RSS layer currently seeds Bangladesh and Myanmar publishers, including national and regional newsrooms. It retains publisher name, feed URL, article URL, publication time, language, region, source class and affiliation. It collects only public feed headlines/excerpts, not full article bodies. RSS items are included in the same read-only TBC feed as Telegram posts, with `platform` identifying the source type and every item marked `UNVERIFIED`. RSS source errors are reported per publisher and do not erase successful Telegram collection. The default RSS lookback is 72 hours to reduce gaps between scheduled runs; duplicate source IDs are removed when the TBC feed is built.
+
+The discovery query set has been expanded with additional Bangladesh district/labour-rights terms, Myanmar state/region terms, South Asia, Palestine, Sudan, Sahel/DRC and Ukraine local-reporting terms. Candidate discovery remains separate from the active registry: no candidate is automatically enabled, and source identity/activity/independence must be reviewed before collection.
