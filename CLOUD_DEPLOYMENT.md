@@ -34,7 +34,7 @@ Artifacts:
 ### Coverage and verification limits
 
 - This workflow uses Telethon and Gemini only. It does not use Tavily or perform general web search.
-- It reads only configured, accessible public Telegram channels in `config/channels.json`; it does not cover every Telegram channel or all posts.
+- It reads configured accessible public channels in `config/channels.json` and also runs 18 event-keyword global searches across Telegram's publicly indexed chats. Each global query is capped at 50 results. Global search can discover posts outside the configured list, but it is query-dependent, indexed and not exhaustive.
 - The collector inspects only the most recent configured number of messages per channel and retains posts published on the requested date in Asia/Dhaka.
 - The Telethon StringSession is highly sensitive. Anyone possessing it may access the associated Telegram account. Use a dedicated account if appropriate, restrict repository access, and revoke the session if compromised.
 - Gemini summarises and structures supplied posts; it is not an independent fact-checker. Treat posts as claims, label rumours, and corroborate independently before publication.
