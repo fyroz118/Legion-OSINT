@@ -2122,6 +2122,48 @@
       "status": "UNREVIEWED_CANDIDATE",
       "enabled_for_collection": false,
       "review_status": "UNREVIEWED_CANDIDATE"
+    },
+    {
+      "username": "dvbtvnews",
+      "region": "Myanmar",
+      "language": "my",
+      "candidate_category": "independent_myanmar_newsroom_candidate",
+      "source_class": "independent_media_candidate",
+      "source_affiliation": "Democratic_Voice_of_Burma",
+      "source_identity_status": "public_channel_self_identifies_as_nonprofit_independent_newsroom",
+      "discovery_notes": "Public Telegram preview identifies DVB TV News as a non-profit Burmese media organisation committed to independent and responsible journalism. Search preview showed dated September 2026 posts; confirm current freshness before activation.",
+      "seed_source_url": "https://t.me/s/dvbtvnews",
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
+    },
+    {
+      "username": "theirrawaddyenglishedition",
+      "region": "Myanmar / Southeast Asia",
+      "language": "en",
+      "candidate_category": "independent_regional_newsroom_candidate",
+      "source_class": "independent_media_candidate",
+      "source_affiliation": "The_Irrawaddy",
+      "source_identity_status": "public_channel_linked_to_named_newsroom",
+      "discovery_notes": "Public Telegram preview identifies The Irrawaddy English Edition and describes reporting on Myanmar, neighbouring countries and Southeast Asia. Preview showed a substantial archive; verify recent posting frequency and cross-check official site links.",
+      "seed_source_url": "https://t.me/s/theirrawaddyenglishedition",
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
+    },
+    {
+      "username": "shannewsburmese",
+      "region": "Myanmar / Shan State",
+      "language": "my",
+      "candidate_category": "regional_independent_newsroom_candidate",
+      "source_class": "independent_media_candidate",
+      "source_affiliation": "Shan_Herald_Agency_for_News",
+      "source_identity_status": "public_channel_self_identifies_as_SHAN",
+      "discovery_notes": "Public Telegram preview identifies SHAN News Burmese Version and describes the Shan Herald Agency for News as a long-running regional media organisation covering eastern Myanmar. Small audience; confirm activity and official cross-link before activation.",
+      "seed_source_url": "https://t.me/shannewsburmese",
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     }
   ],
   "references": [
