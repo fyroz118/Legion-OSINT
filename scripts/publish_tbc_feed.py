@@ -10,7 +10,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "output"
 DEST = ROOT / "docs" / "feed" / "latest.json"
-MAX_POSTS = 1800
+MAX_POSTS = 1800  # Bound the public feed; collection workflow publishes from main only.
 MAX_TEXT = 1800
 
 
