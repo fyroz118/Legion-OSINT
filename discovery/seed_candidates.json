@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "source_directory": "https://tgmarket.io/countries/bd/news",
+  "source_directory": "https://tgmarket.io/countries/bd/news; https://tgscope.io/topics/politics/bangladesh; public Telegram previews and Telegram Register",
   "source_directory_observed": "2026-11-18",
-  "notice": "These are discovery leads from a public directory category listing, not endorsed or verified sources. Subscriber/category labels are directory metadata only. All candidates remain UNREVIEWED_CANDIDATE and disabled for collection until manual source review.",
+  "notice": "Discovery leads only. Political-party and movement accounts are actor-originated sources, not neutral or independent corroboration. Some identities or activity may be unverified/stale. All candidates remain UNREVIEWED_CANDIDATE and disabled for collection until manual source review.",
   "candidates": [
     {
       "username": "genzbds",
@@ -63,6 +63,62 @@
       "region": "Bangladesh",
       "language": "bn",
       "discovery_notes": "Directory-listed political/news channel. Potentially partisan actor-originated content; do not treat as independent media or corroboration."
+    },
+    {
+      "username": "albd1949",
+      "region": "Bangladesh",
+      "language": "bn",
+      "discovery_notes": "Public page and Telegram Register identify this as Bangladesh Awami League's channel; party-affiliated actor source, not independent corroboration. Confirm live identity/activity again during review.",
+      "seed_source_url": "https://t.me/s/albd1949"
+    },
+    {
+      "username": "bnpbd_org",
+      "region": "Bangladesh",
+      "language": "bn",
+      "discovery_notes": "Listed by TG Market as Bangladesh Nationalist Party-BNP; party-affiliated actor source. Verify the live public preview and operator identity before review approval.",
+      "seed_source_url": "https://tgmarket.io/countries/bd/news"
+    },
+    {
+      "username": "bjiofficial",
+      "region": "Bangladesh",
+      "language": "bn",
+      "discovery_notes": "Public channel identifies itself as Bangladesh Jamaat-e-Islami; party-affiliated actor source, not independent corroboration. Verify current public preview during review.",
+      "seed_source_url": "https://tgscope.io/topics/politics/bangladesh"
+    },
+    {
+      "username": "bjpupitcell",
+      "region": "India",
+      "language": "hi",
+      "discovery_notes": "Public Telegram preview describes a BJP Uttar Pradesh IT Cell channel. Regional party communication/actor source; do not label as national BJP headquarters or independent media.",
+      "seed_source_url": "https://t.me/bjpupitcell"
+    },
+    {
+      "username": "bjpforgujarat",
+      "region": "India",
+      "language": "gu",
+      "discovery_notes": "Public Telegram preview identifies BJP Gujarat. Regional party source; confirm operator identity and recent activity before review approval.",
+      "seed_source_url": "https://t.me/bjpforgujarat"
+    },
+    {
+      "username": "KarnatakaBJP",
+      "region": "India",
+      "language": "kn",
+      "discovery_notes": "Public Telegram preview identifies this as BJP Karnataka's official channel, but previewed posts are old. Keep as an inactive/stale review lead until current activity is confirmed.",
+      "seed_source_url": "https://t.me/s/KarnatakaBJP"
+    },
+    {
+      "username": "BJP4Keralam",
+      "region": "India",
+      "language": "ml",
+      "discovery_notes": "Public Telegram preview identifies this as BJP Keralam's official channel. Regional party source; confirm current activity and operator identity.",
+      "seed_source_url": "https://t.me/BJP4Keralam"
+    },
+    {
+      "username": "Congress_officials",
+      "region": "India",
+      "language": "en",
+      "discovery_notes": "Telegram Register identifies the channel as Indian National Congress, but its latest recorded post was 18 October 2024 and the account is not Telegram-verified. Treat identity as unconfirmed and activity as stale; review only, never represent as verified national HQ.",
+      "seed_source_url": "https://tgregister.com/channel/Congress_officials"
     }
   ]
 }
