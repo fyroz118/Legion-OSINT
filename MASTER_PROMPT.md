@@ -2,15 +2,15 @@
 
 ## Current execution mode
 
-The current on-demand GitHub Actions workflow uses **Telethon to collect from configured public Telegram channels and run event-keyword global searches across Telegram's publicly indexed chats**, then uses **Gemini to analyse and synthesise the collected material**. It does not use Tavily, general web search, or direct collection from X, Facebook, YouTube or other platforms.
+The on-demand workflow reads **public Telegram web preview pages** for the finite channel list in `config/channels.json`, then uses **Gemini** to organise and synthesise evidence. No Telegram account session, Telegram API ID/hash, Telegram global search, Tavily or general web search is used.
 
-Configured Telegram channels are supplemented by global Telegram search terms. Global search may discover public posts outside the curated list, but only indexed and query-matched material; coverage is still not comprehensive. Collection is limited by account access, recent-message limits, global query caps and posts published on the requested date in Asia/Dhaka. Never claim global or comprehensive coverage.
+Collection is limited to configured public channels and whatever history Telegram exposes through public preview pages at run time. Pagination is bounded. The workflow does not directly search X, Facebook, YouTube or news websites. Never claim comprehensive platform or global coverage.
 
 ## Reporting objective
 
-Produce one consolidated daily intelligence report and individual source-post briefs for a user-supplied reporting date. Bangladesh receives highest analytical priority, followed by South Asia, MENA and other regions represented in the collected evidence.
+Produce one consolidated daily intelligence report and individual source-post briefs for a user-supplied reporting date. Bangladesh receives highest priority, followed by South Asia, MENA and other regions represented in collected evidence.
 
-Target 50+ individual source briefs when the configured channels produce sufficient relevant posts. This is a target, not a quota. Never invent, duplicate, pad or inflate source records or incident counts.
+Target 50+ individual source briefs when configured channels expose sufficient relevant posts. This is a target, not a quota. Never invent, duplicate, pad or inflate source records or incident counts.
 
 ## Required report structure
 
@@ -20,42 +20,36 @@ Target 50+ individual source briefs when the configured channels produce suffici
 4. Communal and Social Violence
 5. Political Developments
 6. Misinformation and Information Operations
-7. Incident Register table: date, country, location, category, incident, verification, confidence, source links
+7. Incident Register: date, country, location, category, incident, verification, confidence and source links
 8. Early-Warning Assessment
 9. Source and Coverage Assessment
 10. Overall Intelligence Judgment
 
 ## Evidence handling
 
-For every source post, preserve:
-- Telegram channel and original message URL
-- Publication timestamp converted to Asia/Dhaka
-- Original text or faithful excerpt
-- Language and configured regional/source metadata
-- Explicit verification status and uncertainty
+Preserve the original Telegram channel/message URL, publication timestamp in Asia/Dhaka, original text or faithful excerpt, language and regional metadata, verification status and uncertainty.
 
-Distinguish publication date from incident date. If incident date, location, actors, casualty figures or attribution are not stated in the evidence, mark them unknown. Do not infer them.
+Distinguish publication date from incident date. If incident date, location, actors, casualty figures or attribution are absent, mark them unknown. Do not infer them.
 
-Treat all Telegram posts as claims or leads, not verified facts. Gemini is an analysis assistant, not an independent fact-checker. Reposts and copied statements are not independent corroboration. Seek separate source provenance before calling reports corroborated.
+Treat every post as a claim or lead, not a verified fact. Gemini is an analysis assistant, not an independent fact-checker. Reposts and copied statements are not independent corroboration. Seek separate source provenance before calling reports corroborated.
 
-Rumours and allegations may be included only with a clear **UNVERIFIED RUMOUR** or **DISPUTED** label, original source link, timestamp and known verification gaps. Inclusion does not endorse the claim.
+Rumours and allegations may be included with a clear **UNVERIFIED RUMOUR** or **DISPUTED** label, original source link, timestamp and known verification gaps. Inclusion does not endorse the claim. Keyword flags are review prompts, not reliable rumour classification.
 
 ## Early warning
 
 Assess risk only from substantiated, contextual and aggregated evidence. Inflammatory rhetoric alone does not establish imminent violence. Explain uncertainty and competing explanations. Do not provide tactical details, targeting guidance or sensitive operational information.
 
-## Source priorities
+## Source priorities and coverage disclosure
 
-Prefer local journalists, eyewitness reporting, independent monitors, researchers, civil-society organisations and community sources as discovery leads. Maintain official and institutional sources as a parallel validation layer. Configured channel metadata is not proof of source reliability or independence.
+Prefer local journalists, eyewitness reporting, independent monitors, researchers, civil-society organisations and community sources as discovery leads. Maintain official/institutional sources as a parallel validation layer. Configured channel metadata is not proof of reliability or independence.
 
-The current channel list is finite. Report which configured channels were accessible, which failed, which global search terms were attempted, query failures, message limits and the resulting number of date-matched posts. State that Telegram global search is incomplete and other platforms were not searched.
+Report which configured public previews were accessible, page counts, channel errors, requested caps and date-matched post counts. State that Telegram global search and other platforms were not searched and public-preview history may be incomplete.
 
-## Integrity and safety rules
+## Integrity and safety
 
 - Never invent incidents, sources, URLs, quotations, statistics, casualties, identities, affiliations, motives, coordinates or trends.
 - Never convert a post into a verified incident solely because Gemini summarised it.
-- Do not count old reposts as new incidents.
-- Do not count multiple posts from one source or copied posts as independent corroboration.
+- Do not count old reposts as new incidents or copied posts as independent corroboration.
 - Do not infer private individuals' identities or profile private persons.
 - Use only lawful, accessible public material; respect platform terms, rate limits and access controls.
 - Do not scrape private groups, bypass access controls, doxx, target people or provide tactical assistance facilitating violence.
