@@ -784,7 +784,9 @@
       "source_affiliation": "unassessed",
       "source_identity_status": "directory_listed_unverified",
       "discovery_notes": "Telemetrio India politics directory lists INTEL SAGE. Review authorship, sourcing, repost patterns and political alignment; do not assume independent OSINT standards.",
-      "seed_source_url": "https://telemetr.io/en/catalog/india/politics"
+      "seed_source_url": "https://telemetr.io/en/catalog/india/politics",
+      "baseline_reference": true,
+      "baseline_display_name": "INTEL SAGE (Intel Monk)"
     },
     {
       "username": "bheem_army",
@@ -808,7 +810,9 @@
       "discovery_notes": "Public preview identifies this as the official Telegram channel of OSINT613, covering Middle East, US and global geopolitics. Treat posts as leads; verify original sourcing, media provenance and incident details.",
       "seed_source_url": "https://t.me/s/osint613",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "baseline_reference": true,
+      "baseline_display_name": "Open Source Intel"
     },
     {
       "username": "rybar_in_english",
@@ -821,7 +825,9 @@
       "discovery_notes": "Public preview describes this as Rybar's official English Telegram channel. Conflict analysis and battlefield claims are perspective-specific and require independent corroboration.",
       "seed_source_url": "https://t.me/rybar_in_english",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "baseline_reference": true,
+      "baseline_display_name": "Rybar in English"
     },
     {
       "username": "warcabinet",
@@ -834,7 +840,9 @@
       "discovery_notes": "Public profile describes reporting, battlefield analysis and intelligence-driven conflict coverage. Publisher identity and editorial standards are not independently established; treat as an aggregator/commentary lead.",
       "seed_source_url": "https://t.me/warcabinet",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "baseline_reference": true,
+      "baseline_display_name": "WarCabinet"
     },
     {
       "username": "almayadeenenglish",
@@ -847,7 +855,9 @@
       "discovery_notes": "Public preview links to english.almayadeen.net and identifies the channel as Al Mayadeen English. Preserve its regional/editorial perspective and corroborate event claims independently.",
       "seed_source_url": "https://t.me/s/almayadeenenglish",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "baseline_reference": true,
+      "baseline_display_name": "AlMayadeen - English"
     },
     {
       "username": "alhaqnews",
@@ -860,7 +870,9 @@
       "discovery_notes": "Public preview describes an English-language Middle East/Iran/US news feed and includes forwarded material from other channels. Do not confuse it with the separate Al-Haq human-rights organisation; trace claims to original sources.",
       "seed_source_url": "https://t.me/s/alhaqnews",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "baseline_reference": true,
+      "baseline_display_name": "AlHaq News - Iran-US War Updates"
     },
     {
       "username": "geopolitics_prime",
@@ -873,7 +885,9 @@
       "discovery_notes": "Public preview identifies the channel and uses the slogan 'Read the news they hide from you'. Publisher identity, editorial standards and sourcing are unverified; classify as commentary/aggregator pending review.",
       "seed_source_url": "https://t.me/geopolitics_prime",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "baseline_reference": true,
+      "baseline_display_name": "Geopolitics Prime"
     },
     {
       "username": "societyuncensored",
@@ -886,7 +900,9 @@
       "discovery_notes": "Public preview confirms the channel title but provides limited publisher information. Review authorship, topic scope, repost patterns and sourcing before any monitoring decision.",
       "seed_source_url": "https://t.me/SocietyUncensored",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "baseline_reference": true,
+      "baseline_display_name": "Society - Uncensored"
     },
     {
       "username": "ddgeopolitics",
@@ -899,7 +915,9 @@
       "discovery_notes": "Public preview identifies DD Geopolitics and its multipolar-world framing. Treat as viewpoint-specific commentary/aggregation; trace factual claims and forwarded posts to original sources.",
       "seed_source_url": "https://t.me/s/ddgeopolitics",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "baseline_reference": true,
+      "baseline_display_name": "DD Geopolitics"
     },
     {
       "username": "basirapress",
@@ -912,7 +930,9 @@
       "discovery_notes": "Public preview describes the channel as pro-resistance research and analysis. Treat as an advocacy/viewpoint source, not independent corroboration; verify claims against primary and independent sources.",
       "seed_source_url": "https://t.me/basirapress",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "baseline_reference": true,
+      "baseline_display_name": "Basira Press"
     },
     {
       "username": "rnintel",
@@ -925,7 +945,9 @@
       "discovery_notes": "Public preview explicitly describes the channel as an intelligence aggregator from a nationalist perspective. Preserve that declared perspective in analysis; verify underlying reports independently.",
       "seed_source_url": "https://t.me/s/rnintel",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "baseline_reference": true,
+      "baseline_display_name": "Rerum Novarum | Intel, Breaking News, and Alerts"
     },
     {
       "username": "rezistancetrench",
@@ -938,7 +960,9 @@
       "discovery_notes": "Public preview describes this as an official mirror that automatically copies posts from a main channel restricted in some regions. Treat as a mirror, not an independent source; trace each post to its original channel.",
       "seed_source_url": "https://t.me/RezistanceTrench",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "baseline_reference": true,
+      "baseline_display_name": "ResistanceTrench mirror"
     },
     {
       "username": "geo_grandmasters",
