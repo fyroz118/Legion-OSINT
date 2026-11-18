@@ -1,45 +1,49 @@
 # Legion-OSINT
 
-A Bangladesh-priority, global OSINT monitoring and evidence-led intelligence reporting project. The target product is date-driven and event-specific: events define report coverage; configured Telegram channels are only one discovery layer.
+A Bangladesh-priority, global OSINT monitoring and evidence-led intelligence reporting project. Events define report coverage; configured Telegram channels are only one discovery input.
 
-## Reporting specification
-See MASTER_PROMPT.md for the ten-section daily report structure, incident extraction fields, evidence labels, source rules, date handling, coverage disclosure and safety boundaries.
+## Reporting model
+- Target 50+ individual source-lead briefs per research session when evidence supports it; never pad the count.
+- One consolidated ten-section daily intelligence report is generated from the reviewed incident ledger.
+- Bangladesh first, then the Indian subcontinent and Middle East/North Africa, with other world regions included.
+- Explicit rumour/unverified-claim discovery. Rumour-watch results remain UNVERIFIED until independently assessed.
+- Default query-attention target is approximately 70% unofficial/local/public-eyewitness discovery and 30% official/institutional discovery. This is not source classification or a credibility score.
 
-## Current architecture
-- Curated public Telegram collector (Telethon) — one source adapter, not global coverage.
-- Private Telegram command bot (python-telegram-bot).
-- SQLite source-post store with source metadata.
-- Structured incident/evidence ledger (app/incidents.py) preserving incident date, publication date, verification status, confidence, risk and source provenance.
+See MASTER_PROMPT.md for the full specification.
+
+## Architecture
+- Public-web search adapter (Tavily) for event/theme-led discovery.
+- Curated public Telegram collector (Telethon) as one additional source layer, not a channel whitelist defining all coverage.
+- Private Telegram command bot.
+- SQLite post, research-lead and incident/evidence ledgers.
 - Gemini-assisted Q&A grounded in collected records; Gemini is not an autonomous fact-checker.
 - Docker deployment scaffold for a persistent Linux host.
 
-## Target workflow
-Reporting date (Asia/Dhaka) → event-led query plan → accessible public source discovery → candidate extraction → deduplication → independent corroboration → evidence/confidence/risk assessment → ten-section report → coverage audit.
+## Commands
+- /status — stored Telegram post count and source mix
+- /daily — recent collected Telegram posts
+- /bangladesh — recent Bangladesh Telegram posts
+- /search <terms> — search collected post text
+- /ask <question> — ask Gemini about stored records
+- /research YYYY-MM-DD — expanded date-scoped public-web discovery (default 60 queries)
+- /briefs YYYY-MM-DD [limit] — up to 100 individual source-lead briefs (default 60)
+- /leads YYYY-MM-DD — candidate source links
+- /coverage YYYY-MM-DD — regional query success/failure and result counts
+- /report YYYY-MM-DD — consolidated ten-section draft from reviewed incident-ledger entries
 
-## Source priorities
-Give greater discovery attention to unofficial public sources (local journalists, eyewitnesses, independent OSINT researchers, civil-society monitors, community reporters and fact-checkers). Maintain official/institutional sources and independent newsrooms as separate parallel layers. The 70:30 unofficial-to-official attention target is not a credibility score. See SOURCE_POLICY.md.
+## Critical limitations
+This does not provide universal access to every news item or every post on Telegram, X, Facebook or YouTube. Public social material may appear only when indexed/surfaced by the provider; direct platform APIs require separate access and integration. Search results are source leads, not automatically distinct incidents or verified facts. Multiple briefs may describe one event. Deduplicate and corroborate before counting unique incidents or publishing judgments. Provider publication dates do not establish incident dates.
+
+A default 60-query basic session may consume up to 60 basic search credits. It can return fewer than 50 useful or unique leads. Volume is a target, never a reason to fabricate or amplify harmful allegations.
 
 ## Safety and integrity
-- Collect only lawful, accessible public material; respect platform terms, rate limits and access controls.
-- No private-group scraping, access-control bypass, doxxing, private-person profiling, targeting or operational assistance facilitating violence.
-- Social posts are leads, not verified facts. Reposts and syndication are not independent corroboration.
-- Preserve source URLs and timestamps; distinguish event time, publication time and collection time.
+- Use only lawful, accessible public material; respect terms, rate limits and access controls.
+- No private-group scraping, access-control bypass, doxxing, private-person profiling, targeting or tactical assistance facilitating violence.
+- Preserve source URLs and timestamps; distinguish event, publication and collection dates.
+- Treat rumours and social posts as unverified claims. Clearly label them; do not state allegations as fact.
+- Reposts and syndication are not independent corroboration.
 - Never invent sources, incidents, casualties, locations, identities or confidence.
-- Explicitly disclose platform/language/geographic gaps. Do not claim comprehensive coverage.
-- Early-warning assessments are aggregate and uncertainty-aware; rhetoric alone does not prove imminent violence.
+- Disclose platform, language and geographic gaps. Do not claim comprehensive coverage.
 
-## Commands currently implemented
-- /status — stored post count and source mix
-- /daily — recent collected posts (not yet the curated daily intelligence report)
-- /bangladesh — recent Bangladesh posts
-- /search <terms> — search stored post text
-- /ask <question> — Gemini Q&A over stored records
-- /report YYYY-MM-DD — ten-section draft from the reviewed incident ledger; not live research
-- /research YYYY-MM-DD — date-scoped public-web discovery (requires TAVILY_API_KEY)
-- /leads YYYY-MM-DD — candidate links saved from research
-- /coverage YYYY-MM-DD — query success/failure and result counts
-
-The public-web research adapter uses Tavily date filters and stores search results as unverified leads. It does not directly search all X, Facebook, YouTube or Telegram content, and provider date filters do not prove incident dates. See RESEARCH_ADAPTER.md. The ten-section report still requires analyst-reviewed incident-ledger entries; search leads are not automatically promoted to incidents. No live provider search, cloud deployment or 24/7 uptime is claimed until credentials and runtime deployment are configured and tested.
-
-## Setup and deployment
-See CLOUD_DEPLOYMENT.md. Keep credentials in a private environment only; never commit .env, Telegram session files or API keys. A first-time Telethon user-session authorization requires secure interactive login on the host.
+## Setup
+See CLOUD_DEPLOYMENT.md. Set TAVILY_API_KEY, TELEGRAM_BOT_TOKEN and TELEGRAM_ALLOWED_USER_IDS in private deployment environment variables. Never commit credentials or Telegram session files. No live search, cloud deployment or 24/7 uptime is claimed until credentials and runtime are configured and tested.
