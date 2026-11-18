@@ -71,6 +71,18 @@
       "notes": "Public The Daily Star Bangladesh Telegram channel; English-language national reporting.",
       "source_class": "independent_media",
       "monitoring_weight": "standard"
+    },
+    {
+      "username": "OCHA_Ukraine",
+      "priority": "europe",
+      "language": "uk",
+      "source_type": "humanitarian_coordination",
+      "source_affiliation": "UN_OCHA_Ukraine",
+      "default_evidence_status": "UNVERIFIED",
+      "enabled": true,
+      "notes": "Verified public Telegram channel identifying itself as the official UN Office for the Coordination of Humanitarian Affairs in Ukraine; institutional statements remain claims about reported events, not automatic independent confirmation.",
+      "source_class": "official_institutional",
+      "monitoring_weight": "standard"
     }
   ]
 }
