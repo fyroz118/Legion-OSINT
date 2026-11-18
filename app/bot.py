@@ -148,23 +148,34 @@ async def briefs_cmd(update, context):
         f"Individual source-lead briefs: {len(rows)} returned for {report_date}. "
         "These are source-specific leads, not necessarily unique incidents. All new leads are UNVERIFIED."
     )
+    rendered = []
     for index, row in enumerate(rows, 1):
         title = (row.get("title") or "Untitled source result").replace("<", "‹").replace(">", "›")
-        snippet = " ".join((row.get("snippet") or "No snippet supplied by provider.").split())[:650]
+        snippet = " ".join((row.get("snippet") or "No snippet supplied by provider.").split())[:500]
         focus = row.get("source_focus") or "unknown"
         claim = row.get("claim_type") or "EVENT_NEWS"
-        message = (
-            f"BRIEF {index:02d} | {claim}\n"
-            f"Region: {row.get('region') or 'Unknown'}\n"
-            f"Source: {title}\n"
-            f"Published: {row.get('published_date') or 'Unknown'}\n"
-            f"Source class: {row.get('source_class') or 'unknown'} (review required)\n"
-            f"Search focus: {focus}\n"
-            f"Status: UNVERIFIED — source claim only\n"
-            f"Summary: {snippet}\n"
+        rendered.append(
+            f"BRIEF {index:02d} | {claim}\\n"
+            f"Region: {row.get('region') or 'Unknown'}\\n"
+            f"Source: {title}\\n"
+            f"Published: {row.get('published_date') or 'Unknown'}\\n"
+            f"Source class: {row.get('source_class') or 'unknown'} (review required)\\n"
+            f"Search focus: {focus}\\n"
+            f"Status: UNVERIFIED — source claim only\\n"
+            f"Summary: {snippet}\\n"
             f"Original: {row['source_url']}"
         )
-        await update.effective_message.reply_text(message[:3900], disable_web_page_preview=True)
+    # Batch several individual briefs per Telegram message to avoid flooding the chat.
+    batch = ""
+    for brief in rendered:
+        candidate = f"{batch}\\n\\n{brief}" if batch else brief
+        if len(candidate) > 3500 and batch:
+            await update.effective_message.reply_text(batch, disable_web_page_preview=True)
+            batch = brief
+        else:
+            batch = candidate
+    if batch:
+        await update.effective_message.reply_text(batch, disable_web_page_preview=True)
 
 
 async def leads_cmd(update, context):
