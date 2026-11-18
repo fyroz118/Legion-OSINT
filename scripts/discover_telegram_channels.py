@@ -377,6 +377,16 @@ def main():
             })
         time.sleep(0.25)
 
+    active_keys = set()
+    active_path = Path("config/channels.json")
+    if active_path.exists():
+        try:
+            active_config = json.loads(active_path.read_text(encoding="utf-8"))
+            active_keys = {str(item.get("username", "")).lower()
+                           for item in active_config.get("channels", [])}
+        except Exception:
+            active_keys = set()
+
     provider_stats = {name: {"queries_attempted": 0, "queries_with_links": 0,
                              "links_found": 0, "errors": []}
                       for name in ("duckduckgo", "bing", "google")}
@@ -445,8 +455,10 @@ def main():
         row.update(inspect_preview(row["username"]))
         row["source_class"] = row.get("source_class") or "unknown"
         row["source_affiliation"] = row.get("source_affiliation") or "unassessed"
-        row["review_status"] = "UNREVIEWED_CANDIDATE"
-        row["enabled_for_collection"] = False
+        is_active = row["username"].lower() in active_keys
+        row["review_status"] = "ALREADY_CONFIGURED" if is_active else "UNREVIEWED_CANDIDATE"
+        row["collection_status"] = "ACTIVE_ALLOWLIST" if is_active else "NOT_ENABLED"
+        row["enabled_for_collection"] = is_active
         time.sleep(0.2)
     for row in candidates[MAX_PREVIEW_CHECKS:]:
         row.setdefault("accessible", None)
@@ -454,8 +466,10 @@ def main():
         row.setdefault("description", "")
         row["source_class"] = row.get("source_class") or "unknown"
         row["source_affiliation"] = row.get("source_affiliation") or "unassessed"
-        row["review_status"] = "UNREVIEWED_CANDIDATE"
-        row["enabled_for_collection"] = False
+        is_active = row["username"].lower() in active_keys
+        row["review_status"] = "ALREADY_CONFIGURED" if is_active else "UNREVIEWED_CANDIDATE"
+        row["collection_status"] = "ACTIVE_ALLOWLIST" if is_active else "NOT_ENABLED"
+        row["enabled_for_collection"] = is_active
 
     search_candidates_this_run = len(set(found) - seed_keys)
     providers_with_success = sum(1 for stats in provider_stats.values()
@@ -489,7 +503,7 @@ def main():
     (OUT / "telegram_channel_candidates.json").write_text(
         json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     fields = ["username", "candidate_url", "title", "description", "accessible",
-              "source_class", "source_affiliation", "candidate_category", "source_identity_status", "review_status", "enabled_for_collection",
+              "source_class", "source_affiliation", "candidate_category", "source_identity_status", "review_status", "collection_status", "enabled_for_collection",
               "discovery_regions", "discovery_languages", "discovery_queries", "discovery_providers", "discovery_notes", "seed_source_url", "directory_source_urls"]
     with (OUT / "telegram_channel_candidates.csv").open("w", newline="", encoding="utf-8-sig") as handle:
         writer = csv.DictWriter(handle, fieldnames=fields, extrasaction="ignore")
