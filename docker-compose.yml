@@ -1,0 +1,30 @@
+services:
+  bot:
+    build: .
+    container_name: legion-osint-bot
+    command: ["python", "-m", "app.bot"]
+    env_file:
+      - .env
+    environment:
+      DATABASE_PATH: /app/data/legion_osint.sqlite3
+      TELETHON_SESSION_PATH: /app/data/legion_osint_user
+    volumes:
+      - legion_data:/app/data
+    restart: unless-stopped
+
+  collector:
+    build: .
+    container_name: legion-osint-collector
+    command: ["python", "-m", "app.worker"]
+    env_file:
+      - .env
+    environment:
+      DATABASE_PATH: /app/data/legion_osint.sqlite3
+      TELETHON_SESSION_PATH: /app/data/legion_osint_user
+    volumes:
+      - legion_data:/app/data
+      - ./config:/app/config:ro
+    restart: unless-stopped
+
+volumes:
+  legion_data:
