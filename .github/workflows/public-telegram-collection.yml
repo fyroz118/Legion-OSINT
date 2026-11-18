@@ -4,6 +4,8 @@ on:
   push:
     paths:
       - "config/channels.json"
+      - "config/news_sources.json"
+      - "scripts/collect_public_rss.py"
       - "scripts/collect_public_telegram.py"
       - "scripts/publish_tbc_feed.py"
       - ".github/workflows/public-telegram-collection.yml"
@@ -36,6 +38,10 @@ jobs:
           COLLECT_LIMIT_PER_CHANNEL: "100"
           PYTHONUNBUFFERED: "1"
         run: python scripts/collect_public_telegram.py
+      - name: Collect public RSS and Atom news headlines
+        env:
+          PYTHONUNBUFFERED: "1"
+        run: python scripts/collect_public_rss.py
       - name: Build bounded public-source feed for TBC
         run: python scripts/publish_tbc_feed.py
       - name: Publish collection artifact for audit and fallback
