@@ -19,7 +19,7 @@ class ReportDraftTests(unittest.TestCase):
 
     def test_empty_report_is_explicitly_a_draft(self):
         report = build_report_draft("2026-11-18")
-        self.assertIn("DRAFT FROM INCIDENT LEDGER", report)
+        self.assertIn("DRAFT FROM ANALYST-APPROVED INCIDENT LEDGER", report)
         self.assertIn("Empty sections are not evidence", report)
         self.assertIn("## Overall Intelligence Judgment", report)
 
@@ -29,6 +29,8 @@ class ReportDraftTests(unittest.TestCase):
             "country": "Bangladesh", "category": "civil_unrest",
             "description": "A demonstration reported by a public source."
         })
+        from app.incident_workflow import set_incident_workflow_status
+        set_incident_workflow_status("BD-001", "APPROVED", "Analyst reviewed for report inclusion.")
         report = build_report_draft("2026-11-18")
         self.assertIn("A demonstration reported by a public source.", report)
         self.assertIn("Bangladesh", report)
