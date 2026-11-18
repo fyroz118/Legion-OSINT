@@ -368,35 +368,40 @@ if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
         bot.sendMessage("Usage: /incidentdraft POST_ID | INCIDENT_ID | COUNTRY | CATEGORY | DESCRIPTION")
     else:
         post_id, incident_id, country, category, description = parts
-        review = Bot.getData("legion_review_" + post_id)
-        if not review or review.get("status") != "REVIEWED" or review.get("source_class") == "unknown":
-            bot.sendMessage("Only a REVIEWED post with an analyst-assigned source class can seed a draft.")
+        existing = Bot.getData("legion_incident_" + incident_id)
+        if existing:
+            bot.sendMessage("That incident ID already exists. Use a new ID; existing analyst records will not be overwritten.")
+        elif not incident_id or len(incident_id) > 64 or " " in incident_id:
+            bot.sendMessage("Use a unique incident ID of up to 64 characters without spaces.")
         else:
-            try:
-                response = HTTP.get(FEED_URL)
-                if response.status_code != 200:
-                    bot.sendMessage("The public collection feed is temporarily unavailable. Try again later.")
-                else:
-                    data = response.json()
-                    posts = data.get("posts", [])
-                    summary = data.get("summary", {})
-                    source = None
-                    for post in posts:
-                        if str(post.get("id", "")) == post_id:
-                            source = post
-                            break
-                    if not source:
-                        bot.sendMessage("Source post not found in current feed.")
+            review = Bot.getData("legion_review_" + post_id)
+            if not review or review.get("status") != "REVIEWED" or review.get("source_class") == "unknown":
+                bot.sendMessage("Only a REVIEWED post with an analyst-assigned source class can seed a draft.")
+            else:
+                try:
+                    response = HTTP.get(FEED_URL)
+                    if response.status_code != 200:
+                        bot.sendMessage("The public collection feed is temporarily unavailable. Try again later.")
                     else:
-                        incident = {"incident_id": incident_id, "country": country, "category": category, "description": description, "verification_status": "UNVERIFIED", "confidence": "Low", "risk_level": "Low", "inclusion_status": "DRAFT", "approval_rationale": "", "sources": [{"post_id": post_id, "source_url": source.get("source_url"), "source_name": source.get("channel_username"), "source_class": review.get("source_class"), "source_role": "lead", "independence_group": source.get("channel_username")} ]}
-                        Bot.saveData("legion_incident_" + incident_id, incident)
-                        ids = Bot.getData("legion_incident_ids") or []
-                        if incident_id not in ids:
-                            ids.append(incident_id)
-                        Bot.saveData("legion_incident_ids", ids)
-                        bot.sendMessage("Incident draft created. Verification remains UNVERIFIED; confidence and risk remain Low. No incident date or precise location was inferred.")
-            except Exception:
-                bot.sendMessage("Could not create incident draft.")
+                        data = response.json()
+                        posts = data.get("posts", [])
+                        source = None
+                        for post in posts:
+                            if str(post.get("id", "")) == post_id:
+                                source = post
+                                break
+                        if not source:
+                            bot.sendMessage("Source post not found in current feed.")
+                        else:
+                            incident = {"incident_id": incident_id, "country": country, "category": category, "description": description, "verification_status": "UNVERIFIED", "confidence": "Low", "risk_level": "Low", "inclusion_status": "DRAFT", "approval_rationale": "", "sources": [{"post_id": post_id, "source_url": source.get("source_url"), "source_name": source.get("channel_username"), "source_class": review.get("source_class"), "source_role": "lead", "independence_group": source.get("channel_username")}]}
+                            Bot.saveData("legion_incident_" + incident_id, incident)
+                            ids = Bot.getData("legion_incident_ids") or []
+                            if incident_id not in ids:
+                                ids.append(incident_id)
+                            Bot.saveData("legion_incident_ids", ids)
+                            bot.sendMessage("Incident draft created. Verification remains UNVERIFIED; confidence and risk remain Low. No incident date or precise location was inferred.")
+                except Exception:
+                    bot.sendMessage("Could not create incident draft.")
 else:
     bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
 ---
