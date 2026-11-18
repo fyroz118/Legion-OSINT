@@ -5,6 +5,8 @@ import csv, json, os, re, sys, time
 from datetime import datetime, timezone
 from html.parser import HTMLParser
 from pathlib import Path
+# Ensure the repository root is importable when this file is run by path from GitHub Actions.
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from urllib.request import Request, urlopen
 from urllib.parse import urlencode
 from zoneinfo import ZoneInfo
