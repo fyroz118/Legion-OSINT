@@ -13,13 +13,29 @@ for folder in ("app", "scripts"):
         except SyntaxError as exc:
             errors.append(f"Python syntax error in {path.relative_to(ROOT)}: {exc}")
 
-for relative in ("config/channels.json", "config/keywords.json", "config/source_registry.json",
+for relative in ("config/channels.json", "config/keywords.json", "discovery/seed_candidates.json", "config/source_registry.json",
                  "config/source_discovery_queue.json", "config/research.json", "config/news_sources.json"):
     path = ROOT / relative
     try:
         json.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as exc:
         errors.append(f"Invalid JSON in {relative}: {exc}")
+
+try:
+    seed_data = json.loads((ROOT / "discovery/seed_candidates.json").read_text(encoding="utf-8"))
+    seed_candidates = seed_data.get("candidates", [])
+    seed_usernames = [item.get("username", "").lower() for item in seed_candidates]
+    if len(seed_usernames) != len(set(seed_usernames)):
+        errors.append("Duplicate usernames in discovery/seed_candidates.json")
+    for item in seed_candidates:
+        if not item.get("username") or not item.get("region") or not item.get("language"):
+            errors.append("Seed candidate missing username, region or language")
+        if item.get("review_status", "UNREVIEWED_CANDIDATE") != "UNREVIEWED_CANDIDATE":
+            errors.append(f"Seed candidate @{item.get('username')} must remain unreviewed in the seed file")
+        if item.get("enabled_for_collection", False):
+            errors.append(f"Seed candidate @{item.get('username')} must not be enabled from the seed file")
+except (OSError, KeyError, TypeError, json.JSONDecodeError) as exc:
+    errors.append(f"Invalid discovery seed registry: {exc}")
 
 try:
     channels = json.loads((ROOT / "config/channels.json").read_text(encoding="utf-8"))["channels"]
