@@ -81,7 +81,8 @@ def channel_username(href):
         if p.netloc.lower().split(":")[0] not in ("t.me","www.t.me","telegram.me","www.telegram.me"): return None
         bits=[x for x in p.path.split("/") if x]
         if not bits: return None
-        if bits[0] in ("s","joinchat","addstickers","proxy","iv","share","c","faq","blog"): return None
+        if bits[0] == "s": bits=bits[1:]
+        if not bits or bits[0] in ("joinchat","addstickers","proxy","iv","share","c","faq","blog"): return None
         name=bits[0].lstrip("@")
         if not re.fullmatch(r"[A-Za-z][A-Za-z0-9_]{3,31}",name): return None
         return name
