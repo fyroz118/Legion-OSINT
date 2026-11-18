@@ -1,54 +1,41 @@
 # Legion-OSINT
 
-A local-first, evidence-aware OSINT monitoring starter for curated accessible public Telegram sources, with a private Telegram command bot and Gemini-assisted Q&A.
+A Bangladesh-priority, global OSINT monitoring and evidence-led intelligence reporting project. The target product is date-driven and event-specific: events define report coverage; configured Telegram channels are only one discovery layer.
 
-## Scope
-Bangladesh-first, global coverage; English primary with Bangla and other local languages supported as source data. Reporting timezone target: Asia/Dhaka.
+## Reporting specification
+See MASTER_PROMPT.md for the ten-section daily report structure, incident extraction fields, evidence labels, source rules, date handling, coverage disclosure and safety boundaries.
 
-## Safety and collection boundaries
-- Collect only from a curated allowlist of accessible public channels.
-- Respect Telegram terms, rate limits, access controls, and local law.
-- No private-group scraping, access-control bypass, doxxing, private-person profiling, targeting, or assistance that facilitates violence.
-- Treat social posts as leads, not verified facts. Repetition is not independent corroboration.
-- Preserve source links, publication timestamps, collection timestamps, and uncertainty.
-- Gemini summarizes retrieved records; it is not an autonomous fact-checker.
+## Current architecture
+- Curated public Telegram collector (Telethon) — one source adapter, not global coverage.
+- Private Telegram command bot (python-telegram-bot).
+- SQLite source-post store with source metadata.
+- Structured incident/evidence ledger (app/incidents.py) preserving incident date, publication date, verification status, confidence, risk and source provenance.
+- Gemini-assisted Q&A grounded in collected records; Gemini is not an autonomous fact-checker.
+- Docker deployment scaffold for a persistent Linux host.
 
-## Setup
-1. Install Python 3.10+.
-2. Install dependencies: `pip install -r requirements.txt`.
-3. Copy `.env.example` to a local `.env` and fill credentials.
-4. Add reviewed public channel usernames to `config/channels.json`.
-5. Set your own numeric Telegram user ID in `TELEGRAM_ALLOWED_USER_IDS`.
-6. Run `python -m app.collector` once, then `python -m app.bot`.
+## Target workflow
+Reporting date (Asia/Dhaka) → event-led query plan → accessible public source discovery → candidate extraction → deduplication → independent corroboration → evidence/confidence/risk assessment → ten-section report → coverage audit.
 
-Get Telegram API credentials from https://my.telegram.org, a bot token from @BotFather, and a Gemini key from Google AI Studio. Never paste credentials into chat or commit `.env`, Telegram session files, or API keys.
+## Source priorities
+Give greater discovery attention to unofficial public sources (local journalists, eyewitnesses, independent OSINT researchers, civil-society monitors, community reporters and fact-checkers). Maintain official/institutional sources and independent newsrooms as separate parallel layers. The 70:30 unofficial-to-official attention target is not a credibility score. See SOURCE_POLICY.md.
 
-## Commands
-- `/status` — database count
-- `/daily` — recent global posts
-- `/bangladesh` — Bangladesh posts
-- `/search <terms>` — text search
-- `/ask <question>` — Gemini answer grounded in collected records
-- `/help` — help
+## Safety and integrity
+- Collect only lawful, accessible public material; respect platform terms, rate limits and access controls.
+- No private-group scraping, access-control bypass, doxxing, private-person profiling, targeting or operational assistance facilitating violence.
+- Social posts are leads, not verified facts. Reposts and syndication are not independent corroboration.
+- Preserve source URLs and timestamps; distinguish event time, publication time and collection time.
+- Never invent sources, incidents, casualties, locations, identities or confidence.
+- Explicitly disclose platform/language/geographic gaps. Do not claim comprehensive coverage.
+- Early-warning assessments are aggregate and uncertainty-aware; rhetoric alone does not prove imminent violence.
 
-## Evidence standard
-Use `VERIFIED` only when independent corroboration is documented; otherwise retain `CREDIBLE_LEAD`, `DISPUTED`, or `UNVERIFIED`. Use `MISLEADING_FALSE` only when evidence demonstrates it. Keep incident date distinct from post date. Do not infer imminent violence from rhetoric alone.
+## Commands currently implemented
+- /status — stored post count and source mix
+- /daily — recent collected posts (not yet the curated daily intelligence report)
+- /bangladesh — recent Bangladesh posts
+- /search <terms> — search stored post text
+- /ask <question> — Gemini Q&A over stored records
 
-## Current limitations
-This is a starter scaffold: one-shot collection, simple text search, no scheduler, no automated language identification, no validated incident extraction, no comprehensive Telegram coverage, and no analyst-grade verification. Start with 2–5 sources and validate carefully.
+Important: The ten-section research/reporting workflow is a specification and foundation, not yet a fully automated capability. The current bot does not search the open web or all X, Facebook, YouTube and Telegram content. A research/search provider and platform-specific authorized adapters are still required. No live collection, report automation, cloud deployment or 24/7 uptime is claimed.
 
-## Layout
-```
-app/       collector, database, Gemini helper, Telegram bot
-config/    public channel allowlist and keyword lists
-.env.example
-requirements.txt
-```
-
-This is not a validated intelligence product and does not guarantee comprehensive Telegram coverage, accurate geolocation, or verified incident reporting.
-
-## Beginner Android setup
-See [ANDROID_SETUP.md](ANDROID_SETUP.md) for a step-by-step Pydroid 3 guide. The repository also includes `app/setup_check.py` and `run_preflight.py` for a local configuration check. The checker reports whether required settings are present but never prints their values.
-
-## Cloud deployment
-A Docker-based split deployment (private Telegram bot + scheduled collector) is provided in [CLOUD_DEPLOYMENT.md](CLOUD_DEPLOYMENT.md), with `Dockerfile` and `docker-compose.yml`. Persistent storage is required for the SQLite database and Telethon session. First-time Telethon authorization requires a secure interactive terminal; a bot token alone cannot authorize the user-session collector.
+## Setup and deployment
+See CLOUD_DEPLOYMENT.md. Keep credentials in a private environment only; never commit .env, Telegram session files or API keys. A first-time Telethon user-session authorization requires secure interactive login on the host.
