@@ -12,7 +12,9 @@ from app.report_builder import build_report_draft
 from app.research import (run_research, get_research_leads, get_research_coverage,
                           review_queue, review_lead, link_reviewed_lead_to_incident,
                           extract_event_candidates, suggest_duplicate_candidates)
-from app.incident_workflow import (create_incident_draft_from_lead,\n                                   set_incident_workflow_status,\n                                   get_incident_workflow_queue)
+from app.incident_workflow import (create_incident_draft_from_lead,
+                                   set_incident_workflow_status,
+                                   get_incident_workflow_queue)
 
 load_dotenv()
 TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "")
