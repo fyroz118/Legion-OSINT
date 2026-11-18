@@ -10,7 +10,8 @@ from app.database import initialize, count_posts, search_posts, source_mix_count
 from app.gemini_assistant import ask
 from app.report_builder import build_report_draft
 from app.research import (run_research, get_research_leads, get_research_coverage,
-                          review_queue, review_lead, link_reviewed_lead_to_incident,\n                          extract_event_candidates, suggest_duplicate_candidates)
+                          review_queue, review_lead, link_reviewed_lead_to_incident,
+                          extract_event_candidates, suggest_duplicate_candidates)
 
 load_dotenv()
 TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "")
