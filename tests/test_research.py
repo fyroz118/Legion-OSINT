@@ -106,7 +106,7 @@ class ResearchTests(unittest.TestCase):
             independence_group="independent-outlet-b"
         ))
         from app.incidents import get_report_incidents
-        self.assertEqual(len(get_report_incidents("2026-11-18")[0]["sources"]), 1)
+        self.assertEqual(len(get_report_incidents("2026-11-18")[0]["sources"]), 2)
 
     def test_duplicate_decision_requires_existing_other_lead(self):
         from app.research import review_lead
