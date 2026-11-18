@@ -14,7 +14,7 @@ for folder in ("app", "scripts"):
             errors.append(f"Python syntax error in {path.relative_to(ROOT)}: {exc}")
 
 for relative in ("config/channels.json", "config/keywords.json", "config/source_registry.json",
-                 "config/source_discovery_queue.json", "config/research.json"):
+                 "config/source_discovery_queue.json", "config/research.json", "config/news_sources.json"):
     path = ROOT / relative
     try:
         json.loads(path.read_text(encoding="utf-8"))
@@ -37,6 +37,17 @@ try:
                 errors.append(f"Missing {required} for Telegram channel entry")
 except (OSError, KeyError, TypeError, json.JSONDecodeError) as exc:
     errors.append(f"Invalid Telegram source registry: {exc}")
+
+try:
+    news_sources = json.loads((ROOT / "config/news_sources.json").read_text(encoding="utf-8"))["sources"]
+    source_ids = [item["source_id"] for item in news_sources]
+    if len(source_ids) != len(set(source_ids)):
+        errors.append("Duplicate source_id values in config/news_sources.json")
+    for item in news_sources:
+        if not item.get("publisher_name") or not item.get("feed_url", "").startswith("https://"):
+            errors.append(f"Invalid public RSS source entry: {item.get('source_id', 'unknown')}")
+except (OSError, KeyError, TypeError, json.JSONDecodeError) as exc:
+    errors.append(f"Invalid RSS source registry: {exc}")
 
 if errors:
     for error in errors:
