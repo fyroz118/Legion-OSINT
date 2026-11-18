@@ -1757,6 +1757,19 @@
       "seed_source_url": "https://t.me/revealing_the_truths",
       "status": "UNREVIEWED_CANDIDATE",
       "enabled_for_collection": false
+    },
+    {
+      "username": "warcorrespondent107",
+      "region": "Global",
+      "language": "en",
+      "candidate_category": "conflict_news_aggregator_candidate",
+      "source_class": "conflict_news_aggregator_candidate",
+      "source_affiliation": "unassessed_directory_listed_source",
+      "source_identity_status": "public_directory_match",
+      "discovery_notes": "Directory-listed conflict updates and military-operation claims; verify independently.",
+      "seed_source_url": "https://t.me/warcorrespondent107",
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false
     }
   ],
   "references": [
