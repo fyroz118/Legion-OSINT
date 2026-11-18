@@ -328,7 +328,7 @@ def main():
     ]
     payload = {
         "generated_at_utc": stamp,
-        "discovery_method": "Parallel public web-index search (DuckDuckGo, Bing, Google) for public t.me links",
+        "discovery_method": "Public web-index search (DuckDuckGo, Bing, Google) plus unreviewed public-directory seed leads",
         "queries_attempted_per_provider": len(QUERIES),
         "provider_diagnostics": provider_stats,
         "providers_returning_telegram_links": providers_with_success,
@@ -345,7 +345,7 @@ def main():
         json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     fields = ["username", "candidate_url", "title", "description", "accessible",
               "source_class", "source_affiliation", "review_status", "enabled_for_collection",
-              "discovery_regions", "discovery_languages", "discovery_queries", "discovery_providers"]
+              "discovery_regions", "discovery_languages", "discovery_queries", "discovery_providers", "discovery_notes", "seed_source_url"]
     with (OUT / "telegram_channel_candidates.csv").open("w", newline="", encoding="utf-8-sig") as handle:
         writer = csv.DictWriter(handle, fieldnames=fields, extrasaction="ignore")
         writer.writeheader()
