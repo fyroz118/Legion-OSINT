@@ -331,6 +331,10 @@ def main():
                              ("discovery_providers", "tgmarket_public_directory")):
             if value and value not in row[field]:
                 row[field].append(value)
+        row["candidate_category"] = seed.get("candidate_category", "unclassified_candidate")
+        row["source_class"] = seed.get("source_class", "unknown")
+        row["source_affiliation"] = seed.get("source_affiliation", "unassessed")
+        row["source_identity_status"] = seed.get("source_identity_status", "unassessed")
         row["discovery_notes"] = seed.get("discovery_notes", "Directory listing only; identity, role and reliability unverified.")
         row["seed_source_url"] = seed.get("seed_source_url", "https://tgmarket.io/countries/bd/news")
 
@@ -480,7 +484,7 @@ def main():
     (OUT / "telegram_channel_candidates.json").write_text(
         json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     fields = ["username", "candidate_url", "title", "description", "accessible",
-              "source_class", "source_affiliation", "review_status", "enabled_for_collection",
+              "source_class", "source_affiliation", "candidate_category", "source_identity_status", "review_status", "enabled_for_collection",
               "discovery_regions", "discovery_languages", "discovery_queries", "discovery_providers", "discovery_notes", "seed_source_url"]
     with (OUT / "telegram_channel_candidates.csv").open("w", newline="", encoding="utf-8-sig") as handle:
         writer = csv.DictWriter(handle, fieldnames=fields, extrasaction="ignore")
