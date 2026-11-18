@@ -57,7 +57,7 @@ async def help_cmd(update, context):
             "/reviewqueue YYYY-MM-DD — analyst source-review queue\n"
             "/reviewlead ID reviewed|rejected|duplicate [source_class] [duplicate_ID] — review a lead\n"
             "/candidates YYYY-MM-DD [limit] — conservative candidates and duplicate suggestions\n"
-            "/incidentdraft LEAD_ID INCIDENT_ID COUNTRY CATEGORY SOURCE_GROUP description words... — create DRAFT\n"
+            "/incidentdraft LEAD_ID INCIDENT_ID COUNTRY CATEGORY SOURCE_GROUP INCIDENT_DATE LOCATION description... — create DRAFT\n"
             "/incidentqueue YYYY-MM-DD — list DRAFT/APPROVED/REJECTED incidents\n"
             "/approveincident INCIDENT_ID approved|rejected rationale words... — analyst inclusion decision\n"
             "/linklead LEAD_ID INCIDENT_ID [lead|corroboration|contradiction] — attach reviewed source\n"
@@ -374,19 +374,23 @@ async def linklead_cmd(update, context):
 async def incidentdraft_cmd(update, context):
     if not await gate(update):
         return
-    if len(context.args) < 6:
+    if len(context.args) < 8:
         await update.message.reply_text(
-            "Usage: /incidentdraft LEAD_ID INCIDENT_ID COUNTRY CATEGORY SOURCE_GROUP description words...\n"
-            "Use underscores for multiword country/category/source-group values. The lead must already be REVIEWED and classified."
+            "Usage: /incidentdraft LEAD_ID INCIDENT_ID COUNTRY CATEGORY SOURCE_GROUP INCIDENT_DATE LOCATION description words...\\n"
+            "Use YYYY-MM-DD for a known incident date, otherwise -. Use underscores for multiword values; use - for unknown location. "
+            "The lead must already be REVIEWED and classified."
         )
         return
     try:
         lead_id = int(context.args[0])
-        incident_id, country, category, source_group = context.args[1:5]
-        description = " ".join(context.args[5:])
+        incident_id, country, category, source_group, incident_date, location = context.args[1:7]
+        description = " ".join(context.args[7:])
         create_incident_draft_from_lead(
             lead_id, incident_id, country.replace("_", " "),
-            category, description, independence_group=source_group
+            category, description,
+            incident_datetime=None if incident_date == "-" else incident_date,
+            location_text=None if location == "-" else location.replace("_", " "),
+            independence_group=source_group
         )
     except (ValueError, TypeError) as exc:
         await update.message.reply_text(f"Incident draft not created: {exc}")
