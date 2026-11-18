@@ -109,6 +109,41 @@ QUERIES = [
 
 ]
 
+
+DIRECTORY_SOURCES = [
+{"url":"https://tgmarket.io/countries/bd/news","region":"Bangladesh","language":"bn","provider":"tgmarket"},
+{"url":"https://tgmarket.io/countries/bd/politics","region":"Bangladesh","language":"bn","provider":"tgmarket"},
+{"url":"https://tgmarket.io/countries/in/news","region":"India","language":"hi","provider":"tgmarket"},
+{"url":"https://tgmarket.io/countries/in/politics","region":"India","language":"hi","provider":"tgmarket"},
+{"url":"https://tgmarket.io/countries/mm/news","region":"Myanmar","language":"my","provider":"tgmarket"},
+{"url":"https://tgmarket.io/countries/mm/politics","region":"Myanmar","language":"my","provider":"tgmarket"},
+{"url":"https://tgmarket.io/countries/pk/news","region":"Pakistan","language":"ur","provider":"tgmarket"},
+{"url":"https://tgmarket.io/countries/lk/news","region":"Sri Lanka","language":"si","provider":"tgmarket"},
+{"url":"https://tgmarket.io/countries/np/news","region":"Nepal","language":"ne","provider":"tgmarket"},
+{"url":"https://tgmarket.io/countries/af/news","region":"Afghanistan","language":"fa","provider":"tgmarket"},
+{"url":"https://tgmarket.io/countries/ua/news","region":"Ukraine","language":"uk","provider":"tgmarket"},
+{"url":"https://tgmarket.io/countries/ps/news","region":"Palestine","language":"ar","provider":"tgmarket"},
+{"url":"https://tgmarket.io/countries/sd/news","region":"Sudan","language":"ar","provider":"tgmarket"},
+{"url":"https://tgmarket.io/countries/et/news","region":"Ethiopia","language":"am","provider":"tgmarket"},
+{"url":"https://tgmarket.io/countries/lb/news","region":"Lebanon","language":"ar","provider":"tgmarket"},
+{"url":"https://tgmarket.io/countries/sy/news","region":"Syria","language":"ar","provider":"tgmarket"},
+{"url":"https://tgmarket.io/countries/ye/news","region":"Yemen","language":"ar","provider":"tgmarket"},
+{"url":"https://tgmarket.io/countries/ng/news","region":"Nigeria","language":"en","provider":"tgmarket"},
+{"url":"https://tgmarket.io/countries/ke/news","region":"Kenya","language":"en","provider":"tgmarket"},
+{"url":"https://tgmarket.io/countries/za/news","region":"South Africa","language":"en","provider":"tgmarket"},
+{"url":"https://tgmarket.io/countries/id/news","region":"Indonesia","language":"id","provider":"tgmarket"},
+{"url":"https://tgmarket.io/countries/th/news","region":"Thailand","language":"th","provider":"tgmarket"},
+{"url":"https://tgmarket.io/countries/ve/news","region":"Venezuela","language":"es","provider":"tgmarket"},
+{"url":"https://tgmarket.io/countries/ht/news","region":"Haiti","language":"fr","provider":"tgmarket"},
+{"url":"https://tgscope.io/telegram-channels-by-country/bangladesh","region":"Bangladesh","language":"bn","provider":"tgscope"},
+{"url":"https://tgscope.io/telegram-channels-by-country/india","region":"India","language":"hi","provider":"tgscope"},
+{"url":"https://tgscope.io/telegram-channels-by-country/myanmar","region":"Myanmar","language":"my","provider":"tgscope"},
+{"url":"https://tgscope.io/telegram-channels-by-country/ukraine","region":"Ukraine","language":"uk","provider":"tgscope"},
+{"url":"https://tgscope.io/telegram-channels-by-country/palestine","region":"Palestine","language":"ar","provider":"tgscope"},
+{"url":"https://telemetr.io/en/catalog/india/politics","region":"India","language":"hi","provider":"telemetrio"},
+{"url":"https://telemetr.io/en/catalog/bangladesh/politics","region":"Bangladesh","language":"bn","provider":"telemetrio"}
+]
+
 class AnchorParser(HTMLParser):
     def __init__(self):
         super().__init__()
@@ -181,6 +216,36 @@ def extract_candidates(page_html):
         username = channel_username(href)
         if username:
             found.add(username)
+    return found
+
+
+def directory_username(href):
+    target = unwrap(href)
+    direct = channel_username(target)
+    if direct:
+        return direct
+    try:
+        parsed = urlparse(target)
+        host = (parsed.netloc or "").lower().split(":")[0]
+        bits = [part for part in parsed.path.split("/") if part]
+        if host.endswith("tgmarket.io") and len(bits) >= 2 and bits[0] == "c":
+            name = bits[1].lstrip("@")
+            return name if re.fullmatch(r"[A-Za-z][A-Za-z0-9_]{3,31}", name) else None
+        if host.endswith("telemetr.io") and "channels" in bits:
+            match = re.search(r"\\d+-([A-Za-z][A-Za-z0-9_]{3,31})$", bits[-1])
+            return match.group(1) if match else None
+    except Exception:
+        return None
+    return None
+
+def extract_directory_candidates(page_html):
+    parser = AnchorParser()
+    parser.feed(page_html)
+    found = set()
+    for href in parser.links:
+        name = directory_username(href)
+        if name:
+            found.add(name)
     return found
 
 def search_url(provider, query):
@@ -265,6 +330,45 @@ def main():
                 row[field].append(value)
         row["discovery_notes"] = seed.get("discovery_notes", "Directory listing only; identity, role and reliability unverified.")
         row["seed_source_url"] = seed.get("seed_source_url", "https://tgmarket.io/countries/bd/news")
+
+    directory_stats = {"pages_attempted": 0, "pages_with_candidates": 0,
+                       "candidate_links_found": 0, "errors": []}
+    for source in DIRECTORY_SOURCES:
+        directory_stats["pages_attempted"] += 1
+        try:
+            page = get(source["url"], timeout=25)
+            usernames = extract_directory_candidates(page)
+            if usernames:
+                directory_stats["pages_with_candidates"] += 1
+                directory_stats["candidate_links_found"] += len(usernames)
+            for username in usernames:
+                key = username.lower()
+                row = found.setdefault(key, {
+                    "username": username,
+                    "candidate_url": "https://t.me/" + username,
+                    "discovery_regions": [],
+                    "discovery_languages": [],
+                    "discovery_queries": [],
+                    "discovery_providers": [],
+                })
+                for field, value in (
+                    ("discovery_regions", source["region"]),
+                    ("discovery_languages", source["language"]),
+                    ("discovery_queries", "directory:" + source["url"]),
+                    ("discovery_providers", source["provider"] + "_public_directory"),
+                ):
+                    if value not in row[field]:
+                        row[field].append(value)
+                row.setdefault("directory_source_urls", [])
+                if source["url"] not in row["directory_source_urls"]:
+                    row["directory_source_urls"].append(source["url"])
+        except Exception as exc:
+            directory_stats["errors"].append({
+                "url": source["url"], "error": type(exc).__name__,
+                "detail": str(exc)[:180]
+            })
+        time.sleep(0.25)
+
     provider_stats = {name: {"queries_attempted": 0, "queries_with_links": 0,
                              "links_found": 0, "errors": []}
                       for name in ("duckduckgo", "bing", "google")}
@@ -355,8 +459,10 @@ def main():
     ]
     payload = {
         "generated_at_utc": stamp,
-        "discovery_method": "Public web-index search (DuckDuckGo, Bing, Google) plus unreviewed public-directory seed leads",
+        "discovery_method": "Public web-index search plus public Telegram directory pages (TG Market, TGScope, Telemetrio) and unreviewed seed leads",
         "queries_attempted_per_provider": len(QUERIES),
+        "directory_diagnostics": directory_stats,
+        "directory_sources_configured": len(DIRECTORY_SOURCES),
         "provider_diagnostics": provider_stats,
         "providers_returning_telegram_links": providers_with_success,
         "total_query_errors": total_query_errors,
@@ -365,7 +471,7 @@ def main():
         "candidate_leads_loaded_this_run": len(found),
         "unique_candidates": len(candidates),
         "previews_checked_this_run": min(MAX_PREVIEW_CHECKS, len(candidates)),
-        "limitations": limitations,
+        "limitations": limitations + ["Public directory pages expose only their public sample/top listings; full exports may be unavailable or paid.", "Directory country/category labels are approximate and must be checked against each channel profile.", "Directory route failures are retained in directory_diagnostics."],
         "candidates": candidates,
     }
     (OUT / "telegram_channel_candidates.json").write_text(
@@ -381,7 +487,8 @@ def main():
                 "discovery_regions": ";".join(row.get("discovery_regions", [])),
                 "discovery_languages": ";".join(row.get("discovery_languages", [])),
                 "discovery_queries": " | ".join(row.get("discovery_queries", [])),
-                "discovery_providers": ";".join(row.get("discovery_providers", []))})
+                "discovery_providers": ";".join(row.get("discovery_providers", [])),
+                "directory_source_urls": ";".join(row.get("directory_source_urls", []))})
     summary = {key: value for key, value in payload.items() if key != "candidates"}
     (OUT / "discovery_summary.json").write_text(
         json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -391,6 +498,8 @@ def main():
         "cumulative_candidates": len(candidates),
         "preview_checks": min(MAX_PREVIEW_CHECKS, len(candidates)),
         "providers_returning_links": providers_with_success,
+        "directory_pages_returning_candidates": directory_stats["pages_with_candidates"],
+        "directory_candidate_links_found": directory_stats["candidate_links_found"],
         "query_errors": total_query_errors,
         "provider_diagnostics": provider_stats,
     }, ensure_ascii=False))
