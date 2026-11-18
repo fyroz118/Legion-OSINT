@@ -22,12 +22,12 @@ permissions:
 
 concurrency:
   group: legion-osint-channel-discovery
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   discover:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
