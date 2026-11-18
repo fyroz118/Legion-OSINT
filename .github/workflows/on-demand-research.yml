@@ -7,14 +7,15 @@ on:
         description: "Reporting date in Asia/Dhaka (YYYY-MM-DD)"
         required: true
         type: string
-      max_queries:
-        description: "Search volume (higher volume uses more Tavily credits)"
+      posts_per_channel:
+        description: "Maximum recent messages to inspect per configured channel"
         required: true
         type: choice
         options:
-          - "60"
           - "100"
-        default: "60"
+          - "300"
+          - "500"
+        default: "300"
 
 permissions:
   contents: read
@@ -24,9 +25,9 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  research:
+  telegram-gemini-report:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 60
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -36,30 +37,31 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install research dependencies
+      - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Validate requested date and runner
+      - name: Validate requested date
         env:
           REPORT_DATE: ${{ inputs.report_date }}
-        run: |
-          python -m py_compile scripts/run_on_demand.py
-          python -c "import os; from datetime import datetime; datetime.strptime(os.environ['REPORT_DATE'], '%Y-%m-%d')"
+        run: python -c "import os; from datetime import datetime; datetime.strptime(os.environ['REPORT_DATE'], '%Y-%m-%d')"
 
-      - name: Run one-shot public-web research
+      - name: Collect Telegram posts and generate Gemini report
         env:
-          TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
-          RESEARCH_MAX_QUERIES: ${{ inputs.max_queries }}
+          REPORT_DATE: ${{ inputs.report_date }}
+          COLLECT_LIMIT_PER_CHANNEL: ${{ inputs.posts_per_channel }}
+          TELEGRAM_API_ID: ${{ secrets.TELEGRAM_API_ID }}
+          TELEGRAM_API_HASH: ${{ secrets.TELEGRAM_API_HASH }}
+          TELETHON_SESSION_STRING: ${{ secrets.TELETHON_SESSION_STRING }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_MODEL: gemini-2.5-flash
           DATABASE_PATH: ${{ runner.temp }}/legion_osint.sqlite3
-          REPORT_OUTPUT_DIR: output
-          REPORT_DATE: ${{ inputs.report_date }}
-        run: python scripts/run_on_demand.py "$REPORT_DATE" "$RESEARCH_MAX_QUERIES"
+        run: python scripts/run_telegram_gemini.py "$REPORT_DATE"
 
-      - name: Upload reports and source registers
+      - name: Upload report and evidence artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: legion-osint-${{ inputs.report_date }}
+          name: legion-osint-telegram-gemini-${{ inputs.report_date }}
           path: output/${{ inputs.report_date }}/
           if-no-files-found: warn
           retention-days: 14
