@@ -7,6 +7,7 @@ import asyncio
 import json
 import os
 import sqlite3
+import csv
 from pathlib import Path
 
 from telegram import Update
@@ -56,6 +57,24 @@ def write_offset(offset):
     temp.replace(OFFSET_FILE)
 
 
+def import_collected_posts():
+    """Import the latest scheduled public-preview artifact into the bot SQLite DB."""
+    csv_path = DATA_DIR / "incoming" / "telegram_posts.csv"
+    if not csv_path.exists():
+        print("No scheduled collection artifact available; retaining existing database.")
+        return 0
+    imported = 0
+    commands.initialize()
+    with csv_path.open("r", encoding="utf-8-sig", newline="") as handle:
+        for row in csv.DictReader(handle):
+            if not row.get("channel_username") or not row.get("message_id") or not row.get("text"):
+                continue
+            commands.insert_post(row)
+            imported += 1
+    print(f"Imported/checked {imported} rows from latest collection artifact.")
+    return imported
+
+
 def checkpoint_database():
     db_path = Path(os.getenv("DATABASE_PATH", "data/legion_osint.sqlite3"))
     if db_path.exists():
@@ -70,6 +89,7 @@ async def run():
         raise RuntimeError("Missing TELEGRAM_ALLOWED_USER_IDS secret.")
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     commands.initialize()
+    import_collected_posts()
     app = build_application()
     await app.initialize()
     await app.start()
