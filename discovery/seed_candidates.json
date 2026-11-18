@@ -16,7 +16,8 @@
       "political_baseline": true,
       "baseline_group": "discovered_political_channels",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "studentsagainstdiscrimination",
@@ -30,7 +31,8 @@
       "political_baseline": true,
       "baseline_group": "discovered_political_channels",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "antiquotadu",
@@ -44,7 +46,8 @@
       "political_baseline": true,
       "baseline_group": "discovered_political_channels",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "antiquotaandolonbd",
@@ -58,7 +61,8 @@
       "political_baseline": true,
       "baseline_group": "discovered_political_channels",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "studentandolon",
@@ -72,7 +76,8 @@
       "political_baseline": true,
       "baseline_group": "discovered_political_channels",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "bringingjusticetoyou_bangladesh",
@@ -84,7 +89,8 @@
       "source_affiliation": "advocacy_identity_unverified",
       "source_identity_status": "directory_or_public_profile_lead_unverified",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "bwdns",
@@ -96,7 +102,8 @@
       "source_affiliation": "publisher_and_political_alignment_unassessed",
       "source_identity_status": "directory_or_public_profile_lead_unverified",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "TimesOf_Bangladesh",
@@ -108,7 +115,8 @@
       "source_affiliation": "publisher_identity_unverified",
       "source_identity_status": "directory_or_public_profile_lead_unverified",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "Nucleus71official",
@@ -120,7 +128,8 @@
       "source_affiliation": "organization_and_affiliation_unverified",
       "source_identity_status": "directory_or_public_profile_lead_unverified",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "basherkella",
@@ -134,7 +143,8 @@
       "political_baseline": true,
       "baseline_group": "discovered_political_channels",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "bjpupitcell",
@@ -149,7 +159,8 @@
       "political_baseline": true,
       "baseline_group": "discovered_political_channels",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "bjpforgujarat",
@@ -164,7 +175,8 @@
       "political_baseline": true,
       "baseline_group": "discovered_political_channels",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "KarnatakaBJP",
@@ -179,7 +191,8 @@
       "political_baseline": true,
       "baseline_group": "discovered_political_channels",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "BJP4Keralam",
@@ -194,7 +207,8 @@
       "political_baseline": true,
       "baseline_group": "discovered_political_channels",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "Congress_officials",
@@ -209,7 +223,8 @@
       "political_baseline": true,
       "baseline_group": "discovered_political_channels",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "channelelias",
@@ -222,7 +237,8 @@
       "discovery_notes": "TGScope Bangladesh country catalogue lists this news/politics commentator channel. Personal commentary and political alignment must be distinguished from independent newsroom reporting.",
       "seed_source_url": "https://tgscope.io/telegram-channels-by-country/bangladesh",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "badrulbsl",
@@ -237,7 +253,8 @@
       "political_baseline": true,
       "baseline_group": "discovered_political_channels",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "drshafiqofficial",
@@ -252,7 +269,8 @@
       "political_baseline": true,
       "baseline_group": "discovered_political_channels",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "bangladeshislamichhatrashibir",
@@ -267,7 +285,8 @@
       "political_baseline": true,
       "baseline_group": "discovered_political_channels",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "khitthitnews",
@@ -280,7 +299,8 @@
       "discovery_notes": "TG Market profile identifies Khit Thit Media as a Yangon-based Burmese news publisher and provides its publisher website. Editorial claims and incident reports still require corroboration.",
       "seed_source_url": "https://tgmarket.io/c/khitthitnews",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "peoplemedianews",
@@ -293,7 +313,8 @@
       "discovery_notes": "TG Market Myanmar news directory lists People Media. Confirm publisher identity, editorial standards and relationship to similarly named channels.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "khitthitmedianews",
@@ -306,7 +327,8 @@
       "discovery_notes": "TG Market directory lists a similarly named Khit Thit Media channel. Check whether this is a separate official feed, duplicate or impersonator before approval.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "npnewsmyanmar",
@@ -319,7 +341,8 @@
       "discovery_notes": "TG Market Myanmar news directory lists NP News-Myanmar. Verify operator, editorial independence and recent activity.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "peoplemediamyanmar",
@@ -332,7 +355,8 @@
       "discovery_notes": "TG Market lists this as a People Media-related channel. Check relationship to @peoplemedianews and avoid double-counting syndicated posts.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "peoplespring",
@@ -345,7 +369,8 @@
       "discovery_notes": "TG Market Myanmar news directory lists People's Spring. Confirm official publisher links and distinguish its editorial coverage from movement-originated claims.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "positiveanglenews",
@@ -358,7 +383,8 @@
       "discovery_notes": "TG Market Myanmar news directory lists PAN/Positive Angle News. Verify operator, editorial standards and recent public activity.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "myanmarnownews",
@@ -371,7 +397,8 @@
       "discovery_notes": "TG Market lists Myanmar Now. Verify official cross-links and current public preview; treat reporting as leads pending corroboration.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "mizzimatv",
@@ -384,7 +411,8 @@
       "discovery_notes": "TG Market Myanmar news directory lists Mizzima TV. Confirm this exact channel through publisher-controlled sources.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "myaelattathan",
@@ -397,7 +425,8 @@
       "discovery_notes": "TG Market lists Myaelatt Athan as a Burmese news channel. Verify publisher identity, geographic coverage and activity.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "star3mm",
@@ -410,7 +439,8 @@
       "discovery_notes": "TG Market Myanmar news directory lists Star-MM. Verify identity and whether it is an original newsroom or aggregator.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "myanmarhardtalk",
@@ -423,7 +453,8 @@
       "discovery_notes": "TG Market Myanmar news directory lists Myanmar Hard Talk. Review editorial stance, original reporting and source transparency.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "mwdmmnews",
@@ -436,7 +467,8 @@
       "discovery_notes": "TG Market Myanmar directory lists MWD News. Determine whether it is state-affiliated, military-affiliated or independent before assigning a source class.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "myanmarupdate",
@@ -449,7 +481,8 @@
       "discovery_notes": "TG Market Myanmar news directory lists Myanmar Update News. Review source provenance and reposting behaviour.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "thewesternnews",
@@ -462,7 +495,8 @@
       "discovery_notes": "TG Market lists Western News and related Rakhine/Arakan media references. Confirm exact operator, regional focus and affiliation.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "popularjournal",
@@ -475,7 +509,8 @@
       "discovery_notes": "TG Market Myanmar news directory lists Popular Journal. Verify publisher identity and whether it offers original local reporting.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "ayeyarwaddytimes",
@@ -488,7 +523,8 @@
       "discovery_notes": "TG Market Myanmar news directory lists Ayeyarwaddy Times. Review regional coverage, operator identity and editorial standards.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "myanmarnationalpost",
@@ -501,7 +537,8 @@
       "discovery_notes": "TG Market Myanmar news directory lists Myanmar National Post. Determine ownership, state/political affiliation and sourcing practices.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "mt_news_media",
@@ -514,7 +551,8 @@
       "discovery_notes": "TG Market Myanmar news directory lists MT News / Myanmar Transparency. Verify whether the title accurately reflects the operator and editorial role.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "mrtvnewschannel",
@@ -527,7 +565,8 @@
       "discovery_notes": "TG Market Myanmar directory lists MRTV News Channel. Treat as state-media/official narrative candidate, not independent corroboration; verify exact ownership.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "mekongnewsmm",
@@ -540,7 +579,8 @@
       "discovery_notes": "TG Market Myanmar news directory lists Mekong News. Verify publisher identity, geographic focus and recent activity.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "VOMNEWS2023",
@@ -553,7 +593,8 @@
       "discovery_notes": "TG Market Myanmar directory lists Voice of Myanmar. Verify publisher identity and whether this account is the outlet's official public feed.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "mm_earthquake_alert",
@@ -566,7 +607,8 @@
       "discovery_notes": "TG Market lists a Myanmar earthquake alert channel. Potential public-safety signal source; verify data provenance and avoid treating unconfirmed alerts as official warnings.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "infohlaing",
@@ -579,7 +621,8 @@
       "discovery_notes": "TG Market Myanmar news directory lists Hlaing Info. Confirm geographic coverage and whether posts are original local reporting.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "daweiinformationcenter",
@@ -592,7 +635,8 @@
       "discovery_notes": "TG Market channel profile lists Dawei Information Center among related local sources. Verify exact operator and current public activity.",
       "seed_source_url": "https://tgmarket.io/c/countries/mm/news",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "thanlyinmedia",
@@ -605,7 +649,8 @@
       "discovery_notes": "TG Market channel profile lists Thanlyin Media among related local sources. Verify identity, locality and original reporting.",
       "seed_source_url": "https://tgmarket.io/c/khitthitnews",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "myanmarlabournews",
@@ -618,7 +663,8 @@
       "discovery_notes": "TG Market channel profile lists Myanmar Labour News among related channels. Verify whether it is a worker-rights newsroom, advocacy actor or aggregator.",
       "seed_source_url": "https://tgmarket.io/c/khitthitnews",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "mindatpost21",
@@ -631,7 +677,8 @@
       "discovery_notes": "TG Market channel profile lists The Mindat Post among related local sources. Verify local coverage, operator and activity.",
       "seed_source_url": "https://tgmarket.io/c/khitthitnews",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "burmesevoanews",
@@ -644,7 +691,8 @@
       "discovery_notes": "TG Market channel profile lists VOA Burmese. Verify Voice of America cross-link to this exact handle before approval.",
       "seed_source_url": "https://tgmarket.io/c/khitthitnews",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "Yangonnews2024",
@@ -657,7 +705,8 @@
       "discovery_notes": "TG Market channel profile lists Yangon Division News 2025. Check whether the name, date and current publisher identity are consistent.",
       "seed_source_url": "https://tgmarket.io/c/khitthitnews",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "truexanewsua",
@@ -670,7 +719,8 @@
       "discovery_notes": "TGScope Ukraine country catalogue lists this large Ukrainian news channel. Review original reporting, ownership, reposts and any operationally sensitive conflict content.",
       "seed_source_url": "https://tgscope.io/telegram-channels-by-country/ukraine",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "times_ukraina",
@@ -683,7 +733,8 @@
       "discovery_notes": "TGScope Ukraine catalogue lists Times of Ukraine. Verify publisher identity and editorial independence; screen conflict posts for tactical details.",
       "seed_source_url": "https://tgscope.io/telegram-channels-by-country/ukraine",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "insiderukr",
@@ -696,7 +747,8 @@
       "discovery_notes": "TGScope Ukraine catalogue lists INSIDER UA. Verify publisher identity, political alignment and sourcing practices.",
       "seed_source_url": "https://tgscope.io/telegram-channels-by-country/ukraine",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "voynareal",
@@ -709,7 +761,8 @@
       "discovery_notes": "TGScope Ukraine catalogue lists Real War/Ukraine news. Treat as an unverified conflict aggregator; exclude granular real-time troop or targeting information.",
       "seed_source_url": "https://tgscope.io/telegram-channels-by-country/ukraine",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "uaonlii",
@@ -722,7 +775,8 @@
       "discovery_notes": "TGScope Ukraine catalogue lists Ukraine Online. Review editorial identity, political alignment and reposting before use.",
       "seed_source_url": "https://tgscope.io/telegram-channels-by-country/ukraine",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "kievreal1",
@@ -735,7 +789,8 @@
       "discovery_notes": "TGScope Ukraine catalogue lists a Kyiv-focused news channel. Verify operator and local reporting provenance.",
       "seed_source_url": "https://tgscope.io/telegram-channels-by-country/ukraine",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "kiev_kyiv",
@@ -748,7 +803,8 @@
       "discovery_notes": "TGScope Ukraine catalogue lists Kyiv INFO. Verify identity and whether this is a duplicate of similarly named channels.",
       "seed_source_url": "https://tgscope.io/telegram-channels-by-country/ukraine",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "kievinfo_kyiv",
@@ -761,7 +817,8 @@
       "discovery_notes": "TGScope Ukraine catalogue lists a second Kyiv INFO handle. Check for duplicate ownership or impersonation before enabling.",
       "seed_source_url": "https://tgscope.io/telegram-channels-by-country/ukraine",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "novini_ukrtg",
@@ -774,7 +831,8 @@
       "discovery_notes": "TGScope Ukraine catalogue lists Ukrainian Telegram news. Review publisher identity, original sourcing and repost networks.",
       "seed_source_url": "https://tgscope.io/telegram-channels-by-country/ukraine",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "odessa_infonews",
@@ -787,7 +845,8 @@
       "discovery_notes": "TGScope Ukraine catalogue lists Odesa INFO. Verify regional focus and whether incident reports are independently sourced.",
       "seed_source_url": "https://tgscope.io/telegram-channels-by-country/ukraine",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "rezident_ua",
@@ -800,7 +859,8 @@
       "discovery_notes": "TGScope Ukraine catalogue lists Rezident. Treat as a political/war commentary source with unverified affiliation and claims; not independent corroboration.",
       "seed_source_url": "https://tgscope.io/telegram-channels-by-country/ukraine",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "ramallahmix1",
@@ -813,7 +873,8 @@
       "discovery_notes": "TGScope Palestine catalogue lists Ramallah Mix as a high-reach local news channel. Verify operator, editorial independence and incident sourcing.",
       "seed_source_url": "https://tgscope.io/telegram-channels-by-country/palestine",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "ajpalestine",
@@ -826,7 +887,8 @@
       "discovery_notes": "TGScope Palestine catalogue lists Al Jazeera Palestine. Confirm the exact account is publisher-controlled before approval.",
       "seed_source_url": "https://tgscope.io/telegram-channels-by-country/palestine",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "jeninnews1",
@@ -839,7 +901,8 @@
       "discovery_notes": "TGScope Palestine catalogue lists Jenin News. Verify local operator and distinguish eyewitness reporting from reposted claims.",
       "seed_source_url": "https://tgscope.io/telegram-channels-by-country/palestine",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "jenencamb",
@@ -852,7 +915,8 @@
       "discovery_notes": "TGScope Palestine catalogue lists a Jenin camp channel. Treat as community/actor-originated material, not independent confirmation; review content safety and identity.",
       "seed_source_url": "https://tgscope.io/telegram-channels-by-country/palestine",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "ramallahnew",
@@ -865,7 +929,8 @@
       "discovery_notes": "TGScope Palestine catalogue lists a Ramallah news channel. Verify identity, activity and sourcing.",
       "seed_source_url": "https://tgscope.io/telegram-channels-by-country/palestine",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "jai_tdp",
@@ -880,7 +945,8 @@
       "political_baseline": true,
       "baseline_group": "discovered_political_channels",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "cpimkerala",
@@ -895,7 +961,8 @@
       "political_baseline": true,
       "baseline_group": "discovered_political_channels",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "itwingdmk",
@@ -910,7 +977,8 @@
       "political_baseline": true,
       "baseline_group": "discovered_political_channels",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "aamaadmiparty",
@@ -925,7 +993,8 @@
       "political_baseline": true,
       "baseline_group": "discovered_political_channels",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "drabhishekverma_news",
@@ -940,7 +1009,8 @@
       "political_baseline": true,
       "baseline_group": "discovered_political_channels",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "pib_factcheck",
@@ -953,7 +1023,8 @@
       "discovery_notes": "Telemetrio profile identifies PIB Fact Check. Verify official PIB cross-link; institutional fact-checks should be assessed through their cited evidence.",
       "seed_source_url": "https://telemetr.io/en/channels/1559076845-pib_factcheck",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "intelsage",
@@ -967,8 +1038,9 @@
       "seed_source_url": "https://telemetr.io/en/catalog/india/politics",
       "baseline_reference": true,
       "baseline_display_name": "INTEL SAGE (Intel Monk)",
-      "enabled_for_collection": true,
-      "status": "ACTIVE_IN_CONFIG"
+      "enabled_for_collection": false,
+      "status": "UNREVIEWED_CANDIDATE",
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "bheem_army",
@@ -983,7 +1055,8 @@
       "political_baseline": true,
       "baseline_group": "discovered_political_channels",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "osint613",
@@ -995,10 +1068,11 @@
       "source_identity_status": "public_telegram_preview_observed",
       "discovery_notes": "Public preview identifies this as the official Telegram channel of OSINT613, covering Middle East, US and global geopolitics. Treat posts as leads; verify original sourcing, media provenance and incident details.",
       "seed_source_url": "https://t.me/s/osint613",
-      "status": "ACTIVE_IN_CONFIG",
-      "enabled_for_collection": true,
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
       "baseline_reference": true,
-      "baseline_display_name": "Open Source Intel"
+      "baseline_display_name": "Open Source Intel",
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "rybar_in_english",
@@ -1010,10 +1084,11 @@
       "source_identity_status": "public_telegram_preview_observed",
       "discovery_notes": "Public preview describes this as Rybar's official English Telegram channel. Conflict analysis and battlefield claims are perspective-specific and require independent corroboration.",
       "seed_source_url": "https://t.me/rybar_in_english",
-      "status": "ACTIVE_IN_CONFIG",
-      "enabled_for_collection": true,
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
       "baseline_reference": true,
-      "baseline_display_name": "Rybar in English"
+      "baseline_display_name": "Rybar in English",
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "warcabinet",
@@ -1025,10 +1100,11 @@
       "source_identity_status": "public_telegram_preview_and_directory_observed",
       "discovery_notes": "Public profile describes reporting, battlefield analysis and intelligence-driven conflict coverage. Publisher identity and editorial standards are not independently established; treat as an aggregator/commentary lead.",
       "seed_source_url": "https://t.me/warcabinet",
-      "status": "ACTIVE_IN_CONFIG",
-      "enabled_for_collection": true,
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
       "baseline_reference": true,
-      "baseline_display_name": "WarCabinet"
+      "baseline_display_name": "WarCabinet",
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "almayadeenenglish",
@@ -1040,10 +1116,11 @@
       "source_identity_status": "public_telegram_preview_observed",
       "discovery_notes": "Public preview links to english.almayadeen.net and identifies the channel as Al Mayadeen English. Preserve its regional/editorial perspective and corroborate event claims independently.",
       "seed_source_url": "https://t.me/s/almayadeenenglish",
-      "status": "ACTIVE_IN_CONFIG",
-      "enabled_for_collection": true,
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
       "baseline_reference": true,
-      "baseline_display_name": "AlMayadeen - English"
+      "baseline_display_name": "AlMayadeen - English",
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "alhaqnews",
@@ -1055,10 +1132,11 @@
       "source_identity_status": "public_telegram_preview_observed",
       "discovery_notes": "Public preview describes an English-language Middle East/Iran/US news feed and includes forwarded material from other channels. Do not confuse it with the separate Al-Haq human-rights organisation; trace claims to original sources.",
       "seed_source_url": "https://t.me/s/alhaqnews",
-      "status": "ACTIVE_IN_CONFIG",
-      "enabled_for_collection": true,
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
       "baseline_reference": true,
-      "baseline_display_name": "AlHaq News - Iran-US War Updates"
+      "baseline_display_name": "AlHaq News - Iran-US War Updates",
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "geopolitics_prime",
@@ -1070,10 +1148,11 @@
       "source_identity_status": "public_telegram_preview_observed",
       "discovery_notes": "Public preview identifies the channel and uses the slogan 'Read the news they hide from you'. Publisher identity, editorial standards and sourcing are unverified; classify as commentary/aggregator pending review.",
       "seed_source_url": "https://t.me/geopolitics_prime",
-      "status": "ACTIVE_IN_CONFIG",
-      "enabled_for_collection": true,
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
       "baseline_reference": true,
-      "baseline_display_name": "Geopolitics Prime"
+      "baseline_display_name": "Geopolitics Prime",
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "societyuncensored",
@@ -1085,10 +1164,11 @@
       "source_identity_status": "public_telegram_preview_observed",
       "discovery_notes": "Public preview confirms the channel title but provides limited publisher information. Review authorship, topic scope, repost patterns and sourcing before any monitoring decision.",
       "seed_source_url": "https://t.me/SocietyUncensored",
-      "status": "ACTIVE_IN_CONFIG",
-      "enabled_for_collection": true,
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
       "baseline_reference": true,
-      "baseline_display_name": "Society - Uncensored"
+      "baseline_display_name": "Society - Uncensored",
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "ddgeopolitics",
@@ -1100,10 +1180,11 @@
       "source_identity_status": "public_telegram_preview_observed",
       "discovery_notes": "Public preview identifies DD Geopolitics and its multipolar-world framing. Treat as viewpoint-specific commentary/aggregation; trace factual claims and forwarded posts to original sources.",
       "seed_source_url": "https://t.me/s/ddgeopolitics",
-      "status": "ACTIVE_IN_CONFIG",
-      "enabled_for_collection": true,
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
       "baseline_reference": true,
-      "baseline_display_name": "DD Geopolitics"
+      "baseline_display_name": "DD Geopolitics",
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "basirapress",
@@ -1115,10 +1196,11 @@
       "source_identity_status": "public_telegram_preview_observed",
       "discovery_notes": "Public preview describes the channel as pro-resistance research and analysis. Treat as an advocacy/viewpoint source, not independent corroboration; verify claims against primary and independent sources.",
       "seed_source_url": "https://t.me/basirapress",
-      "status": "ACTIVE_IN_CONFIG",
-      "enabled_for_collection": true,
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
       "baseline_reference": true,
-      "baseline_display_name": "Basira Press"
+      "baseline_display_name": "Basira Press",
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "rnintel",
@@ -1130,10 +1212,11 @@
       "source_identity_status": "public_telegram_preview_observed",
       "discovery_notes": "Public preview explicitly describes the channel as an intelligence aggregator from a nationalist perspective. Preserve that declared perspective in analysis; verify underlying reports independently.",
       "seed_source_url": "https://t.me/s/rnintel",
-      "status": "ACTIVE_IN_CONFIG",
-      "enabled_for_collection": true,
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
       "baseline_reference": true,
-      "baseline_display_name": "Rerum Novarum | Intel, Breaking News, and Alerts"
+      "baseline_display_name": "Rerum Novarum | Intel, Breaking News, and Alerts",
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "rezistancetrench",
@@ -1145,10 +1228,11 @@
       "source_identity_status": "public_telegram_preview_observed",
       "discovery_notes": "Public preview describes this as an official mirror that automatically copies posts from a main channel restricted in some regions. Treat as a mirror, not an independent source; trace each post to its original channel.",
       "seed_source_url": "https://t.me/RezistanceTrench",
-      "status": "ACTIVE_IN_CONFIG",
-      "enabled_for_collection": true,
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
       "baseline_reference": true,
-      "baseline_display_name": "ResistanceTrench mirror"
+      "baseline_display_name": "ResistanceTrench mirror",
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "geo_grandmasters",
@@ -1160,10 +1244,11 @@
       "source_identity_status": "public_directory_or_telegram_preview_match_requires_review",
       "discovery_notes": "Public channel index and Telegram preview identify the exact title and handle; viewpoint-specific geopolitical commentary.",
       "seed_source_url": "https://t.me/geo_grandmasters",
-      "status": "ACTIVE_IN_CONFIG",
-      "enabled_for_collection": true,
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
       "baseline_reference": true,
-      "baseline_display_name": "Grandmasters of Geopolitics"
+      "baseline_display_name": "Grandmasters of Geopolitics",
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "isnreport",
@@ -1175,10 +1260,11 @@
       "source_identity_status": "public_directory_or_telegram_preview_match_requires_review",
       "discovery_notes": "Public preview identifies ISN as a digital news network covering global and Indian affairs, OSINT and political developments.",
       "seed_source_url": "https://t.me/isnreport",
-      "status": "ACTIVE_IN_CONFIG",
-      "enabled_for_collection": true,
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
       "baseline_reference": true,
-      "baseline_display_name": "India Sentinel Network"
+      "baseline_display_name": "India Sentinel Network",
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "IntelSlava",
@@ -1190,10 +1276,11 @@
       "source_identity_status": "public_directory_or_telegram_preview_match_requires_review",
       "discovery_notes": "Public Telegram preview identifies Intel Slava as a Russian news aggregator covering conflicts and geopolitics; perspective-specific aggregator.",
       "seed_source_url": "https://t.me/IntelSlava",
-      "status": "ACTIVE_IN_CONFIG",
-      "enabled_for_collection": true,
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
       "baseline_reference": true,
-      "baseline_display_name": "Intel Slava"
+      "baseline_display_name": "Intel Slava",
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "medmannews",
@@ -1205,10 +1292,11 @@
       "source_identity_status": "public_directory_or_telegram_preview_match_requires_review",
       "discovery_notes": "Public Telegram preview matches the exact channel; mixed news, commentary and personal posts.",
       "seed_source_url": "https://t.me/medmannews",
-      "status": "ACTIVE_IN_CONFIG",
-      "enabled_for_collection": true,
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
       "baseline_reference": true,
-      "baseline_display_name": "Mediterranean Man"
+      "baseline_display_name": "Mediterranean Man",
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "americanmajority",
@@ -1220,10 +1308,11 @@
       "source_identity_status": "public_directory_or_telegram_preview_match_requires_review",
       "discovery_notes": "Public Telegram index identifies The American Majority; geopolitics/philosophy commentary. Distinguish from unrelated similarly named forex-signal channel.",
       "seed_source_url": "https://t.me/americanmajority",
-      "status": "ACTIVE_IN_CONFIG",
-      "enabled_for_collection": true,
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
       "baseline_reference": true,
-      "baseline_display_name": "The American Majority"
+      "baseline_display_name": "The American Majority",
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "TasawwufOfficial",
@@ -1235,10 +1324,11 @@
       "source_identity_status": "public_directory_or_telegram_preview_match_requires_review",
       "discovery_notes": "Telegram Register exact title match; self-description says non-political, non-profit awareness initiative. Not a conflict/news source by default.",
       "seed_source_url": "https://t.me/TasawwufOfficial",
-      "status": "ACTIVE_IN_CONFIG",
-      "enabled_for_collection": true,
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
       "baseline_reference": true,
-      "baseline_display_name": "Tasawwuf - تصوف"
+      "baseline_display_name": "Tasawwuf - تصوف",
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "asiabrief",
@@ -1250,10 +1340,11 @@
       "source_identity_status": "public_directory_or_telegram_preview_match_requires_review",
       "discovery_notes": "Telegram Register exact title match; politics/activism classification is model-assigned and should be treated as tentative.",
       "seed_source_url": "https://t.me/asiabrief",
-      "status": "ACTIVE_IN_CONFIG",
-      "enabled_for_collection": true,
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
       "baseline_reference": true,
-      "baseline_display_name": "Asia Brief"
+      "baseline_display_name": "Asia Brief",
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "bharat_voice",
@@ -1265,10 +1356,11 @@
       "source_identity_status": "public_directory_or_telegram_preview_match_requires_review",
       "discovery_notes": "Telegram Register exact title match; self-description includes Indian affairs, geopolitics and opinion.",
       "seed_source_url": "https://t.me/bharat_voice",
-      "status": "ACTIVE_IN_CONFIG",
-      "enabled_for_collection": true,
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
       "baseline_reference": true,
-      "baseline_display_name": "Voice of India"
+      "baseline_display_name": "Voice of India",
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "Hindustanibeast",
@@ -1280,10 +1372,11 @@
       "source_identity_status": "public_directory_or_telegram_preview_match_requires_review",
       "discovery_notes": "Telegram index exact title/handle match; strongly nationalist slogan in profile. Preserve viewpoint classification; verify claims independently.",
       "seed_source_url": "https://t.me/Hindustanibeast",
-      "status": "ACTIVE_IN_CONFIG",
-      "enabled_for_collection": true,
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
       "baseline_reference": true,
-      "baseline_display_name": "Hindustani Beast"
+      "baseline_display_name": "Hindustani Beast",
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "worldwarreport",
@@ -1295,10 +1388,11 @@
       "source_identity_status": "public_directory_or_telegram_preview_match_requires_review",
       "discovery_notes": "TG Market profile matches title; Bangla conflict-news aggregator with last post recorded 14 Nov 2026.",
       "seed_source_url": "https://t.me/worldwarreport",
-      "status": "ACTIVE_IN_CONFIG",
-      "enabled_for_collection": true,
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
       "baseline_reference": true,
-      "baseline_display_name": "World War Report | Middle East Gaza"
+      "baseline_display_name": "World War Report | Middle East Gaza",
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "world24x7hr",
@@ -1310,10 +1404,11 @@
       "source_identity_status": "public_directory_or_telegram_preview_match_requires_review",
       "discovery_notes": "Telegram preview matches exact title and handle; global news feed.",
       "seed_source_url": "https://t.me/world24x7hr",
-      "status": "ACTIVE_IN_CONFIG",
-      "enabled_for_collection": true,
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
       "baseline_reference": true,
-      "baseline_display_name": "World24x7hr"
+      "baseline_display_name": "World24x7hr",
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "TimesOfEra",
@@ -1325,10 +1420,11 @@
       "source_identity_status": "public_directory_or_telegram_preview_match_requires_review",
       "discovery_notes": "Telegram Register lists exact channel title and handle; verify current editorial identity and activity.",
       "seed_source_url": "https://t.me/TimesOfEra",
-      "status": "ACTIVE_IN_CONFIG",
-      "enabled_for_collection": true,
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
       "baseline_reference": true,
-      "baseline_display_name": "Times of Era"
+      "baseline_display_name": "Times of Era",
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "ResistanceNewsUrdu",
@@ -1340,10 +1436,11 @@
       "source_identity_status": "public_directory_or_telegram_preview_match_requires_review",
       "discovery_notes": "Telegram preview matches exact title/handle; self-description focuses on resistance-axis updates in West Asia.",
       "seed_source_url": "https://t.me/ResistanceNewsUrdu",
-      "status": "ACTIVE_IN_CONFIG",
-      "enabled_for_collection": true,
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
       "baseline_reference": true,
-      "baseline_display_name": "Resistance News - Urdu"
+      "baseline_display_name": "Resistance News - Urdu",
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "relentl",
@@ -1355,10 +1452,11 @@
       "source_identity_status": "public_directory_or_telegram_preview_match_requires_review",
       "discovery_notes": "TG Market profile matches Revan M and describes an independent security analyst; last post recorded 24 Jun 2026, so stale/inactive status needs review.",
       "seed_source_url": "https://t.me/relentl",
-      "status": "ACTIVE_IN_CONFIG",
-      "enabled_for_collection": true,
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
       "baseline_reference": true,
-      "baseline_display_name": "Revan M"
+      "baseline_display_name": "Revan M",
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "doamuslimsbangla",
@@ -1370,10 +1468,11 @@
       "source_identity_status": "public_directory_or_telegram_preview_match_requires_review",
       "discovery_notes": "Telegram Register lists exact title and handle; treat as advocacy/community actor source, not neutral corroboration.",
       "seed_source_url": "https://t.me/doamuslimsbangla",
-      "status": "ACTIVE_IN_CONFIG",
-      "enabled_for_collection": true,
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
       "baseline_reference": true,
-      "baseline_display_name": "DOAM বাংলা"
+      "baseline_display_name": "DOAM বাংলা",
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "inb19",
@@ -1385,10 +1484,11 @@
       "source_identity_status": "public_directory_or_telegram_preview_match_requires_review",
       "discovery_notes": "Public Telegram preview identifies International News Broadcasting Bangla; preserve its editorial/religious framing and corroborate.",
       "seed_source_url": "https://t.me/inb19",
-      "status": "ACTIVE_IN_CONFIG",
-      "enabled_for_collection": true,
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
       "baseline_reference": true,
-      "baseline_display_name": "INB বাংলা"
+      "baseline_display_name": "INB বাংলা",
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "Intel_Republic12",
@@ -1400,10 +1500,11 @@
       "source_identity_status": "public_directory_or_telegram_preview_match_requires_review",
       "discovery_notes": "Telegram channel index lists Intel Republic @Intel_Republic12 among channels linked from Rerum Novarum; exact title/handle match, further preview review required.",
       "seed_source_url": "https://t.me/Intel_Republic12",
-      "status": "ACTIVE_IN_CONFIG",
-      "enabled_for_collection": true,
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
       "baseline_reference": true,
-      "baseline_display_name": "Intel Republic"
+      "baseline_display_name": "Intel Republic",
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "MuslimUmmahWorld",
@@ -1415,10 +1516,11 @@
       "source_identity_status": "public_directory_match_requires_manual_identity_confirmation",
       "discovery_notes": "A public channel named Muslim Ummah / Worldwide Muslim Ummah Update exists at this handle, but multiple similarly named channels exist; identity match to the user's folder remains provisional.",
       "seed_source_url": "https://t.me/MuslimUmmahWorld",
-      "status": "ACTIVE_IN_CONFIG",
-      "enabled_for_collection": true,
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
       "baseline_reference": true,
-      "baseline_display_name": "Muslim Ummah"
+      "baseline_display_name": "Muslim Ummah",
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "enemywatch",
@@ -1430,10 +1532,11 @@
       "source_identity_status": "public_directory_match_requires_manual_identity_confirmation",
       "discovery_notes": "Exact public Telegram title/username match; self-description uses adversarial framing and exposes alleged enemies/infiltrators. Treat as advocacy/viewpoint source; claims require independent corroboration.",
       "seed_source_url": "https://t.me/enemywatch",
-      "status": "ACTIVE_IN_CONFIG",
-      "enabled_for_collection": true,
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
       "baseline_reference": true,
-      "baseline_display_name": "Enemy Watch - Official"
+      "baseline_display_name": "Enemy Watch - Official",
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "outpostosint",
@@ -1445,10 +1548,11 @@
       "source_identity_status": "public_directory_match_requires_manual_identity_confirmation",
       "discovery_notes": "Telemetrio profile matches The Outpost and describes military affairs, diplomacy, military history and intelligence topics. Public directory match; verify exact channel preview before collection.",
       "seed_source_url": "https://t.me/outpostosint",
-      "status": "ACTIVE_IN_CONFIG",
-      "enabled_for_collection": true,
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
       "baseline_reference": true,
-      "baseline_display_name": "The Outpost"
+      "baseline_display_name": "The Outpost",
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "DigitalVHP",
@@ -1463,7 +1567,8 @@
       "status": "UNREVIEWED_CANDIDATE",
       "enabled_for_collection": false,
       "political_baseline": true,
-      "baseline_group": "discovered_political_channels"
+      "baseline_group": "discovered_political_channels",
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "NationalJusticeParty",
@@ -1478,7 +1583,8 @@
       "status": "UNREVIEWED_CANDIDATE",
       "enabled_for_collection": false,
       "political_baseline": true,
-      "baseline_group": "discovered_political_channels"
+      "baseline_group": "discovered_political_channels",
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "cpimllib",
@@ -1493,7 +1599,8 @@
       "status": "UNREVIEWED_CANDIDATE",
       "enabled_for_collection": false,
       "political_baseline": true,
-      "baseline_group": "discovered_political_channels"
+      "baseline_group": "discovered_political_channels",
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "thecockroachchannel",
@@ -1508,7 +1615,8 @@
       "status": "UNREVIEWED_CANDIDATE",
       "enabled_for_collection": false,
       "political_baseline": true,
-      "baseline_group": "discovered_political_channels"
+      "baseline_group": "discovered_political_channels",
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "strikemap",
@@ -1521,10 +1629,11 @@
       "source_identity_status": "user_supplied_url_not_independently_verified",
       "reference_folder_baseline": true,
       "baseline_group": "reference_folder_missed_username_matches",
-      "status": "ACTIVE_IN_CONFIG",
-      "enabled_for_collection": true,
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
       "baseline_reference": true,
-      "baseline_display_name": "STRRIKEMAP"
+      "baseline_display_name": "STRRIKEMAP",
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "Echo2e",
@@ -1537,10 +1646,11 @@
       "source_identity_status": "user_supplied_url_not_independently_verified",
       "reference_folder_baseline": true,
       "baseline_group": "reference_folder_missed_username_matches",
-      "status": "ACTIVE_IN_CONFIG",
-      "enabled_for_collection": true,
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
       "baseline_reference": true,
-      "baseline_display_name": "ECHO | ایکو"
+      "baseline_display_name": "ECHO | ایکو",
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "PoliticsGR",
@@ -1553,10 +1663,11 @@
       "source_identity_status": "public_preview_and_directory_match",
       "reference_folder_baseline": true,
       "baseline_group": "reference_folder_missed_username_matches",
-      "status": "ACTIVE_IN_CONFIG",
-      "enabled_for_collection": true,
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
       "baseline_reference": true,
-      "baseline_display_name": "PoliticaGR - Geopolitics"
+      "baseline_display_name": "PoliticaGR - Geopolitics",
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "SomvabboSotto",
@@ -1569,10 +1680,11 @@
       "source_identity_status": "user_supplied_url_not_independently_verified",
       "reference_folder_baseline": true,
       "baseline_group": "reference_folder_missed_username_matches",
-      "status": "ACTIVE_IN_CONFIG",
-      "enabled_for_collection": true,
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
       "baseline_reference": true,
-      "baseline_display_name": "সত্যের সন্ধান"
+      "baseline_display_name": "সত্যের সন্ধান",
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "newsboxbangla02",
@@ -1585,10 +1697,11 @@
       "source_identity_status": "user_supplied_url_and_forward_reference_lead",
       "reference_folder_baseline": true,
       "baseline_group": "reference_folder_missed_username_matches",
-      "status": "ACTIVE_IN_CONFIG",
-      "enabled_for_collection": true,
+      "status": "UNREVIEWED_CANDIDATE",
+      "enabled_for_collection": false,
       "baseline_reference": true,
-      "baseline_display_name": "News Box Bangla 2.0"
+      "baseline_display_name": "News Box Bangla 2.0",
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "BharatIntel360",
@@ -1601,7 +1714,8 @@
       "discovery_notes": "India-focused OSINT and defence news; directory profile describes OSINT-driven coverage. Treat as a viewpoint/aggregator lead and corroborate claims.",
       "seed_source_url": "https://t.me/BharatIntel360",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "ThirdEyeOSINTandAnalysis",
@@ -1614,7 +1728,8 @@
       "discovery_notes": "Directory-listed OSINT and geopolitical analysis channel; authorship and sourcing need review.",
       "seed_source_url": "https://t.me/ThirdEyeOSINTandAnalysis",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "GEOIMINT",
@@ -1627,7 +1742,8 @@
       "discovery_notes": "Directory-listed GEOINT and imagery-analysis channel; verify geolocation methods and media provenance before relying on claims.",
       "seed_source_url": "https://t.me/GEOIMINT",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "GeoIntelHQ",
@@ -1640,7 +1756,8 @@
       "discovery_notes": "Directory-listed live conflict mapping and incident-tracking feed; verify coordinates, timestamps and source media.",
       "seed_source_url": "https://t.me/GeoIntelHQ",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "conflictarchive",
@@ -1653,7 +1770,8 @@
       "discovery_notes": "Directory-listed conflict footage archive and analysis feed; media provenance and original upload dates require review.",
       "seed_source_url": "https://t.me/conflictarchive",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "LebanonOSINT",
@@ -1666,7 +1784,8 @@
       "discovery_notes": "Directory-listed Lebanon and Middle East OSINT/security updates; corroborate incident claims independently.",
       "seed_source_url": "https://t.me/LebanonOSINT",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "NAOSINT12",
@@ -1679,7 +1798,8 @@
       "discovery_notes": "Directory-listed North Africa/Maghreb military and aviation OSINT; verify source links and claims.",
       "seed_source_url": "https://t.me/NAOSINT12",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "AMK_Mapping",
@@ -1692,7 +1812,8 @@
       "discovery_notes": "Directory-listed frontline mapping and conflict updates; mapping claims need independent geospatial validation.",
       "seed_source_url": "https://t.me/AMK_Mapping",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "BellumActaNews",
@@ -1705,7 +1826,8 @@
       "discovery_notes": "Directory-listed global crisis/conflict news aggregator; viewpoint and repost dependencies require assessment.",
       "seed_source_url": "https://t.me/BellumActaNews",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "Slavyangrad",
@@ -1718,7 +1840,8 @@
       "discovery_notes": "Directory-listed Russia-Ukraine conflict commentary; perspective-specific, not independent corroboration.",
       "seed_source_url": "https://t.me/Slavyangrad",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "TabzLive",
@@ -1731,7 +1854,8 @@
       "discovery_notes": "Directory-listed live geopolitical/conflict updates and OSINT; assess original sourcing and repost chains.",
       "seed_source_url": "https://t.me/tabzlive",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "WarFrontWitness",
@@ -1744,7 +1868,8 @@
       "discovery_notes": "Directory-listed conflict updates and military-operation claims; verify independently and avoid treating graphic content as confirmed.",
       "seed_source_url": "https://t.me/warcorrespondent107",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "muslim_world_news1",
@@ -1757,7 +1882,8 @@
       "discovery_notes": "Bangladesh directory-listed Muslim World News feed; classify as community/advocacy perspective and corroborate claims.",
       "seed_source_url": "https://t.me/muslim_world_news1",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "warriorsof24",
@@ -1770,7 +1896,8 @@
       "discovery_notes": "Bangladesh directory-listed 2024 movement channel; actor-originated posts are not independent confirmation.",
       "seed_source_url": "https://t.me/warriorsof24",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "bjidcn",
@@ -1783,7 +1910,8 @@
       "discovery_notes": "Directory-listed Jamaat Dhaka City North channel; party/organisational actor source, not independent corroboration.",
       "seed_source_url": "https://t.me/bjidcn",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "bnpmediacell",
@@ -1796,7 +1924,8 @@
       "discovery_notes": "Directory-listed BNP Media Cell channel; party-originated statements and claims require independent corroboration.",
       "seed_source_url": "https://t.me/bnpmediacell",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "newspediabd",
@@ -1809,7 +1938,8 @@
       "discovery_notes": "Directory profile describes a Bangla domestic and international news feed; publisher identity and editorial standards need review.",
       "seed_source_url": "https://t.me/newspediabd",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "DailyGorjon",
@@ -1822,7 +1952,8 @@
       "discovery_notes": "Directory-listed Daily Gonokantho channel; confirm current publication activity and publisher identity.",
       "seed_source_url": "https://t.me/DailyGorjon",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "Bitorkitoalo",
@@ -1835,7 +1966,8 @@
       "discovery_notes": "Directory-listed Bangla commentary/news channel; source identity and editorial standards unverified.",
       "seed_source_url": "https://t.me/Bitorkitoalo",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "antiquotanews",
@@ -1848,7 +1980,8 @@
       "discovery_notes": "Directory-listed anti-quota/student-movement channel; relationship to other movement channels unverified.",
       "seed_source_url": "https://t.me/antiquotanews",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "dailynewsbangla1",
@@ -1861,7 +1994,8 @@
       "discovery_notes": "Directory-listed Bangla news channel; publisher identity and sourcing require review.",
       "seed_source_url": "https://t.me/dailynewsbangla1",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "savebangladeshistudents8",
@@ -1874,7 +2008,8 @@
       "discovery_notes": "Directory-listed student-advocacy channel; treat mobilisation and claims as actor-originated evidence.",
       "seed_source_url": "https://t.me/savebangladeshistudents8",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "pusab2024",
@@ -1887,7 +2022,8 @@
       "discovery_notes": "Directory-listed student organisation channel; verify identity and distinguish organisational statements from independently confirmed events.",
       "seed_source_url": "https://t.me/pusab2024",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "revealing_the_truths",
@@ -1900,7 +2036,8 @@
       "discovery_notes": "Directory-listed Bangla political/social commentary channel; claims and affiliation require review.",
       "seed_source_url": "https://t.me/revealing_the_truths",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
       "username": "warcorrespondent107",
@@ -1913,7 +2050,8 @@
       "discovery_notes": "Directory-listed conflict updates and military-operation claims; verify independently.",
       "seed_source_url": "https://t.me/warcorrespondent107",
       "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false
+      "enabled_for_collection": false,
+      "review_status": "UNREVIEWED_CANDIDATE"
     }
   ],
   "references": [
