@@ -1,5 +1,6 @@
 import asyncio
 import os
+from datetime import datetime
 from dotenv import load_dotenv
 from telegram import Update
 from telegram.constants import ChatType
@@ -13,10 +14,12 @@ load_dotenv()
 TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "")
 ALLOWED = {x.strip() for x in os.getenv("TELEGRAM_ALLOWED_USER_IDS", "").split(",") if x.strip()}
 
+
 def allowed(update):
     user_ok = bool(update.effective_user and str(update.effective_user.id) in ALLOWED)
     chat_ok = bool(update.effective_chat and update.effective_chat.type == ChatType.PRIVATE)
     return user_ok and chat_ok
+
 
 async def gate(update):
     if not allowed(update):
@@ -25,36 +28,40 @@ async def gate(update):
         return False
     return True
 
+
 async def start(update, context):
     if await gate(update):
         await update.message.reply_text(
             "Legion-OSINT private assistant.\n"
-            "Commands: /status /daily /bangladesh /search /ask /research /leads /coverage /report /help"
+            "Commands: /status /daily /bangladesh /search /ask /research /briefs /leads /coverage /report /help"
         )
+
 
 async def help_cmd(update, context):
     if await gate(update):
         await update.message.reply_text(
             "/status — database status\n"
-            "/daily — recent collected global posts\n"
+            "/daily — recent collected Telegram posts\n"
             "/bangladesh — recent Bangladesh posts\n"
             "/search <terms> — search collected text\n"
             "/ask <question> — ask Gemini about stored records\n"
-            "/report YYYY-MM-DD — draft report from incident ledger\n"
-            "/research YYYY-MM-DD — search public web for dated leads\n"
+            "/research YYYY-MM-DD — run expanded public-web discovery (default 60 queries)\n"
+            "/briefs YYYY-MM-DD [limit] — display individual source-lead briefs (default 60, max 100)\n"
             "/leads YYYY-MM-DD — show stored candidate links\n"
-            "/coverage YYYY-MM-DD — show query coverage and failures"
+            "/coverage YYYY-MM-DD — show regional query coverage and failures\n"
+            "/report YYYY-MM-DD — consolidated ten-section draft from reviewed incident ledger"
         )
+
 
 async def status(update, context):
     if await gate(update):
         mix = source_mix_counts()
         mix_text = ", ".join(f"{name}: {count}" for name, count in sorted(mix.items())) or "no source metadata yet"
         await update.message.reply_text(
-            f"Stored posts: {count_posts()}\n"
-            f"Post source mix: {mix_text}\n"
-            "Collector: scheduled worker (when deployed) or manual run"
+            f"Stored Telegram posts: {count_posts()}\nPost source mix: {mix_text}\n"
+            "Public-web research runs are separate; use /coverage YYYY-MM-DD."
         )
+
 
 async def display(update, region=None, query=""):
     rows = search_posts(query=query, region=region, limit=10)
@@ -68,13 +75,16 @@ async def display(update, region=None, query=""):
     )
     await update.message.reply_text(body[:3900], disable_web_page_preview=True)
 
+
 async def daily(update, context):
     if await gate(update):
         await display(update)
 
+
 async def bangladesh(update, context):
     if await gate(update):
         await display(update, region="bangladesh")
+
 
 async def search_cmd(update, context):
     if await gate(update):
@@ -85,26 +95,77 @@ async def search_cmd(update, context):
             await display(update, query=q)
 
 
-
 async def research_cmd(update, context):
-    if await gate(update):
-        if len(context.args) != 1:
-            await update.message.reply_text("Usage: /research YYYY-MM-DD")
-            return
-        report_date = context.args[0]
-        await update.message.reply_text(f"Starting date-scoped public-web discovery for {report_date}. ")
-        try:
-            result = await asyncio.to_thread(run_research, report_date)
-            await update.message.reply_text(
-                f"Research complete for {report_date}.\n"
-                f"Queries: {result['queries_succeeded']}/{result['queries_attempted']} succeeded.\n"
-                f"Unique candidate links: {result['unique_leads_for_date']}.\n"
-                "These are unverified discovery leads. Use /leads and /coverage for review."
-            )
-        except ValueError:
-            await update.message.reply_text("Invalid date. Use YYYY-MM-DD.")
-        except Exception as exc:
-            await update.message.reply_text(f"Research unavailable ({type(exc).__name__}). Check provider configuration.")
+    if not await gate(update):
+        return
+    if len(context.args) != 1:
+        await update.message.reply_text("Usage: /research YYYY-MM-DD")
+        return
+    report_date = context.args[0]
+    try:
+        datetime.strptime(report_date, "%Y-%m-%d")
+    except ValueError:
+        await update.message.reply_text("Invalid date. Use YYYY-MM-DD.")
+        return
+    await update.message.reply_text(
+        f"Starting expanded discovery for {report_date} (Asia/Dhaka): default 60 queries, up to 10 results each. "
+        "Bangladesh, South Asia and MENA are prioritized. Rumour-watch leads are included but remain unverified."
+    )
+    try:
+        result = await asyncio.to_thread(run_research, report_date)
+        await update.message.reply_text(
+            f"Research complete for {report_date}.\n"
+            f"Queries: {result['queries_succeeded']}/{result['queries_attempted']} succeeded.\n"
+            f"Query focus: {result['unofficial_focus_queries']} unofficial/local; "
+            f"{result['official_focus_queries']} official/institutional.\n"
+            f"Unique source leads: {result['unique_leads_for_date']}.\n"
+            "Use /briefs, /leads and /coverage. These are unverified source leads, not verified incidents."
+        )
+    except Exception as exc:
+        await update.message.reply_text(f"Research unavailable ({type(exc).__name__}). Check provider configuration.")
+
+
+async def briefs_cmd(update, context):
+    if not await gate(update):
+        return
+    if len(context.args) not in (1, 2):
+        await update.message.reply_text("Usage: /briefs YYYY-MM-DD [limit]")
+        return
+    report_date = context.args[0]
+    try:
+        datetime.strptime(report_date, "%Y-%m-%d")
+        limit = int(context.args[1]) if len(context.args) == 2 else 60
+        if limit < 1 or limit > 100:
+            raise ValueError
+        rows = get_research_leads(report_date, limit=limit)
+    except ValueError:
+        await update.message.reply_text("Invalid date or limit. Use /briefs YYYY-MM-DD [1-100].")
+        return
+    if not rows:
+        await update.message.reply_text("No source leads stored for this date. Run /research first.")
+        return
+    await update.message.reply_text(
+        f"Individual source-lead briefs: {len(rows)} returned for {report_date}. "
+        "These are source-specific leads, not necessarily unique incidents. All new leads are UNVERIFIED."
+    )
+    for index, row in enumerate(rows, 1):
+        title = (row.get("title") or "Untitled source result").replace("<", "‹").replace(">", "›")
+        snippet = " ".join((row.get("snippet") or "No snippet supplied by provider.").split())[:650]
+        focus = row.get("source_focus") or "unknown"
+        claim = row.get("claim_type") or "EVENT_NEWS"
+        message = (
+            f"BRIEF {index:02d} | {claim}\n"
+            f"Region: {row.get('region') or 'Unknown'}\n"
+            f"Source: {title}\n"
+            f"Published: {row.get('published_date') or 'Unknown'}\n"
+            f"Source class: {row.get('source_class') or 'unknown'} (review required)\n"
+            f"Search focus: {focus}\n"
+            f"Status: UNVERIFIED — source claim only\n"
+            f"Summary: {snippet}\n"
+            f"Original: {row['source_url']}"
+        )
+        await update.effective_message.reply_text(message[:3900], disable_web_page_preview=True)
+
 
 async def leads_cmd(update, context):
     if await gate(update):
@@ -112,24 +173,22 @@ async def leads_cmd(update, context):
             await update.message.reply_text("Usage: /leads YYYY-MM-DD")
             return
         try:
-            rows = get_research_leads(context.args[0], limit=20)
+            rows = get_research_leads(context.args[0], limit=100)
         except ValueError:
             await update.message.reply_text("Invalid date. Use YYYY-MM-DD.")
             return
         if not rows:
             await update.message.reply_text("No stored research leads for that date.")
             return
-        parts = []
-        for row in rows:
-            parts.append(
-                f"[{row['region']}] {row.get('title') or 'Untitled result'}\n"
-                f"Published: {row.get('published_date') or 'unknown'} | Score: {row.get('relevance_score') or 'n/a'}\n"
-                f"{row['source_url']}\n"
-                f"{(row.get('snippet') or '')[:280]}"
-            )
-        body = "\n\n".join(parts)
+        body = "\n\n".join(
+            f"[{row['region']}] {row.get('title') or 'Untitled result'}\n"
+            f"Published: {row.get('published_date') or 'unknown'} | "
+            f"{row.get('claim_type', 'EVENT_NEWS')} | UNVERIFIED\n{row['source_url']}"
+            for row in rows
+        )
         for start in range(0, len(body), 3800):
             await update.message.reply_text(body[start:start + 3800], disable_web_page_preview=True)
+
 
 async def coverage_cmd(update, context):
     if await gate(update):
@@ -145,10 +204,11 @@ async def coverage_cmd(update, context):
             await update.message.reply_text("No research coverage log for that date.")
             return
         body = "\n".join(
-            f"{row['region']}: {row['status']} — {row['query_count']} query(s), {row['result_count'] or 0} result(s)"
+            f"{row['region']}: {row['status']} — {row['query_count']} queries, {row['result_count'] or 0} results"
             for row in rows
         )
         await update.message.reply_text(f"Research coverage — {context.args[0]}\n{body}")
+
 
 async def report_cmd(update, context):
     if await gate(update):
@@ -163,6 +223,7 @@ async def report_cmd(update, context):
         for start in range(0, len(report), 3800):
             await update.message.reply_text(report[start:start + 3800], disable_web_page_preview=True)
 
+
 async def ask_cmd(update, context):
     if await gate(update):
         q = " ".join(context.args).strip()
@@ -176,6 +237,7 @@ async def ask_cmd(update, context):
             answer = f"Gemini request failed ({type(exc).__name__}). Check service configuration and logs."
         await update.message.reply_text(answer[:3900], disable_web_page_preview=True)
 
+
 def main():
     if not TOKEN:
         raise RuntimeError("Set TELEGRAM_BOT_TOKEN in private .env or deployment environment")
@@ -187,10 +249,11 @@ def main():
         ("start", start), ("help", help_cmd), ("status", status),
         ("daily", daily), ("bangladesh", bangladesh),
         ("search", search_cmd), ("ask", ask_cmd), ("report", report_cmd),
-        ("research", research_cmd), ("leads", leads_cmd), ("coverage", coverage_cmd)
+        ("research", research_cmd), ("briefs", briefs_cmd), ("leads", leads_cmd), ("coverage", coverage_cmd)
     ]:
         app.add_handler(CommandHandler(name, fn))
     app.run_polling(drop_pending_updates=True)
+
 
 if __name__ == "__main__":
     main()
