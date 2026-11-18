@@ -55,6 +55,31 @@ QUERIES = [
     ("Global","en","site:t.me OSINT independent conflict monitor journalist"),
     ("Global","en","site:t.me local eyewitness conflict monitoring"),
     ("Global","en","site:t.me civil society conflict monitor"),
+    ("Bangladesh","bn","site:t.me গাজীপুর নারায়ণগঞ্জ পোশাক শ্রমিক স্থানীয় সংবাদ"),
+    ("Bangladesh","bn","site:t.me চট্টগ্রাম কক্সবাজার পার্বত্য চট্টগ্রাম সংবাদ প্রতিনিধি"),
+    ("Bangladesh","bn","site:t.me বরিশাল খুলনা রাজশাহী সিলেট জেলা সংবাদ"),
+    ("Bangladesh","bn","site:t.me রংপুর ময়মনসিংহ জেলা সাংবাদিক সংবাদ"),
+    ("Bangladesh","bn","site:t.me বাংলাদেশ মানবাধিকার পর্যবেক্ষক শ্রমিক অধিকার"),
+    ("Bangladesh","en","site:t.me Bangladesh district correspondent local eyewitness reporter"),
+    ("Bangladesh","en","site:t.me Bangladesh labour rights monitor civil society"),
+    ("Myanmar","my","site:t.me ရခိုင် ဒေသခံ သတင်း သတင်းထောက်"),
+    ("Myanmar","my","site:t.me ကချင် ရှမ်း ကရင် ဒေသခံ သတင်း"),
+    ("Myanmar","my","site:t.me စစ်ကိုင်း မကွေး ဒေသခံ သတင်း သတင်းထောက်"),
+    ("Myanmar","en","site:t.me Rakhine Kachin Karen Shan local independent reporter"),
+    ("Myanmar","en","site:t.me Myanmar civil society human rights field monitor"),
+    ("India","bn","site:t.me Assam Tripura West Bengal local news reporter"),
+    ("India","hi","site:t.me मणिपुर असम स्थानीय पत्रकार समाचार"),
+    ("Pakistan","ur","site:t.me بلوچستان خیبر پختونخوا مقامی صحافی خبر"),
+    ("South Asia","en","site:t.me South Asia local eyewitness independent monitor"),
+    ("Middle East","ar","site:t.me غزة صحفي محلي مراسل ميداني أخبار"),
+    ("Middle East","ar","site:t.me الضفة الغربية القدس مراسل محلي أخبار"),
+    ("Middle East","ar","site:t.me السودان دارفور كردفان مراسل محلي"),
+    ("Middle East","ar","site:t.me لبنان سوريا اليمن صحفي مستقل أخبار محلية"),
+    ("Africa","am","site:t.me አማራ ትግራይ ኦሮሚያ የአካባቢ ዜና"),
+    ("Africa","fr","site:t.me RDC Kivu journaliste local société civile"),
+    ("Ukraine/Russia","uk","site:t.me Харків Херсон Запоріжжя місцевий журналіст"),
+    ("Ukraine/Russia","ru","site:t.me независимый местный корреспондент Украина Россия"),
+    ("Global","en","site:t.me independent local newsroom eyewitness public monitor conflict"),
 ]
 
 class AnchorParser(HTMLParser):
@@ -183,6 +208,36 @@ def self_test():
 def main():
     OUT.mkdir(exist_ok=True)
     found = {}
+    seed_path = OUT / "seed_candidates.json"
+    seed_candidates = []
+    seed_keys = set()
+    if seed_path.exists():
+        try:
+            seed_candidates = json.loads(seed_path.read_text(encoding="utf-8")).get("candidates", [])
+        except Exception:
+            seed_candidates = []
+    for seed in seed_candidates:
+        username = str(seed.get("username", "")).strip().lstrip("@")
+        if not re.fullmatch(r"[A-Za-z][A-Za-z0-9_]{3,31}", username):
+            continue
+        key = username.lower()
+        seed_keys.add(key)
+        row = found.setdefault(key, {
+            "username": username,
+            "candidate_url": "https://t.me/" + username,
+            "discovery_regions": [],
+            "discovery_languages": [],
+            "discovery_queries": [],
+            "discovery_providers": [],
+        })
+        for field, value in (("discovery_regions", seed.get("region", "Bangladesh")),
+                             ("discovery_languages", seed.get("language", "bn")),
+                             ("discovery_queries", "TG Market public Bangladesh news directory"),
+                             ("discovery_providers", "tgmarket_public_directory")):
+            if value and value not in row[field]:
+                row[field].append(value)
+        row["discovery_notes"] = seed.get("discovery_notes", "Directory listing only; identity, role and reliability unverified.")
+        row["seed_source_url"] = seed.get("seed_source_url", "https://tgmarket.io/countries/bd/news")
     provider_stats = {name: {"queries_attempted": 0, "queries_with_links": 0,
                              "links_found": 0, "errors": []}
                       for name in ("duckduckgo", "bing", "google")}
@@ -236,7 +291,7 @@ def main():
         row["last_seen_utc"] = now
         for field in ("discovery_regions", "discovery_languages", "discovery_queries", "discovery_providers"):
             row[field] = sorted(set(previous.get(field, [])) | set(row.get(field, [])))
-        for field in ("title", "description", "accessible", "source_class", "source_affiliation"):
+        for field in ("title", "description", "accessible", "source_class", "source_affiliation", "discovery_notes", "seed_source_url"):
             if field in previous:
                 row[field] = previous[field]
         prior[key] = row
@@ -259,6 +314,7 @@ def main():
         row["review_status"] = "UNREVIEWED_CANDIDATE"
         row["enabled_for_collection"] = False
 
+    search_candidates_this_run = len(set(found) - seed_keys)
     providers_with_success = sum(1 for stats in provider_stats.values()
                                  if stats["queries_with_links"] > 0)
     total_query_errors = sum(len(stats["errors"]) for stats in provider_stats.values())
@@ -272,12 +328,14 @@ def main():
     ]
     payload = {
         "generated_at_utc": stamp,
-        "discovery_method": "Parallel public web-index search (DuckDuckGo, Bing, Google) for public t.me links",
+        "discovery_method": "Public web-index search (DuckDuckGo, Bing, Google) plus unreviewed public-directory seed leads",
         "queries_attempted_per_provider": len(QUERIES),
         "provider_diagnostics": provider_stats,
         "providers_returning_telegram_links": providers_with_success,
         "total_query_errors": total_query_errors,
-        "new_candidates_this_run": len(found),
+        "new_candidates_this_run": search_candidates_this_run,
+        "directory_seed_candidates_loaded": len(seed_keys),
+        "candidate_leads_loaded_this_run": len(found),
         "unique_candidates": len(candidates),
         "previews_checked_this_run": min(MAX_PREVIEW_CHECKS, len(candidates)),
         "limitations": limitations,
@@ -287,7 +345,7 @@ def main():
         json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     fields = ["username", "candidate_url", "title", "description", "accessible",
               "source_class", "source_affiliation", "review_status", "enabled_for_collection",
-              "discovery_regions", "discovery_languages", "discovery_queries", "discovery_providers"]
+              "discovery_regions", "discovery_languages", "discovery_queries", "discovery_providers", "discovery_notes", "seed_source_url"]
     with (OUT / "telegram_channel_candidates.csv").open("w", newline="", encoding="utf-8-sig") as handle:
         writer = csv.DictWriter(handle, fieldnames=fields, extrasaction="ignore")
         writer.writeheader()
@@ -301,7 +359,8 @@ def main():
     (OUT / "discovery_summary.json").write_text(
         json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps({
-        "new_candidates": len(found),
+        "new_candidates": search_candidates_this_run,
+        "directory_seed_candidates": len(seed_keys),
         "cumulative_candidates": len(candidates),
         "preview_checks": min(MAX_PREVIEW_CHECKS, len(candidates)),
         "providers_returning_links": providers_with_success,

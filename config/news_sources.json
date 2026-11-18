@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "description": "Public RSS/Atom news sources. Inclusion means collection eligibility, not endorsement or verification. Review source identity, editorial position and feed health periodically.",
+  "sources": [
+    {
+      "source_id": "daily_star_rss",
+      "publisher_name": "The Daily Star",
+      "feed_url": "https://www.thedailystar.net/frontpage/rss.xml",
+      "priority_region": "bangladesh",
+      "language": "en",
+      "source_class": "independent_media",
+      "source_affiliation": "Bangladesh_national_newsroom",
+      "monitoring_weight": "high",
+      "enabled": true
+    },
+    {
+      "source_id": "bdnews24_rss",
+      "publisher_name": "bdnews24.com",
+      "feed_url": "https://bdnews24.com/?widgetName=rssfeed&widgetId=1150&getXmlFeed=true",
+      "priority_region": "bangladesh",
+      "language": "en",
+      "source_class": "independent_media",
+      "source_affiliation": "Bangladesh_digital_newsroom",
+      "monitoring_weight": "high",
+      "enabled": true
+    },
+    {
+      "source_id": "jagonews24_rss",
+      "publisher_name": "Jago News 24",
+      "feed_url": "https://www.jagonews24.com/rss/rss.xml",
+      "priority_region": "bangladesh",
+      "language": "bn",
+      "source_class": "independent_media",
+      "source_affiliation": "Bangladesh_digital_newsroom",
+      "monitoring_weight": "standard",
+      "enabled": true
+    },
+    {
+      "source_id": "prothom_alo_rss",
+      "publisher_name": "Prothom Alo",
+      "feed_url": "https://www.prothomalo.com/feed/",
+      "priority_region": "bangladesh",
+      "language": "bn",
+      "source_class": "independent_media",
+      "source_affiliation": "Bangladesh_national_newsroom",
+      "monitoring_weight": "high",
+      "enabled": true
+    },
+    {
+      "source_id": "myanmar_now_rss",
+      "publisher_name": "Myanmar Now",
+      "feed_url": "https://myanmar-now.org/en/feed",
+      "priority_region": "myanmar",
+      "language": "en",
+      "source_class": "independent_media",
+      "source_affiliation": "Myanmar_independent_newsroom",
+      "monitoring_weight": "high",
+      "enabled": true
+    },
+    {
+      "source_id": "kachin_news_group_rss",
+      "publisher_name": "Kachin News Group",
+      "feed_url": "https://kachinnews.com/feed",
+      "priority_region": "myanmar",
+      "language": "en",
+      "source_class": "independent_media",
+      "source_affiliation": "Kachin_regional_independent_newsroom",
+      "monitoring_weight": "high",
+      "enabled": true
+    },
+    {
+      "source_id": "shan_news_rss",
+      "publisher_name": "SHAN News",
+      "feed_url": "https://shannews.org/feed",
+      "priority_region": "myanmar",
+      "language": "en",
+      "source_class": "independent_media",
+      "source_affiliation": "Shan_regional_independent_newsroom",
+      "monitoring_weight": "high",
+      "enabled": true
+    }
+  ]
+}

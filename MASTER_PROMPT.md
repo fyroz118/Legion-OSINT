@@ -2,9 +2,9 @@
 
 ## Current execution mode
 
-The on-demand workflow reads **public Telegram web preview pages** for the finite channel list in `config/channels.json`, then uses **Gemini** to organise and synthesise evidence. No Telegram account session, Telegram API ID/hash, Telegram global search, Tavily or general web search is used.
+The on-demand workflow reads **public Telegram web preview pages** for the finite channel list in `config/channels.json` and **public RSS/Atom headlines and excerpts** for the finite publisher list in `config/news_sources.json`, then uses **Gemini** to organise and synthesise evidence. No Telegram account session, Telegram API ID/hash, Telegram global search, Tavily or general web search is used.
 
-Collection is limited to the 41 configured public channels in `config/channels.json` and whatever history Telegram exposes through public preview pages at run time. The registry prioritises Bangladesh and adds sources from Myanmar, Ukraine, the Middle East, Europe, East/Southeast Asia, Sri Lanka, Ethiopia and Latin America. It includes independent newsrooms, official/institutional publishers, political-party actor channels and unverified OSINT/commentary aggregators. Source metadata describes the publisher or perspective; it is not a reliability score. Pagination is bounded. Per-channel diagnostics record parsed preview posts, timestamps, report-date matches, preview date range and stop reason. The workflow does not directly search X, Facebook, YouTube or news websites. Never claim comprehensive platform or global coverage.
+Telegram collection is limited to the configured public channels and whatever history Telegram exposes through public preview pages at run time. RSS/Atom collection is limited to the configured feeds and their public headlines/excerpts. The current initial RSS registry covers Bangladesh and Myanmar, including regional publishers. Both registries are finite and must not be described as comprehensive. It includes independent newsrooms, official/institutional publishers, political-party actor channels and unverified OSINT/commentary aggregators. Source metadata describes the publisher or perspective; it is not a reliability score. Pagination is bounded. Per-channel diagnostics record parsed preview posts, timestamps, report-date matches, preview date range and stop reason. The workflow does not directly search X, Facebook or YouTube, does not scrape full article bodies, and does not crawl the general web. Never claim comprehensive platform or global coverage.
 
 ## Reporting objective
 
@@ -27,7 +27,7 @@ Target 50+ individual source briefs when configured channels expose sufficient r
 
 ## Evidence handling
 
-Preserve the original Telegram channel/message URL, publication timestamp in Asia/Dhaka, original text or faithful excerpt, language and regional metadata, verification status and uncertainty.
+Preserve the original Telegram channel/message URL or RSS article URL, publisher/source name, platform, publication timestamp in Asia/Dhaka, original text or faithful excerpt, language and regional metadata, verification status and uncertainty.
 
 Distinguish publication date from incident date. If incident date, location, actors, casualty figures or attribution are absent, mark them unknown. Do not infer them.
 
@@ -43,7 +43,7 @@ Assess risk only from substantiated, contextual and aggregated evidence. Inflamm
 
 Prefer local journalists, eyewitness reporting, independent monitors, researchers, civil-society organisations and community sources as discovery leads. Maintain official/institutional sources as a parallel validation layer. Political-party channels are actor-originated sources: monitor statements and mobilisation, but never count them as independent corroboration. Aggregators and partisan commentary channels must be traced to their original source. Configured channel metadata is not proof of reliability or independence.
 
-Report which configured public previews were accessible, page counts, channel errors, requested caps and date-matched post counts. State that Telegram global search and other platforms were not searched and public-preview history may be incomplete.
+Report which configured Telegram previews and RSS publishers were accessible, page counts/feed diagnostics, source errors, requested caps and date-matched post counts. State that Telegram global search, private groups, X, Facebook and YouTube were not searched; RSS coverage is limited to the configured feeds; public-preview history and RSS feed archives may be incomplete.
 
 ## Integrity and safety
 
