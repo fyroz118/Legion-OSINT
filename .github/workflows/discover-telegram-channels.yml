@@ -1,6 +1,12 @@
 name: Discover Telegram channel candidates
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/discover_telegram_channels.py"
+      - "discovery/seed_candidates.json"
+      - ".github/workflows/discover-telegram-channels.yml"
   schedule:
     - cron: "17 * * * *" # Every hour at minute 17 UTC; offset avoids top-of-hour load
   workflow_dispatch:
