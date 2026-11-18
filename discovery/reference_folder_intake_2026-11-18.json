@@ -272,5 +272,36 @@
       "notes": "Telegram channel index lists Intel Republic @Intel_Republic12 among channels linked from Rerum Novarum; exact title/handle match, further preview review required.",
       "evidence_url": "https://t.me/Intel_Republic12"
     }
-  ]
+  ],
+  "discovered_political_channels": [
+    {
+      "display_name": "Vishva Hindu Parishad - VHP",
+      "username": "DigitalVHP",
+      "status": "UNREVIEWED_CANDIDATE",
+      "source_url": "https://t.me/DigitalVHP",
+      "notes": "Official VHP channel; Telegram-verified and links to vhp.org and VHP social accounts. Organisational actor source, not independent corroboration."
+    },
+    {
+      "display_name": "The National Justice Party",
+      "username": "NationalJusticeParty",
+      "status": "UNREVIEWED_CANDIDATE",
+      "source_url": "https://t.me/s/NationalJusticeParty",
+      "notes": "Self-described official party update channel. Treat as actor-originated content; inspect posts and independently verify claims. Public preview contains at least one repost with a racial slur; do not amplify it."
+    },
+    {
+      "display_name": "CPIML Liberation",
+      "username": "cpimllib",
+      "status": "UNREVIEWED_CANDIDATE",
+      "source_url": "https://t.me/s/cpimllib",
+      "notes": "Telegram-verified official CPI(ML) Liberation channel; links to cpiml.org and liberation.org.in. Party-originated statements are actor evidence, not independent corroboration."
+    },
+    {
+      "display_name": "Cockroach Janta Party",
+      "username": "thecockroachchannel",
+      "status": "UNREVIEWED_CANDIDATE",
+      "source_url": "https://t.me/s/thecockroachchannel",
+      "notes": "Self-described official party channel, with political commentary, protest coverage and mobilisation posts. Treat as an actor/supporter source; verify event claims independently."
+    }
+  ],
+  "political_channel_count": 4
 }
