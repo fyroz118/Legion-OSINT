@@ -2096,20 +2096,6 @@
       "review_status": "UNREVIEWED_CANDIDATE"
     },
     {
-      "username": "theirrawaddyenglishedition",
-      "region": "Myanmar",
-      "language": "en",
-      "candidate_category": "independent_newsroom_candidate",
-      "source_class": "independent_media_candidate",
-      "source_affiliation": "unassessed_or_candidate_identity",
-      "source_identity_status": "public_preview_or_official_reference_found",
-      "discovery_notes": "The Irrawaddy English Edition public channel has recent November 2026 posts and links to the newsroom; small audience compared with its Burmese channel, but useful English-language regional coverage.",
-      "seed_source_url": "https://t.me/theirrawaddyenglishedition",
-      "status": "UNREVIEWED_CANDIDATE",
-      "enabled_for_collection": false,
-      "review_status": "UNREVIEWED_CANDIDATE"
-    },
-    {
       "username": "goreunit",
       "region": "South Asia",
       "language": "en",
