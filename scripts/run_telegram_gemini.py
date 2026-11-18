@@ -17,6 +17,15 @@ from app.database import initialize, insert_post, search_posts
 
 TZ = ZoneInfo("Asia/Dhaka")
 
+# Telegram global search discovers public posts beyond the curated channel list.
+# These are search terms, not a guarantee of exhaustive platform coverage.
+GLOBAL_TELEGRAM_QUERIES = [
+    "Bangladesh", "বাংলাদেশ", "ঢাকা", "সংঘর্ষ", "বিক্ষোভ", "গুজব",
+    "নিহত", "আহত", "India violence", "Pakistan protest", "Kashmir",
+    "Myanmar conflict", "Gaza", "Sudan conflict", "Ukraine", "Syria",
+    "Yemen", "Haiti protest"
+]
+
 def collect(report_date, limit):
     api_id = os.getenv("TELEGRAM_API_ID", "").strip()
     api_hash = os.getenv("TELEGRAM_API_HASH", "").strip()
@@ -61,6 +70,35 @@ def collect(report_date, limit):
                         collected += 1
                 except Exception as exc:
                     errors.append({"channel": username, "error": type(exc).__name__, "detail": str(exc)[:250]})
+
+            # Global Telegram search across public/indexed chats, not only configured channels.
+            for query in GLOBAL_TELEGRAM_QUERIES:
+                try:
+                    async for msg in client.iter_messages(None, search=query, limit=min(limit, 50)):
+                        if not msg.message or not msg.date:
+                            continue
+                        published = msg.date.astimezone(TZ)
+                        if published.date().isoformat() != report_date:
+                            continue
+                        chat = await msg.get_chat()
+                        username = getattr(chat, "username", None)
+                        if not username:
+                            continue
+                        insert_post({
+                            "channel_username": username, "channel_id": str(getattr(chat, "id", "")),
+                            "message_id": str(msg.id), "published_at": published.isoformat(),
+                            "collected_at": datetime.now(timezone.utc).isoformat(),
+                            "text": msg.message[:12000],
+                            "source_url": f"https://t.me/{username}/{msg.id}",
+                            "language": "unknown", "priority_region": "global",
+                            "source_class": "unknown", "source_type": "telegram_global_search",
+                            "source_affiliation": "global_search_query:" + query,
+                            "monitoring_weight": "standard",
+                        })
+                        collected += 1
+                except Exception as exc:
+                    errors.append({"channel": "GLOBAL_SEARCH:" + query,
+                                   "error": type(exc).__name__, "detail": str(exc)[:250]})
         finally:
             await client.disconnect()
     import asyncio
@@ -128,6 +166,8 @@ def main():
         batch_summaries.append(gemini_text(client, model, prompt))
     coverage_context = json.dumps({
         "configured_channels": [ch.get("username") for ch in channels],
+        "global_telegram_search_queries": GLOBAL_TELEGRAM_QUERIES,
+        "global_search_limit_per_query": min(limit, 50),
         "messages_collected_this_run": collected,
         "maximum_recent_messages_inspected_per_channel": limit,
         "channel_access_errors": errors,
@@ -145,7 +185,7 @@ def main():
         "Mark all claims UNVERIFIED unless the supplied notes explicitly contain independent corroboration; "
         "even then explain evidence basis. Never infer incident date from publication date. "
         "Do not claim comprehensive Telegram coverage. State channel list scope, inaccessible channels, missing data, "
-        "and that only configured channels were collected. Do not give tactical details or identify private individuals. "
+        "and that both the configured channel list and Telegram global-search terms were used; global search is indexed and incomplete. Do not give tactical details or identify private individuals. "
         "Rhetoric alone does not establish imminent violence. Keep every material claim linked to its original URL. "
         "If there are no verified facts, say so clearly.\n\n"
         "Exact collection coverage metadata (report access failures honestly; do not imply unlisted channels were searched):\n"
@@ -168,7 +208,7 @@ def main():
             for section in empty_sections
         )
     header = (f"# Legion-OSINT Daily Intelligence Report — {report_date}\n\n"
-              "**Method:** on-demand collection from configured accessible public Telegram channels, "
+              "**Method:** on-demand collection from configured public Telegram channels plus Telegram global search, "
               "followed by Gemini-assisted synthesis.\n"
               "**Timezone:** Asia/Dhaka (UTC+6).\n"
               "**Verification warning:** Gemini analysis does not independently verify claims. "
@@ -179,7 +219,7 @@ def main():
                "posts_collected_this_run": collected, "posts_for_report_date_in_database": len(rows),
                "posts_in_gemini_analysis": len(analysis_rows),
                "channel_errors": errors, "verification": "Gemini-assisted; no automatic independent verification",
-               "coverage_limit": "Only configured and accessible public Telegram channels"}
+               "coverage_limit": "Configured accessible public channels plus incomplete Telegram global search; not all Telegram content"}
     (out / "collection_summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps(summary, ensure_ascii=False))
 
