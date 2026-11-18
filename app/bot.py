@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 from telegram import Update
 from telegram.constants import ChatType
 from telegram.ext import Application, CommandHandler
-from app.database import initialize, count_posts, search_posts
+from app.database import initialize, count_posts, search_posts, source_mix_counts
 from app.gemini_assistant import ask
 
 load_dotenv()
@@ -42,8 +42,11 @@ async def help_cmd(update, context):
 
 async def status(update, context):
     if await gate(update):
+        mix = source_mix_counts()
+        mix_text = ", ".join(f"{name}: {count}" for name, count in sorted(mix.items())) or "no source metadata yet"
         await update.message.reply_text(
             f"Stored posts: {count_posts()}\n"
+            f"Post source mix: {mix_text}\n"
             "Collector: scheduled worker (when deployed) or manual run"
         )
 
