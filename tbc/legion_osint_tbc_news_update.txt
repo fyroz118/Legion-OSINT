@@ -9,7 +9,7 @@ else:
 Command: help
 ---
 if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
-    bot.sendMessage("/status — Telegram and RSS collection freshness/counts\n/daily — latest public Telegram posts\n/news — latest public RSS/Atom news headlines\n/bangladesh — Bangladesh source posts\n/search <words> — all words must match text, source, region or classification\n/leads — recent source leads\n/briefs — individual source briefs\n/coverage — Telegram channel and RSS publisher diagnostics\n/report — analyst-approved incident report\n/digest — latest unverified source-post digest\n/reviewqueue — unreviewed source posts\n/reviewlead ID | reviewed|rejected|duplicate | source_class | rationale\n/candidates — recent event-news leads for analyst screening\n/incidentdraft POST_ID | INCIDENT_ID | COUNTRY | CATEGORY | DESCRIPTION\n/incidentqueue — incident drafts and inclusion status\n/approveincident INCIDENT_ID | approved|rejected | rationale\n/linklead POST_ID | INCIDENT_ID | lead|corroboration|contradiction\n/alerts_on — enable two-hourly alerts\n/alerts_off — disable alerts\n/ask and /research — not connected yet\n\nSource integrity: posts remain UNVERIFIED; publication time is not incident time; reposts are not independent corroboration. Approval permits report inclusion only and does not verify an event.")
+    bot.sendMessage("/status — Telegram and RSS collection freshness/counts\n/daily — latest public Telegram posts\\n/date YYYY-MM-DD — all collected news published on a date\n/news — latest public RSS/Atom news headlines\n/bangladesh — Bangladesh source posts\n/search <words> — all words must match text, source, region or classification\n/leads — recent source leads\n/briefs — individual source briefs\n/coverage — Telegram channel and RSS publisher diagnostics\n/report — analyst-approved incident report\n/digest — latest unverified source-post digest\n/reviewqueue — unreviewed source posts\n/reviewlead ID | reviewed|rejected|duplicate | source_class | rationale\n/candidates — recent event-news leads for analyst screening\n/incidentdraft POST_ID | INCIDENT_ID | COUNTRY | CATEGORY | DESCRIPTION\n/incidentqueue — incident drafts and inclusion status\n/approveincident INCIDENT_ID | approved|rejected | rationale\n/linklead POST_ID | INCIDENT_ID | lead|corroboration|contradiction\n/alerts_on — enable two-hourly alerts\n/alerts_off — disable alerts\n/ask and /research — not connected yet\n\nSource integrity: posts remain UNVERIFIED; publication time is not incident time; reposts are not independent corroboration. Approval permits report inclusion only and does not verify an event.")
 else:
     bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
 ---
@@ -68,6 +68,84 @@ else:
     bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
 ---
 
+
+Command: date
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    raw_date = str(params or "").strip()
+    import re
+    if not re.fullmatch(r"\\d{4}-\\d{2}-\\d{2}", raw_date):
+        bot.sendMessage("Usage: /date YYYY-MM-DD\\nExample: /date 2026-11-18")
+    else:
+        try:
+            from datetime import date
+            date.fromisoformat(raw_date)
+            response = HTTP.get(FEED_URL)
+            if response.status_code != 200:
+                bot.sendMessage("The public collection feed is temporarily unavailable. Try again later.")
+            else:
+                data = response.json()
+                summary = data.get("summary", {})
+                tz_name = str(summary.get("timezone") or "Asia/Dhaka")
+                matches = []
+                undated = 0
+                for post in data.get("posts", []):
+                    stamp = str(post.get("published_at") or "").strip()
+                    if not stamp:
+                        undated += 1
+                        continue
+                    try:
+                        if "T" in stamp:
+                            from datetime import datetime, timezone, timedelta
+                            parsed_stamp = datetime.fromisoformat(stamp.replace("Z", "+00:00"))
+                            if parsed_stamp.tzinfo is None:
+                                parsed_stamp = parsed_stamp.replace(tzinfo=timezone.utc)
+                            if tz_name == "Asia/Dhaka":
+                                local_stamp = parsed_stamp.astimezone(timezone(timedelta(hours=6)))
+                            else:
+                                local_stamp = parsed_stamp
+                            post_day = local_stamp.date().isoformat()
+                        else:
+                            post_day = stamp[:10]
+                        if post_day == raw_date:
+                            matches.append(post)
+                    except Exception:
+                        continue
+                matches.sort(key=lambda p: str(p.get("published_at") or ""))
+                if not matches:
+                    bot.sendMessage("No collected posts found for " + raw_date + ". This date search covers only records retained in the latest feed snapshot; it is not a complete Telegram or internet archive.")
+                else:
+                    lines = ["LEGION-OSINT — COLLECTED NEWS FOR " + raw_date, "Timezone: " + tz_name + " | Matching records: " + str(len(matches)), "SOURCE LEADS ONLY — not verified incidents. Posts are publication records; multiple posts may describe the same event."]
+                    for post in matches:
+                        publisher = str(post.get("publisher_name") or post.get("channel_username") or "Unknown source")
+                        platform = str(post.get("platform") or "Telegram")
+                        stamp = str(post.get("published_at") or "time unknown")
+                        body = " ".join(str(post.get("text") or "").split())[:190]
+                        url = str(post.get("source_url") or "")
+                        lines.append("\\n" + stamp + " | " + publisher + " | " + platform + "\\n" + body + "\\n" + url)
+                    message_text = "\\n".join(lines)
+                    if len(message_text) <= 3900:
+                        bot.sendMessage(message_text, disable_web_page_preview=True)
+                    else:
+                        chunks = []
+                        current = lines[0] + "\\n" + lines[1] + "\\n" + lines[2]
+                        for item in lines[3:]:
+                            if len(current) + len(item) + 2 > 3800:
+                                chunks.append(current)
+                                current = "CONTINUED — " + raw_date
+                            current += "\\n" + item
+                        if current:
+                            chunks.append(current)
+                        for chunk in chunks[:6]:
+                            bot.sendMessage(chunk, disable_web_page_preview=True)
+                        if len(chunks) > 6:
+                            bot.sendMessage("Output capped at six messages. The snapshot contains more matching records; refine with /search or use the feed archive.")
+        except ValueError:
+            bot.sendMessage("Invalid date. Use YYYY-MM-DD, for example /date 2026-11-18.")
+        except Exception:
+            bot.sendMessage("Date search failed. The feed may be unavailable or contain an unexpected timestamp.")
+else:
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
 Command: news
 ---
 if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
