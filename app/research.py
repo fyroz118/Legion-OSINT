@@ -309,7 +309,7 @@ def review_lead(lead_id, status, source_class=None, analyst_note=None,
     return True
 
 
-def link_reviewed_lead_to_incident(lead_id, incident_id, source_role="lead"):
+def link_reviewed_lead_to_incident(lead_id, incident_id, source_role="lead", independence_group=None):
     """Attach reviewed provenance to an existing incident; never creates an incident."""
     from app.incidents import add_incident_source, initialize_incident_tables
     initialize_research_tables()
