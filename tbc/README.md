@@ -4,7 +4,8 @@ This is an import-ready TPY command package reconstructed from the current Legio
 
 ## Files
 
-- `legion_osint_tbc_import.json` — 24 commands in TBC's structured JSON command-import format.
+- `legion_osint_tbc_import.json` — 25 commands in TBC's structured JSON command-import format.
+- `legion_osint_tbc_import.txt` — same commands in TBC's documented plain-text import format.
 - `../scripts/publish_tbc_feed.py` — builds a bounded read-only snapshot from public Telegram preview collection output.
 - `../docs/feed/latest.json` — generated snapshot location; it appears after the first successful scheduled collection and publisher run.
 
