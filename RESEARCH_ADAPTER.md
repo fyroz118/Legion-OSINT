@@ -1,40 +1,18 @@
-# High-volume public-web research adapter
+# High-volume public-web research
 
-Legion-OSINT uses Tavily Search API as its first configurable public-web discovery provider.
+Legion-OSINT's default research session runs 60 event-led search queries (maximum 100), requesting up to 10 results per query. Bangladesh is first priority, followed by the Indian subcontinent and MENA, with global searches retained. Queries include local/unofficial discovery, official/institutional checks and explicit rumour-watch terms. The approximate 70:30 split is query focus only; returned source identities are not classified automatically.
 
-## Session target and workflow
-- Default discovery plan: 60 queries (maximum 100), up to 10 results per query.
-- Aim: produce 50+ individual source-lead briefs when returned evidence supports that volume. This is a target, not a quota; never pad with duplicates or invented events.
-- Geographic priority: Bangladesh, the Indian subcontinent, Middle East/North Africa, then other global regions.
-- The default query allocation is approximately 70% unofficial/local/public-eyewitness discovery and 30% official/institutional discovery. This measures query attention only. A domain's actual source class remains unknown until reviewed.
-- Rumour-watch queries deliberately seek unconfirmed claims, viral posts and fact-checks. These results are tagged RUMOUR_WATCH leads, not confirmed rumours or facts.
-- Search is event/theme-driven. The configured Telegram channel list is not the boundary of report coverage.
+## Output model
+- `/research YYYY-MM-DD` runs discovery.
+- `/briefs YYYY-MM-DD [limit]` displays up to 100 individual source-lead briefs. These are source-specific items, not necessarily 100 unique incidents.
+- `/leads YYYY-MM-DD` lists saved leads.
+- `/coverage YYYY-MM-DD` reports regional query success/failure.
+- `/report YYYY-MM-DD` creates the consolidated ten-section draft from reviewed incident-ledger records.
 
-## Individual briefs
-Use /briefs YYYY-MM-DD [limit] to render up to 100 individual source-lead briefs. Each brief preserves title, region, publication timestamp, source URL, source class (unknown until reviewed), query focus and snippet. A brief describes what a source reported; it does not establish that the event occurred. Multiple sources about one event may produce multiple source briefs and must be consolidated during incident analysis.
+New leads are `UNVERIFIED` and `UNREVIEWED`. Rumour-watch items are labelled `RUMOUR_WATCH`; their claims are not facts. A rumour may be retained even when it cannot yet be corroborated, but harmful allegations should be summarized cautiously and not amplified unnecessarily. Duplicate source links are deduplicated; different sources describing the same event remain separate source briefs until an analyst consolidates the event.
 
-## Limitations
-- This is broad public-web discovery, not universal internet or social-platform surveillance.
-- X, Facebook, YouTube and Telegram content may appear only if indexed/surfaced by the provider; direct platform APIs/adapters require separate permissions and integration.
-- Search engines can miss local-language posts, deleted content, closed groups and unindexed websites.
-- Search result ranking is not verification. Rumours must remain UNVERIFIED/DISPUTED until corroborated; preserve their original wording/context and never repeat harmful allegations as established facts.
-- Provider publication date is not incident date. Undated items are retained with date unknown.
-- Similar headlines, syndicated stories and reposts are not independent corroboration.
-- Never publish private personal data, doxxing, private-person profiling, targeting, tactical targeting details or exploitable security information.
+## Limits and cost
+At Tavily basic depth, 60 successful queries may consume up to 60 search credits per session; actual billing depends on provider rules and successful calls. The 100-query cap is a safety/cost guard. Results depend on the provider's index and ranking. This is not direct access to every Telegram channel, X, Facebook, YouTube or local-language post. Configured Telegram channels are not the global coverage boundary, but direct platform collection requires separate lawful API/access adapters. No system can guarantee every rumour or news item.
 
 ## Configuration
-Set private environment variables on the deployment host:
-- TAVILY_API_KEY — required.
-- TAVILY_SEARCH_DEPTH — basic by default; advanced uses more credits.
-- RESEARCH_MAX_QUERIES — default 60, maximum 100.
-
-At 60 basic queries, a session may consume up to 60 basic search credits (subject to provider billing and query execution). At 100 queries, up to 100. Each query can return up to 10 results; this is not a guarantee of 600 or 1,000 unique leads.
-
-## Commands
-- /research YYYY-MM-DD — run the expanded discovery session.
-- /briefs YYYY-MM-DD [limit] — display individual source-lead briefs (default 60, maximum 100).
-- /leads YYYY-MM-DD — list candidate source links.
-- /coverage YYYY-MM-DD — show query success/failure and regional result counts.
-- /report YYYY-MM-DD — generate the consolidated ten-section draft from analyst-reviewed incident-ledger entries.
-
-The consolidated report still requires review, event deduplication, independent corroboration, incident-date assessment, and analyst judgment. The research adapter does not automatically verify or promote leads into incidents.
+Set `TAVILY_API_KEY`, `TAVILY_SEARCH_DEPTH=basic` and optionally `RESEARCH_MAX_QUERIES=60` in the private host environment. Never commit keys. Search leads do not automatically become incidents or verified facts.
