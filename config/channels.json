@@ -206,7 +206,9 @@
       "enabled": true,
       "notes": "Official BNP party channel. Monitor party statements, mobilisation notices and allegations as actor-originated claims; partisan content is not independent corroboration.",
       "source_class": "other",
-      "monitoring_weight": "high"
+      "monitoring_weight": "high",
+      "political_baseline": true,
+      "baseline_group": "discovered_political_channels"
     },
     {
       "username": "bjiofficial",
@@ -218,7 +220,9 @@
       "enabled": true,
       "notes": "Official Bangladesh Jamaat-e-Islami channel. Monitor statements and mobilisation as actor-originated claims; partisan content is not independent corroboration.",
       "source_class": "other",
-      "monitoring_weight": "high"
+      "monitoring_weight": "high",
+      "political_baseline": true,
+      "baseline_group": "discovered_political_channels"
     },
     {
       "username": "albd1949",
@@ -230,7 +234,9 @@
       "enabled": true,
       "notes": "Official Bangladesh Awami League channel. Monitor statements and mobilisation as actor-originated claims; partisan content is not independent corroboration.",
       "source_class": "other",
-      "monitoring_weight": "high"
+      "monitoring_weight": "high",
+      "political_baseline": true,
+      "baseline_group": "discovered_political_channels"
     },
     {
       "username": "theirrawaddy",
