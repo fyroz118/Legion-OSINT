@@ -57,6 +57,13 @@ class DatabaseTests(unittest.TestCase):
         self.assertEqual(row["source_type"], "local_journalist")
         self.assertEqual(row["monitoring_weight"], "high")
 
+    def test_source_mix_counts(self):
+        database.insert_post(self.sample())
+        official = self.sample(message_id="102")
+        official["source_class"] = "official_institutional"
+        database.insert_post(official)
+        self.assertEqual(database.source_mix_counts(), {"unofficial": 1, "official_institutional": 1})
+
     def test_new_records_start_unverified(self):
         database.insert_post(self.sample())
         self.assertEqual(database.search_posts()[0]["evidence_status"], "UNVERIFIED")
