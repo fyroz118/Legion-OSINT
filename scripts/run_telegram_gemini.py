@@ -32,41 +32,39 @@ def collect(report_date, limit):
     async def run():
         nonlocal collected
         await client.connect()
-        if not await client.is_user_authorized():
-            raise RuntimeError("Telethon session is invalid or revoked; export a new session")
-        for ch in channels:
-            username = ch["username"].lstrip("@")
-            try:
-                entity = await client.get_entity(username)
-                async for msg in client.iter_messages(entity, limit=limit):
-                    if not msg.message or not msg.date:
-                        continue
-                    published = msg.date.astimezone(TZ)
-                    if published.date().isoformat() != report_date:
-                        continue
-                    insert_post({
-                        "channel_username": username, "channel_id": str(entity.id),
-                        "message_id": str(msg.id), "published_at": published.isoformat(),
-                        "collected_at": datetime.now(timezone.utc).isoformat(),
-                        "text": msg.message[:12000],
-                        "source_url": f"https://t.me/{username}/{msg.id}",
-                        "language": ch.get("language", "unknown"),
-                        "priority_region": ch.get("priority", "global"),
-                        "source_class": ch.get("source_class", "unknown"),
-                        "source_type": ch.get("source_type", "unknown"),
-                        "source_affiliation": ch.get("source_affiliation", "unknown"),
-                        "monitoring_weight": ch.get("monitoring_weight", "standard"),
-                    })
-                    collected += 1
-            except Exception as exc:
-                errors.append({"channel": username, "error": type(exc).__name__, "detail": str(exc)[:250]})
-        await client.disconnect()
+        try:
+            if not await client.is_user_authorized():
+                raise RuntimeError("Telethon session is invalid or revoked; export a new session")
+            for ch in channels:
+                username = ch["username"].lstrip("@")
+                try:
+                    entity = await client.get_entity(username)
+                    async for msg in client.iter_messages(entity, limit=limit):
+                        if not msg.message or not msg.date:
+                            continue
+                        published = msg.date.astimezone(TZ)
+                        if published.date().isoformat() != report_date:
+                            continue
+                        insert_post({
+                            "channel_username": username, "channel_id": str(entity.id),
+                            "message_id": str(msg.id), "published_at": published.isoformat(),
+                            "collected_at": datetime.now(timezone.utc).isoformat(),
+                            "text": msg.message[:12000],
+                            "source_url": f"https://t.me/{username}/{msg.id}",
+                            "language": ch.get("language", "unknown"),
+                            "priority_region": ch.get("priority", "global"),
+                            "source_class": ch.get("source_class", "unknown"),
+                            "source_type": ch.get("source_type", "unknown"),
+                            "source_affiliation": ch.get("source_affiliation", "unknown"),
+                            "monitoring_weight": ch.get("monitoring_weight", "standard"),
+                        })
+                        collected += 1
+                except Exception as exc:
+                    errors.append({"channel": username, "error": type(exc).__name__, "detail": str(exc)[:250]})
+        finally:
+            await client.disconnect()
     import asyncio
-    try:
-        asyncio.run(run())
-    finally:
-        if client.is_connected():
-            asyncio.run(client.disconnect())
+    asyncio.run(run())
     return channels, collected, errors
 
 def gemini_text(client, model, prompt):
@@ -111,8 +109,9 @@ def main():
     client = genai.Client(api_key=key)
     model = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
     batch_summaries = []
-    for start in range(0, len(rows), 20):
-        batch = rows[start:start+20]
+    analysis_rows = rows[:300]
+    for start in range(0, len(analysis_rows), 20):
+        batch = analysis_rows[start:start+20]
         evidence = "\n\n".join(
             f"POST {r['id']} | @{r['channel_username']} | {r['published_at']} | {r['priority_region']} | {r['source_url']}\n{r['text'][:2200]}"
             for r in batch)
@@ -154,6 +153,7 @@ def main():
     (out / "daily_intelligence_report.md").write_text(header + report, encoding="utf-8")
     summary = {"report_date": report_date, "timezone": "Asia/Dhaka", "configured_channels": len(channels),
                "posts_collected_this_run": collected, "posts_for_report_date_in_database": len(rows),
+               "posts_in_gemini_analysis": len(analysis_rows),
                "channel_errors": errors, "verification": "Gemini-assisted; no automatic independent verification",
                "coverage_limit": "Only configured and accessible public Telegram channels"}
     (out / "collection_summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
