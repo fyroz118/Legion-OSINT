@@ -163,12 +163,12 @@ def main():
         report+="\n\n### Collected source leads (unverified)\n"
         for r in rows:
             report+=f"- {r.get('published_at')} | @{r.get('channel_username')} | {r.get('text','')} | {r.get('source_url')}\n"
-    header=(f"# Legion-OSINT Daily Intelligence Report — {day}\n\n**Method:** configured public Telegram preview pages + Gemini synthesis. "
+    header=(f"# Legion-OSINT Daily Intelligence Report — {day}\n\n**Method:** configured public Telegram preview pages + "+("Gemini synthesis." if not gemini_error else "evidence-preservation fallback; Gemini unavailable.")+" "
       f"**Timezone:** Asia/Dhaka. **All claims require independent verification.**\n**Posts:** {len(rows)}; **Gemini analysed:** {len(analysis)} (max 300); **channels:** {len(channels)}.\n\n")
     (out/"daily_intelligence_report.md").write_text(header+report,encoding="utf-8")
     summary={"report_date":day,"timezone":"Asia/Dhaka","configured_channels":[c["username"] for c in channels],
       "posts_collected":len(posts),"posts_for_date":len(rows),"posts_in_gemini_analysis":len(analysis),
-      "pages_fetched_per_channel":page_counts,"channel_errors":errors,
+      "pages_fetched_per_channel":page_counts,"channel_errors":errors,"gemini_error":gemini_error,
       "method":"public Telegram previews; no session/global search",
       "coverage_limit":"finite configured public channels only; no other platforms"}
     (out/"collection_summary.json").write_text(json.dumps(summary,ensure_ascii=False,indent=2),encoding="utf-8")
