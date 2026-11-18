@@ -45,7 +45,7 @@ def main():
             index += 1
         if index >= len(txt_lines):
             raise SystemExit("Missing closing command fence in TBC TXT package.")
-        parsed_txt.append({"command": name, "code": "\\n".join(code_lines)})
+        parsed_txt.append({"command": name, "code": "\n".join(code_lines)})
         index += 1
     if parsed_txt != commands:
         raise SystemExit("JSON and TXT TBC import packages do not match.")
