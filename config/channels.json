@@ -1081,6 +1081,18 @@
       "notes": "Official English Telegram account of Anadolu Agency, linked to its official social accounts. Turkish public news-agency perspective; attribute claims and corroborate independently.",
       "source_class": "official_media",
       "monitoring_weight": "standard"
+    },
+    {
+      "username": "QatarNewsAgency",
+      "priority": "mena",
+      "language": "ar",
+      "source_type": "national_news_agency",
+      "source_affiliation": "Qatar_News_Agency_QNA",
+      "default_evidence_status": "UNVERIFIED",
+      "enabled": true,
+      "notes": "Verified official Telegram channel linked directly from the Qatar News Agency's official website. Arabic national news-agency feed; attribute official statements and independently corroborate contested events.",
+      "source_class": "official_media",
+      "monitoring_weight": "standard"
     }
   ]
 }
