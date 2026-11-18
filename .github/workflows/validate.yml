@@ -19,3 +19,5 @@ jobs:
           python-version: "3.11"
       - name: Validate Python syntax and JSON configuration
         run: python scripts/validate_project.py
+      - name: Run database regression tests
+        run: python -m unittest discover -s tests -v
