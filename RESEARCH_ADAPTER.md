@@ -1,32 +1,40 @@
-# Public-web research adapter
+# High-volume public-web research adapter
 
-Legion-OSINT uses the Tavily Search API as its first configurable public-web discovery provider.
+Legion-OSINT uses Tavily Search API as its first configurable public-web discovery provider.
 
-## What this layer does
-- Builds a reporting-date query plan, with Bangladesh searches first.
-- Searches news-indexed public web sources for the supplied date.
-- Stores result title, URL, domain, provider publication date, snippet, query and region in SQLite.
-- Records successful and failed queries so source coverage can be audited.
-- Deduplicates repeated URLs for a reporting date.
+## Session target and workflow
+- Default discovery plan: 60 queries (maximum 100), up to 10 results per query.
+- Aim: produce 50+ individual source-lead briefs when returned evidence supports that volume. This is a target, not a quota; never pad with duplicates or invented events.
+- Geographic priority: Bangladesh, the Indian subcontinent, Middle East/North Africa, then other global regions.
+- The default query allocation is approximately 70% unofficial/local/public-eyewitness discovery and 30% official/institutional discovery. This measures query attention only. A domain's actual source class remains unknown until reviewed.
+- Rumour-watch queries deliberately seek unconfirmed claims, viral posts and fact-checks. These results are tagged RUMOUR_WATCH leads, not confirmed rumours or facts.
+- Search is event/theme-driven. The configured Telegram channel list is not the boundary of report coverage.
 
-## What it does not do
-- It does not search every website or every post on X, Facebook, YouTube or Telegram.
-- Public social posts are returned only when indexed and surfaced by the provider; direct platform API adapters are separate work.
-- Search date filters use provider publication dates; known timestamps are normalized to Asia/Dhaka for the reporting-day check. A publication date still does not prove the incident happened on that date. Undated results are retained but their date remains unknown.
-- Search ranking is not verification. Search results are leads, not incidents or facts.
-- It does not automatically upgrade evidence status, assign confidence or produce a verified report.
+## Individual briefs
+Use /briefs YYYY-MM-DD [limit] to render up to 100 individual source-lead briefs. Each brief preserves title, region, publication timestamp, source URL, source class (unknown until reviewed), query focus and snippet. A brief describes what a source reported; it does not establish that the event occurred. Multiple sources about one event may produce multiple source briefs and must be consolidated during incident analysis.
+
+## Limitations
+- This is broad public-web discovery, not universal internet or social-platform surveillance.
+- X, Facebook, YouTube and Telegram content may appear only if indexed/surfaced by the provider; direct platform APIs/adapters require separate permissions and integration.
+- Search engines can miss local-language posts, deleted content, closed groups and unindexed websites.
+- Search result ranking is not verification. Rumours must remain UNVERIFIED/DISPUTED until corroborated; preserve their original wording/context and never repeat harmful allegations as established facts.
+- Provider publication date is not incident date. Undated items are retained with date unknown.
+- Similar headlines, syndicated stories and reposts are not independent corroboration.
+- Never publish private personal data, doxxing, private-person profiling, targeting, tactical targeting details or exploitable security information.
 
 ## Configuration
-Set these private environment variables on the deployment host:
+Set private environment variables on the deployment host:
 - TAVILY_API_KEY — required.
-- TAVILY_SEARCH_DEPTH — basic by default; advanced may use more credits.
-- RESEARCH_MAX_QUERIES — defaults to 12, maximum 20.
+- TAVILY_SEARCH_DEPTH — basic by default; advanced uses more credits.
+- RESEARCH_MAX_QUERIES — default 60, maximum 100.
 
-Do not commit .env or share API keys in chat. The code uses the official Tavily API endpoint https://api.tavily.com/search with bearer authentication and date filters. It does not request generated answers or raw page content.
+At 60 basic queries, a session may consume up to 60 basic search credits (subject to provider billing and query execution). At 100 queries, up to 100. Each query can return up to 10 results; this is not a guarantee of 600 or 1,000 unique leads.
 
 ## Commands
-- /research YYYY-MM-DD — run the configured date-specific discovery plan.
-- /leads YYYY-MM-DD — list stored candidate links for analyst review.
-- /coverage YYYY-MM-DD — show which regional queries succeeded or failed.
+- /research YYYY-MM-DD — run the expanded discovery session.
+- /briefs YYYY-MM-DD [limit] — display individual source-lead briefs (default 60, maximum 100).
+- /leads YYYY-MM-DD — list candidate source links.
+- /coverage YYYY-MM-DD — show query success/failure and regional result counts.
+- /report YYYY-MM-DD — generate the consolidated ten-section draft from analyst-reviewed incident-ledger entries.
 
-A research run is not a daily intelligence report. Review candidate links, establish incident dates, group duplicates, attach independent sources, and enter reviewed events into the incident ledger before generating /report YYYY-MM-DD.
+The consolidated report still requires review, event deduplication, independent corroboration, incident-date assessment, and analyst judgment. The research adapter does not automatically verify or promote leads into incidents.
