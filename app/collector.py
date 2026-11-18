@@ -13,7 +13,8 @@ async def collect():
         raise RuntimeError("Set TELEGRAM_API_ID and TELEGRAM_API_HASH in local .env")
     cfg = json.loads(Path("config/channels.json").read_text(encoding="utf-8"))
     channels = [c for c in cfg.get("channels", [])
-                if c.get("username") and not c["username"].startswith("REPLACE_")]
+                if c.get("username") and c.get("enabled", True)
+                and not c["username"].startswith("REPLACE_")]
     limit = int(os.getenv("COLLECT_LIMIT_PER_CHANNEL", "100"))
     initialize()
     session_path = os.getenv("TELETHON_SESSION_PATH", "data/legion_osint_user")
@@ -36,7 +37,11 @@ async def collect():
                         "text": msg.message[:12000],
                         "source_url": f"https://t.me/{username}/{msg.id}",
                         "language": ch.get("language", "unknown"),
-                        "priority_region": ch.get("priority", "global")
+                        "priority_region": ch.get("priority", "global"),
+                        "source_class": ch.get("source_class", "unknown"),
+                        "source_type": ch.get("source_type", "unknown"),
+                        "source_affiliation": ch.get("source_affiliation", "unknown"),
+                        "monitoring_weight": ch.get("monitoring_weight", "standard"),
                     })
                 print("Collected public channel @" + username)
             except Exception as exc:
