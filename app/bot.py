@@ -4,12 +4,13 @@ from datetime import datetime
 from dotenv import load_dotenv
 from telegram import Update
 from telegram.constants import ChatType
-from telegram.ext import Application, CommandHandler
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.ext import Application, CallbackQueryHandler, CommandHandler
 from app.database import initialize, count_posts, search_posts, source_mix_counts
 from app.gemini_assistant import ask
 from app.report_builder import build_report_draft
 from app.research import (run_research, get_research_leads, get_research_coverage,
-                          review_queue, review_lead, link_reviewed_lead_to_incident)
+                          review_queue, review_lead, link_reviewed_lead_to_incident,\n                          extract_event_candidates, suggest_duplicate_candidates)
 
 load_dotenv()
 TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "")
@@ -50,7 +51,9 @@ async def help_cmd(update, context):
             "/briefs YYYY-MM-DD [limit] — display individual source-lead briefs (default 60, max 100)\n"
             "/leads YYYY-MM-DD — show stored candidate links\n"
             "/coverage YYYY-MM-DD — show regional query coverage and failures\n"
-            "/reviewqueue YYYY-MM-DD — analyst review queue\n            /reviewlead ID reviewed|rejected|duplicate [source_class] [duplicate_ID] — record review\n            /linklead LEAD_ID INCIDENT_ID [lead|corroboration|contradiction] — link reviewed provenance\n            /report YYYY-MM-DD — consolidated ten-section draft from reviewed incident ledger"
+            "/reviewqueue YYYY-MM-DD — analyst review queue with one-tap decisions\n"
+            "/candidates YYYY-MM-DD [limit] — conservative event candidates and duplicate suggestions\n"
+            "/reviewlead ID reviewed|rejected|duplicate [source_class] [duplicate_ID] — record review\n            /linklead LEAD_ID INCIDENT_ID [lead|corroboration|contradiction] — link reviewed provenance\n            /report YYYY-MM-DD — consolidated ten-section draft from reviewed incident ledger"
         )
 
 
@@ -243,7 +246,13 @@ async def reviewqueue_cmd(update, context):
         msg = (f"Lead ID: {row['id']} | {row['region']} | {row['claim_type']}\n"
                f"{title}\n{snippet}\nSource: {row['source_url']}\n"
                "Review with /reviewlead ID reviewed|rejected|duplicate [source_class] [duplicate_lead_id]")
-        await update.effective_message.reply_text(msg[:3500], disable_web_page_preview=True)
+        keyboard = InlineKeyboardMarkup([[
+            InlineKeyboardButton("Reviewed (not verified)", callback_data=f"leadreview:{row['id']}:REVIEWED"),
+            InlineKeyboardButton("Reject lead", callback_data=f"leadreview:{row['id']}:REJECTED")
+        ]])
+        await update.effective_message.reply_text(
+            msg[:3500], reply_markup=keyboard, disable_web_page_preview=True
+        )
 
 
 async def reviewlead_cmd(update, context):
@@ -270,6 +279,71 @@ async def reviewlead_cmd(update, context):
         f"Lead {lead_id} marked {status_value}. This does not verify the underlying claim "
         "or create an incident record."
     )
+
+
+
+
+async def review_button_callback(update, context):
+    query = update.callback_query
+    if not await gate(update):
+        return
+    await query.answer()
+    try:
+        _, lead_id, status_value = query.data.split(":")
+        review_lead(int(lead_id), status_value)
+    except (ValueError, TypeError) as exc:
+        await query.edit_message_reply_markup(reply_markup=None)
+        await query.message.reply_text(f"Review not saved: {exc}")
+        return
+    await query.edit_message_reply_markup(reply_markup=None)
+    await query.message.reply_text(
+        f"Lead {lead_id} marked {status_value}. This is an analyst workflow decision, "
+        "not verification of the underlying claim."
+    )
+
+
+async def candidates_cmd(update, context):
+    if not await gate(update):
+        return
+    if len(context.args) not in (1, 2):
+        await update.message.reply_text("Usage: /candidates YYYY-MM-DD [limit]")
+        return
+    try:
+        report_date = context.args[0]
+        limit = int(context.args[1]) if len(context.args) == 2 else 50
+        rows = extract_event_candidates(report_date, limit=max(1, min(limit, 100)))
+        suggestions = suggest_duplicate_candidates(report_date, limit=max(1, min(limit, 100)))
+    except (ValueError, TypeError) as exc:
+        await update.message.reply_text(f"Could not build candidates: {exc}")
+        return
+    if not rows:
+        await update.message.reply_text("No source leads available for candidate extraction on that date.")
+        return
+    await update.message.reply_text(
+        f"{len(rows)} unverified event candidates. Event dates, precise locations and actors "
+        "remain unknown unless separately evidenced. Similar-title pairs are suggestions only."
+    )
+    for row in rows:
+        summary = " ".join(row["summary"].split())[:240]
+        message = (
+            f"{row['candidate_id']} | {row['region']} | {row['claim_type']}\n"
+            f"{row['title']}\n{summary}\n"
+            f"Incident date: unknown | Location: unknown | Actors: unknown\n"
+            f"Status: {row['candidate_status']} | Review: {row['review_status']}\n"
+            f"Source: {row['source_url']}"
+        )
+        await update.effective_message.reply_text(message[:3500], disable_web_page_preview=True)
+    if suggestions:
+        await update.effective_message.reply_text(
+            f"Possible duplicate-title pairs for human review: {len(suggestions)}"
+        )
+        for pair in suggestions[:20]:
+            await update.effective_message.reply_text(
+                f"Possible match: lead {pair['lead_id_a']} / lead {pair['lead_id_b']} "
+                f"({pair['similarity']:.0%} title-token overlap)\n"
+                f"A: {pair['title_a']}\nB: {pair['title_b']}\n"
+                "This is not a duplicate determination."
+            )
 
 
 async def linklead_cmd(update, context):
@@ -329,9 +403,10 @@ def main():
         ("daily", daily), ("bangladesh", bangladesh),
         ("search", search_cmd), ("ask", ask_cmd), ("report", report_cmd),
         ("research", research_cmd), ("briefs", briefs_cmd), ("leads", leads_cmd), ("coverage", coverage_cmd),
-        ("reviewqueue", reviewqueue_cmd), ("reviewlead", reviewlead_cmd), ("linklead", linklead_cmd)
+        ("reviewqueue", reviewqueue_cmd), ("candidates", candidates_cmd), ("reviewlead", reviewlead_cmd), ("linklead", linklead_cmd)
     ]:
         app.add_handler(CommandHandler(name, fn))
+    app.add_handler(CallbackQueryHandler(review_button_callback, pattern=r"^leadreview:[0-9]+:(REVIEWED|REJECTED)$"))
     app.run_polling(drop_pending_updates=True)
 
 
