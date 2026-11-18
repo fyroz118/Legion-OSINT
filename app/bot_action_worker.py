@@ -76,6 +76,10 @@ async def run():
     processed = 0
     try:
         offset = read_offset()
+        # This bot is intentionally hosted only by this GitHub Actions worker.
+        # Telegram webhooks and getUpdates polling are mutually exclusive.
+        # Remove any stale webhook but preserve queued updates.
+        await app.bot.delete_webhook(drop_pending_updates=False)
         # One bounded batch per scheduled run. Telegram retains unacknowledged
         # updates, and the next scheduled run continues from the saved offset.
         updates = await app.bot.get_updates(
