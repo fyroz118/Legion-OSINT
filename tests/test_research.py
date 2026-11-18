@@ -99,6 +99,12 @@ class ResearchTests(unittest.TestCase):
         })
         review_lead(lead["id"], "REVIEWED", source_class="independent_media")
         self.assertTrue(link_reviewed_lead_to_incident(lead["id"], "BD-REVIEW-001"))
+        with self.assertRaises(ValueError):
+            link_reviewed_lead_to_incident(lead["id"], "BD-REVIEW-001", "corroboration")
+        self.assertTrue(link_reviewed_lead_to_incident(
+            lead["id"], "BD-REVIEW-001", "corroboration",
+            independence_group="independent-outlet-b"
+        ))
         from app.incidents import get_report_incidents
         self.assertEqual(len(get_report_incidents("2026-11-18")[0]["sources"]), 1)
 
