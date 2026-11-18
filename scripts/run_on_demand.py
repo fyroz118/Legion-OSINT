@@ -14,7 +14,7 @@ from pathlib import Path
 from app.research import run_research, get_research_leads, get_research_coverage
 
 def clean(value):
-    return str(value or "Not supplied").replace("|", "\\|").replace("\\n", " ").replace("\\r", " ")
+    return str(value or "Not supplied").replace("|", "\\|").replace("\n", " ").replace("\r", " ")
 
 def main():
     if len(sys.argv) not in (2, 3):
