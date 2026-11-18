@@ -1,6 +1,12 @@
 name: Legion-OSINT scheduled public Telegram collection
 
 on:
+  push:
+    paths:
+      - "config/channels.json"
+      - "scripts/collect_public_telegram.py"
+      - "scripts/publish_tbc_feed.py"
+      - ".github/workflows/public-telegram-collection.yml"
   schedule:
     - cron: "23 */2 * * *"
   workflow_dispatch:
