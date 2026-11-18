@@ -57,6 +57,15 @@ def build_report_draft(report_date):
             leads = get_research_leads(report_date, limit=1000)
             coverage = get_research_coverage(report_date)
             lines.append(f"Public-web discovery leads saved: {len(leads)}.")
+            focus_counts = {}
+            for lead in leads:
+                focus = lead.get("source_focus") or "unknown"
+                focus_counts[focus] = focus_counts.get(focus, 0) + 1
+            rumour_count = sum(1 for lead in leads if lead.get("claim_type") == "RUMOUR_WATCH")
+            lines.append(f"Rumour-watch leads: {rumour_count} (unverified claims, not established events).")
+            if focus_counts:
+                lines.append("Search-focus distribution (not actual source classification): " +
+                             ", ".join(f"{key}: {value}" for key, value in sorted(focus_counts.items())) + ".")
             if coverage:
                 for row in coverage:
                     lines.append(f"- {row['region']}: {row['status']} — {row['query_count']} query(s), {row['result_count'] or 0} result(s).")
