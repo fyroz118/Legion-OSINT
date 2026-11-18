@@ -8,7 +8,9 @@
       "source_affiliation": "independent_investigative_group",
       "default_evidence_status": "UNVERIFIED",
       "enabled": true,
-      "notes": "Public English Bellingcat investigations channel; posts are leads, not verified events."
+      "notes": "Public English Bellingcat investigations channel; posts are leads, not verified events.",
+      "source_class": "unofficial",
+      "monitoring_weight": "high"
     },
     {
       "username": "BNONews",
@@ -18,7 +20,9 @@
       "source_affiliation": "independent_news_service",
       "default_evidence_status": "UNVERIFIED",
       "enabled": true,
-      "notes": "Public BNO News breaking-news channel; independently corroborate claims."
+      "notes": "Public BNO News breaking-news channel; independently corroborate claims.",
+      "source_class": "independent_media",
+      "monitoring_weight": "standard"
     },
     {
       "username": "bdnews24telegram",
@@ -28,7 +32,9 @@
       "source_affiliation": "newsroom",
       "default_evidence_status": "UNVERIFIED",
       "enabled": true,
-      "notes": "Public bdnews24.com Telegram channel. Public preview currently includes an owner-inactivity warning; monitor availability and corroborate."
+      "notes": "Public bdnews24.com Telegram channel. Public preview currently includes an owner-inactivity warning; monitor availability and corroborate.",
+      "source_class": "independent_media",
+      "monitoring_weight": "standard"
     },
     {
       "username": "prothomaloonline",
@@ -38,7 +44,9 @@
       "source_affiliation": "newsroom",
       "default_evidence_status": "UNVERIFIED",
       "enabled": true,
-      "notes": "Public Prothom Alo Telegram channel; national reporting, corroborate independently."
+      "notes": "Public Prothom Alo Telegram channel; national reporting, corroborate independently.",
+      "source_class": "independent_media",
+      "monitoring_weight": "standard"
     },
     {
       "username": "RumorScanner",
@@ -48,7 +56,9 @@
       "source_affiliation": "independent_fact_checking_initiative",
       "default_evidence_status": "UNVERIFIED",
       "enabled": true,
-      "notes": "Bangladeshi independent fact-checking initiative; its fact-checks are useful leads and still retain cited evidence."
+      "notes": "Bangladeshi independent fact-checking initiative; its fact-checks are useful leads and still retain cited evidence.",
+      "source_class": "unofficial",
+      "monitoring_weight": "high"
     },
     {
       "username": "TheDailyStar",
@@ -58,7 +68,9 @@
       "source_affiliation": "newsroom",
       "default_evidence_status": "UNVERIFIED",
       "enabled": true,
-      "notes": "Public The Daily Star Bangladesh Telegram channel; English-language national reporting."
+      "notes": "Public The Daily Star Bangladesh Telegram channel; English-language national reporting.",
+      "source_class": "independent_media",
+      "monitoring_weight": "standard"
     }
   ]
 }
