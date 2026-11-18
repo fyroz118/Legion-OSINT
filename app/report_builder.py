@@ -63,6 +63,19 @@ def build_report_draft(report_date):
                 focus_counts[focus] = focus_counts.get(focus, 0) + 1
             rumour_count = sum(1 for lead in leads if lead.get("claim_type") == "RUMOUR_WATCH")
             lines.append(f"Rumour-watch leads: {rumour_count} (unverified claims, not established events).")
+            review_counts = {}
+            source_class_counts = {}
+            for lead in leads:
+                review = lead.get("review_status") or "unknown"
+                source_class = lead.get("source_class") or "unknown"
+                review_counts[review] = review_counts.get(review, 0) + 1
+                source_class_counts[source_class] = source_class_counts.get(source_class, 0) + 1
+            if review_counts:
+                lines.append("Analyst review status: " + ", ".join(
+                    f"{key}: {value}" for key, value in sorted(review_counts.items())) + ".")
+            if source_class_counts:
+                lines.append("Analyst-assigned source classes (not inferred from domain): " + ", ".join(
+                    f"{key}: {value}" for key, value in sorted(source_class_counts.items())) + ".")
             if focus_counts:
                 lines.append("Search-focus distribution (not actual source classification): " +
                              ", ".join(f"{key}: {value}" for key, value in sorted(focus_counts.items())) + ".")
