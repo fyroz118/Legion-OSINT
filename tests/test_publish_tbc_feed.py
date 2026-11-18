@@ -31,6 +31,8 @@ class PublishTbcFeedTests(unittest.TestCase):
             self.assertEqual(len(payload["posts"]), 2)
             self.assertEqual(payload["schema_version"], 2)
             self.assertEqual({p["platform"] for p in payload["posts"]}, {"Telegram", "RSS/Atom"})
+            rss_post = next(p for p in payload["posts"] if p["platform"] == "RSS/Atom")
+            self.assertEqual(rss_post["channel_username"], "RSS: The Daily Star")
             self.assertTrue(all(p["evidence_status"] == "UNVERIFIED" for p in payload["posts"]))
             self.assertEqual(payload["summary"]["configured_rss_sources"], 1)
             self.assertEqual(payload["summary"]["configured_channels"], 1)
