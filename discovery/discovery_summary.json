@@ -1,473 +1,108 @@
 {
-  "generated_at_utc": "2026-11-18T15:57:34.666574+00:00",
-  "discovery_method": "Public web-index search (DuckDuckGo, Bing, Google) plus unreviewed public-directory seed leads",
+  "generated_at_utc": "2026-11-18T16:03:01.834689+00:00",
+  "discovery_method": "Public web-index search plus public Telegram directory pages (TG Market, TGScope, Telemetrio) and unreviewed seed leads",
   "queries_attempted_per_provider": 84,
+  "directory_diagnostics": {
+    "pages_attempted": 31,
+    "pages_with_candidates": 0,
+    "candidate_links_found": 0,
+    "errors": [
+      {
+        "url": "https://tgscope.io/telegram-channels-by-country/bangladesh",
+        "error": "HTTPError",
+        "detail": "HTTP Error 403: Forbidden"
+      },
+      {
+        "url": "https://tgscope.io/telegram-channels-by-country/india",
+        "error": "HTTPError",
+        "detail": "HTTP Error 403: Forbidden"
+      },
+      {
+        "url": "https://tgscope.io/telegram-channels-by-country/myanmar",
+        "error": "HTTPError",
+        "detail": "HTTP Error 403: Forbidden"
+      },
+      {
+        "url": "https://tgscope.io/telegram-channels-by-country/ukraine",
+        "error": "HTTPError",
+        "detail": "HTTP Error 403: Forbidden"
+      },
+      {
+        "url": "https://tgscope.io/telegram-channels-by-country/palestine",
+        "error": "HTTPError",
+        "detail": "HTTP Error 403: Forbidden"
+      },
+      {
+        "url": "https://telemetr.io/en/catalog/india/politics",
+        "error": "HTTPError",
+        "detail": "HTTP Error 403: Forbidden"
+      },
+      {
+        "url": "https://telemetr.io/en/catalog/bangladesh/politics",
+        "error": "HTTPError",
+        "detail": "HTTP Error 403: Forbidden"
+      }
+    ]
+  },
+  "directory_sources_configured": 31,
   "provider_diagnostics": {
     "duckduckgo": {
-      "queries_attempted": 84,
+      "queries_attempted": 3,
       "queries_with_links": 0,
       "links_found": 0,
       "errors": [
         {
           "query": "site:t.me/s/ বাংলাদেশ জেলা সংবাদ সাংবাদিক",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
+          "error": "URLError",
+          "detail": "<urlopen error _ssl.c:1001: The handshake operation timed out>"
         },
         {
           "query": "site:t.me বাংলাদেশ স্থানীয় সংবাদ জেলা প্রতিনিধি",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
+          "error": "URLError",
+          "detail": "<urlopen error [Errno 104] Connection reset by peer>"
         },
         {
           "query": "site:t.me বাংলাদেশ মানবাধিকার পর্যবেক্ষক",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me বাংলাদেশ প্রত্যক্ষদর্শী সংবাদ",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me Bangladesh local journalist district news",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me Bangladesh eyewitness monitor civil society",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me India regional news पत्रकार जिला",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me India independent journalist local news",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me Pakistan local news صحافی شہر",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me Pakistan independent journalist monitor",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me Afghanistan local news خبرنگار",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me Myanmar independent news journalist",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me Myanmar local eyewitness monitoring",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me Sri Lanka local news journalist",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me Nepal local news journalist",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me فلسطين صحفي محلي أخبار",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me سوريا مراسل أخبار محلية",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me السودان صحفي أخبار",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me اليمن صحفي أخبار",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me Lebanon local journalist monitor",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me Україна місцеві новини журналіст",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me независимый журналист новости регионы",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me local journalist protest monitor Europe",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me Ethiopia local news journalist",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me السودان دارفور أخبار مراسل",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me Sudan local monitor journalist",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me Sahel journaliste actualités locales",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me DRC local news journalist",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me Myanmar local eyewitness news",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me Indonesia local news journalist",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me Thailand local news journalist",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me Venezuela periodista noticias locales",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me Haiti journaliste actualités locales",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me OSINT independent conflict monitor journalist",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me local eyewitness conflict monitoring",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me civil society conflict monitor",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me গাজীপুর নারায়ণগঞ্জ পোশাক শ্রমিক স্থানীয় সংবাদ",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me চট্টগ্রাম কক্সবাজার পার্বত্য চট্টগ্রাম সংবাদ প্রতিনিধি",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me বরিশাল খুলনা রাজশাহী সিলেট জেলা সংবাদ",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me রংপুর ময়মনসিংহ জেলা সাংবাদিক সংবাদ",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me বাংলাদেশ মানবাধিকার পর্যবেক্ষক শ্রমিক অধিকার",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me Bangladesh district correspondent local eyewitness reporter",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me Bangladesh labour rights monitor civil society",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me ရခိုင် ဒေသခံ သတင်း သတင်းထောက်",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me ကချင် ရှမ်း ကရင် ဒေသခံ သတင်း",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me စစ်ကိုင်း မကွေး ဒေသခံ သတင်း သတင်းထောက်",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me Rakhine Kachin Karen Shan local independent reporter",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me Myanmar civil society human rights field monitor",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me Assam Tripura West Bengal local news reporter",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me मणिपुर असम स्थानीय पत्रकार समाचार",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me بلوچستان خیبر پختونخوا مقامی صحافی خبر",
-          "error": "RuntimeError",
-          "detail": "duckduckgo_blocked_or_challenged"
-        },
-        {
-          "query": "site:t.me South Asia local eyewitness independent monitor",
-          "error": "HTTPError",
-          "detail": "HTTP Error 403: Forbidden"
-        },
-        {
-          "query": "site:t.me غزة صحفي محلي مراسل ميداني أخبار",
-          "error": "HTTPError",
-          "detail": "HTTP Error 403: Forbidden"
-        },
-        {
-          "query": "site:t.me الضفة الغربية القدس مراسل محلي أخبار",
-          "error": "HTTPError",
-          "detail": "HTTP Error 403: Forbidden"
-        },
-        {
-          "query": "site:t.me السودان دارفور كردفان مراسل محلي",
-          "error": "HTTPError",
-          "detail": "HTTP Error 403: Forbidden"
-        },
-        {
-          "query": "site:t.me لبنان سوريا اليمن صحفي مستقل أخبار محلية",
-          "error": "HTTPError",
-          "detail": "HTTP Error 403: Forbidden"
-        },
-        {
-          "query": "site:t.me አማራ ትግራይ ኦሮሚያ የአካባቢ ዜና",
-          "error": "HTTPError",
-          "detail": "HTTP Error 403: Forbidden"
-        },
-        {
-          "query": "site:t.me RDC Kivu journaliste local société civile",
-          "error": "HTTPError",
-          "detail": "HTTP Error 403: Forbidden"
-        },
-        {
-          "query": "site:t.me Харків Херсон Запоріжжя місцевий журналіст",
-          "error": "HTTPError",
-          "detail": "HTTP Error 403: Forbidden"
-        },
-        {
-          "query": "site:t.me независимый местный корреспондент Украина Россия",
-          "error": "HTTPError",
-          "detail": "HTTP Error 403: Forbidden"
-        },
-        {
-          "query": "site:t.me independent local newsroom eyewitness public monitor conflict",
-          "error": "HTTPError",
-          "detail": "HTTP Error 403: Forbidden"
-        },
-        {
-          "query": "site:t.me বাংলাদেশ আওয়ামী লীগ অফিসিয়াল টেলিগ্রাম চ্যানেল",
-          "error": "HTTPError",
-          "detail": "HTTP Error 403: Forbidden"
-        },
-        {
-          "query": "site:t.me বাংলাদেশ বিএনপি অফিসিয়াল টেলিগ্রাম চ্যানেল",
-          "error": "HTTPError",
-          "detail": "HTTP Error 403: Forbidden"
-        },
-        {
-          "query": "site:t.me বাংলাদেশ জামায়াতে ইসলামী টেলিগ্রাম চ্যানেল",
-          "error": "HTTPError",
-          "detail": "HTTP Error 403: Forbidden"
-        },
-        {
-          "query": "site:t.me বাংলাদেশ ছাত্রশিবির ছাত্রদল ছাত্রলীগ টেলিগ্রাম",
-          "error": "HTTPError",
-          "detail": "HTTP Error 403: Forbidden"
-        },
-        {
-          "query": "site:t.me Bangladesh Awami League BNP Jamaat political party channel",
-          "error": "HTTPError",
-          "detail": "HTTP Error 403: Forbidden"
-        },
-        {
-          "query": "site:t.me Bangladesh political party media cell student wing",
-          "error": "HTTPError",
-          "detail": "HTTP Error 403: Forbidden"
-        },
-        {
-          "query": "site:t.me भाजपा आधिकारिक टेलीग्राम चैनल",
-          "error": "HTTPError",
-          "detail": "HTTP Error 403: Forbidden"
-        },
-        {
-          "query": "site:t.me कांग्रेस पार्टी आधिकारिक टेलीग्राम चैनल",
-          "error": "HTTPError",
-          "detail": "HTTP Error 403: Forbidden"
-        },
-        {
-          "query": "site:t.me BJP Bharatiya Janata Party state unit Telegram",
-          "error": "HTTPError",
-          "detail": "HTTP Error 403: Forbidden"
-        },
-        {
-          "query": "site:t.me Indian National Congress state unit Telegram",
-          "error": "HTTPError",
-          "detail": "HTTP Error 403: Forbidden"
-        },
-        {
-          "query": "site:t.me Aam Aadmi Party CPI CPI(M) political party Telegram",
-          "error": "HTTPError",
-          "detail": "HTTP Error 403: Forbidden"
-        },
-        {
-          "query": "site:t.me পশ্চিমবঙ্গ বিজেপি তৃণমূল কংগ্রেস সিপিআইএম টেলিগ্রাম",
-          "error": "HTTPError",
-          "detail": "HTTP Error 403: Forbidden"
-        },
-        {
-          "query": "site:t.me महाराष्ट्र भाजपा कांग्रेस शिवसेना टेलीग्राम",
-          "error": "HTTPError",
-          "detail": "HTTP Error 403: Forbidden"
-        },
-        {
-          "query": "site:t.me தமிழ்நாடு திமுக அதிமுக பாஜக காங்கிரஸ் Telegram",
-          "error": "HTTPError",
-          "detail": "HTTP Error 403: Forbidden"
-        },
-        {
-          "query": "site:t.me കേരളം ബിജെപി കോൺഗ്രസ് സിപിഎം ടെലിഗ്രാം",
-          "error": "HTTPError",
-          "detail": "HTTP Error 403: Forbidden"
-        },
-        {
-          "query": "site:t.me India political reporter election monitor civil society",
-          "error": "HTTPError",
-          "detail": "HTTP Error 403: Forbidden"
-        },
-        {
-          "query": "site:t.me South Asia political party student wing movement channel",
-          "error": "HTTPError",
-          "detail": "HTTP Error 403: Forbidden"
-        },
-        {
-          "query": "site:t.me political party official media cell public channel",
-          "error": "HTTPError",
-          "detail": "HTTP Error 403: Forbidden"
-        },
-        {
-          "query": "site:t.me opposition party supporters activist public channel",
-          "error": "HTTPError",
-          "detail": "HTTP Error 403: Forbidden"
-        },
-        {
-          "query": "site:t.me election observer civic monitor public channel",
-          "error": "RemoteDisconnected",
-          "detail": "Remote end closed connection without response"
-        },
-        {
-          "query": "site:t.me حزب سياسي قناة رسمية أخبار محلية",
           "error": "URLError",
-          "detail": "<urlopen error timed out>"
-        },
-        {
-          "query": "site:t.me partido político canal oficial noticias locales",
-          "error": "URLError",
-          "detail": "<urlopen error timed out>"
-        },
-        {
-          "query": "site:t.me parti politique canal officiel actualités locales",
-          "error": "URLError",
-          "detail": "<urlopen error timed out>"
+          "detail": "<urlopen error _ssl.c:1001: The handshake operation timed out>"
         }
-      ]
+      ],
+      "skipped_after_circuit_breaker": 81
     },
     "bing": {
-      "queries_attempted": 84,
+      "queries_attempted": 8,
       "queries_with_links": 0,
       "links_found": 0,
       "errors": [],
-      "empty_query_count": 84
+      "empty_query_count": 8,
+      "skipped_after_circuit_breaker": 76
     },
     "google": {
-      "queries_attempted": 84,
+      "queries_attempted": 8,
       "queries_with_links": 0,
       "links_found": 0,
-      "errors": [
-        {
-          "query": "site:t.me partido político canal oficial noticias locales",
-          "error": "HTTPError",
-          "detail": "HTTP Error 429: Too Many Requests"
-        },
-        {
-          "query": "site:t.me parti politique canal officiel actualités locales",
-          "error": "HTTPError",
-          "detail": "HTTP Error 429: Too Many Requests"
-        }
-      ],
-      "empty_query_count": 82
+      "errors": [],
+      "empty_query_count": 8,
+      "skipped_after_circuit_breaker": 76
     }
   },
   "providers_returning_telegram_links": 0,
-  "total_query_errors": 86,
+  "total_query_errors": 3,
   "new_candidates_this_run": 0,
-  "directory_seed_candidates_loaded": 10,
-  "candidate_leads_loaded_this_run": 10,
-  "unique_candidates": 10,
-  "previews_checked_this_run": 10,
+  "directory_seed_candidates_loaded": 73,
+  "candidate_leads_loaded_this_run": 73,
+  "unique_candidates": 73,
+  "already_configured_channels": 0,
+  "unreviewed_not_enabled_candidates": 73,
+  "previews_checked_this_run": 73,
   "limitations": [
     "Public search-engine indexes are incomplete, ranking-biased and may block automated requests.",
     "This does not access Telegram global search or private channels.",
     "Discovery does not establish source identity, independence, reliability or current activity.",
     "Only the first 250 candidates receive public preview checks per run.",
-    "No candidate is automatically enabled in the active monitoring registry."
+    "No candidate is automatically enabled in the active monitoring registry.",
+    "Public directory pages expose only their public sample/top listings; full exports may be unavailable or paid.",
+    "Directory country/category labels are approximate and must be checked against each channel profile.",
+    "Directory route failures are retained in directory_diagnostics."
   ]
 }

@@ -1,4 +1,14 @@
-﻿username,candidate_url,title,description,accessible,source_class,source_affiliation,review_status,enabled_for_collection,discovery_regions,discovery_languages,discovery_queries,discovery_providers,discovery_notes,seed_source_url
+﻿username,candidate_url,title,description,accessible,source_class,source_affiliation,candidate_category,source_identity_status,review_status,collection_status,enabled_for_collection,discovery_regions,discovery_languages,discovery_queries,discovery_providers,discovery_notes,seed_source_url,directory_source_urls
+aamaadmiparty,https://t.me/aamaadmiparty,Aam Aadmi Party,"★Aam Aadmi Party's official channel on Telegram for dedicated AAP volunteers
+
+★Made to provide content to be shared on WhatsApp and other social media
+
+""CRUSADE AGAINST PAID/BIASED MEDIA""
+
+JOIN & SHARE MAX:
+
+👉 t.me/AamAadmiParty",True,political_actor_candidate,Aam_Aadmi_Party_affiliation_claimed,political_actor_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,India,hi,TG Market public Bangladesh news directory,tgmarket_public_directory,Telemetrio catalog lists an Aam Aadmi Party channel. Confirm party-controlled cross-links and treat statements as actor-originated.,https://telemetr.io/en/channels/1237723764-aamaadmiparty,
+ajpalestine,https://t.me/ajpalestine,الجزيرة فلسطين,حساب تابع لقناة الجزيرة متخصص في متابعة الأخبار المحلية والدولية الخاصة بفلسطين 🇵🇸,True,media_candidate,publisher_identity_unverified,media_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Palestine,ar,TG Market public Bangladesh news directory,tgmarket_public_directory,TGScope Palestine catalogue lists Al Jazeera Palestine. Confirm the exact account is publisher-controlled before approval.,https://tgscope.io/telegram-channels-by-country/palestine,
 antiquotaandolonbd,https://t.me/antiquotaandolonbd,বৈষম্যবিরোধী ছাত্র আন্দোলন,"©Official Channel ✅ 
 
 We speak for our people 
@@ -6,7 +16,7 @@ We fight for our people 🇧🇩
 
 Discussion Group @quotaandolonbd
 News, Media, Announcement, Update, Bangladesh
-Also Join Our Sponsor Channel - @Darazbdoffer1",True,unknown,unassessed,UNREVIEWED_CANDIDATE,False,Bangladesh,bn,TG Market public Bangladesh news directory,tgmarket_public_directory,Directory-listed student movement channel. Treat as an actor-originated source; verify identity and activity before any monitoring decision.,https://tgmarket.io/countries/bd/news
+Also Join Our Sponsor Channel - @Darazbdoffer1",True,unknown,unassessed,political_movement_candidate,directory_or_public_profile_lead_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Bangladesh,bn,TG Market public Bangladesh news directory,tgmarket_public_directory,Directory-listed student movement channel. Treat as an actor-originated source; verify identity and activity before any monitoring decision.,https://tgmarket.io/countries/bd/news,
 antiquotadu,https://t.me/antiquotadu,বৈষম্যবিরোধী ছাত্র আন্দোলন,"©Official Channel ✅ 
 If you want Contact with us then text here @Textnowdubot
 
@@ -14,21 +24,221 @@ https://x.com/antiquotadu
 
 Discussion Group @antiquotanews
 
-News, Media, Announcement, Update, Bangladesh",True,unknown,unassessed,UNREVIEWED_CANDIDATE,False,Bangladesh,bn,TG Market public Bangladesh news directory,tgmarket_public_directory,Directory-listed anti-quota/student movement channel. Relationship to other similarly named channels and current operator are unverified.,https://tgmarket.io/countries/bd/news
+News, Media, Announcement, Update, Bangladesh",True,unknown,unassessed,political_movement_candidate,directory_or_public_profile_lead_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Bangladesh,bn,TG Market public Bangladesh news directory,tgmarket_public_directory,Directory-listed anti-quota/student movement channel. Relationship to other similarly named channels and current operator are unverified.,https://tgmarket.io/countries/bd/news,
+ayeyarwaddytimes,https://t.me/ayeyarwaddytimes,Ayeyarwaddy Times,"📰 Daily news and current affairs
+
+Covering: • World News • Business • Technology • Public Affairs
+
+Promotion: 👉 @ayeyarwaddytimes",True,media_candidate,publisher_identity_unverified,media_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Myanmar,my,TG Market public Bangladesh news directory,tgmarket_public_directory,"TG Market Myanmar news directory lists Ayeyarwaddy Times. Review regional coverage, operator identity and editorial standards.",https://tgmarket.io/countries/mm/news,
+badrulbsl,https://t.me/badrulbsl,বাংলাদেশ বদরুললীগ,"""চাঁদাবাজদের নিয়ে  ব্যাপক গবেষণা হয় এখানে""
+ডিসকাশন গ্রুপ👉 @BALBD1959
+ব্যাকআপ চ্যানেল👉 @BadrulCentral
+ব্যাকআপ গ্রুপ 👉 @BadrulProMax
+Follow us on: FB www.fb.com/BadrulBSL25",True,political_actor_candidate,political_affiliation_unassessed,political_actor_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Bangladesh,bn,TG Market public Bangladesh news directory,tgmarket_public_directory,TG Market/TGScope list this as a Bangladesh political/news channel. Treat as an actor-originated or partisan source unless independent editorial status is established.,https://tgmarket.io/countries/bd/news,
+bangladeshislamichhatrashibir,https://t.me/bangladeshislamichhatrashibir,Bangladesh Islami Chhatrashibir,"Official Telegram Channel of Bangladesh Islami Chhatrashibir.
+
+Social Media Link :
+Facebook : www.fb.com/bangladeshislamichhatrashibir
+Twitter : www.twitter.com/info_shibir
+Youtube : www.youtube.com/IslamiChhatrashibir",True,political_actor_candidate,student_political_organization_association_claimed,political_actor_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Bangladesh,bn,TG Market public Bangladesh news directory,tgmarket_public_directory,TGScope lists a Bangladesh Islami Chhatrashibir channel. Treat as an organizational actor source; verify official ownership and public preview.,https://tgscope.io/telegram-channels-by-country/bangladesh,
 basherkella,https://t.me/basherkella,বাঁশেরকেল্লা - Basherkella,"Official Telegram Channel of Basherkella Page.
-Page Link: https://www.facebook.com/BasherKella00",True,unknown,unassessed,UNREVIEWED_CANDIDATE,False,Bangladesh,bn,TG Market public Bangladesh news directory,tgmarket_public_directory,Directory-listed political/news channel. Potentially partisan actor-originated content; do not treat as independent media or corroboration.,https://tgmarket.io/countries/bd/news
+Page Link: https://www.facebook.com/BasherKella00",True,unknown,unassessed,political_actor_candidate,directory_or_public_profile_lead_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Bangladesh,bn,TG Market public Bangladesh news directory,tgmarket_public_directory,Directory-listed political/news channel. Potentially partisan actor-originated content; do not treat as independent media or corroboration.,https://tgmarket.io/countries/bd/news,
+bheem_army,https://t.me/bheem_army,Bhim Army Official,,True,political_movement_candidate,Bhim_Army_association_claimed,political_movement_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,India,hi,TG Market public Bangladesh news directory,tgmarket_public_directory,Telemetrio India politics directory lists Bhim Army Official. Treat as a movement/advocacy actor source; verify official ownership and avoid using it as neutral corroboration.,https://telemetr.io/en/channels/1196828389-bheem_army,
+BJP4Keralam,https://t.me/BJP4Keralam,BJP Keralam,Official Channel of BJP Keralam,True,political_actor_candidate,BJP_Keralam_association_claimed,political_actor_candidate,directory_or_public_profile_lead_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,India,ml,TG Market public Bangladesh news directory,tgmarket_public_directory,Public Telegram preview identifies this as BJP Keralam's official channel. Regional party source; confirm current activity and operator identity.,https://t.me/BJP4Keralam,
+bjpforgujarat,https://t.me/bjpforgujarat,BJP Gujarat,Telegram Channel of Bharatiya Janta Party (BJP) Gujarat,True,political_actor_candidate,BJP_Gujarat_association_claimed,political_actor_candidate,directory_or_public_profile_lead_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,India,gu,TG Market public Bangladesh news directory,tgmarket_public_directory,Public Telegram preview identifies BJP Gujarat. Regional party source; confirm operator identity and recent activity before review approval.,https://t.me/bjpforgujarat,
+bjpupitcell,https://t.me/bjpupitcell,Bharatiya Janta Party Uttar Pradesh,Political Official BJP I.T. Cell Channel,True,political_actor_candidate,BJP_Uttar_Pradesh_IT_Cell_association_claimed,political_actor_candidate,directory_or_public_profile_lead_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,India,hi,TG Market public Bangladesh news directory,tgmarket_public_directory,Public Telegram preview describes a BJP Uttar Pradesh IT Cell channel. Regional party communication/actor source; do not label as national BJP headquarters or independent media.,https://t.me/bjpupitcell,
 bringingjusticetoyou_bangladesh,https://t.me/bringingjusticetoyou_bangladesh,Bringing Justice to You Bangladesh,"আমার ভাইয়ের রক্ত
-বৃথা যেতে দিব না।",True,unknown,unassessed,UNREVIEWED_CANDIDATE,False,Bangladesh,bn,TG Market public Bangladesh news directory,tgmarket_public_directory,Directory-listed as a justice-focused Bangladesh news channel. Possible advocacy/civil-society source; organisation and editorial independence are unverified.,https://tgmarket.io/countries/bd/news
+বৃথা যেতে দিব না।",True,unknown,unassessed,civil_society_candidate,directory_or_public_profile_lead_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Bangladesh,bn,TG Market public Bangladesh news directory,tgmarket_public_directory,Directory-listed as a justice-focused Bangladesh news channel. Possible advocacy/civil-society source; organisation and editorial independence are unverified.,https://tgmarket.io/countries/bd/news,
+burmesevoanews,https://t.me/burmesevoanews,VOA Burmese,"မြန်မာနဲ့ ကမ္ဘာ့သတင်းတွေကို တင်ဆက်ပေးနေတဲ့ ယုံကြည်ရတဲ့ သတင်းဌာန 
+https://Facebook.com/VOABurmese 
+https://Instagram.com/VOABurmese 
+https://YouTube.com/VOABurmese
+https://Twitter.com/VOABurmese",True,media_candidate,VOA_Burmese_association_claimed,media_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Myanmar,my,TG Market public Bangladesh news directory,tgmarket_public_directory,TG Market channel profile lists VOA Burmese. Verify Voice of America cross-link to this exact handle before approval.,https://tgmarket.io/c/khitthitnews,
 bwdns,https://t.me/bwdns,Bangladesh & World Defence News (BWDN),"আসসালামু আলাইকুম 
 সবাইকে স্বাগতম ❤️
 
-সামরিক, সমর-রাজনৈতিক এবং আন্তর্জাতিক বিষয়ে প্রতি সেকেন্ড এর  আপডেট পেতে আমাদের চ্যানেলে জয়েন করুন।",True,unknown,unassessed,UNREVIEWED_CANDIDATE,False,Bangladesh,bn,TG Market public Bangladesh news directory,tgmarket_public_directory,Directory-listed defence-news channel. Likely specialist aggregation/commentary; trace claims to original sources and assess political alignment.,https://tgmarket.io/countries/bd/news
-genzbds,https://t.me/genzbds,Gen Z,We Were Born to Make History,True,unknown,unassessed,UNREVIEWED_CANDIDATE,False,Bangladesh,bn,TG Market public Bangladesh news directory,tgmarket_public_directory,"Directory-listed as a Bangladesh news channel using the Gen Z label. Actual operator, editorial role, affiliation and sourcing are unverified; may be an actor or movement channel.",https://tgmarket.io/countries/bd/news
-Nucleus71official,https://t.me/Nucleus71official,Nucleus 71 - Official,বঙ্গবন্ধু - মুক্তিযুদ্ধ - বাংলাদেশ 🇧🇩,True,unknown,unassessed,UNREVIEWED_CANDIDATE,False,Bangladesh,bn,TG Market public Bangladesh news directory,tgmarket_public_directory,Directory-listed as an official channel but the organisation and account authenticity are unverified. Treat as an actor source until independently identified.,https://tgmarket.io/countries/bd/news
+সামরিক, সমর-রাজনৈতিক এবং আন্তর্জাতিক বিষয়ে প্রতি সেকেন্ড এর  আপডেট পেতে আমাদের চ্যানেলে জয়েন করুন।",True,unknown,unassessed,conflict_commentary_candidate,directory_or_public_profile_lead_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Bangladesh,bn,TG Market public Bangladesh news directory,tgmarket_public_directory,Directory-listed defence-news channel. Likely specialist aggregation/commentary; trace claims to original sources and assess political alignment.,https://tgmarket.io/countries/bd/news,
+channelelias,https://t.me/channelelias,Elias Hossain,"In the kingdom of lies, we find truth
+
+ 
+
+
+Journalist",True,commentary_candidate,individual_political_commentator_unverified,commentary_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Bangladesh,bn,TG Market public Bangladesh news directory,tgmarket_public_directory,TGScope Bangladesh country catalogue lists this news/politics commentator channel. Personal commentary and political alignment must be distinguished from independent newsroom reporting.,https://tgscope.io/telegram-channels-by-country/bangladesh,
+Congress_officials,https://t.me/Congress_officials,Indian National Congress,"We stand with every Indian
+Let's Fight against injustice together.",True,political_actor_candidate,Indian_National_Congress_association_unverified,political_actor_candidate,directory_or_public_profile_lead_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,India,en,TG Market public Bangladesh news directory,tgmarket_public_directory,"Telegram Register identifies the channel as Indian National Congress, but its latest recorded post was 18 October 2024 and the account is not Telegram-verified. Treat identity as unconfirmed and activity as stale; review only, never represent as verified national HQ.",https://tgregister.com/channel/Congress_officials,
+cpimkerala,https://t.me/cpimkerala,CPIM Kerala,Official Channel of the Communist Party of India (Marxist) Keralam State Committee,True,political_actor_candidate,CPI_M_Kerala_affiliation_claimed,political_actor_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,India,ml,TG Market public Bangladesh news directory,tgmarket_public_directory,Telemetrio catalog lists CPIM Kerala. Verify party ownership and exact public preview; treat as party-originated source.,https://telemetr.io/en/channels/1175566518-cpimkerala,
+daweiinformationcenter,https://t.me/daweiinformationcenter,Dawei information center,Dawei information center ပြည်သူ့သတင်းဌာနသည် ၂၀၂၁ခုနစ် ၊ ဧပြီလ ၁၁ ရက်နေ့မှာ စတင်ထူထောင်ခဲ့သော တနင်္သာရီတိုင်းအခြေစိုက်သတင်းဌာနတစ်ခုပင် ဖြစ်ပါသည်။,True,local_news_candidate,publisher_identity_unverified,local_news_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Myanmar,my,TG Market public Bangladesh news directory,tgmarket_public_directory,TG Market channel profile lists Dawei Information Center among related local sources. Verify exact operator and current public activity.,https://tgmarket.io/c/countries/mm/news,
+drabhishekverma_news,https://t.me/drabhishekverma_news,Dr Abhishek Verma ~ ShivSena (NDA),Chief National Coordinator of ShivSena (NDA) for Alliance & Elections,True,political_actor_candidate,ShivSena_NDA_role_claimed,political_actor_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,India,hi,TG Market public Bangladesh news directory,tgmarket_public_directory,"Telemetrio profile describes this channel operator as a Shiv Sena (NDA) national coordinator. This is an individual political actor source, not a party headquarters channel.",https://telemetr.io/en/channels/1415837480-drabhishekverma_news,
+drshafiqofficial,https://t.me/drshafiqofficial,Dr. Shafiqur Rahman,"👉Official Telegram Channel of Dr. Shafiqur Rahman MP.
+👉Ameer-e-Jamaat (Chief) of Bangladesh Jamaat-e-Islami.
+👉Leader of the Opposition of Bangladesh Parliament.
+
+Stay Connected on Web👉 www.dr-shafiqurrahman.info
+🔵FB : fb.com/DrShafiqurRahman.Official",True,political_actor_candidate,Bangladesh_Jamaat_e_Islami_leadership_association_claimed,political_actor_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Bangladesh,bn,TG Market public Bangladesh news directory,tgmarket_public_directory,"TGScope lists this as Dr Shafiqur Rahman's channel and describes him as Jamaat-e-Islami leader. Actor statement source, not independent corroboration; verify current public identity.",https://tgscope.io/telegram-channels-by-country/bangladesh,
+genzbds,https://t.me/genzbds,Gen Z,We Were Born to Make History,True,unknown,unassessed,political_movement_candidate,directory_or_public_profile_lead_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Bangladesh,bn,TG Market public Bangladesh news directory,tgmarket_public_directory,"Directory-listed as a Bangladesh news channel using the Gen Z label. Actual operator, editorial role, affiliation and sourcing are unverified; may be an actor or movement channel.",https://tgmarket.io/countries/bd/news,
+infohlaing,https://t.me/infohlaing,Hlaing Info,"We are committed to bringing unbiased and accurate news to the people of Myanmar. We believe in freedom of speech, freedom of expression and freedom of thought. We will always strive to ensure the people’s right to information.
+www.hlaing.info",True,local_news_candidate,publisher_identity_unverified,local_news_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Myanmar,my,TG Market public Bangladesh news directory,tgmarket_public_directory,TG Market Myanmar news directory lists Hlaing Info. Confirm geographic coverage and whether posts are original local reporting.,https://tgmarket.io/countries/mm/news,
+insiderukr,https://t.me/insiderukr,INSIDER UA | Україна | Новини,"Политический канал №1.
+
+Сотрудничество: @insider_uke
+
+Прислать контент: t.me/insider_offer_bot
+
+Сайт: https://insiderua.net
+
+Благотворительность: https://www.insider-help.com",True,media_candidate,publisher_identity_unverified,media_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Ukraine,uk,TG Market public Bangladesh news directory,tgmarket_public_directory,"TGScope Ukraine catalogue lists INSIDER UA. Verify publisher identity, political alignment and sourcing practices.",https://tgscope.io/telegram-channels-by-country/ukraine,
+intelsage,https://t.me/intelsage,INTEL SAGE 🇮🇳 (Intel Monk),#ForIndiaAnything 🇮🇳 (Managed By Team Intel Monk),True,independent_commentary_candidate,unassessed,independent_commentary_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,India,en,TG Market public Bangladesh news directory,tgmarket_public_directory,"Telemetrio India politics directory lists INTEL SAGE. Review authorship, sourcing, repost patterns and political alignment; do not assume independent OSINT standards.",https://telemetr.io/en/catalog/india/politics,
+itwingdmk,https://t.me/itwingdmk,DMK IT Wing,"Official #DMKITWing. follow 👇
+
+WA: whatsapp.com/channel/0029Va4Z7ju7j6gDEeegs737
+
+Insta: instagram.com/dmkitwing",True,political_actor_candidate,DMK_IT_Wing_affiliation_claimed,political_actor_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,India,ta,TG Market public Bangladesh news directory,tgmarket_public_directory,Telemetrio catalog identifies DMK IT Wing. Party communication/actor source; verify official ownership and assess campaign messaging separately from reporting.,https://telemetr.io/en/channels/1837346134-itwingdmk,
+jai_tdp,https://t.me/jai_tdp,Telugu Desam Party,Official account for TDP Broadcasts,True,political_actor_candidate,Telugu_Desam_Party_claimed_verified_by_Telemetrio,political_actor_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,India,te,TG Market public Bangladesh news directory,tgmarket_public_directory,"Telemetrio channel profile identifies this as the official TDP broadcast account and displayed a Telegram verification mark. Party-originated statements are actor evidence, not independent corroboration.",https://telemetr.io/en/channels/1152818678-jai_tdp,
+jenencamb,https://t.me/jenencamb,مخيم جنين 24 ساعة 🇵🇸,"صوت المخيم... نبض الصمود 💔✊
+
+نرصد الحدث لحظة بلحظة، نوثق الحقيقة، ونعكس واقع أهلنا في جنين.
+
+ صور |  فيديو | تغطية مباشرة
+
+كن معنا، وخلّي الحقيقة توصلك من قلب الميدان 🇵🇸
+ 
+💠مناقشات https://t.me/jenencamb24
+
+💠بوت القناة لتواصل _ @Jeenin24bot",True,community_actor_candidate,affiliation_unassessed,community_actor_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Palestine,ar,TG Market public Bangladesh news directory,tgmarket_public_directory,"TGScope Palestine catalogue lists a Jenin camp channel. Treat as community/actor-originated material, not independent confirmation; review content safety and identity.",https://tgscope.io/telegram-channels-by-country/palestine,
+jeninnews1,https://t.me/jeninnews1,Jenin News | أخبار جنين,"شبكة أخبار #جنين تختص بالشأن الجنيني والأخبار المحلية لمحافظة جنين والأخبار المهمه في باقي فلسطين التاريخية من نهرها لبحرها كونوا دائماً بالقرب  ..
+
+للمراسلة عبر الرسائل المباشرة
+
+مجموعة المناقشات https://t.me/jeninnews2
+جنين القسام تقاوم ✊🔥",True,local_news_candidate,publisher_identity_unverified,local_news_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Palestine,ar,TG Market public Bangladesh news directory,tgmarket_public_directory,TGScope Palestine catalogue lists Jenin News. Verify local operator and distinguish eyewitness reporting from reposted claims.,https://tgscope.io/telegram-channels-by-country/palestine,
+KarnatakaBJP,https://t.me/KarnatakaBJP,BJP Karnataka,Official Telegram Channel of BJP Karnataka,True,political_actor_candidate,BJP_Karnataka_association_claimed,political_actor_candidate,directory_or_public_profile_lead_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,India,kn,TG Market public Bangladesh news directory,tgmarket_public_directory,"Public Telegram preview identifies this as BJP Karnataka's official channel, but previewed posts are old. Keep as an inactive/stale review lead until current activity is confirmed.",https://t.me/s/KarnatakaBJP,
+khitthitmedianews,https://t.me/khitthitmedianews,Khit Thit Media ခေတ်သစ်မီဒီယာ,"Khit Thit Media ခေတ်သစ်မီဒီယာ
+ရန်ကုန်ခေတ်သစ်သတင်းဌာနသည် ၂၀၁၈ ခုနှစ်၊ ဇန်နဝါရီလ ၁ ရက်နေ့တွင် စတင်ထူထောင်ခဲ့သော သတင်းဌာနဖြစ်ပါသည်။  https://yktnews.com/
+https://t.me/khitthitmedianews
+https://t.me/khitthitmediagroup
+https://t.me/earnppmoney2020_bot?start=r0",True,media_candidate,publisher_claimed_Khit_Thit_Media,media_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Myanmar,my,TG Market public Bangladesh news directory,tgmarket_public_directory,"TG Market directory lists a similarly named Khit Thit Media channel. Check whether this is a separate official feed, duplicate or impersonator before approval.",https://tgmarket.io/countries/mm/news,
+khitthitnews,https://t.me/khitthitnews,Khit Thit Media,ရန်ကုန်ခေတ်သစ်သတင်းဌာနသည် ၂၀၁၈ ခုနှစ်၊ ဇန်နဝါရီလ ၁ ရက်နေ့တွင် စတင်ထူထောင်ခဲ့သော သတင်းဌာနဖြစ်ပါသည်။  https://yktnews.com/,True,media_candidate,publisher_claimed_Khit_Thit_Media,media_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Myanmar,my,TG Market public Bangladesh news directory,tgmarket_public_directory,TG Market profile identifies Khit Thit Media as a Yangon-based Burmese news publisher and provides its publisher website. Editorial claims and incident reports still require corroboration.,https://tgmarket.io/c/khitthitnews,
+kiev_kyiv,https://t.me/kiev_kyiv,Київ ІНФО | Новини Україна 🇺🇦,"⚡️Актуальні події Києва
+💥 Яскравий контент 24/7
+👉 З питань реклами: @reklama_uabot
+💵 Платимо гроші за унікальний контент
+
+👉 Надсилай адміну контент: @novosty_kieva_bot
+@novosty_kiev_bot
+
+👇🏻 Посилання для запрошення друзів:
+
+https://t.me/+aAaZ8kQkkpo2ZjRi",True,local_news_candidate,publisher_identity_unverified,local_news_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Ukraine,uk,TG Market public Bangladesh news directory,tgmarket_public_directory,TGScope Ukraine catalogue lists Kyiv INFO. Verify identity and whether this is a duplicate of similarly named channels.,https://tgscope.io/telegram-channels-by-country/ukraine,
+kievinfo_kyiv,https://t.me/kievinfo_kyiv,Київ ІНФО | Новини Україна 🇺🇦,"⚡️Актуальні події Києва
+💥 Яскравий контент 24/7
+👉 З питань реклами: @reklama_uabot
+💵 Платимо гроші за унікальний контент
+
+👉 Надсилай адміну контент: @novosty_kieva_bot
+@novosty_kiev_bot
+
+👇🏻 Посилання для запрошення друзів:
+
+https://t.me/+aAaZ8kQkkpo2ZjRi",True,local_news_candidate,publisher_identity_unverified,local_news_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Ukraine,uk,TG Market public Bangladesh news directory,tgmarket_public_directory,TGScope Ukraine catalogue lists a second Kyiv INFO handle. Check for duplicate ownership or impersonation before enabling.,https://tgscope.io/telegram-channels-by-country/ukraine,
+kievreal1,https://t.me/kievreal1,Реальний Київ | Украина,"Найбільший канал новин Києва
+
+надіслати новину 👉 @novosti_kieva_bot
+
+Посилання для запрошення друзів👇
+https://t.me/+Pz7-AZhNANxhOGZi
+
+з реклами @alex_reklama_ua",True,local_news_candidate,publisher_identity_unverified,local_news_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Ukraine,uk,TG Market public Bangladesh news directory,tgmarket_public_directory,TGScope Ukraine catalogue lists a Kyiv-focused news channel. Verify operator and local reporting provenance.,https://tgscope.io/telegram-channels-by-country/ukraine,
+mekongnewsmm,https://t.me/mekongnewsmm,MeKong News - မဲခေါင်သတင်း,ရှမ်းအရှေ့ အခြေစိုက် မဲခေါင်သတင်းဌာန၏ Telegram Channel,True,media_candidate,publisher_identity_unverified,media_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Myanmar,my,TG Market public Bangladesh news directory,tgmarket_public_directory,"TG Market Myanmar news directory lists Mekong News. Verify publisher identity, geographic focus and recent activity.",https://tgmarket.io/countries/mm/news,
+mindatpost21,https://t.me/mindatpost21,The Mindat Post,"“The Mindat Post @MP” is an emerging local media outlet and established in November 2021 with the purpose to present the local news in Chin State and the news happening worldwide, in a timely manner.",True,local_news_candidate,publisher_identity_unverified,local_news_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Myanmar,my,TG Market public Bangladesh news directory,tgmarket_public_directory,"TG Market channel profile lists The Mindat Post among related local sources. Verify local coverage, operator and activity.",https://tgmarket.io/c/khitthitnews,
+mizzimatv,https://t.me/mizzimatv,Mizzima,Share & Follow us. https://mizzima.carrd.co Mizzima News brings you the latest news and insightful reports about Myanmar.,True,media_candidate,publisher_claimed_Mizzima,media_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Myanmar,my,TG Market public Bangladesh news directory,tgmarket_public_directory,TG Market Myanmar news directory lists Mizzima TV. Confirm this exact channel through publisher-controlled sources.,https://tgmarket.io/countries/mm/news,
+mm_earthquake_alert,https://t.me/mm_earthquake_alert,MM Earthquake Alert,"Stay Alert, Stay Safe: Earthquake Updates for Myanmar & Thailand		Welcome to our earthquake alert channel! We provide timely notifications about seismic activity throughout Myanmar and Thailand.",True,emergency_information_candidate,operator_unverified,emergency_information_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Myanmar,my,TG Market public Bangladesh news directory,tgmarket_public_directory,TG Market lists a Myanmar earthquake alert channel. Potential public-safety signal source; verify data provenance and avoid treating unconfirmed alerts as official warnings.,https://tgmarket.io/countries/mm/news,
+mrtvnewschannel,https://t.me/mrtvnewschannel,MRTV News Channel,သတင်းကဏ္ဍသီးသန့် ကြည့်ရှုနားဆင်နိုင်ရန်,True,official_media_candidate,state_media_affiliation_claimed,official_media_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Myanmar,my,TG Market public Bangladesh news directory,tgmarket_public_directory,"TG Market Myanmar directory lists MRTV News Channel. Treat as state-media/official narrative candidate, not independent corroboration; verify exact ownership.",https://tgmarket.io/countries/mm/news,
+mt_news_media,https://t.me/mt_news_media,MT News _ Myanmar Transparency,MT News _ Myanmar Transparency,True,media_candidate,publisher_identity_unverified,media_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Myanmar,my,TG Market public Bangladesh news directory,tgmarket_public_directory,TG Market Myanmar news directory lists MT News / Myanmar Transparency. Verify whether the title accurately reflects the operator and editorial role.,https://tgmarket.io/countries/mm/news,
+mwdmmnews,https://t.me/mwdmmnews,MWD News,မြဝတီရုပ်မြင်သံကြား ပြည်တွင်းသတင်းများ,True,media_candidate,publisher_identity_unverified,media_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Myanmar,my,TG Market public Bangladesh news directory,tgmarket_public_directory,"TG Market Myanmar directory lists MWD News. Determine whether it is state-affiliated, military-affiliated or independent before assigning a source class.",https://tgmarket.io/countries/mm/news,
+myaelattathan,https://t.me/myaelattathan,မြေလတ်အသံ - Myaelatt Athan,Sharing Information to the local,True,media_candidate,publisher_identity_unverified,media_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Myanmar,my,TG Market public Bangladesh news directory,tgmarket_public_directory,"TG Market lists Myaelatt Athan as a Burmese news channel. Verify publisher identity, geographic coverage and activity.",https://tgmarket.io/countries/mm/news,
+myanmarhardtalk,https://t.me/myanmarhardtalk,Myanmar Hard Talk,This is the News Channel,True,commentary_candidate,publisher_identity_unverified,commentary_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Myanmar,my,TG Market public Bangladesh news directory,tgmarket_public_directory,"TG Market Myanmar news directory lists Myanmar Hard Talk. Review editorial stance, original reporting and source transparency.",https://tgmarket.io/countries/mm/news,
+myanmarlabournews,https://t.me/myanmarlabournews,Myanmar Labour News,"အလုပ်သမားရေးရာသတင်းနှင့်လတ်တလောဖြစ်ပေါ်နေသော မြန်မာနိုင်ငံအခြေအနေများကို တိကျမှန်ကန်စွာဖော်ပြပေးနေသော သတင်းဌာနဖြစ်ပါသည်။https://my.wikipedia.org/wiki/Myanmar_Labor_News https://www.facebook.com/myanmarlabournews
+https://www.myanmarlabournews.com/en",True,civil_society_candidate,publisher_identity_unverified,civil_society_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Myanmar,my,TG Market public Bangladesh news directory,tgmarket_public_directory,"TG Market channel profile lists Myanmar Labour News among related channels. Verify whether it is a worker-rights newsroom, advocacy actor or aggregator.",https://tgmarket.io/c/khitthitnews,
+myanmarnationalpost,https://t.me/myanmarnationalpost,Myanmar National Post,"သတင်း၊ ဆောင်းပါးများ
+ဆက်သွယ်ပေးပို့လိုပါက
+Viber Ph : 09692366274
+Email : mmnationalpost@gmail.com",True,media_candidate,publisher_identity_unverified,media_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Myanmar,my,TG Market public Bangladesh news directory,tgmarket_public_directory,"TG Market Myanmar news directory lists Myanmar National Post. Determine ownership, state/political affiliation and sourcing practices.",https://tgmarket.io/countries/mm/news,
+myanmarnownews,https://t.me/myanmarnownews,Myanmar Now,Myanmar Now သည် မတရားမှုများကို စုံစမ်းဖော်ထုတ်သည့်သတင်းဌာနဖြစ်သည်။,True,media_candidate,publisher_claimed_Myanmar_Now,media_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Myanmar,my,TG Market public Bangladesh news directory,tgmarket_public_directory,TG Market lists Myanmar Now. Verify official cross-links and current public preview; treat reporting as leads pending corroboration.,https://tgmarket.io/countries/mm/news,
+myanmarupdate,https://t.me/myanmarupdate,Myanmar Update News,အမှောင်ထဲမှ အလင်းတစ်စ,True,media_candidate,publisher_identity_unverified,media_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Myanmar,my,TG Market public Bangladesh news directory,tgmarket_public_directory,TG Market Myanmar news directory lists Myanmar Update News. Review source provenance and reposting behaviour.,https://tgmarket.io/countries/mm/news,
+novini_ukrtg,https://t.me/novini_ukrtg,Український Телеграм 🇺🇦,"⚡️Телеграм № 1 в Україні. Інформуємо — 24/7. 
+
+Посилання для друзів - https://t.me/+V8VPwRkVmO9mODBi
+
+Співпраця: @ceo_7777",True,media_candidate,publisher_identity_unverified,media_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Ukraine,uk,TG Market public Bangladesh news directory,tgmarket_public_directory,"TGScope Ukraine catalogue lists Ukrainian Telegram news. Review publisher identity, original sourcing and repost networks.",https://tgscope.io/telegram-channels-by-country/ukraine,
+npnewsmyanmar,https://t.me/npnewsmyanmar,NP News-Myanmar,အမုန်းမပွားစေဘဲ အမှန်တရားသတင်းစကားများဖြင့် ရပ်တည်မည်,True,media_candidate,publisher_identity_unverified,media_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Myanmar,my,TG Market public Bangladesh news directory,tgmarket_public_directory,"TG Market Myanmar news directory lists NP News-Myanmar. Verify operator, editorial independence and recent activity.",https://tgmarket.io/countries/mm/news,
+Nucleus71official,https://t.me/Nucleus71official,Nucleus 71 - Official,বঙ্গবন্ধু - মুক্তিযুদ্ধ - বাংলাদেশ 🇧🇩,True,unknown,unassessed,political_actor_candidate,directory_or_public_profile_lead_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Bangladesh,bn,TG Market public Bangladesh news directory,tgmarket_public_directory,Directory-listed as an official channel but the organisation and account authenticity are unverified. Treat as an actor source until independently identified.,https://tgmarket.io/countries/bd/news,
+odessa_infonews,https://t.me/odessa_infonews,Одесса INFO ⚓️ 🇺🇦 Новости | Одеса,"🔞 Самые важные новости Одессы и области .Только Одесская аудитория❗️
+⚡️Реклама ➡️ @ua_4499
+
+⚡️Предложить новость АНОНИМНО / сотрудничество ➡️ @Odinfo_bot
+
+➡️ Ссылка на канал https://t.me/+_osZLpRD48c3ODYy",True,local_news_candidate,publisher_identity_unverified,local_news_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Ukraine,uk,TG Market public Bangladesh news directory,tgmarket_public_directory,TGScope Ukraine catalogue lists Odesa INFO. Verify regional focus and whether incident reports are independently sourced.,https://tgscope.io/telegram-channels-by-country/ukraine,
+peoplemediamyanmar,https://t.me/peoplemediamyanmar,U Kyaw Soe Oo,News and Media (People Media),True,media_candidate,publisher_identity_unverified,media_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Myanmar,my,TG Market public Bangladesh news directory,tgmarket_public_directory,TG Market lists this as a People Media-related channel. Check relationship to @peoplemedianews and avoid double-counting syndicated posts.,https://tgmarket.io/countries/mm/news,
+peoplemedianews,https://t.me/peoplemedianews,People Media,https://www.peoplemediamyanmar.com/,True,media_candidate,publisher_identity_unverified,media_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Myanmar,my,TG Market public Bangladesh news directory,tgmarket_public_directory,"TG Market Myanmar news directory lists People Media. Confirm publisher identity, editorial standards and relationship to similarly named channels.",https://tgmarket.io/countries/mm/news,
+peoplespring,https://t.me/peoplespring,People's Spring,"People's Spring ကို အတွေ့အကြုံရင့် သတင်းသမားတွေက စုစည်းတင်ဆက်နေတာဖြစ်ပါတယ်။
+
+Facebook >> https://www.facebook.com/LuduNwayOo
+Youtube >> https://www.youtube.com/@peoplespring
+Website >> https://www.ludunwayoo.com/",True,media_candidate,publisher_claimed_Peoples_Spring,media_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Myanmar,my,TG Market public Bangladesh news directory,tgmarket_public_directory,TG Market Myanmar news directory lists People's Spring. Confirm official publisher links and distinguish its editorial coverage from movement-originated claims.,https://tgmarket.io/countries/mm/news,
+pib_factcheck,https://t.me/pib_factcheck,PIB Fact Check,"Countering misinformation on Govt. policies/schemes. 
+
+Suspect a Govt. related news to be fake? Send it to us at +918799711259/socialmedia@pib.gov.in",True,official_institutional_candidate,Government_of_India_PIB_Fact_Check_claimed,official_institutional_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,India,en,TG Market public Bangladesh news directory,tgmarket_public_directory,Telemetrio profile identifies PIB Fact Check. Verify official PIB cross-link; institutional fact-checks should be assessed through their cited evidence.,https://telemetr.io/en/channels/1559076845-pib_factcheck,
+popularjournal,https://t.me/popularjournal,Popular Journal,"https://www.popularmyanmar.com/      
+
+https://www.youtube.com/c/PopularJournalOfficial",True,media_candidate,publisher_identity_unverified,media_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Myanmar,my,TG Market public Bangladesh news directory,tgmarket_public_directory,TG Market Myanmar news directory lists Popular Journal. Verify publisher identity and whether it offers original local reporting.,https://tgmarket.io/countries/mm/news,
+positiveanglenews,https://t.me/positiveanglenews,PAN,"တိကျမှန်ကန် PAN 
+
+Viber 📬 09772979725
+Email 💌 positiveanglenews.pans
+
+@PAN
+
+Myanmar Local Media. PAN is the offical media. PAN media is used on online platforms such as YouTube, Telegram, TikTok ,  VK and Viber Channel. Wellcome to PAN.",True,media_candidate,publisher_identity_unverified,media_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Myanmar,my,TG Market public Bangladesh news directory,tgmarket_public_directory,"TG Market Myanmar news directory lists PAN/Positive Angle News. Verify operator, editorial standards and recent public activity.",https://tgmarket.io/countries/mm/news,
+ramallahmix1,https://t.me/ramallahmix1,Ramallah Mix - رام الله مكس,موقع رام الله مكس الرسمي www.rmix.ps,True,local_news_candidate,publisher_identity_unverified,local_news_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Palestine,ar,TG Market public Bangladesh news directory,tgmarket_public_directory,"TGScope Palestine catalogue lists Ramallah Mix as a high-reach local news channel. Verify operator, editorial independence and incident sourcing.",https://tgscope.io/telegram-channels-by-country/palestine,
+ramallahnew,https://t.me/ramallahnew,رام الله الاخباري,"في 28/11/2014 تأسس موقع رام الله الاخباري و دأب على نشر الاخبار على مدار الساعة و يعتبر موقع رام الله الاخباري من اكثر المواقع في بفلسطين التي يزورها القراء و متابعو الاخبار في الاراضي الفلسطينية حيث يزور الموقع شهرياً اكثر من مليون , و يقدم موقع رام الله",True,local_news_candidate,publisher_identity_unverified,local_news_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Palestine,ar,TG Market public Bangladesh news directory,tgmarket_public_directory,"TGScope Palestine catalogue lists a Ramallah news channel. Verify identity, activity and sourcing.",https://tgscope.io/telegram-channels-by-country/palestine,
+rezident_ua,https://t.me/rezident_ua,Резидент,Мы расскажем для чего создают иллюзию обмана и кто стоит за всеми процессами в обществе. Для связи по всем вопросам Rezidentukr@proton.me,True,political_commentary_candidate,political_affiliation_unassessed,political_commentary_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Ukraine,ru,TG Market public Bangladesh news directory,tgmarket_public_directory,TGScope Ukraine catalogue lists Rezident. Treat as a political/war commentary source with unverified affiliation and claims; not independent corroboration.,https://tgscope.io/telegram-channels-by-country/ukraine,
+star3mm,https://t.me/star3mm,Star-MM,For Malaysia News@ Myanmar News,True,media_candidate,publisher_identity_unverified,media_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Myanmar,my,TG Market public Bangladesh news directory,tgmarket_public_directory,TG Market Myanmar news directory lists Star-MM. Verify identity and whether it is an original newsroom or aggregator.,https://tgmarket.io/countries/mm/news,
 studentandolon,https://t.me/studentandolon,Bangla Politics,"Join our channel to get updates on all the news happening in Bangladesh after the July 24th movement and share it with your friends.
 
-#খবর #news #নিউজ #নির্বাচন২০২৬ #iranwarnews #Israelwarnews",True,unknown,unassessed,UNREVIEWED_CANDIDATE,False,Bangladesh,bn,TG Market public Bangladesh news directory,tgmarket_public_directory,"Directory-listed Bangla politics/student-movement channel. Operator, affiliation and source provenance are unverified.",https://tgmarket.io/countries/bd/news
-studentsagainstdiscrimination,https://t.me/studentsagainstdiscrimination,বৈষম্যবিরোধী ছাত্র আন্দোলন (অফিসিয়াল),,True,unknown,unassessed,UNREVIEWED_CANDIDATE,False,Bangladesh,bn,TG Market public Bangladesh news directory,tgmarket_public_directory,"Directory-listed student movement channel. Treat as an actor-originated source for statements and mobilisation, not independent incident corroboration.",https://tgmarket.io/countries/bd/news
+#খবর #news #নিউজ #নির্বাচন২০২৬ #iranwarnews #Israelwarnews",True,unknown,unassessed,political_movement_candidate,directory_or_public_profile_lead_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Bangladesh,bn,TG Market public Bangladesh news directory,tgmarket_public_directory,"Directory-listed Bangla politics/student-movement channel. Operator, affiliation and source provenance are unverified.",https://tgmarket.io/countries/bd/news,
+studentsagainstdiscrimination,https://t.me/studentsagainstdiscrimination,বৈষম্যবিরোধী ছাত্র আন্দোলন (অফিসিয়াল),,True,unknown,unassessed,political_movement_candidate,directory_or_public_profile_lead_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Bangladesh,bn,TG Market public Bangladesh news directory,tgmarket_public_directory,"Directory-listed student movement channel. Treat as an actor-originated source for statements and mobilisation, not independent incident corroboration.",https://tgmarket.io/countries/bd/news,
+thanlyinmedia,https://t.me/thanlyinmedia,Thanlyin Media,Thanlyin Media မှ ကြိုဆိုပါတယ်။ နေ့စဥ်နောက်ဆုံးရ သတင်းတွေကိုအချိန်နဲ့တပြေးညီ တင်ဆက်ပေးပါမည်။,True,local_news_candidate,publisher_identity_unverified,local_news_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Myanmar,my,TG Market public Bangladesh news directory,tgmarket_public_directory,"TG Market channel profile lists Thanlyin Media among related local sources. Verify identity, locality and original reporting.",https://tgmarket.io/c/khitthitnews,
+thewesternnews,https://t.me/thewesternnews,Western News,Western News သတင်းဌာနသည် မတရားမှုများနှင့် လူ့အခွင့်ရေးချိုးဖောက်ခံရမှုများကို သတင်းမီဒီယာဂုဏ်သိက္ခာနှင့် အညီ စောင့်ကြည့် စုံစမ်းဖော်ထုတ်တင်ပြသည့် မြန်မာနိုင်ငံအခြေစိုက် သတင်းဌာနတစ်ခုဖြစ်သည်။,True,media_candidate,publisher_identity_unverified,media_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Myanmar,my,TG Market public Bangladesh news directory,tgmarket_public_directory,"TG Market lists Western News and related Rakhine/Arakan media references. Confirm exact operator, regional focus and affiliation.",https://tgmarket.io/countries/mm/news,
+times_ukraina,https://t.me/times_ukraina,Times of Ukraine: Новини | Україна,"Політичне та незалежне медіа, якому довіряють.
+
+
+Співпраця — @tu_marketer
+
+Надіслати новину — @tu_national_bot",True,media_candidate,publisher_identity_unverified,media_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Ukraine,uk,TG Market public Bangladesh news directory,tgmarket_public_directory,TGScope Ukraine catalogue lists Times of Ukraine. Verify publisher identity and editorial independence; screen conflict posts for tactical details.,https://tgscope.io/telegram-channels-by-country/ukraine,
 TimesOf_Bangladesh,https://t.me/TimesOf_Bangladesh,𝗧𝗶𝗺𝗲𝘀 𝗼𝗳 𝗕𝗮𝗻𝗴𝗹𝗮𝗱𝗲𝘀𝗵,"যুদ্ধ, সংঘাত, রাজনীতি, ইসলাম, নিউজ বিশ্লেষণ ||
 দেশ-বিদেশের সকল সংবাদের পূর্নাঙ্গ প্লাটফর্ম ""𝗧𝗶𝗺𝗲𝘀 𝗼𝗳 𝗕𝗮𝗻𝗴𝗹𝗮𝗱𝗲𝘀𝗵"" এ আপনাকে স্বাগতম।
-চ্যানেল লিংক ⤵️ https://t.me/+-ugHjfXOamw0NmNl",True,unknown,unassessed,UNREVIEWED_CANDIDATE,False,Bangladesh,bn,TG Market public Bangladesh news directory,tgmarket_public_directory,"Directory-listed news channel. Publisher identity, editorial standards, activity and original reporting are unverified.",https://tgmarket.io/countries/bd/news
+চ্যানেল লিংক ⤵️ https://t.me/+-ugHjfXOamw0NmNl",True,unknown,unassessed,media_candidate,directory_or_public_profile_lead_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Bangladesh,bn,TG Market public Bangladesh news directory,tgmarket_public_directory,"Directory-listed news channel. Publisher identity, editorial standards, activity and original reporting are unverified.",https://tgmarket.io/countries/bd/news,
+truexanewsua,https://t.me/truexanewsua,Труха⚡️Україна,"⚡️Актуальні події України.
+✌️З питань реклами:
+@Tr_PromoUa_bot
+
+Ідентифікатор медіа – R40-06805
+Детальніше https://telegra.ph/TruhaUkraina-01-16
+
+👇🏻Надіслати контент:
+@truexausend_bot
+
+Посилання для друзів: https://t.me/+bGpZFNsAYzAxNTli
+
+Контент 21+",True,media_candidate,publisher_identity_unverified,media_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Ukraine,uk,TG Market public Bangladesh news directory,tgmarket_public_directory,"TGScope Ukraine country catalogue lists this large Ukrainian news channel. Review original reporting, ownership, reposts and any operationally sensitive conflict content.",https://tgscope.io/telegram-channels-by-country/ukraine,
+uaonlii,https://t.me/uaonlii,Україна Online: Новини | Політика,"Інсайди, політика, новини  — все в одному місці
+
+Співпраця — @anonimnoua",True,media_candidate,publisher_identity_unverified,media_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Ukraine,uk,TG Market public Bangladesh news directory,tgmarket_public_directory,"TGScope Ukraine catalogue lists Ukraine Online. Review editorial identity, political alignment and reposting before use.",https://tgscope.io/telegram-channels-by-country/ukraine,
+VOMNEWS2023,https://t.me/VOMNEWS2023,Voice of Myanmar,ONLINE MEDIA,True,media_candidate,publisher_identity_unverified,media_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Myanmar,my,TG Market public Bangladesh news directory,tgmarket_public_directory,TG Market Myanmar directory lists Voice of Myanmar. Verify publisher identity and whether this account is the outlet's official public feed.,https://tgmarket.io/countries/mm/news,
+voynareal,https://t.me/voynareal,Реальна Війна | Україна | Новини,"Новини, зведення з фронту, ключові події – розповідаємо про все, що потрібно знати в Україні.
+
+
+Для зв’язку – @media_ua
+
+Надіслати контент – @voynarealnews_bot",True,conflict_news_candidate,affiliation_unassessed,conflict_news_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Ukraine,uk,TG Market public Bangladesh news directory,tgmarket_public_directory,TGScope Ukraine catalogue lists Real War/Ukraine news. Treat as an unverified conflict aggregator; exclude granular real-time troop or targeting information.,https://tgscope.io/telegram-channels-by-country/ukraine,
+Yangonnews2024,https://t.me/Yangonnews2024,Yangon Division News 2025,ရန်ကုန်တိုင်းဒေသကြီးသတင်းများကို တိကျမှန်ကန်စွာဖော်ပြပေးလျှက်ရှိပြီး ရန်ကုန်တိုင်းအစိုးရအဖွဲ့ဆောင်ရွက်ချက်များ၏ဂုဏ်တစ်ရပ်ကိုမြှင့်တင်မယ်။,True,local_news_candidate,publisher_identity_unverified,local_news_candidate,directory_listed_unverified,UNREVIEWED_CANDIDATE,NOT_ENABLED,False,Myanmar,my,TG Market public Bangladesh news directory,tgmarket_public_directory,"TG Market channel profile lists Yangon Division News 2025. Check whether the name, date and current publisher identity are consistent.",https://tgmarket.io/c/khitthitnews,
