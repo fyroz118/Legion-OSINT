@@ -50,6 +50,14 @@ def build_query_plan(report_date, max_queries=None):
             {"region": region, "language_scope": language, "query": rumour,
              "source_focus": "unofficial_public", "claim_type": "RUMOUR_WATCH"},
         ])
+    plan.extend([
+        {"region": "Bangladesh", "language_scope": "bn", "query": "বাংলাদেশ আজ জেলা উপজেলা স্থানীয় সংঘর্ষ বিক্ষোভ হামলা প্রত্যক্ষদর্শী সংবাদ",
+         "source_focus": "unofficial_public", "claim_type": "EVENT_NEWS"},
+        {"region": "Bangladesh", "language_scope": "bn", "query": "বাংলাদেশ আজ গুজব ভাইরাল দাবি যাচাই স্থানীয় সংবাদ",
+         "source_focus": "unofficial_public", "claim_type": "RUMOUR_WATCH"},
+        {"region": "Bangladesh", "language_scope": "bn+en", "query": "Bangladesh district upazila official police administration incident update",
+         "source_focus": "official_institutional", "claim_type": "EVENT_NEWS"},
+    ])
     # Additional 40-query expansion for sessions explicitly configured above the 60-query default.
     # The 28:12 focus mix preserves the 70:30 discovery-attention target at the 100-query cap.
     for index, (region, language, *_rest) in enumerate(REGION_QUERIES):
@@ -71,14 +79,6 @@ def build_query_plan(report_date, max_queries=None):
                 "source_focus": "official_institutional", "claim_type": "EVENT_NEWS"
             })
     # The base plan is 60; 40 expansion queries are appended for opt-in high-volume runs.
-    plan.extend([
-        {"region": "Bangladesh", "language_scope": "bn", "query": "বাংলাদেশ আজ জেলা উপজেলা স্থানীয় সংঘর্ষ বিক্ষোভ হামলা প্রত্যক্ষদর্শী সংবাদ",
-         "source_focus": "unofficial_public", "claim_type": "EVENT_NEWS"},
-        {"region": "Bangladesh", "language_scope": "bn", "query": "বাংলাদেশ আজ গুজব ভাইরাল দাবি যাচাই স্থানীয় সংবাদ",
-         "source_focus": "unofficial_public", "claim_type": "RUMOUR_WATCH"},
-        {"region": "Bangladesh", "language_scope": "bn+en", "query": "Bangladesh district upazila official police administration incident update",
-         "source_focus": "official_institutional", "claim_type": "EVENT_NEWS"},
-    ])
     for index, item in enumerate(plan[:limit]):
         item["report_date"] = report_date
         item["topic"] = "news"
