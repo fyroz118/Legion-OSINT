@@ -1,15 +1,18 @@
 """Human-gated incident drafting and publication approval.
 
-Approval means an analyst permits inclusion in the report; it does NOT mean
-that an event or claim is verified.
+Approval permits report inclusion; it does NOT mean an event or claim is verified.
 """
 from datetime import datetime, timezone
 from app.database import connect
-from app.incidents import (initialize_incident_tables, upsert_incident,\n                            add_incident_source, get_report_incidents)
+from app.incidents import (
+    initialize_incident_tables, upsert_incident,
+    add_incident_source, get_report_incidents,
+)
 from app.research import initialize_research_tables
 
 
 def initialize_workflow_tables():
+    initialize_incident_tables()
     with connect() as db:
         db.execute("""CREATE TABLE IF NOT EXISTS incident_workflow (
             incident_id TEXT PRIMARY KEY,
@@ -98,12 +101,12 @@ def get_incident_workflow_queue(report_date):
 
 def get_approved_report_incidents(report_date):
     initialize_workflow_tables()
-    return [item for item in get_report_incidents(report_date)
-            if _is_approved(item["incident_id"])]
-
-
-def _is_approved(incident_id):
+    approved_ids = set()
     with connect() as db:
-        row = db.execute("SELECT status FROM incident_workflow WHERE incident_id=?",
-                         (incident_id,)).fetchone()
-    return bool(row and row["status"] == "APPROVED")
+        approved_ids = {
+            row["incident_id"] for row in db.execute(
+                "SELECT incident_id FROM incident_workflow WHERE status='APPROVED'"
+            ).fetchall()
+        }
+    return [item for item in get_report_incidents(report_date)
+            if item["incident_id"] in approved_ids]
