@@ -2851,6 +2851,97 @@
       "candidate_category": "unverified_news_aggregator_candidate",
       "candidate_identity_status": "public_preview_or_official_reference_found",
       "discovery_source_url": "https://t.me/news_of_bangladesh"
+    },
+    {
+      "username": "Hindustan",
+      "priority": "south_asia",
+      "language": "hi",
+      "source_type": "national_news",
+      "source_affiliation": "LiveHindustan_newsroom",
+      "default_evidence_status": "UNVERIFIED",
+      "enabled": true,
+      "notes": "Public channel identifying itself as Live Hindustan and linking to livehindustan.com; recent public preview posts observed. Treat newsroom reporting as leads pending corroboration.",
+      "source_class": "independent_media",
+      "monitoring_weight": "standard",
+      "discovery_source_url": "https://t.me/s/Hindustan"
+    },
+    {
+      "username": "hindu",
+      "priority": "south_asia",
+      "language": "hi",
+      "source_type": "sanatan_dharma_community_and_advocacy_feed",
+      "source_affiliation": "self_described_Hindu_Sanatana_Dharma_channel",
+      "default_evidence_status": "UNVERIFIED",
+      "enabled": true,
+      "notes": "Public Hindu/Sanatana Dharma community channel with religious-cultural content and possible social/political narratives. Operator and editorial standards not independently established; viewpoint-specific lead only, not independent corroboration.",
+      "source_class": "unknown",
+      "monitoring_weight": "standard",
+      "discovery_source_url": "https://t.me/s/hindu"
+    },
+    {
+      "username": "IndianHindus",
+      "priority": "south_asia",
+      "language": "en",
+      "source_type": "sanatan_dharma_community_feed",
+      "source_affiliation": "self_described_followers_of_Sanatan_Dharma_channel",
+      "default_evidence_status": "UNVERIFIED",
+      "enabled": true,
+      "notes": "Public channel self-described for followers of Sanatan Dharma; preview includes forwarded material and political/social claims. Treat as community/advocacy perspective and trace claims to original sources.",
+      "source_class": "unknown",
+      "monitoring_weight": "standard",
+      "discovery_source_url": "https://t.me/s/IndianHindus"
+    },
+    {
+      "username": "sanatanishaktii",
+      "priority": "south_asia",
+      "language": "en",
+      "source_type": "sanatani_news_commentary_aggregator",
+      "source_affiliation": "self_described_Sanatani_Shakti",
+      "default_evidence_status": "UNVERIFIED",
+      "enabled": true,
+      "notes": "Public channel self-describes as India/world headlines covering politics, diplomacy, defence, economy and conflict with Hindu/Sanatani framing. Identity and editorial standards unverified; viewpoint-specific lead only.",
+      "source_class": "unknown",
+      "monitoring_weight": "high",
+      "discovery_source_url": "https://t.me/s/sanatanishaktii"
+    },
+    {
+      "username": "sanataniindian",
+      "priority": "south_asia",
+      "language": "en",
+      "source_type": "sanatani_nationalist_community_actor",
+      "source_affiliation": "self_described_pro_Indian_Sanatani_Hindutva_community",
+      "default_evidence_status": "UNVERIFIED",
+      "enabled": true,
+      "notes": "Small public channel explicitly self-describes as pro-Indian, Sanatani and Hindutva-oriented. Treat as an actor/community viewpoint source; claims and mobilisation are not independent corroboration.",
+      "source_class": "other",
+      "monitoring_weight": "standard",
+      "discovery_source_url": "https://t.me/s/sanataniindian"
+    },
+    {
+      "username": "hindutvawatchin",
+      "priority": "south_asia",
+      "language": "en",
+      "source_type": "religious_minority_rights_research_monitor",
+      "source_affiliation": "Hindutva_Watch_research_initiative",
+      "default_evidence_status": "UNVERIFIED",
+      "enabled": true,
+      "notes": "Public research-monitoring initiative documenting reported attacks on religious minorities in India. Its reports are valuable incident leads, not automatic verification; inspect original evidence and seek independent corroboration.",
+      "source_class": "civil_society",
+      "monitoring_weight": "high",
+      "discovery_source_url": "https://t.me/s/hindutvawatchin"
+    },
+    {
+      "username": "angrysaffron",
+      "priority": "south_asia",
+      "language": "en",
+      "source_type": "india_osint_and_ground_report_commentary",
+      "source_affiliation": "Angry_Saffron_and_Treeni_self_described",
+      "default_evidence_status": "UNVERIFIED",
+      "enabled": true,
+      "notes": "Public India-focused OSINT/ground-report channel; recent posts observed. Its framing and sourcing require scrutiny, especially communal allegations; treat as viewpoint-specific lead and verify claims independently.",
+      "source_class": "unknown",
+      "monitoring_weight": "high",
+      "discovery_source_url": "https://t.me/s/angrysaffron"
     }
   ]
 }
