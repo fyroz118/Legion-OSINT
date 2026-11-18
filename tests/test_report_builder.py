@@ -29,6 +29,13 @@ class ReportDraftTests(unittest.TestCase):
             "country": "Bangladesh", "category": "civil_unrest",
             "description": "A demonstration reported by a public source."
         })
+        incidents.add_incident_source("BD-001", {
+            "source_url": "https://example.org/report",
+            "source_name": "Example independent outlet",
+            "source_class": "independent_media",
+            "source_role": "lead",
+            "independence_group": "example-outlet"
+        })
         from app.incident_workflow import set_incident_workflow_status
         set_incident_workflow_status("BD-001", "APPROVED", "Analyst reviewed for report inclusion.")
         report = build_report_draft("2026-11-18")
