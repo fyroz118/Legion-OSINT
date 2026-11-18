@@ -1,10 +1,6 @@
 {
   "channels": [
-    {
-      "username": "REPLACE_WITH_REVIEWED_PUBLIC_CHANNEL",
-      "priority": "bangladesh",
-      "language": "unknown",
-      "notes": "Placeholder only. Replace with an accessible public channel you have reviewed."
-    }
+    {"username":"bellingcat_en","priority":"global","language":"en","source_type":"investigative_osint","source_affiliation":"independent_investigative_group","default_evidence_status":"UNVERIFIED","enabled":true,"notes":"Public English Bellingcat investigations channel; posts are leads, not verified events."},
+    {"username":"BNONews","priority":"global","language":"en","source_type":"breaking_news","source_affiliation":"independent_news_service","default_evidence_status":"UNVERIFIED","enabled":true,"notes":"Public BNO News breaking-news channel; independently corroborate claims."}
   ]
 }
