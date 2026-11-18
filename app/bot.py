@@ -11,7 +11,8 @@ from app.gemini_assistant import ask
 from app.report_builder import build_report_draft
 from app.research import (run_research, get_research_leads, get_research_coverage,
                           review_queue, review_lead, link_reviewed_lead_to_incident,
-                          extract_event_candidates, suggest_duplicate_candidates)\nfrom app.incident_workflow import (create_incident_draft_from_lead,\n                                   set_incident_workflow_status,\n                                   get_incident_workflow_queue)
+                          extract_event_candidates, suggest_duplicate_candidates)
+from app.incident_workflow import (create_incident_draft_from_lead,\n                                   set_incident_workflow_status,\n                                   get_incident_workflow_queue)
 
 load_dotenv()
 TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "")
@@ -473,7 +474,9 @@ def main():
         ("daily", daily), ("bangladesh", bangladesh),
         ("search", search_cmd), ("ask", ask_cmd), ("report", report_cmd),
         ("research", research_cmd), ("briefs", briefs_cmd), ("leads", leads_cmd), ("coverage", coverage_cmd),
-        ("reviewqueue", reviewqueue_cmd), ("candidates", candidates_cmd), ("reviewlead", reviewlead_cmd),\n        ("incidentdraft", incidentdraft_cmd), ("incidentqueue", incidentqueue_cmd),\n        ("approveincident", approveincident_cmd), ("linklead", linklead_cmd)
+        ("reviewqueue", reviewqueue_cmd), ("candidates", candidates_cmd), ("reviewlead", reviewlead_cmd),
+        ("incidentdraft", incidentdraft_cmd), ("incidentqueue", incidentqueue_cmd),
+        ("approveincident", approveincident_cmd), ("linklead", linklead_cmd)
     ]:
         app.add_handler(CommandHandler(name, fn))
     app.add_handler(CallbackQueryHandler(review_button_callback, pattern=r"^leadreview:[0-9]+:(REVIEWED|REJECTED)$"))
