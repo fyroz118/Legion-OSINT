@@ -29,7 +29,7 @@ async def start(update, context):
     if await gate(update):
         await update.message.reply_text(
             "Legion-OSINT private assistant.\n"
-            "Commands: /status /daily /bangladesh /search <terms> /ask <question> /help"
+            "Commands: /status /daily /bangladesh /search /ask /research /leads /coverage /report /help"
         )
 
 async def help_cmd(update, context):
@@ -92,7 +92,7 @@ async def research_cmd(update, context):
             await update.message.reply_text("Usage: /research YYYY-MM-DD")
             return
         report_date = context.args[0]
-        await update.message.reply_text(f"Starting date-scoped public-web discovery for {report_date}. This may use up to 12 search requests.")
+        await update.message.reply_text(f"Starting date-scoped public-web discovery for {report_date}. ")
         try:
             result = await asyncio.to_thread(run_research, report_date)
             await update.message.reply_text(
