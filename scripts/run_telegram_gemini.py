@@ -103,8 +103,24 @@ def collect_channel(ch, report_date, cap):
     return posts, errors, pages, diagnostic
 
 def gemini_text(client, model, prompt):
-    response=client.models.generate_content(model=model, contents=prompt)
-    return response.text or "Gemini returned no text."
+    """Generate text with bounded retries for transient Gemini service failures."""
+    retryable = ("429", "500", "502", "503", "504", "RESOURCE_EXHAUSTED",
+                 "UNAVAILABLE", "INTERNAL", "DEADLINE_EXCEEDED")
+    delays = (2, 4, 8, 16, 30)
+    for attempt in range(len(delays) + 1):
+        try:
+            response = client.models.generate_content(model=model, contents=prompt)
+            return response.text or "Gemini returned no text."
+        except Exception as exc:
+            message = f"{type(exc).__name__}: {exc}"
+            transient = any(code in message for code in retryable)
+            if not transient or attempt >= len(delays):
+                raise
+            wait = delays[attempt]
+            print(json.dumps({"event":"gemini_retry","model":model,
+                              "attempt":attempt + 1,"max_retries":len(delays),
+                              "wait_seconds":wait,"error":message[:300]}), flush=True)
+            time.sleep(wait)
 
 def main():
     if len(sys.argv)!=2: raise SystemExit("Usage: python scripts/run_telegram_gemini.py YYYY-MM-DD")
