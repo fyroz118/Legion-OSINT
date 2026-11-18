@@ -1,6 +1,8 @@
 name: Discover Telegram channel candidates
 
 on:
+  schedule:
+    - cron: "15 2 * * *" # Daily at 08:15 Asia/Dhaka
   workflow_dispatch:
     inputs:
       run_note:
@@ -10,7 +12,7 @@ on:
         default: "Global discovery; Bangladesh priority"
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: legion-osint-channel-discovery
@@ -29,6 +31,16 @@ jobs:
         run: python -m py_compile scripts/discover_telegram_channels.py
       - name: Discover public Telegram channel candidates
         run: python scripts/discover_telegram_channels.py
+      - name: Persist cumulative candidate registry
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add discovery/
+          if ! git diff --cached --quiet; then
+            git commit -m "Update automated Telegram channel discovery registry"
+            git push
+          fi
       - name: Upload candidate registry
         if: always()
         uses: actions/upload-artifact@v4
