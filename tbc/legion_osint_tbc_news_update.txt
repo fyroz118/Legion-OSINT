@@ -9,7 +9,7 @@ else:
 Command: help
 ---
 if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
-    bot.sendMessage("/status — Telegram and RSS collection freshness/counts\n/daily — latest public Telegram posts\n/date YYYY-MM-DD — daily Telegram + RSS/Atom archive\n/news — latest public RSS/Atom news headlines\n/bangladesh — Bangladesh source posts\n/search <words> — all words must match text, source, region or classification\n/leads — recent source leads\n/briefs — individual source briefs\n/coverage — Telegram channel and RSS publisher diagnostics\n/report — analyst-approved incident report\n/digest — latest unverified source-post digest\n/reviewqueue — unreviewed source posts\n/reviewlead ID | reviewed|rejected|duplicate | source_class | rationale\n/candidates — recent event-news leads for analyst screening\n/incidentdraft POST_ID | INCIDENT_ID | COUNTRY | CATEGORY | DESCRIPTION\n/incidentqueue — incident drafts and inclusion status\n/approveincident INCIDENT_ID | approved|rejected | rationale\n/linklead POST_ID | INCIDENT_ID | lead|corroboration|contradiction\n/alerts_on — enable two-hourly alerts\n/alerts_off — disable alerts\n/ask and /research — not connected yet\n\nSource integrity: posts remain UNVERIFIED; publication time is not incident time; reposts are not independent corroboration. Approval permits report inclusion only and does not verify an event.")
+    bot.sendMessage("/status — Telegram and RSS collection freshness/counts\n/daily — latest public Telegram posts\n/date YYYY-MM-DD [page] — browse daily Telegram + RSS/Atom archive\n/news — latest public RSS/Atom news headlines\n/bangladesh — Bangladesh source posts\n/search <words> — all words must match text, source, region or classification\n/leads — recent source leads\n/briefs — individual source briefs\n/coverage — Telegram channel and RSS publisher diagnostics\n/report — analyst-approved incident report\n/digest — latest unverified source-post digest\n/reviewqueue — unreviewed source posts\n/reviewlead ID | reviewed|rejected|duplicate | source_class | rationale\n/candidates — recent event-news leads for analyst screening\n/incidentdraft POST_ID | INCIDENT_ID | COUNTRY | CATEGORY | DESCRIPTION\n/incidentqueue — incident drafts and inclusion status\n/approveincident INCIDENT_ID | approved|rejected | rationale\n/linklead POST_ID | INCIDENT_ID | lead|corroboration|contradiction\n/alerts_on — enable two-hourly alerts\n/alerts_off — disable alerts\n/ask and /research — not connected yet\n\nSource integrity: posts remain UNVERIFIED; publication time is not incident time; reposts are not independent corroboration. Approval permits report inclusion only and does not verify an event.")
 else:
     bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
 ---
@@ -72,18 +72,22 @@ else:
 Command: date
 ---
 if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
-    raw_date = str(params or "").strip()
+    parts = str(params or "").strip().split()
     import re
-    if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", raw_date):
-        bot.sendMessage("Usage: /date YYYY-MM-DD\\nExample: /date 2026-11-18")
+    if not parts or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", parts[0]) or len(parts) > 2:
+        bot.sendMessage("Usage: /date YYYY-MM-DD [page]\\nExample: /date 2026-11-18 2")
     else:
         try:
             from datetime import date
-            date.fromisoformat(raw_date)
+            date.fromisoformat(parts[0])
+            page = int(parts[1]) if len(parts) == 2 else 1
+            if page < 1:
+                raise ValueError("page")
+            raw_date = parts[0]
             archive_url = "https://raw.githubusercontent.com/fyroz118/Legion-OSINT/main/docs/feed/archive/" + raw_date + ".json"
             response = HTTP.get(archive_url)
             if response.status_code == 404:
-                bot.sendMessage("No daily archive is available for " + raw_date + ". Archives are created by scheduled collection; older dates from before archive activation cannot be reconstructed automatically.")
+                bot.sendMessage("No daily archive is available for " + raw_date + ". Archives begin after this feature is deployed; older dates cannot be reconstructed automatically.")
             elif response.status_code != 200:
                 bot.sendMessage("The daily archive is temporarily unavailable. Try again later.")
             else:
@@ -92,11 +96,16 @@ if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
                 summary = data.get("summary", {})
                 timezone_name = str(summary.get("archive_timezone") or summary.get("timezone") or "Asia/Dhaka")
                 posts.sort(key=lambda item: str(item.get("published_at") or ""))
-                if not posts:
+                page_size = 20
+                total_pages = max(1, (len(posts) + page_size - 1) // page_size)
+                if page > total_pages:
+                    bot.sendMessage("Page " + str(page) + " does not exist. Available pages: 1-" + str(total_pages) + ".")
+                elif not posts:
                     bot.sendMessage("The archive for " + raw_date + " currently contains no dated source posts.")
                 else:
-                    lines = ["LEGION-OSINT — DAILY NEWS ARCHIVE: " + raw_date, "Timezone: " + timezone_name + " | Archived records: " + str(len(posts)), "Telegram + RSS/Atom public-source leads. UNVERIFIED; multiple posts may refer to the same event."]
-                    for post in posts:
+                    selected = posts[(page - 1) * page_size:page * page_size]
+                    lines = ["LEGION-OSINT — DAILY NEWS ARCHIVE: " + raw_date, "Timezone: " + timezone_name + " | Total records: " + str(len(posts)), "Page " + str(page) + "/" + str(total_pages) + " | Records on this page: " + str(len(selected)), "Telegram + RSS/Atom public-source leads. UNVERIFIED; multiple posts may refer to the same event."]
+                    for post in selected:
                         publisher = str(post.get("publisher_name") or post.get("channel_username") or "Unknown source")
                         platform = str(post.get("platform") or "Telegram")
                         stamp = str(post.get("published_at") or "time unknown")
@@ -104,20 +113,20 @@ if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
                         url = str(post.get("source_url") or "")
                         lines.append("\\n" + stamp + " | " + publisher + " | " + platform + "\\n" + body + "\\n" + url)
                     chunks = []
-                    current = lines[0] + "\\n" + lines[1] + "\\n" + lines[2]
-                    for item in lines[3:]:
+                    current = lines[0] + "\\n" + lines[1] + "\\n" + lines[2] + "\\n" + lines[3]
+                    for item in lines[4:]:
                         if len(current) + len(item) + 2 > 3800:
                             chunks.append(current)
-                            current = "CONTINUED — DAILY ARCHIVE " + raw_date
+                            current = "CONTINUED — " + raw_date + " | PAGE " + str(page)
                         current += "\\n" + item
                     if current:
                         chunks.append(current)
                     for chunk in chunks[:6]:
                         bot.sendMessage(chunk, disable_web_page_preview=True)
-                    if len(chunks) > 6:
-                        bot.sendMessage("Display capped at six messages. Archive contains more records; use /search <words> to narrow the collection.")
+                    if page < total_pages:
+                        bot.sendMessage("More records: /date " + raw_date + " " + str(page + 1))
         except ValueError:
-            bot.sendMessage("Invalid date. Use YYYY-MM-DD, for example /date 2026-11-18.")
+            bot.sendMessage("Invalid date or page. Use /date YYYY-MM-DD [page], for example /date 2026-11-18 2.")
         except Exception:
             bot.sendMessage("Date archive retrieval failed. Try again later.")
 else:
