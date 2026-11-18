@@ -16,6 +16,9 @@ Set these as environment variables in the hosting provider's private service set
 - `TELEGRAM_ALLOWED_USER_IDS` (your own numeric Telegram user ID)
 - `GEMINI_API_KEY`
 - `GEMINI_MODEL=gemini-2.5-flash`
+- `TAVILY_API_KEY` (required only for `/research`; keep it private)
+- `TAVILY_SEARCH_DEPTH=basic`
+- `RESEARCH_MAX_QUERIES=12`
 - `DATABASE_PATH=/app/data/legion_osint.sqlite3`
 - `TELETHON_SESSION_PATH=/app/data/legion_osint_user`
 - `COLLECT_INTERVAL_MINUTES=60`
@@ -50,6 +53,7 @@ Before starting the collector, replace the placeholder in `config/channels.json`
 - Collector: inspect host logs for successful collection and rate-limit messages.
 - Database: verify new records are stored and de-duplicated.
 - Gemini: use `/ask` only after records have been collected.
+- Public-web research: set `TAVILY_API_KEY`, then test `/research YYYY-MM-DD`, `/leads YYYY-MM-DD` and `/coverage YYYY-MM-DD`. This uses date-scoped news search and does not provide direct access to every social platform.
 - Back up the persistent volume securely.
 
 ## Important limits
