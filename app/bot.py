@@ -60,7 +60,7 @@ async def help_cmd(update, context):
             "/incidentdraft LEAD_ID INCIDENT_ID COUNTRY CATEGORY SOURCE_GROUP INCIDENT_DATE LOCATION description... — create DRAFT\n"
             "/incidentqueue YYYY-MM-DD — list DRAFT/APPROVED/REJECTED incidents\n"
             "/approveincident INCIDENT_ID approved|rejected rationale words... — analyst inclusion decision\n"
-            "/linklead LEAD_ID INCIDENT_ID [lead|corroboration|contradiction] — attach reviewed source\n"
+            "/linklead LEAD_ID INCIDENT_ID [lead|corroboration|contradiction] [SOURCE_GROUP] — attach reviewed source\n"
             "/report YYYY-MM-DD — report only explicitly APPROVED incidents"
         )
 
@@ -357,18 +357,23 @@ async def candidates_cmd(update, context):
 async def linklead_cmd(update, context):
     if not await gate(update):
         return
-    if len(context.args) not in (2, 3):
-        await update.message.reply_text("Usage: /linklead LEAD_ID EXISTING_INCIDENT_ID [lead|corroboration|contradiction]")
+    if len(context.args) not in (2, 3, 4):
+        await update.message.reply_text(
+            "Usage: /linklead LEAD_ID INCIDENT_ID [lead|corroboration|contradiction] [SOURCE_GROUP]"
+        )
         return
     try:
+        role = context.args[2] if len(context.args) >= 3 else "lead"
+        group = context.args[3] if len(context.args) == 4 else None
         link_reviewed_lead_to_incident(
-            int(context.args[0]), context.args[1],
-            context.args[2] if len(context.args) == 3 else "lead"
+            int(context.args[0]), context.args[1], role, independence_group=group
         )
     except (ValueError, TypeError) as exc:
         await update.message.reply_text(f"Link not saved: {exc}")
         return
-    await update.message.reply_text("Reviewed source provenance linked to the existing incident.")
+    await update.message.reply_text(
+        "Reviewed source provenance linked. Corroboration is not independent unless its source group is genuinely distinct."
+    )
 
 
 async def incidentdraft_cmd(update, context):
