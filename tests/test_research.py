@@ -81,32 +81,39 @@ class ResearchTests(unittest.TestCase):
     def test_review_workflow_requires_explicit_classification_and_existing_incident(self):
         from app.research import review_queue, review_lead, link_reviewed_lead_to_incident
         def fake_search(query, report_date, max_results=10):
-            return {"results": [{
-                "title": "A distinct public incident report title",
-                "url": "https://review.example.org/story",
-                "content": "A claim that requires corroboration.",
-                "published_date": report_date,
-            }]}
+            return {"results": [
+                {"title": "A distinct public incident report title",
+                 "url": "https://review.example.org/story",
+                 "content": "A claim that requires corroboration.",
+                 "published_date": report_date},
+                {"title": "A second independent account of the same event",
+                 "url": "https://second-review.example.net/story",
+                 "content": "A separate outlet reports the event.",
+                 "published_date": report_date},
+            ]}
         run_research("2026-11-18", max_queries=1, search_fn=fake_search)
-        lead = review_queue("2026-11-18")[0]
+        leads = review_queue("2026-11-18")
+        lead, second_lead = leads[0], leads[1]
         with self.assertRaises(ValueError):
             link_reviewed_lead_to_incident(lead["id"], "missing-incident")
-        from app.incidents import upsert_incident
+        from app.incidents import upsert_incident, get_report_incidents
         upsert_incident({
             "incident_id": "BD-REVIEW-001", "report_date": "2026-11-18",
             "country": "Bangladesh", "category": "civil_unrest",
             "description": "Analyst-created incident record pending verification."
         })
         review_lead(lead["id"], "REVIEWED", source_class="independent_media")
+        review_lead(second_lead["id"], "REVIEWED", source_class="independent_media")
         self.assertTrue(link_reviewed_lead_to_incident(lead["id"], "BD-REVIEW-001"))
         with self.assertRaises(ValueError):
-            link_reviewed_lead_to_incident(lead["id"], "BD-REVIEW-001", "corroboration")
+            link_reviewed_lead_to_incident(second_lead["id"], "BD-REVIEW-001", "corroboration")
         self.assertTrue(link_reviewed_lead_to_incident(
-            lead["id"], "BD-REVIEW-001", "corroboration",
+            second_lead["id"], "BD-REVIEW-001", "corroboration",
             independence_group="independent-outlet-b"
         ))
-        from app.incidents import get_report_incidents
-        self.assertEqual(len(get_report_incidents("2026-11-18")[0]["sources"]), 2)
+        sources = get_report_incidents("2026-11-18")[0]["sources"]
+        self.assertEqual(len(sources), 2)
+        self.assertEqual(sources[1]["independence_group"], "independent-outlet-b")
 
     def test_duplicate_decision_requires_existing_other_lead(self):
         from app.research import review_lead
