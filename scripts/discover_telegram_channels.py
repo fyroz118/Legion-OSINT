@@ -471,6 +471,8 @@ def main():
         row["collection_status"] = "ACTIVE_ALLOWLIST" if is_active else "NOT_ENABLED"
         row["enabled_for_collection"] = is_active
 
+    already_configured_count = sum(1 for row in candidates if row.get("collection_status") == "ACTIVE_ALLOWLIST")
+    unreviewed_candidate_count = sum(1 for row in candidates if row.get("collection_status") == "NOT_ENABLED")
     search_candidates_this_run = len(set(found) - seed_keys)
     providers_with_success = sum(1 for stats in provider_stats.values()
                                  if stats["queries_with_links"] > 0)
@@ -496,6 +498,8 @@ def main():
         "directory_seed_candidates_loaded": len(seed_keys),
         "candidate_leads_loaded_this_run": len(found),
         "unique_candidates": len(candidates),
+        "already_configured_channels": already_configured_count,
+        "unreviewed_not_enabled_candidates": unreviewed_candidate_count,
         "previews_checked_this_run": min(MAX_PREVIEW_CHECKS, len(candidates)),
         "limitations": limitations + ["Public directory pages expose only their public sample/top listings; full exports may be unavailable or paid.", "Directory country/category labels are approximate and must be checked against each channel profile.", "Directory route failures are retained in directory_diagnostics."],
         "candidates": candidates,
@@ -522,6 +526,8 @@ def main():
         "new_candidates": search_candidates_this_run,
         "directory_seed_candidates": len(seed_keys),
         "cumulative_candidates": len(candidates),
+        "already_configured_channels": already_configured_count,
+        "unreviewed_not_enabled_candidates": unreviewed_candidate_count,
         "preview_checks": min(MAX_PREVIEW_CHECKS, len(candidates)),
         "providers_returning_links": providers_with_success,
         "directory_pages_returning_candidates": directory_stats["pages_with_candidates"],
