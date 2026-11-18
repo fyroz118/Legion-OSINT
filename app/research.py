@@ -254,3 +254,96 @@ def get_research_coverage(report_date):
                GROUP BY region, status ORDER BY region, status""", (report_date,)
         ).fetchall()
     return [dict(row) for row in rows]
+
+
+REVIEW_STATUSES = {"UNREVIEWED", "REVIEWED", "REJECTED", "DUPLICATE"}
+SOURCE_CLASSES = {"unknown", "unofficial", "independent_media", "civil_society",
+                  "official_media", "official_government", "intergovernmental",
+                  "research_academic", "other"}
+
+
+def review_queue(report_date, limit=50):
+    """Return unreviewed leads for human assessment; no source inference is performed."""
+    datetime.strptime(report_date, "%Y-%m-%d")
+    initialize_research_tables()
+    with connect() as db:
+        return [dict(row) for row in db.execute(
+            """SELECT id, report_date, region, title, source_url, domain, published_date,
+                      snippet, source_focus, claim_type, source_class, review_status
+               FROM research_leads WHERE report_date=? AND review_status='UNREVIEWED'
+               ORDER BY CASE region WHEN 'Bangladesh' THEN 0 ELSE 1 END,
+                        relevance_score DESC, id LIMIT ?""",
+            (report_date, max(1, min(int(limit), 100)))
+        ).fetchall()]
+
+
+def review_lead(lead_id, status, source_class=None, analyst_note=None,
+                duplicate_of=None):
+    """Record an explicit analyst decision. Classification is never inferred from a domain."""
+    if status not in REVIEW_STATUSES:
+        raise ValueError("Invalid review status")
+    if source_class is not None and source_class not in SOURCE_CLASSES:
+        raise ValueError("Invalid source class")
+    if status == "DUPLICATE" and not duplicate_of:
+        raise ValueError("duplicate_of is required for DUPLICATE status")
+    initialize_research_tables()
+    with connect() as db:
+        exists = db.execute("SELECT id FROM research_leads WHERE id=?", (int(lead_id),)).fetchone()
+        if not exists:
+            raise ValueError("Lead not found")
+        if duplicate_of is not None:
+            target = db.execute("SELECT id FROM research_leads WHERE id=?", (int(duplicate_of),)).fetchone()
+            if not target or int(duplicate_of) == int(lead_id):
+                raise ValueError("duplicate_of must reference a different existing lead")
+        db.execute(
+            """UPDATE research_leads
+               SET review_status=?, source_class=COALESCE(?, source_class),
+                   analyst_note=?, duplicate_of=?, reviewed_at=?
+               WHERE id=?""",
+            (status, source_class, analyst_note, int(duplicate_of) if duplicate_of is not None else None,
+             datetime.now(timezone.utc).isoformat(), int(lead_id))
+        )
+    return True
+
+
+def link_reviewed_lead_to_incident(lead_id, incident_id, source_role="lead"):
+    """Attach reviewed provenance to an existing incident; never creates an incident."""
+    from app.incidents import add_incident_source
+    initialize_research_tables()
+    with connect() as db:
+        row = db.execute(
+            "SELECT * FROM research_leads WHERE id=?", (int(lead_id),)
+        ).fetchone()
+        if not row:
+            raise ValueError("Lead not found")
+        if row["review_status"] != "REVIEWED":
+            raise ValueError("Only REVIEWED leads can be linked to an incident")
+        if row["source_class"] == "unknown":
+            raise ValueError("Assign an analyst-reviewed source class before linking")
+        incident = db.execute(
+            "SELECT 1 FROM incidents WHERE incident_id=?", (incident_id,)
+        ).fetchone()
+        if not incident:
+            raise ValueError("Incident does not exist; create/review it separately first")
+        source = {
+            "source_url": row["source_url"], "source_name": row["title"],
+            "source_class": row["source_class"], "source_type": "public_web",
+            "published_at": row["published_date"], "source_role": source_role,
+            "claim_summary": row["snippet"]
+        }
+    add_incident_source(incident_id, source)
+    return True
+
+
+def exact_title_groups(report_date):
+    """Return exact normalized-title groups as duplicate-review hints, never auto-merge."""
+    import re
+    leads = get_research_leads(report_date, limit=1000)
+    groups = {}
+    for lead in leads:
+        title = (lead.get("title") or "").lower()
+        normalized = re.sub(r"[^a-z0-9]+", " ", title).strip()
+        if len(normalized) < 18:
+            continue
+        groups.setdefault(normalized, []).append(lead)
+    return [items for items in groups.values() if len(items) > 1]
