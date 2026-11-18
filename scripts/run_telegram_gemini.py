@@ -148,7 +148,7 @@ def main():
     for i,r in enumerate(rows,1):
         flag=" — POSSIBLE RUMOUR / CLAIM (UNVERIFIED)" if any(x in (r.get("text") or "").lower() for x in ["rumour","rumor","গুজব","viral claim"]) else ""
         briefs += [f"## Brief {i:03d}{flag}",f"- Channel: @{r['channel_username']}",f"- Published (Dhaka): {r['published_at']}",
-          "- Source class: unknown; not independently assessed","- Status: UNVERIFIED",f"- Source: {r['source_url']}","",
+          f"- Source class: {r.get('source_class','unknown')} (registry metadata; not a reliability rating)",f"- Publisher/affiliation: {r.get('source_affiliation','unassessed')}",f"- Source type: {r.get('source_type','unknown')}","- Status: UNVERIFIED",f"- Source: {r['source_url']}","",
           (r.get("text") or "").replace("\n"," ")[:2500],""]
     (out/"individual_source_briefs.md").write_text("\n".join(briefs),encoding="utf-8")
     posts_by_channel={}
