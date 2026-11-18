@@ -39,7 +39,7 @@ class ResearchTests(unittest.TestCase):
         leads = get_research_leads("2026-11-18")
         self.assertEqual(len(leads), 1)
         self.assertEqual(leads[0]["region"], "Bangladesh")
-        self.assertEqual(len(get_research_coverage("2026-11-18")), 2)
+        self.assertEqual(sum(x["query_count"] for x in get_research_coverage("2026-11-18")), 2)
 
 
     def test_known_out_of_window_publications_are_filtered(self):
