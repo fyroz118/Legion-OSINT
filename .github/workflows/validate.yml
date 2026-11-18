@@ -23,6 +23,8 @@ jobs:
         run: python scripts/validate_project.py
       - name: Compile scripts
         run: python -m py_compile scripts/*.py app/*.py
+      - name: Validate Telebot Creator import package
+        run: python scripts/validate_tbc_package.py
       - name: Run database regression tests
         run: python -m unittest discover -s tests -v
       - name: Validate Docker Compose configuration
