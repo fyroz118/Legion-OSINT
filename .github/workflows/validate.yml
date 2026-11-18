@@ -22,7 +22,7 @@ jobs:
       - name: Validate Python syntax and JSON configuration
         run: python scripts/validate_project.py
       - name: Compile scripts
-        run: python -m py_compile scripts/*.py
+        run: python -m py_compile scripts/*.py app/*.py
       - name: Run database regression tests
         run: python -m unittest discover -s tests -v
       - name: Validate Docker Compose configuration
