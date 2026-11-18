@@ -1,0 +1,15 @@
+{
+  "provider": "tavily",
+  "date_timezone": "Asia/Dhaka",
+  "default_max_queries": 12,
+  "default_results_per_query": 5,
+  "max_queries_hard_limit": 20,
+  "search_depth": "basic",
+  "topic": "news",
+  "notes": [
+    "Bangladesh queries are ordered first.",
+    "Date filters narrow publication search results but do not prove the underlying incident occurred on that date.",
+    "Public social posts may appear only when indexed by the provider; this is not direct platform coverage.",
+    "Search results are leads and require analyst review and independent corroboration."
+  ]
+}
