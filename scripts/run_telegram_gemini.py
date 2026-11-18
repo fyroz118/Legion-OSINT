@@ -153,7 +153,7 @@ def main():
             "7. Incident Register", "8. Early-Warning Assessment",
             "9. Source and Coverage Assessment", "10. Overall Intelligence Judgment"
         ]
-        report = "\\n\\n".join(
+        report = "\n\n".join(
             f"## {section}\\nNo posts were collected from configured channels for this date. "
             "This is not evidence that no incidents occurred."
             for section in empty_sections
@@ -164,7 +164,7 @@ def main():
               "**Timezone:** Asia/Dhaka (UTC+6).\n"
               "**Verification warning:** Gemini analysis does not independently verify claims. "
               "Posts remain unverified unless corroborated through independent evidence.\n"
-              f"**Posts collected for date:** {len(rows)}. **Configured channels:** {len(channels)}.\n\n")
+              f"**Posts collected for date:** {len(rows)}. **Posts included in Gemini synthesis:** {len(analysis_rows)} (maximum 300). **Configured channels:** {len(channels)}.\n\n")
     (out / "daily_intelligence_report.md").write_text(header + report, encoding="utf-8")
     summary = {"report_date": report_date, "timezone": "Asia/Dhaka", "configured_channels": len(channels),
                "posts_collected_this_run": collected, "posts_for_report_date_in_database": len(rows),
