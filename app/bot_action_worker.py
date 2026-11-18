@@ -59,8 +59,10 @@ def write_offset(offset):
 
 def import_collected_posts():
     """Import the latest scheduled public-preview artifact into the bot SQLite DB."""
-    csv_path = DATA_DIR / "incoming" / "telegram_posts.csv"
-    if not csv_path.exists():
+    incoming = DATA_DIR / "incoming"
+    candidates = sorted(incoming.rglob("telegram_posts.csv")) if incoming.exists() else []
+    csv_path = candidates[-1] if candidates else None
+    if csv_path is None:
         print("No scheduled collection artifact available; retaining existing database.")
         return 0
     imported = 0
