@@ -12,7 +12,7 @@ import time
 from datetime import datetime, timezone
 from html.parser import HTMLParser
 from pathlib import Path
-from urllib.parse import urlparse, parse_qs, unquote, urlencode
+from urllib.parse import urlparse, parse_qs, unquote, urlencode, urljoin
 from urllib.request import Request, urlopen
 
 OUT = Path("discovery")
@@ -238,12 +238,12 @@ def directory_username(href):
         return None
     return None
 
-def extract_directory_candidates(page_html):
+def extract_directory_candidates(page_html, base_url='https://tgmarket.io'):
     parser = AnchorParser()
     parser.feed(page_html)
     found = set()
     for href in parser.links:
-        name = directory_username(href)
+        name = directory_username(urljoin(base_url, href))
         if name:
             found.add(name)
     return found
@@ -298,6 +298,7 @@ def self_test():
     assert directory_username("https://tgmarket.io/c/example_channel") == "example_channel"
     assert directory_username("https://telemetr.io/en/channels/12345-example_channel") == "example_channel"
     assert extract_directory_candidates('<a href="https://tgmarket.io/c/example_channel">x</a>') == {"example_channel"}
+    assert extract_directory_candidates('<a href="/c/example_channel">x</a>', "https://tgmarket.io/countries/mm/news") == {"example_channel"}
     print("Discovery parser self-tests passed.")
 
 def main():
@@ -344,7 +345,7 @@ def main():
         directory_stats["pages_attempted"] += 1
         try:
             page = get(source["url"], timeout=25)
-            usernames = extract_directory_candidates(page)
+            usernames = extract_directory_candidates(page, source["url"])
             if usernames:
                 directory_stats["pages_with_candidates"] += 1
                 directory_stats["candidate_links_found"] += len(usernames)
