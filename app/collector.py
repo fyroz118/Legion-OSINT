@@ -16,7 +16,9 @@ async def collect():
                 if c.get("username") and not c["username"].startswith("REPLACE_")]
     limit = int(os.getenv("COLLECT_LIMIT_PER_CHANNEL", "100"))
     initialize()
-    client = TelegramClient("legion_osint_user", int(api_id), api_hash)
+    session_path = os.getenv("TELETHON_SESSION_PATH", "data/legion_osint_user")
+    Path(session_path).parent.mkdir(parents=True, exist_ok=True)
+    client = TelegramClient(session_path, int(api_id), api_hash)
     await client.start()
     try:
         for ch in channels:
