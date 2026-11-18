@@ -6,7 +6,7 @@ Bangladesh-priority, global public-source OSINT reporting. The collection workfl
 
 - Bangladesh first, then South Asia, MENA and other regions represented in configured public channels.
 - Ten-section daily report, individual source-post briefs, CSV evidence register and JSON coverage summary.
-- Target 50+ source briefs when configured channels expose enough relevant posts; never pad counts or treat multiple posts as unique incidents. The configured Telegram registry now contains 78 public channels spanning Bangladesh, Myanmar, Ukraine, the Middle East, Europe, East/Southeast Asia, Sri Lanka, Ethiopia and Latin America. It deliberately mixes independent newsrooms, official/institutional feeds, political-party actor channels and unverified OSINT/commentary aggregators; source affiliation and perspective are disclosed, not treated as proof of reliability.
+- Target 50+ source briefs when configured channels expose enough relevant posts; never pad counts or treat multiple posts as unique incidents. The configured Telegram registry now contains 83 public channels spanning Bangladesh, Myanmar, Ukraine, the Middle East, Europe, East/Southeast Asia, Sri Lanka, Ethiopia and Latin America. It deliberately mixes independent newsrooms, official/institutional feeds, political-party actor channels and unverified OSINT/commentary aggregators; source affiliation and perspective are disclosed, not treated as proof of reliability.
 - Independent/local reporting receives attention, with official/institutional channels retained as a parallel source layer.
 - Rumours and allegations remain clearly labelled UNVERIFIED RUMOUR.
 - Reporting timezone: Asia/Dhaka (UTC+6).
@@ -80,3 +80,8 @@ The discovery query set includes Bangladesh district/labour-rights and party-net
 ### Bangladesh Telegram directory seeds
 
 The discovery pool now also imports a small set of Bangladesh public-directory leads from [TG Market's Bangladesh news category](https://tgmarket.io/countries/bd/news). These are stored in [discovery/seed_candidates.json](discovery/seed_candidates.json) and merged into the cumulative candidate registry. Directory category labels and subscriber counts are not source verification. The seeded channels remain `UNREVIEWED_CANDIDATE`, have unknown/unassessed source identity, and stay `enabled_for_collection=false`. Movement, party, advocacy and aggregator accounts must be classified as actor-originated or unknown where appropriate; none should be treated as independent corroboration without separate evidence.
+
+
+### Official-source Telegram layer
+
+The active registry includes official/institutional Telegram feeds as a parallel source layer, separate from independent newsrooms and unofficial/actor-originated sources. Five authenticated public channels were added in November 2026: India's Ministry of Information & Broadcasting (`@MIB_India`), the Russian Embassy in Bangladesh (`@rusembbd`), Iran's IRNA English service (`@Irna_en`), TASS English (`@tassagency_en`) and Anadolu Agency English (`@anadoluagency_en`). Official channels for Bangladesh BSS/BTV/Betar were not added because an authentic public Telegram channel was not established during this review. Official statements are attributed to their issuing institution and are not treated as independent confirmation.
