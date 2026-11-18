@@ -2942,6 +2942,19 @@
       "source_class": "unknown",
       "monitoring_weight": "high",
       "discovery_source_url": "https://t.me/s/angrysaffron"
+    },
+    {
+      "username": "indianexpress",
+      "priority": "south_asia",
+      "language": "en",
+      "source_type": "national_newsroom",
+      "source_affiliation": "The_Indian_Express_newsroom",
+      "default_evidence_status": "UNVERIFIED",
+      "enabled": true,
+      "notes": "Public verified Telegram channel described as the official Indian Express channel; mainstream Indian newsroom coverage of India and international affairs. Use as a media source, not a substitute for primary evidence.",
+      "source_class": "independent_media",
+      "monitoring_weight": "high",
+      "discovery_source_url": "https://t.me/s/indianexpress"
     }
   ]
 }
