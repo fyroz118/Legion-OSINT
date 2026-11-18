@@ -210,6 +210,7 @@ def main():
     found = {}
     seed_path = OUT / "seed_candidates.json"
     seed_candidates = []
+    seed_keys = set()
     if seed_path.exists():
         try:
             seed_candidates = json.loads(seed_path.read_text(encoding="utf-8")).get("candidates", [])
@@ -220,6 +221,7 @@ def main():
         if not re.fullmatch(r"[A-Za-z][A-Za-z0-9_]{3,31}", username):
             continue
         key = username.lower()
+        seed_keys.add(key)
         row = found.setdefault(key, {
             "username": username,
             "candidate_url": "https://t.me/" + username,
@@ -312,6 +314,7 @@ def main():
         row["review_status"] = "UNREVIEWED_CANDIDATE"
         row["enabled_for_collection"] = False
 
+    search_candidates_this_run = len(set(found) - seed_keys)
     providers_with_success = sum(1 for stats in provider_stats.values()
                                  if stats["queries_with_links"] > 0)
     total_query_errors = sum(len(stats["errors"]) for stats in provider_stats.values())
@@ -330,8 +333,9 @@ def main():
         "provider_diagnostics": provider_stats,
         "providers_returning_telegram_links": providers_with_success,
         "total_query_errors": total_query_errors,
-        "new_candidates_this_run": len(found),
-        "directory_seed_candidates_loaded": len(seed_candidates),
+        "new_candidates_this_run": search_candidates_this_run,
+        "directory_seed_candidates_loaded": len(seed_keys),
+        "candidate_leads_loaded_this_run": len(found),
         "unique_candidates": len(candidates),
         "previews_checked_this_run": min(MAX_PREVIEW_CHECKS, len(candidates)),
         "limitations": limitations,
@@ -355,7 +359,8 @@ def main():
     (OUT / "discovery_summary.json").write_text(
         json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps({
-        "new_candidates": len(found),
+        "new_candidates": search_candidates_this_run,
+        "directory_seed_candidates": len(seed_keys),
         "cumulative_candidates": len(candidates),
         "preview_checks": min(MAX_PREVIEW_CHECKS, len(candidates)),
         "providers_returning_links": providers_with_success,
