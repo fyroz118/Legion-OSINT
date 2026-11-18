@@ -141,11 +141,12 @@ def main():
 
     rss_config=json.loads(Path("config/news_sources.json").read_text(encoding="utf-8"))
     rss_sources=[s for s in rss_config.get("sources",[]) if s.get("enabled",True)]
-    rss_diagnostics={}; rss_errors=[]
+    rss_diagnostics={}; rss_errors=[]; rss_posts_collected=0
     collection_now=datetime.now(timezone.utc)
     for source in rss_sources:
         found, diagnostic=collect_source(source,collection_now)
         rss_diagnostics[source["source_id"]]=diagnostic
+        rss_posts_collected += len(found)
         if diagnostic.get("status")=="error":
             rss_errors.append({"source":source["source_id"],"detail":diagnostic.get("error","unknown")})
         for p in found: insert_post(p)
@@ -176,6 +177,7 @@ def main():
     coverage=json.dumps({
         "report_date":day,"timezone":"Asia/Dhaka","configured_channels":[c["username"] for c in channels],
         "channel_registry":[{"username":c["username"],"region":c.get("priority","global"),"language":c.get("language","unknown"),"source_class":c.get("source_class","unknown"),"source_affiliation":c.get("source_affiliation","unassessed"),"notes":c.get("notes","")} for c in channels],
+        "rss_source_registry":[{"source_id":s["source_id"],"publisher_name":s["publisher_name"],"region":s.get("priority_region","global"),"language":s.get("language","unknown"),"source_class":s.get("source_class","unknown")} for s in rss_sources],
         "pages_fetched_per_channel":page_counts,"channel_diagnostics":channel_diagnostics,"posts_by_channel":posts_by_channel,
         "configured_rss_sources":[s["source_id"] for s in rss_sources],"rss_source_diagnostics":rss_diagnostics,"rss_source_errors":rss_errors,
         "telegram_posts_for_date":len(telegram_rows),"rss_articles_for_date":len(rss_rows),"total_posts_for_date":len(rows),"collection_errors":errors,
@@ -216,13 +218,13 @@ def main():
           "Overall Intelligence Judgment"]
         sections=[
           "This is an automated evidence-preservation fallback because Gemini synthesis was unavailable. It is not a completed analytical assessment.",
-          "Posts were collected from configured channels. Headlines below are leads only; incident date, location, actors, casualties and attribution must be independently checked.",
+          "Source items were collected from configured public Telegram channels and RSS/Atom feeds. Headlines below are leads only; incident date, location, actors, casualties and attribution must be independently checked.",
           "No regional synthesis is made without corroborated evidence. The configured channel set is not global Telegram coverage.",
           "No communal-violence finding is made from unverified headlines alone.",
           "Political/security-related headlines require original-article review and independent corroboration.",
           "No coordinated information operation or rumour is declared from keyword matching alone.",
           "The entries below are source leads, not confirmed incidents. Publication time is not incident time.",
-          "Risk is NOT ASSESSED. A single-channel headline sample cannot support a reliable escalation forecast.",
+          "Risk is NOT ASSESSED. A headline-only source sample cannot support a reliable escalation forecast.",
           "Collection method: configured public Telegram previews plus configured RSS/Atom headlines/excerpts. No Telegram global search, private groups, X, Facebook or YouTube. "
           "Per-channel pages and counts: "+json.dumps(page_counts,ensure_ascii=False)+". Telegram errors: "+json.dumps(errors,ensure_ascii=False)+". RSS diagnostics: "+json.dumps(rss_diagnostics,ensure_ascii=False)+". RSS errors: "+json.dumps(rss_errors,ensure_ascii=False)+". "
           "Gemini synthesis error: "+str(gemini_error or "not attempted")+".",
@@ -233,13 +235,13 @@ def main():
         for r in rows:
             report+=f"- {r.get('published_at')} | {r.get('publisher_name') or r.get('channel_username')} ({r.get('platform') or 'Telegram'}) | {r.get('text','')} | {r.get('source_url')}\n"
     header=(f"# Legion-OSINT Daily Intelligence Report — {day}\n\n**Method:** configured public Telegram preview pages and RSS/Atom feeds + "+("Gemini synthesis." if not gemini_error else "evidence-preservation fallback; Gemini unavailable.")+" "
-      f"**Timezone:** Asia/Dhaka. **All claims require independent verification.**\n**Source items:** {len(rows)} (Telegram {len(telegram_rows)}; RSS/Atom {len(rss_rows)}); **Gemini successfully analysed:** {gemini_posts_successfully_analysed} of {len(analysis)} submitted (max 300); **channels:** {len(channels)}.\n\n")
+      f"**Timezone:** Asia/Dhaka. **All claims require independent verification.**\n**Source items:** {len(rows)} (Telegram {len(telegram_rows)}; RSS/Atom {len(rss_rows)}); **Gemini successfully analysed:** {gemini_posts_successfully_analysed} of {len(analysis)} submitted (max 300); **Telegram channels:** {len(channels)}; **RSS publishers:** {len(rss_sources)}.\n\n")
     (out/"daily_intelligence_report.md").write_text(header+report,encoding="utf-8")
     summary={"report_date":day,"timezone":"Asia/Dhaka","configured_channels":[c["username"] for c in channels],
       "configured_rss_sources":[s["source_id"] for s in rss_sources],"rss_source_diagnostics":rss_diagnostics,"rss_source_errors":rss_errors,
       "telegram_posts_for_date":len(telegram_rows),"rss_articles_for_date":len(rss_rows),
       "channel_registry":[{"username":c["username"],"region":c.get("priority","global"),"language":c.get("language","unknown"),"source_class":c.get("source_class","unknown"),"source_affiliation":c.get("source_affiliation","unassessed")} for c in channels],
-      "posts_collected":len(posts),"posts_for_date":len(rows),"posts_submitted_to_gemini":len(analysis),"posts_successfully_analysed_by_gemini":gemini_posts_successfully_analysed,
+      "posts_collected":len(posts)+rss_posts_collected,"telegram_posts_collected":len(posts),"rss_articles_collected":rss_posts_collected,"posts_for_date":len(rows),"posts_submitted_to_gemini":len(analysis),"posts_successfully_analysed_by_gemini":gemini_posts_successfully_analysed,
       "gemini_batches_succeeded":gemini_batches_succeeded,"gemini_synthesis_succeeded":gemini_synthesis_succeeded,
       "pages_fetched_per_channel":page_counts,"channel_diagnostics":channel_diagnostics,"channel_errors":errors,"gemini_error":gemini_error,
       "method":"public Telegram previews and public RSS/Atom headlines/excerpts; no session/global search",
