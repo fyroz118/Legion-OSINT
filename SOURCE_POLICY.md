@@ -3,8 +3,16 @@
 Legion-OSINT does not claim to monitor every Telegram channel. Telegram has no universal public directory of all channels; discovery is incomplete, public visibility does not imply reliability, and access/rate limits can change.
 
 ## Initial enabled sources
+
+Global:
 - [Bellingcat EN](https://t.me/bellingcat_en): specialist investigative OSINT; useful for investigations and verification, not a continuous breaking-news feed.
 - [BNO News](https://t.me/BNONews): broad breaking-news feed; treat every item as a lead pending corroboration.
+
+Bangladesh:
+- [bdnews24.com](https://t.me/bdnews24telegram): national newsroom feed; public preview showed an owner-inactivity warning, so monitor availability and cadence.
+- [Prothom Alo](https://t.me/prothomaloonline): Bengali-language national newsroom feed.
+- [Rumor Scanner](https://t.me/RumorScanner): independent fact-checking initiative; inspect cited evidence rather than treating a fact-check post as unquestionable.
+- [The Daily Star](https://t.me/TheDailyStar): English-language national newsroom feed.
 
 The active collector allowlist is `config/channels.json`. The wider source registry and review queue are in `config/source_registry.json`.
 
