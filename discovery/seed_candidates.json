@@ -8,117 +8,189 @@
       "username": "genzbds",
       "region": "Bangladesh",
       "language": "bn",
-      "discovery_notes": "Directory-listed as a Bangladesh news channel using the Gen Z label. Actual operator, editorial role, affiliation and sourcing are unverified; may be an actor or movement channel."
+      "discovery_notes": "Directory-listed as a Bangladesh news channel using the Gen Z label. Actual operator, editorial role, affiliation and sourcing are unverified; may be an actor or movement channel.",
+      "candidate_category": "political_movement_candidate",
+      "source_class": "political_movement_candidate",
+      "source_affiliation": "movement_or_supporter_network_unassessed",
+      "source_identity_status": "directory_or_public_profile_lead_unverified"
     },
     {
       "username": "studentsagainstdiscrimination",
       "region": "Bangladesh",
       "language": "bn",
-      "discovery_notes": "Directory-listed student movement channel. Treat as an actor-originated source for statements and mobilisation, not independent incident corroboration."
+      "discovery_notes": "Directory-listed student movement channel. Treat as an actor-originated source for statements and mobilisation, not independent incident corroboration.",
+      "candidate_category": "political_movement_candidate",
+      "source_class": "political_movement_candidate",
+      "source_affiliation": "Bangladesh_student_movement_association_claimed",
+      "source_identity_status": "directory_or_public_profile_lead_unverified"
     },
     {
       "username": "antiquotadu",
       "region": "Bangladesh",
       "language": "bn",
-      "discovery_notes": "Directory-listed anti-quota/student movement channel. Relationship to other similarly named channels and current operator are unverified."
+      "discovery_notes": "Directory-listed anti-quota/student movement channel. Relationship to other similarly named channels and current operator are unverified.",
+      "candidate_category": "political_movement_candidate",
+      "source_class": "political_movement_candidate",
+      "source_affiliation": "Bangladesh_student_movement_association_claimed",
+      "source_identity_status": "directory_or_public_profile_lead_unverified"
     },
     {
       "username": "antiquotaandolonbd",
       "region": "Bangladesh",
       "language": "bn",
-      "discovery_notes": "Directory-listed student movement channel. Treat as an actor-originated source; verify identity and activity before any monitoring decision."
+      "discovery_notes": "Directory-listed student movement channel. Treat as an actor-originated source; verify identity and activity before any monitoring decision.",
+      "candidate_category": "political_movement_candidate",
+      "source_class": "political_movement_candidate",
+      "source_affiliation": "Bangladesh_student_movement_association_claimed",
+      "source_identity_status": "directory_or_public_profile_lead_unverified"
     },
     {
       "username": "studentandolon",
       "region": "Bangladesh",
       "language": "bn",
-      "discovery_notes": "Directory-listed Bangla politics/student-movement channel. Operator, affiliation and source provenance are unverified."
+      "discovery_notes": "Directory-listed Bangla politics/student-movement channel. Operator, affiliation and source provenance are unverified.",
+      "candidate_category": "political_movement_candidate",
+      "source_class": "political_movement_candidate",
+      "source_affiliation": "student_movement_affiliation_unassessed",
+      "source_identity_status": "directory_or_public_profile_lead_unverified"
     },
     {
       "username": "bringingjusticetoyou_bangladesh",
       "region": "Bangladesh",
       "language": "bn",
-      "discovery_notes": "Directory-listed as a justice-focused Bangladesh news channel. Possible advocacy/civil-society source; organisation and editorial independence are unverified."
+      "discovery_notes": "Directory-listed as a justice-focused Bangladesh news channel. Possible advocacy/civil-society source; organisation and editorial independence are unverified.",
+      "candidate_category": "civil_society_candidate",
+      "source_class": "civil_society_candidate",
+      "source_affiliation": "advocacy_identity_unverified",
+      "source_identity_status": "directory_or_public_profile_lead_unverified"
     },
     {
       "username": "bwdns",
       "region": "Bangladesh",
       "language": "bn",
-      "discovery_notes": "Directory-listed defence-news channel. Likely specialist aggregation/commentary; trace claims to original sources and assess political alignment."
+      "discovery_notes": "Directory-listed defence-news channel. Likely specialist aggregation/commentary; trace claims to original sources and assess political alignment.",
+      "candidate_category": "conflict_commentary_candidate",
+      "source_class": "conflict_commentary_candidate",
+      "source_affiliation": "publisher_and_political_alignment_unassessed",
+      "source_identity_status": "directory_or_public_profile_lead_unverified"
     },
     {
       "username": "TimesOf_Bangladesh",
       "region": "Bangladesh",
       "language": "bn",
-      "discovery_notes": "Directory-listed news channel. Publisher identity, editorial standards, activity and original reporting are unverified."
+      "discovery_notes": "Directory-listed news channel. Publisher identity, editorial standards, activity and original reporting are unverified.",
+      "candidate_category": "media_candidate",
+      "source_class": "media_candidate",
+      "source_affiliation": "publisher_identity_unverified",
+      "source_identity_status": "directory_or_public_profile_lead_unverified"
     },
     {
       "username": "Nucleus71official",
       "region": "Bangladesh",
       "language": "bn",
-      "discovery_notes": "Directory-listed as an official channel but the organisation and account authenticity are unverified. Treat as an actor source until independently identified."
+      "discovery_notes": "Directory-listed as an official channel but the organisation and account authenticity are unverified. Treat as an actor source until independently identified.",
+      "candidate_category": "political_actor_candidate",
+      "source_class": "political_actor_candidate",
+      "source_affiliation": "organization_and_affiliation_unverified",
+      "source_identity_status": "directory_or_public_profile_lead_unverified"
     },
     {
       "username": "basherkella",
       "region": "Bangladesh",
       "language": "bn",
-      "discovery_notes": "Directory-listed political/news channel. Potentially partisan actor-originated content; do not treat as independent media or corroboration."
+      "discovery_notes": "Directory-listed political/news channel. Potentially partisan actor-originated content; do not treat as independent media or corroboration.",
+      "candidate_category": "political_actor_candidate",
+      "source_class": "political_actor_candidate",
+      "source_affiliation": "partisan_affiliation_unassessed",
+      "source_identity_status": "directory_or_public_profile_lead_unverified"
     },
     {
       "username": "albd1949",
       "region": "Bangladesh",
       "language": "bn",
       "discovery_notes": "Public page and Telegram Register identify this as Bangladesh Awami League's channel; party-affiliated actor source, not independent corroboration. Confirm live identity/activity again during review.",
-      "seed_source_url": "https://t.me/s/albd1949"
+      "seed_source_url": "https://t.me/s/albd1949",
+      "candidate_category": "political_actor_candidate",
+      "source_class": "political_actor_candidate",
+      "source_affiliation": "Bangladesh_Awami_League_association_claimed",
+      "source_identity_status": "directory_or_public_profile_lead_unverified"
     },
     {
       "username": "bnpbd_org",
       "region": "Bangladesh",
       "language": "bn",
       "discovery_notes": "Listed by TG Market as Bangladesh Nationalist Party-BNP; party-affiliated actor source. Verify the live public preview and operator identity before review approval.",
-      "seed_source_url": "https://tgmarket.io/countries/bd/news"
+      "seed_source_url": "https://tgmarket.io/countries/bd/news",
+      "candidate_category": "political_actor_candidate",
+      "source_class": "political_actor_candidate",
+      "source_affiliation": "Bangladesh_Nationalist_Party_association_publicly_identified",
+      "source_identity_status": "directory_or_public_profile_lead_unverified"
     },
     {
       "username": "bjiofficial",
       "region": "Bangladesh",
       "language": "bn",
       "discovery_notes": "Public channel identifies itself as Bangladesh Jamaat-e-Islami; party-affiliated actor source, not independent corroboration. Verify current public preview during review.",
-      "seed_source_url": "https://tgscope.io/topics/politics/bangladesh"
+      "seed_source_url": "https://tgscope.io/topics/politics/bangladesh",
+      "candidate_category": "political_actor_candidate",
+      "source_class": "political_actor_candidate",
+      "source_affiliation": "Bangladesh_Jamaat_e_Islami_association_claimed",
+      "source_identity_status": "directory_or_public_profile_lead_unverified"
     },
     {
       "username": "bjpupitcell",
       "region": "India",
       "language": "hi",
       "discovery_notes": "Public Telegram preview describes a BJP Uttar Pradesh IT Cell channel. Regional party communication/actor source; do not label as national BJP headquarters or independent media.",
-      "seed_source_url": "https://t.me/bjpupitcell"
+      "seed_source_url": "https://t.me/bjpupitcell",
+      "candidate_category": "political_actor_candidate",
+      "source_class": "political_actor_candidate",
+      "source_affiliation": "BJP_Uttar_Pradesh_IT_Cell_association_claimed",
+      "source_identity_status": "directory_or_public_profile_lead_unverified"
     },
     {
       "username": "bjpforgujarat",
       "region": "India",
       "language": "gu",
       "discovery_notes": "Public Telegram preview identifies BJP Gujarat. Regional party source; confirm operator identity and recent activity before review approval.",
-      "seed_source_url": "https://t.me/bjpforgujarat"
+      "seed_source_url": "https://t.me/bjpforgujarat",
+      "candidate_category": "political_actor_candidate",
+      "source_class": "political_actor_candidate",
+      "source_affiliation": "BJP_Gujarat_association_claimed",
+      "source_identity_status": "directory_or_public_profile_lead_unverified"
     },
     {
       "username": "KarnatakaBJP",
       "region": "India",
       "language": "kn",
       "discovery_notes": "Public Telegram preview identifies this as BJP Karnataka's official channel, but previewed posts are old. Keep as an inactive/stale review lead until current activity is confirmed.",
-      "seed_source_url": "https://t.me/s/KarnatakaBJP"
+      "seed_source_url": "https://t.me/s/KarnatakaBJP",
+      "candidate_category": "political_actor_candidate",
+      "source_class": "political_actor_candidate",
+      "source_affiliation": "BJP_Karnataka_association_claimed",
+      "source_identity_status": "directory_or_public_profile_lead_unverified"
     },
     {
       "username": "BJP4Keralam",
       "region": "India",
       "language": "ml",
       "discovery_notes": "Public Telegram preview identifies this as BJP Keralam's official channel. Regional party source; confirm current activity and operator identity.",
-      "seed_source_url": "https://t.me/BJP4Keralam"
+      "seed_source_url": "https://t.me/BJP4Keralam",
+      "candidate_category": "political_actor_candidate",
+      "source_class": "political_actor_candidate",
+      "source_affiliation": "BJP_Keralam_association_claimed",
+      "source_identity_status": "directory_or_public_profile_lead_unverified"
     },
     {
       "username": "Congress_officials",
       "region": "India",
       "language": "en",
       "discovery_notes": "Telegram Register identifies the channel as Indian National Congress, but its latest recorded post was 18 October 2024 and the account is not Telegram-verified. Treat identity as unconfirmed and activity as stale; review only, never represent as verified national HQ.",
-      "seed_source_url": "https://tgregister.com/channel/Congress_officials"
+      "seed_source_url": "https://tgregister.com/channel/Congress_officials",
+      "candidate_category": "political_actor_candidate",
+      "source_class": "political_actor_candidate",
+      "source_affiliation": "Indian_National_Congress_association_unverified",
+      "source_identity_status": "directory_or_public_profile_lead_unverified"
     },
     {
       "username": "newsboxbangla",
