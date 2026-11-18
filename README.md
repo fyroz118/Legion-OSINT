@@ -1,76 +1,55 @@
 # Legion-OSINT
 
-Bangladesh-priority, global public-source OSINT reporting. The current on-demand workflow uses **Telegram (Telethon) for collection and Gemini for analysis**. It does not use Tavily or general web search.
+Bangladesh-priority, global public-source OSINT reporting. The on-demand workflow collects from **configured public Telegram channel preview pages** and uses **Gemini** to organise evidence and draft the report. It does not require a Telegram account session, Telegram API credentials, a VPS or Tavily.
 
 ## Reporting model
 
-- Bangladesh first, then South Asia, MENA and other regions represented in the configured Telegram sources.
+- Bangladesh first, then South Asia, MENA and other regions represented in configured public channels.
 - Ten-section daily report, individual source-post briefs, CSV evidence register and JSON coverage summary.
-- Target 50+ source briefs when the configured channels produce enough relevant posts; never pad counts or treat multiple posts as unique incidents.
-- Greater attention to unofficial/local reporting, eyewitnesses and independent monitors, while retaining official/institutional channels as a parallel source layer.
-- Rumours and allegations must remain clearly labelled UNVERIFIED RUMOUR.
+- Target 50+ source briefs when configured channels expose enough relevant posts; never pad counts or treat multiple posts as unique incidents.
+- Independent/local reporting receives attention, with official/institutional channels retained as a parallel source layer.
+- Rumours and allegations remain clearly labelled UNVERIFIED RUMOUR.
 - Reporting timezone: Asia/Dhaka (UTC+6).
 
-See [MASTER_PROMPT.md](MASTER_PROMPT.md) for the full analytic specification.
+See [MASTER_PROMPT.md](MASTER_PROMPT.md) for the analytic specification.
 
-## On-demand workflow (no VPS)
+## One-time setup
 
-GitHub Actions starts a temporary runner only when manually triggered. It collects messages from configured accessible public Telegram channels and asks Gemini to structure the evidence into a report.
+1. Create a Gemini API key at [Google AI Studio](https://aistudio.google.com/app/apikey).
+2. In this repository, open **Settings → Secrets and variables → Actions**.
+3. Add one repository secret named `GEMINI_API_KEY`. Never paste the key into chat, workflow inputs, source files or commits.
 
-### One-time setup
+No Telegram developer portal, Telegram login, API ID/hash, session string, local Python setup or VPS is required.
 
-1. Obtain Telegram API ID and API hash through Telegram's official developer portal.
-2. Install Python 3.11 and dependencies in a trusted local environment: `pip install -r requirements.txt`.
-3. Run `python scripts/export_telegram_session.py` and complete Telegram login locally. The script prints a Telethon StringSession.
-4. Treat that session string as a password. Never send it in chat, commit it, or save it in a public file. Revoke it in Telegram if exposed.
-5. In GitHub repository **Settings → Secrets and variables → Actions**, create these repository secrets:
-   - `TELEGRAM_API_ID`
-   - `TELEGRAM_API_HASH`
-   - `TELETHON_SESSION_STRING`
-   - `GEMINI_API_KEY`
+## Run a report
 
-### Run each report
+1. Open [Actions](../../actions).
+2. Select **Run Legion-OSINT on demand** → **Run workflow**.
+3. Enter the reporting date as `YYYY-MM-DD` in Asia/Dhaka.
+4. Choose 100, 300 or 500 messages as the per-channel inspection cap.
+5. Start the workflow and download `legion-osint-public-telegram-gemini-YYYY-MM-DD`.
 
-1. Open **Actions → Run Legion-OSINT on demand → Run workflow**.
-2. Enter the reporting date as `YYYY-MM-DD` in Asia/Dhaka.
-3. Choose 100, 300 or 500 recent messages to inspect per configured channel.
-4. Run the workflow and download the artifact `legion-osint-telegram-gemini-YYYY-MM-DD`.
-
-### Output files
+## Outputs
 
 - `daily_intelligence_report.md` — Gemini-assisted ten-section report.
 - `individual_source_briefs.md` — one brief per collected post.
-- `telegram_posts.csv` — sortable evidence register.
-- `collection_summary.json` — collection totals and channel errors.
+- `telegram_posts.csv` — evidence register.
+- `collection_summary.json` — counts, page totals and channel errors.
 
-## Sources and coverage
+## Coverage limitations
 
-The collector reads enabled channels in [config/channels.json](config/channels.json) and also runs event-keyword global searches across Telegram's publicly indexed chats (Bangladesh/Bangla, South Asia and major conflict regions). Configured channel collection is capped by the selected recent-message limit; global searches inspect up to 50 results per query. Telegram global search is useful for discovery beyond the allowlist, but it is indexed, query-dependent and not exhaustive. Only public messages with usable public links are retained. All results are restricted to the requested Dhaka reporting date.
+The collector reads enabled usernames in [config/channels.json](config/channels.json) using public Telegram preview pages (`https://t.me/s/<channel>`). It attempts bounded pagination up to the selected cap and stops when it reaches dates earlier than the reporting date.
 
-The current workflow does not search X, Facebook, YouTube, news websites or all public Telegram channels. It cannot guarantee that 50 posts will be available on every date. A source post is not a unique incident.
+**This mode does not authenticate to Telegram and cannot use Telegram global search.** It covers only the finite configured channel list and whatever history Telegram exposes through public previews. It does not directly search X, Facebook, YouTube or general news websites. Pagination, historical availability, media extraction and rate limits may vary. 50+ briefs cannot be guaranteed; missing posts do not mean no incidents occurred.
 
 ## Verification and safety
 
-- Gemini summarises and organises supplied evidence; it is not an independent fact-checker.
-- Every post begins as an unverified claim. Seek independent corroboration before presenting an incident as established.
-- Publication time is not necessarily incident time.
-- Reposts and syndicated copies are not independent corroboration.
+- Gemini is not an independent fact-checker. Every post begins as an unverified claim.
+- Publication time is not necessarily incident time; reposts are not independent corroboration.
 - Do not infer motives, identities, casualties, locations or confidence from incomplete posts.
 - Rhetoric alone does not establish imminent violence.
-- Use only lawfully accessible public material; respect Telegram terms, rate limits and access controls.
+- Use only lawfully accessible public material; respect platform terms and rate limits.
 - No private-group scraping, access-control bypass, doxxing, private-person profiling, targeting or tactical assistance facilitating violence.
-- Disclose inaccessible channels and language/geographic gaps. Do not claim comprehensive coverage.
+- Disclose inaccessible channels and language/geographic gaps; never claim comprehensive coverage.
 
-## Optional private Telegram bot
-
-The repository also contains a separate Telegram command bot and analyst-review modules. They are not started by the on-demand workflow and are not required for generating reports. The current workflow does not preserve analyst review state between runs. GitHub Actions artifacts are retained for 14 days.
-
-## Local validation
-
-```bash
-python scripts/validate_project.py
-python -m py_compile scripts/*.py
-python -m unittest discover -s tests -v
-```
-
-Never commit `.env`, API keys, Telegram session strings, session files or database files.
+Other repository components include a separate Telegram bot and older authenticated collection/review modules; they are not used by this workflow. Actions artifacts are retained for 14 days. Never commit secrets, session strings or database files.
