@@ -29,10 +29,13 @@ See MASTER_PROMPT.md for the full specification.
 - /briefs YYYY-MM-DD [limit] — up to 100 individual source-lead briefs (default 60)
 - /leads YYYY-MM-DD — candidate source links
 - /coverage YYYY-MM-DD — regional query success/failure and result counts
+- /reviewqueue YYYY-MM-DD — retrieve unreviewed leads for analyst assessment
+- /reviewlead ID reviewed|rejected|duplicate [source_class] [duplicate_ID] — record an explicit decision
+- /linklead LEAD_ID INCIDENT_ID [lead|corroboration|contradiction] — attach a reviewed source to an existing incident
 - /report YYYY-MM-DD — consolidated ten-section draft from reviewed incident-ledger entries
 
 ## Critical limitations
-This does not provide universal access to every news item or every post on Telegram, X, Facebook or YouTube. Public social material may appear only when indexed/surfaced by the provider; direct platform APIs require separate access and integration. Search results are source leads, not automatically distinct incidents or verified facts. Multiple briefs may describe one event. Deduplicate and corroborate before counting unique incidents or publishing judgments. Provider publication dates do not establish incident dates.
+This does not provide universal access to every news item or every post on Telegram, X, Facebook or YouTube. Public social material may appear only when indexed/surfaced by the provider; direct platform APIs require separate access and integration. Search results are source leads, not automatically distinct incidents or verified facts. New leads enter an UNREVIEWED queue; source class is never inferred from a domain. Exact-title similarity is only a duplicate-review hint. A lead must be marked REVIEWED and assigned an analyst-reviewed source class before it can be linked to an incident already created in the ledger; this workflow never auto-creates or verifies an incident. Multiple briefs may describe one event. Deduplicate and corroborate before counting unique incidents or publishing judgments. Provider publication dates do not establish incident dates.
 
 A default 60-query basic session may consume up to 60 basic search credits. It can return fewer than 50 useful or unique leads. Volume is a target, never a reason to fabricate or amplify harmful allegations.
 
