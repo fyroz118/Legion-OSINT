@@ -107,8 +107,7 @@ def build_query_plan(report_date, max_queries=None):
                 "query": query, "topic": "news", "source_focus": focus,
                 "claim_type": "RUMOUR_WATCH" if ("rumour" in theme or "গুজব" in theme or "unverified claims" in theme) else "EVENT_NEWS",
             })
-    # Stable 70:30 attention split across the full plan, without asserting source identity.
-    planned.sort(key=lambda item: (item["source_focus"] != "unofficial_public",))
+    # Preserve geographic priority; the 70:30 allocation is distributed across the plan.
     return planned[:limit]
 
 
