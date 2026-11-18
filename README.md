@@ -38,7 +38,7 @@ No Telegram developer portal, Telegram login, API ID/hash, session string, local
 
 ## Expand the source network
 
-The active registry is intentionally kept separate from unreviewed discoveries. To contribute a large source list, follow [CHANNEL_LIST_INTAKE.md](CHANNEL_LIST_INTAKE.md) and upload a TXT/CSV of public Telegram channel links. Unreviewed candidates are staged first; they are not automatically treated as reliable or enabled. A 1,000+ candidate pool is a discovery target, not a promise of 1,000 channels being active or fetched in every run.
+The active registry is intentionally kept separate from unreviewed discoveries. Run the [automated discovery workflow](../../actions/workflows/discover-telegram-channels.yml) to build the cumulative candidate pool without manually collecting channel links. You may still contribute a TXT/CSV list through [CHANNEL_LIST_INTAKE.md](CHANNEL_LIST_INTAKE.md), but this is optional. Unreviewed candidates are never automatically treated as reliable or enabled. A 1,000+ candidate pool is a target, not a promise that 1,000 channels will be found, active or fetched in every run.
 
 ## Coverage limitations
 
