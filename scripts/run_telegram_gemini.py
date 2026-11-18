@@ -80,8 +80,8 @@ def collect_channel(ch, report_date, cap):
               "published_at":published.isoformat(),"collected_at":datetime.now(timezone.utc).isoformat(),
               "text":body[:12000],"source_url":item.get("url") or f"https://t.me/{user}/{mid}",
               "language":ch.get("language","unknown"),"priority_region":ch.get("priority","global"),
-              "source_class":"unknown","source_type":"public_telegram_preview",
-              "source_affiliation":"unassessed","monitoring_weight":ch.get("monitoring_weight","standard")})
+              "source_class":ch.get("source_class","unknown"),"source_type":ch.get("source_type","public_telegram_preview"),
+              "source_affiliation":ch.get("source_affiliation","unassessed"),"monitoring_weight":ch.get("monitoring_weight","standard")})
         if dates:
             all_dates=[d.isoformat() for d in dates]
             diagnostic["earliest_preview_date"]=min(all_dates)
@@ -140,7 +140,7 @@ def main():
       and r.get("published_at") and datetime.fromisoformat(r["published_at"]).astimezone(TZ).date().isoformat()==day]
     rows.sort(key=lambda r:(0 if r.get("priority_region")=="bangladesh" else 1,r.get("published_at") or ""))
     out=Path("output")/day; out.mkdir(parents=True,exist_ok=True)
-    fields=["id","channel_username","published_at","priority_region","language","source_class","evidence_status","source_url","text"]
+    fields=["id","channel_username","published_at","priority_region","language","source_class","source_affiliation","source_type","monitoring_weight","evidence_status","source_url","text"]
     with (out/"telegram_posts.csv").open("w",newline="",encoding="utf-8-sig") as f:
         w=csv.DictWriter(f,fieldnames=fields,extrasaction="ignore"); w.writeheader(); w.writerows(rows)
     briefs=[f"# Telegram Source Briefs — {day}","","**All posts are unverified claims, not verified incidents.**",
@@ -156,6 +156,7 @@ def main():
         posts_by_channel[row.get("channel_username","unknown")]=posts_by_channel.get(row.get("channel_username","unknown"),0)+1
     coverage=json.dumps({
         "report_date":day,"timezone":"Asia/Dhaka","configured_channels":[c["username"] for c in channels],
+        "channel_registry":[{"username":c["username"],"region":c.get("priority","global"),"language":c.get("language","unknown"),"source_class":c.get("source_class","unknown"),"source_affiliation":c.get("source_affiliation","unassessed"),"notes":c.get("notes","")} for c in channels],
         "pages_fetched_per_channel":page_counts,"channel_diagnostics":channel_diagnostics,"posts_by_channel":posts_by_channel,
         "total_posts_for_date":len(rows),"collection_errors":errors,
         "collection_method":"unauthenticated public Telegram preview pages only",
@@ -212,6 +213,7 @@ def main():
       f"**Timezone:** Asia/Dhaka. **All claims require independent verification.**\n**Posts:** {len(rows)}; **Gemini analysed:** {len(analysis)} (max 300); **channels:** {len(channels)}.\n\n")
     (out/"daily_intelligence_report.md").write_text(header+report,encoding="utf-8")
     summary={"report_date":day,"timezone":"Asia/Dhaka","configured_channels":[c["username"] for c in channels],
+      "channel_registry":[{"username":c["username"],"region":c.get("priority","global"),"language":c.get("language","unknown"),"source_class":c.get("source_class","unknown"),"source_affiliation":c.get("source_affiliation","unassessed")} for c in channels],
       "posts_collected":len(posts),"posts_for_date":len(rows),"posts_in_gemini_analysis":len(analysis),
       "pages_fetched_per_channel":page_counts,"channel_diagnostics":channel_diagnostics,"channel_errors":errors,"gemini_error":gemini_error,
       "method":"public Telegram previews; no session/global search",
