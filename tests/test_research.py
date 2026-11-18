@@ -19,7 +19,7 @@ class ResearchTests(unittest.TestCase):
     def test_query_plan_prioritizes_bangladesh_and_is_date_scoped(self):
         plan = build_query_plan("2026-11-18")
         self.assertEqual(plan[0]["region"], "Bangladesh")
-        self.assertIn('"2026-11-18"', plan[0]["query"])
+        self.assertEqual(plan[0]["report_date"], "2026-11-18")
         self.assertEqual(len(plan), 12)
 
     def test_invalid_date_rejected(self):
@@ -40,6 +40,20 @@ class ResearchTests(unittest.TestCase):
         self.assertEqual(len(leads), 1)
         self.assertEqual(leads[0]["region"], "Bangladesh")
         self.assertEqual(len(get_research_coverage("2026-11-18")), 2)
+
+
+    def test_known_out_of_window_publications_are_filtered(self):
+        def fake_search(query, report_date, max_results=5):
+            return {"results": [
+                {"title": "In-window", "url": "https://news.example.org/in", "published_date": "2026-11-18T12:00:00Z"},
+                {"title": "Out-of-window", "url": "https://news.example.org/out", "published_date": "2026-11-17T23:00:00Z"},
+                {"title": "Undated", "url": "https://news.example.org/unknown"},
+            ]}
+        run_research("2026-11-18", max_queries=1, search_fn=fake_search)
+        leads = get_research_leads("2026-11-18")
+        self.assertEqual({x["source_url"] for x in leads}, {
+            "https://news.example.org/in", "https://news.example.org/unknown"
+        })
 
     def test_failed_provider_call_is_recorded_not_hidden(self):
         def fail_search(query, report_date, max_results=5):
