@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-18T16:03:01.834689+00:00",
+  "generated_at_utc": "2026-11-18T16:20:18.663392+00:00",
   "discovery_method": "Public web-index search plus public Telegram directory pages (TG Market, TGScope, Telemetrio) and unreviewed seed leads",
   "queries_attempted_per_provider": 84,
   "directory_diagnostics": {
@@ -53,18 +53,18 @@
       "errors": [
         {
           "query": "site:t.me/s/ বাংলাদেশ জেলা সংবাদ সাংবাদিক",
-          "error": "URLError",
-          "detail": "<urlopen error _ssl.c:1001: The handshake operation timed out>"
+          "error": "RuntimeError",
+          "detail": "duckduckgo_blocked_or_challenged"
         },
         {
           "query": "site:t.me বাংলাদেশ স্থানীয় সংবাদ জেলা প্রতিনিধি",
-          "error": "URLError",
-          "detail": "<urlopen error [Errno 104] Connection reset by peer>"
+          "error": "RuntimeError",
+          "detail": "duckduckgo_blocked_or_challenged"
         },
         {
           "query": "site:t.me বাংলাদেশ মানবাধিকার পর্যবেক্ষক",
-          "error": "URLError",
-          "detail": "<urlopen error _ssl.c:1001: The handshake operation timed out>"
+          "error": "RuntimeError",
+          "detail": "duckduckgo_blocked_or_challenged"
         }
       ],
       "skipped_after_circuit_breaker": 81
@@ -89,12 +89,12 @@
   "providers_returning_telegram_links": 0,
   "total_query_errors": 3,
   "new_candidates_this_run": 0,
-  "directory_seed_candidates_loaded": 73,
-  "candidate_leads_loaded_this_run": 73,
-  "unique_candidates": 73,
+  "directory_seed_candidates_loaded": 108,
+  "candidate_leads_loaded_this_run": 108,
+  "unique_candidates": 108,
   "already_configured_channels": 0,
-  "unreviewed_not_enabled_candidates": 73,
-  "previews_checked_this_run": 73,
+  "unreviewed_not_enabled_candidates": 108,
+  "previews_checked_this_run": 108,
   "limitations": [
     "Public search-engine indexes are incomplete, ranking-biased and may block automated requests.",
     "This does not access Telegram global search or private channels.",

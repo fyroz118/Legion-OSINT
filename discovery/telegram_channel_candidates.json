@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-18T16:03:01.834689+00:00",
+  "generated_at_utc": "2026-11-18T16:20:18.663392+00:00",
   "discovery_method": "Public web-index search plus public Telegram directory pages (TG Market, TGScope, Telemetrio) and unreviewed seed leads",
   "queries_attempted_per_provider": 84,
   "directory_diagnostics": {
@@ -53,18 +53,18 @@
       "errors": [
         {
           "query": "site:t.me/s/ বাংলাদেশ জেলা সংবাদ সাংবাদিক",
-          "error": "URLError",
-          "detail": "<urlopen error _ssl.c:1001: The handshake operation timed out>"
+          "error": "RuntimeError",
+          "detail": "duckduckgo_blocked_or_challenged"
         },
         {
           "query": "site:t.me বাংলাদেশ স্থানীয় সংবাদ জেলা প্রতিনিধি",
-          "error": "URLError",
-          "detail": "<urlopen error [Errno 104] Connection reset by peer>"
+          "error": "RuntimeError",
+          "detail": "duckduckgo_blocked_or_challenged"
         },
         {
           "query": "site:t.me বাংলাদেশ মানবাধিকার পর্যবেক্ষক",
-          "error": "URLError",
-          "detail": "<urlopen error _ssl.c:1001: The handshake operation timed out>"
+          "error": "RuntimeError",
+          "detail": "duckduckgo_blocked_or_challenged"
         }
       ],
       "skipped_after_circuit_breaker": 81
@@ -89,12 +89,12 @@
   "providers_returning_telegram_links": 0,
   "total_query_errors": 3,
   "new_candidates_this_run": 0,
-  "directory_seed_candidates_loaded": 73,
-  "candidate_leads_loaded_this_run": 73,
-  "unique_candidates": 73,
+  "directory_seed_candidates_loaded": 108,
+  "candidate_leads_loaded_this_run": 108,
+  "unique_candidates": 108,
   "already_configured_channels": 0,
-  "unreviewed_not_enabled_candidates": 73,
-  "previews_checked_this_run": 73,
+  "unreviewed_not_enabled_candidates": 108,
+  "previews_checked_this_run": 108,
   "limitations": [
     "Public search-engine indexes are incomplete, ranking-biased and may block automated requests.",
     "This does not access Telegram global search or private channels.",
@@ -128,11 +128,11 @@
       "discovery_notes": "Telemetrio catalog lists an Aam Aadmi Party channel. Confirm party-controlled cross-links and treat statements as actor-originated.",
       "seed_source_url": "https://telemetr.io/en/channels/1237723764-aamaadmiparty",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "Aam Aadmi Party",
       "description": "★Aam Aadmi Party's official channel on Telegram for dedicated AAP volunteers\n\n★Made to provide content to be shared on WhatsApp and other social media\n\n\"CRUSADE AGAINST PAID/BIASED MEDIA\"\n\nJOIN & SHARE MAX:\n\n👉 t.me/AamAadmiParty",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -159,11 +159,104 @@
       "discovery_notes": "TGScope Palestine catalogue lists Al Jazeera Palestine. Confirm the exact account is publisher-controlled before approval.",
       "seed_source_url": "https://tgscope.io/telegram-channels-by-country/palestine",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "الجزيرة فلسطين",
       "description": "حساب تابع لقناة الجزيرة متخصص في متابعة الأخبار المحلية والدولية الخاصة بفلسطين 🇵🇸",
+      "accessible": true,
+      "review_status": "UNREVIEWED_CANDIDATE",
+      "collection_status": "NOT_ENABLED",
+      "enabled_for_collection": false
+    },
+    {
+      "username": "alhaqnews",
+      "candidate_url": "https://t.me/alhaqnews",
+      "discovery_regions": [
+        "MENA"
+      ],
+      "discovery_languages": [
+        "en"
+      ],
+      "discovery_queries": [
+        "TG Market public Bangladesh news directory"
+      ],
+      "discovery_providers": [
+        "tgmarket_public_directory"
+      ],
+      "candidate_category": "conflict_news_aggregator_candidate",
+      "source_class": "conflict_news_aggregator_candidate",
+      "source_affiliation": "self_described_AlHaq_News_Iran_US_War_Updates",
+      "source_identity_status": "public_telegram_preview_observed",
+      "discovery_notes": "Public preview describes an English-language Middle East/Iran/US news feed and includes forwarded material from other channels. Do not confuse it with the separate Al-Haq human-rights organisation; trace claims to original sources.",
+      "seed_source_url": "https://t.me/s/alhaqnews",
+      "first_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "directory_source_urls": [],
+      "accessible": true,
+      "title": "AlHaq News | Iran-US War Updates",
+      "description": "Stay informed with reliable news in English covering Middle East, Iran, US, and beyond. We deliver news, truthful reports from verified sources.\n\nRainbet.com #1 non-kyc crypto casino & sportsbook @rainbetcom",
+      "review_status": "UNREVIEWED_CANDIDATE",
+      "collection_status": "NOT_ENABLED",
+      "enabled_for_collection": false
+    },
+    {
+      "username": "almayadeenenglish",
+      "candidate_url": "https://t.me/almayadeenenglish",
+      "discovery_regions": [
+        "MENA"
+      ],
+      "discovery_languages": [
+        "en"
+      ],
+      "discovery_queries": [
+        "TG Market public Bangladesh news directory"
+      ],
+      "discovery_providers": [
+        "tgmarket_public_directory"
+      ],
+      "candidate_category": "regional_media_candidate",
+      "source_class": "regional_media_candidate",
+      "source_affiliation": "Al_Mayadeen_English_publisher_claimed",
+      "source_identity_status": "public_telegram_preview_observed",
+      "discovery_notes": "Public preview links to english.almayadeen.net and identifies the channel as Al Mayadeen English. Preserve its regional/editorial perspective and corroborate event claims independently.",
+      "seed_source_url": "https://t.me/s/almayadeenenglish",
+      "first_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "directory_source_urls": [],
+      "accessible": true,
+      "title": "Al Mayadeen English",
+      "description": "english.almayadeen.net",
+      "review_status": "UNREVIEWED_CANDIDATE",
+      "collection_status": "NOT_ENABLED",
+      "enabled_for_collection": false
+    },
+    {
+      "username": "americanmajority",
+      "candidate_url": "https://t.me/americanmajority",
+      "discovery_regions": [
+        "North America"
+      ],
+      "discovery_languages": [
+        "en"
+      ],
+      "discovery_queries": [
+        "TG Market public Bangladesh news directory"
+      ],
+      "discovery_providers": [
+        "tgmarket_public_directory"
+      ],
+      "candidate_category": "political_commentary_candidate",
+      "source_class": "political_commentary_candidate",
+      "source_affiliation": "reference_folder_source_identity_or_affiliation_unassessed",
+      "source_identity_status": "public_directory_or_telegram_preview_match_requires_review",
+      "discovery_notes": "Public Telegram index identifies The American Majority; geopolitics/philosophy commentary. Distinguish from unrelated similarly named forex-signal channel.",
+      "seed_source_url": "https://t.me/americanmajority",
+      "first_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "directory_source_urls": [],
+      "accessible": true,
+      "title": "The American Majority",
+      "description": "Rainbet.com #1 non-kyc crypto casino & sportsbook @rainbetcom\n\nEsoteric America. Geopolitics, philosophy.\nContact me @peytontheam",
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -190,7 +283,7 @@
       "discovery_notes": "Directory-listed student movement channel. Treat as an actor-originated source; verify identity and activity before any monitoring decision.",
       "seed_source_url": "https://tgmarket.io/countries/bd/news",
       "first_seen_utc": "2026-11-18T15:23:39.388565+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
       "title": "বৈষম্যবিরোধী ছাত্র আন্দোলন",
       "description": "©Official Channel ✅ \n\nWe speak for our people \nWe fight for our people 🇧🇩\n\nDiscussion Group @quotaandolonbd\nNews, Media, Announcement, Update, Bangladesh\nAlso Join Our Sponsor Channel - @Darazbdoffer1",
@@ -221,11 +314,42 @@
       "discovery_notes": "Directory-listed anti-quota/student movement channel. Relationship to other similarly named channels and current operator are unverified.",
       "seed_source_url": "https://tgmarket.io/countries/bd/news",
       "first_seen_utc": "2026-11-18T15:23:39.388565+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
       "title": "বৈষম্যবিরোধী ছাত্র আন্দোলন",
       "description": "©Official Channel ✅ \nIf you want Contact with us then text here @Textnowdubot\n\nhttps://x.com/antiquotadu\n\nDiscussion Group @antiquotanews\n\nNews, Media, Announcement, Update, Bangladesh",
       "accessible": true,
+      "review_status": "UNREVIEWED_CANDIDATE",
+      "collection_status": "NOT_ENABLED",
+      "enabled_for_collection": false
+    },
+    {
+      "username": "asiabrief",
+      "candidate_url": "https://t.me/asiabrief",
+      "discovery_regions": [
+        "South Asia"
+      ],
+      "discovery_languages": [
+        "en"
+      ],
+      "discovery_queries": [
+        "TG Market public Bangladesh news directory"
+      ],
+      "discovery_providers": [
+        "tgmarket_public_directory"
+      ],
+      "candidate_category": "political_commentary_candidate",
+      "source_class": "political_commentary_candidate",
+      "source_affiliation": "reference_folder_source_identity_or_affiliation_unassessed",
+      "source_identity_status": "public_directory_or_telegram_preview_match_requires_review",
+      "discovery_notes": "Telegram Register exact title match; politics/activism classification is model-assigned and should be treated as tentative.",
+      "seed_source_url": "https://t.me/asiabrief",
+      "first_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "directory_source_urls": [],
+      "accessible": true,
+      "title": "Asia Brief",
+      "description": "🌏 Your daily brief on Asia.\nBreaking news, politics, business, technology, culture and more — from India and China to Central Asia and beyond.",
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -252,11 +376,11 @@
       "discovery_notes": "TG Market Myanmar news directory lists Ayeyarwaddy Times. Review regional coverage, operator identity and editorial standards.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "Ayeyarwaddy Times",
       "description": "📰 Daily news and current affairs\n\nCovering: • World News • Business • Technology • Public Affairs\n\nPromotion: 👉 @ayeyarwaddytimes",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -283,11 +407,11 @@
       "discovery_notes": "TG Market/TGScope list this as a Bangladesh political/news channel. Treat as an actor-originated or partisan source unless independent editorial status is established.",
       "seed_source_url": "https://tgmarket.io/countries/bd/news",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "বাংলাদেশ বদরুললীগ",
       "description": "\"চাঁদাবাজদের নিয়ে  ব্যাপক গবেষণা হয় এখানে\"\nডিসকাশন গ্রুপ👉 @BALBD1959\nব্যাকআপ চ্যানেল👉 @BadrulCentral\nব্যাকআপ গ্রুপ 👉 @BadrulProMax\nFollow us on: FB www.fb.com/BadrulBSL25",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -314,11 +438,11 @@
       "discovery_notes": "TGScope lists a Bangladesh Islami Chhatrashibir channel. Treat as an organizational actor source; verify official ownership and public preview.",
       "seed_source_url": "https://tgscope.io/telegram-channels-by-country/bangladesh",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "Bangladesh Islami Chhatrashibir",
       "description": "Official Telegram Channel of Bangladesh Islami Chhatrashibir.\n\nSocial Media Link :\nFacebook : www.fb.com/bangladeshislamichhatrashibir\nTwitter : www.twitter.com/info_shibir\nYoutube : www.youtube.com/IslamiChhatrashibir",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -345,11 +469,73 @@
       "discovery_notes": "Directory-listed political/news channel. Potentially partisan actor-originated content; do not treat as independent media or corroboration.",
       "seed_source_url": "https://tgmarket.io/countries/bd/news",
       "first_seen_utc": "2026-11-18T15:23:39.388565+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
       "title": "বাঁশেরকেল্লা - Basherkella",
       "description": "Official Telegram Channel of Basherkella Page.\nPage Link: https://www.facebook.com/BasherKella00",
       "accessible": true,
+      "review_status": "UNREVIEWED_CANDIDATE",
+      "collection_status": "NOT_ENABLED",
+      "enabled_for_collection": false
+    },
+    {
+      "username": "basirapress",
+      "candidate_url": "https://t.me/basirapress",
+      "discovery_regions": [
+        "MENA/global"
+      ],
+      "discovery_languages": [
+        "en"
+      ],
+      "discovery_queries": [
+        "TG Market public Bangladesh news directory"
+      ],
+      "discovery_providers": [
+        "tgmarket_public_directory"
+      ],
+      "candidate_category": "advocacy_research_commentary_candidate",
+      "source_class": "advocacy_research_commentary_candidate",
+      "source_affiliation": "Basira_Press_self_described_pro_resistance",
+      "source_identity_status": "public_telegram_preview_observed",
+      "discovery_notes": "Public preview describes the channel as pro-resistance research and analysis. Treat as an advocacy/viewpoint source, not independent corroboration; verify claims against primary and independent sources.",
+      "seed_source_url": "https://t.me/basirapress",
+      "first_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "directory_source_urls": [],
+      "accessible": true,
+      "title": "Basira Press",
+      "description": "Islamic pro-resistance research and analysis of both material & metaphysical issues facing our world.\n\nBasiraPress.org\n\nDonate: https://basirapress.org/donate/\n\nBuy our book: https://basirapress.org/shop/books/firmest-handle-book/",
+      "review_status": "UNREVIEWED_CANDIDATE",
+      "collection_status": "NOT_ENABLED",
+      "enabled_for_collection": false
+    },
+    {
+      "username": "bharat_voice",
+      "candidate_url": "https://t.me/bharat_voice",
+      "discovery_regions": [
+        "India"
+      ],
+      "discovery_languages": [
+        "en"
+      ],
+      "discovery_queries": [
+        "TG Market public Bangladesh news directory"
+      ],
+      "discovery_providers": [
+        "tgmarket_public_directory"
+      ],
+      "candidate_category": "political_commentary_candidate",
+      "source_class": "political_commentary_candidate",
+      "source_affiliation": "reference_folder_source_identity_or_affiliation_unassessed",
+      "source_identity_status": "public_directory_or_telegram_preview_match_requires_review",
+      "discovery_notes": "Telegram Register exact title match; self-description includes Indian affairs, geopolitics and opinion.",
+      "seed_source_url": "https://t.me/bharat_voice",
+      "first_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "directory_source_urls": [],
+      "accessible": true,
+      "title": "Voice of india🛕🚩",
+      "description": "Updates on Indian affairs, latest and breaking news, geopolitics, opinions, Twitter trends, memes, rants and ramblings",
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -376,11 +562,11 @@
       "discovery_notes": "Telemetrio India politics directory lists Bhim Army Official. Treat as a movement/advocacy actor source; verify official ownership and avoid using it as neutral corroboration.",
       "seed_source_url": "https://telemetr.io/en/channels/1196828389-bheem_army",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "Bhim Army Official",
       "description": "",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -407,11 +593,11 @@
       "discovery_notes": "Public Telegram preview identifies this as BJP Keralam's official channel. Regional party source; confirm current activity and operator identity.",
       "seed_source_url": "https://t.me/BJP4Keralam",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "BJP Keralam",
       "description": "Official Channel of BJP Keralam",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -438,11 +624,11 @@
       "discovery_notes": "Public Telegram preview identifies BJP Gujarat. Regional party source; confirm operator identity and recent activity before review approval.",
       "seed_source_url": "https://t.me/bjpforgujarat",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "BJP Gujarat",
       "description": "Telegram Channel of Bharatiya Janta Party (BJP) Gujarat",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -469,11 +655,11 @@
       "discovery_notes": "Public Telegram preview describes a BJP Uttar Pradesh IT Cell channel. Regional party communication/actor source; do not label as national BJP headquarters or independent media.",
       "seed_source_url": "https://t.me/bjpupitcell",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "Bharatiya Janta Party Uttar Pradesh",
       "description": "Political Official BJP I.T. Cell Channel",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -500,7 +686,7 @@
       "discovery_notes": "Directory-listed as a justice-focused Bangladesh news channel. Possible advocacy/civil-society source; organisation and editorial independence are unverified.",
       "seed_source_url": "https://tgmarket.io/countries/bd/news",
       "first_seen_utc": "2026-11-18T15:23:39.388565+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
       "title": "Bringing Justice to You Bangladesh",
       "description": "আমার ভাইয়ের রক্ত\nবৃথা যেতে দিব না।",
@@ -531,11 +717,11 @@
       "discovery_notes": "TG Market channel profile lists VOA Burmese. Verify Voice of America cross-link to this exact handle before approval.",
       "seed_source_url": "https://tgmarket.io/c/khitthitnews",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "VOA Burmese",
       "description": "မြန်မာနဲ့ ကမ္ဘာ့သတင်းတွေကို တင်ဆက်ပေးနေတဲ့ ယုံကြည်ရတဲ့ သတင်းဌာန \nhttps://Facebook.com/VOABurmese \nhttps://Instagram.com/VOABurmese \nhttps://YouTube.com/VOABurmese\nhttps://Twitter.com/VOABurmese",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -562,7 +748,7 @@
       "discovery_notes": "Directory-listed defence-news channel. Likely specialist aggregation/commentary; trace claims to original sources and assess political alignment.",
       "seed_source_url": "https://tgmarket.io/countries/bd/news",
       "first_seen_utc": "2026-11-18T15:23:39.388565+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
       "title": "Bangladesh & World Defence News (BWDN)",
       "description": "আসসালামু আলাইকুম \nসবাইকে স্বাগতম ❤️\n\nসামরিক, সমর-রাজনৈতিক এবং আন্তর্জাতিক বিষয়ে প্রতি সেকেন্ড এর  আপডেট পেতে আমাদের চ্যানেলে জয়েন করুন।",
@@ -593,11 +779,11 @@
       "discovery_notes": "TGScope Bangladesh country catalogue lists this news/politics commentator channel. Personal commentary and political alignment must be distinguished from independent newsroom reporting.",
       "seed_source_url": "https://tgscope.io/telegram-channels-by-country/bangladesh",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "Elias Hossain",
       "description": "In the kingdom of lies, we find truth\n\n \n\n\nJournalist",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -624,11 +810,11 @@
       "discovery_notes": "Telegram Register identifies the channel as Indian National Congress, but its latest recorded post was 18 October 2024 and the account is not Telegram-verified. Treat identity as unconfirmed and activity as stale; review only, never represent as verified national HQ.",
       "seed_source_url": "https://tgregister.com/channel/Congress_officials",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "Indian National Congress",
       "description": "We stand with every Indian\nLet's Fight against injustice together.",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -655,11 +841,42 @@
       "discovery_notes": "Telemetrio catalog lists CPIM Kerala. Verify party ownership and exact public preview; treat as party-originated source.",
       "seed_source_url": "https://telemetr.io/en/channels/1175566518-cpimkerala",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "CPIM Kerala",
       "description": "Official Channel of the Communist Party of India (Marxist) Keralam State Committee",
+      "accessible": true,
+      "review_status": "UNREVIEWED_CANDIDATE",
+      "collection_status": "NOT_ENABLED",
+      "enabled_for_collection": false
+    },
+    {
+      "username": "cpimllib",
+      "candidate_url": "https://t.me/cpimllib",
+      "discovery_regions": [
+        "India"
+      ],
+      "discovery_languages": [
+        "en"
+      ],
+      "discovery_queries": [
+        "TG Market public Bangladesh news directory"
+      ],
+      "discovery_providers": [
+        "tgmarket_public_directory"
+      ],
+      "candidate_category": "political_party_actor_candidate",
+      "source_class": "political_party_actor_candidate",
+      "source_affiliation": "Communist_Party_of_India_Marxist_Leninist_Liberation",
+      "source_identity_status": "Telegram_verified_and_links_to_party_websites",
+      "discovery_notes": "Telegram-verified official CPI(ML) Liberation channel; links to cpiml.org and liberation.org.in. Party-originated statements are actor evidence, not independent corroboration.",
+      "seed_source_url": "https://t.me/s/cpimllib",
+      "first_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "directory_source_urls": [],
+      "accessible": true,
+      "title": "CPIML Liberation",
+      "description": "Official Telegram channel of Communist Party of India (Marxist-Leninist) Liberation \nWebsite: cpiml.org | liberation.org.in \n\nINDIA PEOPLE'S STRUGGLES | INDIAN RESISTANCE | INTERNATIONAL SOLIDARITY| COMMUNISM | ANTI-IMPERIALISM",
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -686,11 +903,104 @@
       "discovery_notes": "TG Market channel profile lists Dawei Information Center among related local sources. Verify exact operator and current public activity.",
       "seed_source_url": "https://tgmarket.io/c/countries/mm/news",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "Dawei information center",
       "description": "Dawei information center ပြည်သူ့သတင်းဌာနသည် ၂၀၂၁ခုနစ် ၊ ဧပြီလ ၁၁ ရက်နေ့မှာ စတင်ထူထောင်ခဲ့သော တနင်္သာရီတိုင်းအခြေစိုက်သတင်းဌာနတစ်ခုပင် ဖြစ်ပါသည်။",
+      "accessible": true,
+      "review_status": "UNREVIEWED_CANDIDATE",
+      "collection_status": "NOT_ENABLED",
+      "enabled_for_collection": false
+    },
+    {
+      "username": "ddgeopolitics",
+      "candidate_url": "https://t.me/ddgeopolitics",
+      "discovery_regions": [
+        "Global/Eurasia"
+      ],
+      "discovery_languages": [
+        "en"
+      ],
+      "discovery_queries": [
+        "TG Market public Bangladesh news directory"
+      ],
+      "discovery_providers": [
+        "tgmarket_public_directory"
+      ],
+      "candidate_category": "geopolitical_conflict_commentary_candidate",
+      "source_class": "geopolitical_conflict_commentary_candidate",
+      "source_affiliation": "DD_Geopolitics_self_identified",
+      "source_identity_status": "public_telegram_preview_observed",
+      "discovery_notes": "Public preview identifies DD Geopolitics and its multipolar-world framing. Treat as viewpoint-specific commentary/aggregation; trace factual claims and forwarded posts to original sources.",
+      "seed_source_url": "https://t.me/s/ddgeopolitics",
+      "first_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "directory_source_urls": [],
+      "accessible": true,
+      "title": "DD Geopolitics",
+      "description": "Transcending borders in a multipolar world.\n\nVisit DDGeopolitics.com to grab some merch or follow us on other platforms.\n\nYou can message @DDGeopoliticsBOT if you wish to send media, news, or have any questions for the admin team.",
+      "review_status": "UNREVIEWED_CANDIDATE",
+      "collection_status": "NOT_ENABLED",
+      "enabled_for_collection": false
+    },
+    {
+      "username": "DigitalVHP",
+      "candidate_url": "https://t.me/DigitalVHP",
+      "discovery_regions": [
+        "India"
+      ],
+      "discovery_languages": [
+        "hi"
+      ],
+      "discovery_queries": [
+        "TG Market public Bangladesh news directory"
+      ],
+      "discovery_providers": [
+        "tgmarket_public_directory"
+      ],
+      "candidate_category": "political_organisation_actor_candidate",
+      "source_class": "political_organisation_actor_candidate",
+      "source_affiliation": "Vishva_Hindu_Parishad_official_channel",
+      "source_identity_status": "Telegram_verified_and_links_to_vhp_org",
+      "discovery_notes": "Official VHP channel; Telegram-verified and links to vhp.org and VHP social accounts. Organisational actor source, not independent corroboration.",
+      "seed_source_url": "https://t.me/DigitalVHP",
+      "first_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "directory_source_urls": [],
+      "accessible": true,
+      "title": "Vishva Hindu Parishad -VHP",
+      "description": "Official Channel of Vishva Hindu Parishad- VHP \n\n\nhttps://vhp.org/\nhttps://facebook.com/VHPDigital\nhttps://Instagram.com/DigitalVHP \nhttps://m.youtube.com/channel/UCLzgGwMnpzw8zOs3uoW6AUg\nhttps://t.me/DigitalVHP",
+      "review_status": "UNREVIEWED_CANDIDATE",
+      "collection_status": "NOT_ENABLED",
+      "enabled_for_collection": false
+    },
+    {
+      "username": "doamuslimsbangla",
+      "candidate_url": "https://t.me/doamuslimsbangla",
+      "discovery_regions": [
+        "Bangladesh"
+      ],
+      "discovery_languages": [
+        "bn"
+      ],
+      "discovery_queries": [
+        "TG Market public Bangladesh news directory"
+      ],
+      "discovery_providers": [
+        "tgmarket_public_directory"
+      ],
+      "candidate_category": "religious_advocacy_candidate",
+      "source_class": "religious_advocacy_candidate",
+      "source_affiliation": "reference_folder_source_identity_or_affiliation_unassessed",
+      "source_identity_status": "public_directory_or_telegram_preview_match_requires_review",
+      "discovery_notes": "Telegram Register lists exact title and handle; treat as advocacy/community actor source, not neutral corroboration.",
+      "seed_source_url": "https://t.me/doamuslimsbangla",
+      "first_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "directory_source_urls": [],
+      "accessible": true,
+      "title": "DOAM বাংলা",
+      "description": "মুসলিমদের উপর অত্যাচার\n\nভিসিটঃ \nhttp://www.doambangla.org/\n\nএটি DOAM ( @doamuslims ) পেজের অফিসিয়াল বাংলা টেলিগ্রাম চ্যানেল।\n\nমেইলঃ info@doambangla.org",
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -717,11 +1027,11 @@
       "discovery_notes": "Telemetrio profile describes this channel operator as a Shiv Sena (NDA) national coordinator. This is an individual political actor source, not a party headquarters channel.",
       "seed_source_url": "https://telemetr.io/en/channels/1415837480-drabhishekverma_news",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "Dr Abhishek Verma ~ ShivSena (NDA)",
       "description": "Chief National Coordinator of ShivSena (NDA) for Alliance & Elections",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -748,11 +1058,42 @@
       "discovery_notes": "TGScope lists this as Dr Shafiqur Rahman's channel and describes him as Jamaat-e-Islami leader. Actor statement source, not independent corroboration; verify current public identity.",
       "seed_source_url": "https://tgscope.io/telegram-channels-by-country/bangladesh",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "Dr. Shafiqur Rahman",
       "description": "👉Official Telegram Channel of Dr. Shafiqur Rahman MP.\n👉Ameer-e-Jamaat (Chief) of Bangladesh Jamaat-e-Islami.\n👉Leader of the Opposition of Bangladesh Parliament.\n\nStay Connected on Web👉 www.dr-shafiqurrahman.info\n🔵FB : fb.com/DrShafiqurRahman.Official",
+      "accessible": true,
+      "review_status": "UNREVIEWED_CANDIDATE",
+      "collection_status": "NOT_ENABLED",
+      "enabled_for_collection": false
+    },
+    {
+      "username": "enemywatch",
+      "candidate_url": "https://t.me/enemywatch",
+      "discovery_regions": [
+        "Global/MENA"
+      ],
+      "discovery_languages": [
+        "en"
+      ],
+      "discovery_queries": [
+        "TG Market public Bangladesh news directory"
+      ],
+      "discovery_providers": [
+        "tgmarket_public_directory"
+      ],
+      "candidate_category": "geopolitical_advocacy_commentary_candidate",
+      "source_class": "geopolitical_advocacy_commentary_candidate",
+      "source_affiliation": "reference_folder_source_identity_or_affiliation_unassessed",
+      "source_identity_status": "public_directory_match_requires_manual_identity_confirmation",
+      "discovery_notes": "Exact public Telegram title/username match; self-description uses adversarial framing and exposes alleged enemies/infiltrators. Treat as advocacy/viewpoint source; claims require independent corroboration.",
+      "seed_source_url": "https://t.me/enemywatch",
+      "first_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "directory_source_urls": [],
+      "accessible": true,
+      "title": "Enemy Watch — Official",
+      "description": "Monitoring & Exposing!\n\nWest Asia | South Asia | West \n\nRead articles on : https://enemywatch.wordpress.com",
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -779,11 +1120,135 @@
       "discovery_notes": "Directory-listed as a Bangladesh news channel using the Gen Z label. Actual operator, editorial role, affiliation and sourcing are unverified; may be an actor or movement channel.",
       "seed_source_url": "https://tgmarket.io/countries/bd/news",
       "first_seen_utc": "2026-11-18T15:23:39.388565+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
       "title": "Gen Z",
       "description": "We Were Born to Make History",
       "accessible": true,
+      "review_status": "UNREVIEWED_CANDIDATE",
+      "collection_status": "NOT_ENABLED",
+      "enabled_for_collection": false
+    },
+    {
+      "username": "geo_grandmasters",
+      "candidate_url": "https://t.me/geo_grandmasters",
+      "discovery_regions": [
+        "Global"
+      ],
+      "discovery_languages": [
+        "en"
+      ],
+      "discovery_queries": [
+        "TG Market public Bangladesh news directory"
+      ],
+      "discovery_providers": [
+        "tgmarket_public_directory"
+      ],
+      "candidate_category": "geopolitical_commentary_candidate",
+      "source_class": "geopolitical_commentary_candidate",
+      "source_affiliation": "reference_folder_source_identity_or_affiliation_unassessed",
+      "source_identity_status": "public_directory_or_telegram_preview_match_requires_review",
+      "discovery_notes": "Public channel index and Telegram preview identify the exact title and handle; viewpoint-specific geopolitical commentary.",
+      "seed_source_url": "https://t.me/geo_grandmasters",
+      "first_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "directory_source_urls": [],
+      "accessible": true,
+      "title": "Grandmasters of Geopolitics",
+      "description": "Geopolitics unfiltered.\n\n📲Contact: @grandmasters_pr\n\n👉 Instagram: www.instagram.com/geo_grandmasters",
+      "review_status": "UNREVIEWED_CANDIDATE",
+      "collection_status": "NOT_ENABLED",
+      "enabled_for_collection": false
+    },
+    {
+      "username": "geopolitics_prime",
+      "candidate_url": "https://t.me/geopolitics_prime",
+      "discovery_regions": [
+        "Global"
+      ],
+      "discovery_languages": [
+        "en"
+      ],
+      "discovery_queries": [
+        "TG Market public Bangladesh news directory"
+      ],
+      "discovery_providers": [
+        "tgmarket_public_directory"
+      ],
+      "candidate_category": "geopolitical_commentary_candidate",
+      "source_class": "geopolitical_commentary_candidate",
+      "source_affiliation": "publisher_identity_unverified",
+      "source_identity_status": "public_telegram_preview_observed",
+      "discovery_notes": "Public preview identifies the channel and uses the slogan 'Read the news they hide from you'. Publisher identity, editorial standards and sourcing are unverified; classify as commentary/aggregator pending review.",
+      "seed_source_url": "https://t.me/geopolitics_prime",
+      "first_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "directory_source_urls": [],
+      "accessible": true,
+      "title": "Geopolitics Prime",
+      "description": "Read the news they hide from you.\n\nCross-promotion:\n@prgeopoliticsprime",
+      "review_status": "UNREVIEWED_CANDIDATE",
+      "collection_status": "NOT_ENABLED",
+      "enabled_for_collection": false
+    },
+    {
+      "username": "Hindustanibeast",
+      "candidate_url": "https://t.me/Hindustanibeast",
+      "discovery_regions": [
+        "India"
+      ],
+      "discovery_languages": [
+        "hi"
+      ],
+      "discovery_queries": [
+        "TG Market public Bangladesh news directory"
+      ],
+      "discovery_providers": [
+        "tgmarket_public_directory"
+      ],
+      "candidate_category": "political_commentary_candidate",
+      "source_class": "political_commentary_candidate",
+      "source_affiliation": "reference_folder_source_identity_or_affiliation_unassessed",
+      "source_identity_status": "public_directory_or_telegram_preview_match_requires_review",
+      "discovery_notes": "Telegram index exact title/handle match; strongly nationalist slogan in profile. Preserve viewpoint classification; verify claims independently.",
+      "seed_source_url": "https://t.me/Hindustanibeast",
+      "first_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "directory_source_urls": [],
+      "accessible": true,
+      "title": "Hindustani Beast",
+      "description": "जो देश तोड़ेगा हम उसे तोड़ेंगे 🔱\n\nContact Us:- @HindustaniBeastBot\n\nYT👉 https://youtube.com/c/HindustaniBeast\n\nIG👉https://www.instagram.com/Hindustanibeast\n\nFB👉https://www.facebook.com/HindustaniBeast/\n\nTWT👉https://twitter.com/Hindustanibeast?s=09",
+      "review_status": "UNREVIEWED_CANDIDATE",
+      "collection_status": "NOT_ENABLED",
+      "enabled_for_collection": false
+    },
+    {
+      "username": "inb19",
+      "candidate_url": "https://t.me/inb19",
+      "discovery_regions": [
+        "Bangladesh"
+      ],
+      "discovery_languages": [
+        "bn"
+      ],
+      "discovery_queries": [
+        "TG Market public Bangladesh news directory"
+      ],
+      "discovery_providers": [
+        "tgmarket_public_directory"
+      ],
+      "candidate_category": "news_commentary_candidate",
+      "source_class": "news_commentary_candidate",
+      "source_affiliation": "reference_folder_source_identity_or_affiliation_unassessed",
+      "source_identity_status": "public_directory_or_telegram_preview_match_requires_review",
+      "discovery_notes": "Public Telegram preview identifies International News Broadcasting Bangla; preserve its editorial/religious framing and corroborate.",
+      "seed_source_url": "https://t.me/inb19",
+      "first_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "directory_source_urls": [],
+      "accessible": true,
+      "title": "INB বাংলা",
+      "description": "International News Broadcasting Bangla\nইসলামের সাথে, আগামীর পথে \n\nসোশ্যাল মিডিয়ার লিংকসমূহ\n\nটেলিগ্রাম: https://t.me/inb19\n\nফেইসবুক: https://www.facebook.com/inbbangla\n\nইউটিউব: https://www.youtube.com/@inbbangla\n\nটুইটার: https://twitter.com/inbbangla",
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -810,11 +1275,11 @@
       "discovery_notes": "TG Market Myanmar news directory lists Hlaing Info. Confirm geographic coverage and whether posts are original local reporting.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "Hlaing Info",
       "description": "We are committed to bringing unbiased and accurate news to the people of Myanmar. We believe in freedom of speech, freedom of expression and freedom of thought. We will always strive to ensure the people’s right to information.\nwww.hlaing.info",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -841,11 +1306,42 @@
       "discovery_notes": "TGScope Ukraine catalogue lists INSIDER UA. Verify publisher identity, political alignment and sourcing practices.",
       "seed_source_url": "https://tgscope.io/telegram-channels-by-country/ukraine",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "INSIDER UA | Україна | Новини",
       "description": "Политический канал №1.\n\nСотрудничество: @insider_uke\n\nПрислать контент: t.me/insider_offer_bot\n\nСайт: https://insiderua.net\n\nБлаготворительность: https://www.insider-help.com",
+      "accessible": true,
+      "review_status": "UNREVIEWED_CANDIDATE",
+      "collection_status": "NOT_ENABLED",
+      "enabled_for_collection": false
+    },
+    {
+      "username": "Intel_Republic12",
+      "candidate_url": "https://t.me/Intel_Republic12",
+      "discovery_regions": [
+        "Global"
+      ],
+      "discovery_languages": [
+        "en"
+      ],
+      "discovery_queries": [
+        "TG Market public Bangladesh news directory"
+      ],
+      "discovery_providers": [
+        "tgmarket_public_directory"
+      ],
+      "candidate_category": "conflict_news_aggregator_candidate",
+      "source_class": "conflict_news_aggregator_candidate",
+      "source_affiliation": "reference_folder_source_identity_or_affiliation_unassessed",
+      "source_identity_status": "public_directory_or_telegram_preview_match_requires_review",
+      "discovery_notes": "Telegram channel index lists Intel Republic @Intel_Republic12 among channels linked from Rerum Novarum; exact title/handle match, further preview review required.",
+      "seed_source_url": "https://t.me/Intel_Republic12",
+      "first_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "directory_source_urls": [],
+      "accessible": true,
+      "title": "Intel Republic",
+      "description": "",
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -872,11 +1368,73 @@
       "discovery_notes": "Telemetrio India politics directory lists INTEL SAGE. Review authorship, sourcing, repost patterns and political alignment; do not assume independent OSINT standards.",
       "seed_source_url": "https://telemetr.io/en/catalog/india/politics",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "INTEL SAGE 🇮🇳 (Intel Monk)",
       "description": "#ForIndiaAnything 🇮🇳 (Managed By Team Intel Monk)",
+      "accessible": true,
+      "review_status": "UNREVIEWED_CANDIDATE",
+      "collection_status": "NOT_ENABLED",
+      "enabled_for_collection": false
+    },
+    {
+      "username": "IntelSlava",
+      "candidate_url": "https://t.me/IntelSlava",
+      "discovery_regions": [
+        "Global/Eurasia"
+      ],
+      "discovery_languages": [
+        "en"
+      ],
+      "discovery_queries": [
+        "TG Market public Bangladesh news directory"
+      ],
+      "discovery_providers": [
+        "tgmarket_public_directory"
+      ],
+      "candidate_category": "conflict_news_aggregator_candidate",
+      "source_class": "conflict_news_aggregator_candidate",
+      "source_affiliation": "reference_folder_source_identity_or_affiliation_unassessed",
+      "source_identity_status": "public_directory_or_telegram_preview_match_requires_review",
+      "discovery_notes": "Public Telegram preview identifies Intel Slava as a Russian news aggregator covering conflicts and geopolitics; perspective-specific aggregator.",
+      "seed_source_url": "https://t.me/IntelSlava",
+      "first_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "directory_source_urls": [],
+      "accessible": true,
+      "title": "Intel Slava",
+      "description": "Intel slava is a Russian News aggregator who covers Conflicts/Geopolitics and urgent news from around the world.\n\nRainbet.com #1 non-kyc crypto casino & sportsbook @rainbetcom",
+      "review_status": "UNREVIEWED_CANDIDATE",
+      "collection_status": "NOT_ENABLED",
+      "enabled_for_collection": false
+    },
+    {
+      "username": "isnreport",
+      "candidate_url": "https://t.me/isnreport",
+      "discovery_regions": [
+        "India"
+      ],
+      "discovery_languages": [
+        "en"
+      ],
+      "discovery_queries": [
+        "TG Market public Bangladesh news directory"
+      ],
+      "discovery_providers": [
+        "tgmarket_public_directory"
+      ],
+      "candidate_category": "independent_osint_media_candidate",
+      "source_class": "independent_osint_media_candidate",
+      "source_affiliation": "reference_folder_source_identity_or_affiliation_unassessed",
+      "source_identity_status": "public_directory_or_telegram_preview_match_requires_review",
+      "discovery_notes": "Public preview identifies ISN as a digital news network covering global and Indian affairs, OSINT and political developments.",
+      "seed_source_url": "https://t.me/isnreport",
+      "first_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "directory_source_urls": [],
+      "accessible": true,
+      "title": "India Sentinel Network",
+      "description": "instagram.com/isn.report\n\nISN | Sentinel Network\nDigital news network covering global and Indian affairs, public interest, OSINT news and political developments.\n📧 isnreport@gmail.com",
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -903,11 +1461,11 @@
       "discovery_notes": "Telemetrio catalog identifies DMK IT Wing. Party communication/actor source; verify official ownership and assess campaign messaging separately from reporting.",
       "seed_source_url": "https://telemetr.io/en/channels/1837346134-itwingdmk",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "DMK IT Wing",
       "description": "Official #DMKITWing. follow 👇\n\nWA: whatsapp.com/channel/0029Va4Z7ju7j6gDEeegs737\n\nInsta: instagram.com/dmkitwing",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -934,11 +1492,11 @@
       "discovery_notes": "Telemetrio channel profile identifies this as the official TDP broadcast account and displayed a Telegram verification mark. Party-originated statements are actor evidence, not independent corroboration.",
       "seed_source_url": "https://telemetr.io/en/channels/1152818678-jai_tdp",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "Telugu Desam Party",
       "description": "Official account for TDP Broadcasts",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -965,11 +1523,11 @@
       "discovery_notes": "TGScope Palestine catalogue lists a Jenin camp channel. Treat as community/actor-originated material, not independent confirmation; review content safety and identity.",
       "seed_source_url": "https://tgscope.io/telegram-channels-by-country/palestine",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "مخيم جنين 24 ساعة 🇵🇸",
       "description": "صوت المخيم... نبض الصمود 💔✊\n\nنرصد الحدث لحظة بلحظة، نوثق الحقيقة، ونعكس واقع أهلنا في جنين.\n\n صور |  فيديو | تغطية مباشرة\n\nكن معنا، وخلّي الحقيقة توصلك من قلب الميدان 🇵🇸\n \n💠مناقشات https://t.me/jenencamb24\n\n💠بوت القناة لتواصل _ @Jeenin24bot",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -996,11 +1554,11 @@
       "discovery_notes": "TGScope Palestine catalogue lists Jenin News. Verify local operator and distinguish eyewitness reporting from reposted claims.",
       "seed_source_url": "https://tgscope.io/telegram-channels-by-country/palestine",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "Jenin News | أخبار جنين",
       "description": "شبكة أخبار #جنين تختص بالشأن الجنيني والأخبار المحلية لمحافظة جنين والأخبار المهمه في باقي فلسطين التاريخية من نهرها لبحرها كونوا دائماً بالقرب  ..\n\nللمراسلة عبر الرسائل المباشرة\n\nمجموعة المناقشات https://t.me/jeninnews2\nجنين القسام تقاوم ✊🔥",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -1027,11 +1585,11 @@
       "discovery_notes": "Public Telegram preview identifies this as BJP Karnataka's official channel, but previewed posts are old. Keep as an inactive/stale review lead until current activity is confirmed.",
       "seed_source_url": "https://t.me/s/KarnatakaBJP",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "BJP Karnataka",
       "description": "Official Telegram Channel of BJP Karnataka",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -1058,11 +1616,11 @@
       "discovery_notes": "TG Market directory lists a similarly named Khit Thit Media channel. Check whether this is a separate official feed, duplicate or impersonator before approval.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "Khit Thit Media ခေတ်သစ်မီဒီယာ",
       "description": "Khit Thit Media ခေတ်သစ်မီဒီယာ\nရန်ကုန်ခေတ်သစ်သတင်းဌာနသည် ၂၀၁၈ ခုနှစ်၊ ဇန်နဝါရီလ ၁ ရက်နေ့တွင် စတင်ထူထောင်ခဲ့သော သတင်းဌာနဖြစ်ပါသည်။  https://yktnews.com/\nhttps://t.me/khitthitmedianews\nhttps://t.me/khitthitmediagroup\nhttps://t.me/earnppmoney2020_bot?start=r0",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -1089,11 +1647,11 @@
       "discovery_notes": "TG Market profile identifies Khit Thit Media as a Yangon-based Burmese news publisher and provides its publisher website. Editorial claims and incident reports still require corroboration.",
       "seed_source_url": "https://tgmarket.io/c/khitthitnews",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "Khit Thit Media",
       "description": "ရန်ကုန်ခေတ်သစ်သတင်းဌာနသည် ၂၀၁၈ ခုနှစ်၊ ဇန်နဝါရီလ ၁ ရက်နေ့တွင် စတင်ထူထောင်ခဲ့သော သတင်းဌာနဖြစ်ပါသည်။  https://yktnews.com/",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -1120,11 +1678,11 @@
       "discovery_notes": "TGScope Ukraine catalogue lists Kyiv INFO. Verify identity and whether this is a duplicate of similarly named channels.",
       "seed_source_url": "https://tgscope.io/telegram-channels-by-country/ukraine",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "Київ ІНФО | Новини Україна 🇺🇦",
       "description": "⚡️Актуальні події Києва\n💥 Яскравий контент 24/7\n👉 З питань реклами: @reklama_uabot\n💵 Платимо гроші за унікальний контент\n\n👉 Надсилай адміну контент: @novosty_kieva_bot\n@novosty_kiev_bot\n\n👇🏻 Посилання для запрошення друзів:\n\nhttps://t.me/+aAaZ8kQkkpo2ZjRi",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -1151,11 +1709,11 @@
       "discovery_notes": "TGScope Ukraine catalogue lists a second Kyiv INFO handle. Check for duplicate ownership or impersonation before enabling.",
       "seed_source_url": "https://tgscope.io/telegram-channels-by-country/ukraine",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "Київ ІНФО | Новини Україна 🇺🇦",
       "description": "⚡️Актуальні події Києва\n💥 Яскравий контент 24/7\n👉 З питань реклами: @reklama_uabot\n💵 Платимо гроші за унікальний контент\n\n👉 Надсилай адміну контент: @novosty_kieva_bot\n@novosty_kiev_bot\n\n👇🏻 Посилання для запрошення друзів:\n\nhttps://t.me/+aAaZ8kQkkpo2ZjRi",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -1182,11 +1740,42 @@
       "discovery_notes": "TGScope Ukraine catalogue lists a Kyiv-focused news channel. Verify operator and local reporting provenance.",
       "seed_source_url": "https://tgscope.io/telegram-channels-by-country/ukraine",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "Реальний Київ | Украина",
       "description": "Найбільший канал новин Києва\n\nнадіслати новину 👉 @novosti_kieva_bot\n\nПосилання для запрошення друзів👇\nhttps://t.me/+Pz7-AZhNANxhOGZi\n\nз реклами @alex_reklama_ua",
+      "accessible": true,
+      "review_status": "UNREVIEWED_CANDIDATE",
+      "collection_status": "NOT_ENABLED",
+      "enabled_for_collection": false
+    },
+    {
+      "username": "medmannews",
+      "candidate_url": "https://t.me/medmannews",
+      "discovery_regions": [
+        "MENA/global"
+      ],
+      "discovery_languages": [
+        "en"
+      ],
+      "discovery_queries": [
+        "TG Market public Bangladesh news directory"
+      ],
+      "discovery_providers": [
+        "tgmarket_public_directory"
+      ],
+      "candidate_category": "news_commentary_candidate",
+      "source_class": "news_commentary_candidate",
+      "source_affiliation": "reference_folder_source_identity_or_affiliation_unassessed",
+      "source_identity_status": "public_directory_or_telegram_preview_match_requires_review",
+      "discovery_notes": "Public Telegram preview matches the exact channel; mixed news, commentary and personal posts.",
+      "seed_source_url": "https://t.me/medmannews",
+      "first_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "directory_source_urls": [],
+      "accessible": true,
+      "title": "Mediterranean Man",
+      "description": "For news and coping.\n\nWe discuss life and report happenings.\n\nComments regarding posts or talks to the admin staff -> DM of the channel. \n\nIf you wish to contact the TEMPORARY owner for an ad, casual convo, or info, (dm @GeneralEgregious)",
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -1213,11 +1802,11 @@
       "discovery_notes": "TG Market Myanmar news directory lists Mekong News. Verify publisher identity, geographic focus and recent activity.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "MeKong News - မဲခေါင်သတင်း",
       "description": "ရှမ်းအရှေ့ အခြေစိုက် မဲခေါင်သတင်းဌာန၏ Telegram Channel",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -1244,11 +1833,11 @@
       "discovery_notes": "TG Market channel profile lists The Mindat Post among related local sources. Verify local coverage, operator and activity.",
       "seed_source_url": "https://tgmarket.io/c/khitthitnews",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "The Mindat Post",
       "description": "“The Mindat Post @MP” is an emerging local media outlet and established in November 2021 with the purpose to present the local news in Chin State and the news happening worldwide, in a timely manner.",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -1275,11 +1864,11 @@
       "discovery_notes": "TG Market Myanmar news directory lists Mizzima TV. Confirm this exact channel through publisher-controlled sources.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "Mizzima",
       "description": "Share & Follow us. https://mizzima.carrd.co Mizzima News brings you the latest news and insightful reports about Myanmar.",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -1306,11 +1895,11 @@
       "discovery_notes": "TG Market lists a Myanmar earthquake alert channel. Potential public-safety signal source; verify data provenance and avoid treating unconfirmed alerts as official warnings.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "MM Earthquake Alert",
       "description": "Stay Alert, Stay Safe: Earthquake Updates for Myanmar & Thailand\t\tWelcome to our earthquake alert channel! We provide timely notifications about seismic activity throughout Myanmar and Thailand.",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -1337,11 +1926,11 @@
       "discovery_notes": "TG Market Myanmar directory lists MRTV News Channel. Treat as state-media/official narrative candidate, not independent corroboration; verify exact ownership.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "MRTV News Channel",
       "description": "သတင်းကဏ္ဍသီးသန့် ကြည့်ရှုနားဆင်နိုင်ရန်",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -1368,11 +1957,42 @@
       "discovery_notes": "TG Market Myanmar news directory lists MT News / Myanmar Transparency. Verify whether the title accurately reflects the operator and editorial role.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "MT News _ Myanmar Transparency",
       "description": "MT News _ Myanmar Transparency",
+      "accessible": true,
+      "review_status": "UNREVIEWED_CANDIDATE",
+      "collection_status": "NOT_ENABLED",
+      "enabled_for_collection": false
+    },
+    {
+      "username": "MuslimUmmahWorld",
+      "candidate_url": "https://t.me/MuslimUmmahWorld",
+      "discovery_regions": [
+        "Global"
+      ],
+      "discovery_languages": [
+        "en"
+      ],
+      "discovery_queries": [
+        "TG Market public Bangladesh news directory"
+      ],
+      "discovery_providers": [
+        "tgmarket_public_directory"
+      ],
+      "candidate_category": "religious_news_aggregator_candidate",
+      "source_class": "religious_news_aggregator_candidate",
+      "source_affiliation": "reference_folder_source_identity_or_affiliation_unassessed",
+      "source_identity_status": "public_directory_match_requires_manual_identity_confirmation",
+      "discovery_notes": "A public channel named Muslim Ummah / Worldwide Muslim Ummah Update exists at this handle, but multiple similarly named channels exist; identity match to the user's folder remains provisional.",
+      "seed_source_url": "https://t.me/MuslimUmmahWorld",
+      "first_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "directory_source_urls": [],
+      "accessible": true,
+      "title": "Muslim Ummah",
+      "description": "Worldwide Muslim Ummah Update",
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -1399,11 +2019,11 @@
       "discovery_notes": "TG Market Myanmar directory lists MWD News. Determine whether it is state-affiliated, military-affiliated or independent before assigning a source class.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "MWD News",
       "description": "မြဝတီရုပ်မြင်သံကြား ပြည်တွင်းသတင်းများ",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -1430,11 +2050,11 @@
       "discovery_notes": "TG Market lists Myaelatt Athan as a Burmese news channel. Verify publisher identity, geographic coverage and activity.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "မြေလတ်အသံ - Myaelatt Athan",
       "description": "Sharing Information to the local",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -1461,11 +2081,11 @@
       "discovery_notes": "TG Market Myanmar news directory lists Myanmar Hard Talk. Review editorial stance, original reporting and source transparency.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "Myanmar Hard Talk",
       "description": "This is the News Channel",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -1492,11 +2112,11 @@
       "discovery_notes": "TG Market channel profile lists Myanmar Labour News among related channels. Verify whether it is a worker-rights newsroom, advocacy actor or aggregator.",
       "seed_source_url": "https://tgmarket.io/c/khitthitnews",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "Myanmar Labour News",
       "description": "အလုပ်သမားရေးရာသတင်းနှင့်လတ်တလောဖြစ်ပေါ်နေသော မြန်မာနိုင်ငံအခြေအနေများကို တိကျမှန်ကန်စွာဖော်ပြပေးနေသော သတင်းဌာနဖြစ်ပါသည်။https://my.wikipedia.org/wiki/Myanmar_Labor_News https://www.facebook.com/myanmarlabournews\nhttps://www.myanmarlabournews.com/en",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -1523,11 +2143,11 @@
       "discovery_notes": "TG Market Myanmar news directory lists Myanmar National Post. Determine ownership, state/political affiliation and sourcing practices.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "Myanmar National Post",
       "description": "သတင်း၊ ဆောင်းပါးများ\nဆက်သွယ်ပေးပို့လိုပါက\nViber Ph : 09692366274\nEmail : mmnationalpost@gmail.com",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -1554,11 +2174,11 @@
       "discovery_notes": "TG Market lists Myanmar Now. Verify official cross-links and current public preview; treat reporting as leads pending corroboration.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "Myanmar Now",
       "description": "Myanmar Now သည် မတရားမှုများကို စုံစမ်းဖော်ထုတ်သည့်သတင်းဌာနဖြစ်သည်။",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -1585,11 +2205,42 @@
       "discovery_notes": "TG Market Myanmar news directory lists Myanmar Update News. Review source provenance and reposting behaviour.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "Myanmar Update News",
       "description": "အမှောင်ထဲမှ အလင်းတစ်စ",
+      "accessible": true,
+      "review_status": "UNREVIEWED_CANDIDATE",
+      "collection_status": "NOT_ENABLED",
+      "enabled_for_collection": false
+    },
+    {
+      "username": "NationalJusticeParty",
+      "candidate_url": "https://t.me/NationalJusticeParty",
+      "discovery_regions": [
+        "India"
+      ],
+      "discovery_languages": [
+        "en"
+      ],
+      "discovery_queries": [
+        "TG Market public Bangladesh news directory"
+      ],
+      "discovery_providers": [
+        "tgmarket_public_directory"
+      ],
+      "candidate_category": "political_party_actor_candidate",
+      "source_class": "political_party_actor_candidate",
+      "source_affiliation": "self_described_official_party_update_channel",
+      "source_identity_status": "public_preview_matches_channel_description",
+      "discovery_notes": "Self-described official party update channel. Treat as actor-originated content; inspect posts and independently verify claims. Public preview contains at least one repost with a racial slur; do not amplify it.",
+      "seed_source_url": "https://t.me/s/NationalJusticeParty",
+      "first_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "directory_source_urls": [],
+      "accessible": true,
+      "title": "The National Justice Party 🎉",
+      "description": "This is the official update channel for The National Justice Party.",
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -1616,11 +2267,11 @@
       "discovery_notes": "TGScope Ukraine catalogue lists Ukrainian Telegram news. Review publisher identity, original sourcing and repost networks.",
       "seed_source_url": "https://tgscope.io/telegram-channels-by-country/ukraine",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "Український Телеграм 🇺🇦",
       "description": "⚡️Телеграм № 1 в Україні. Інформуємо — 24/7. \n\nПосилання для друзів - https://t.me/+V8VPwRkVmO9mODBi\n\nСпівпраця: @ceo_7777",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -1647,11 +2298,11 @@
       "discovery_notes": "TG Market Myanmar news directory lists NP News-Myanmar. Verify operator, editorial independence and recent activity.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "NP News-Myanmar",
       "description": "အမုန်းမပွားစေဘဲ အမှန်တရားသတင်းစကားများဖြင့် ရပ်တည်မည်",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -1678,7 +2329,7 @@
       "discovery_notes": "Directory-listed as an official channel but the organisation and account authenticity are unverified. Treat as an actor source until independently identified.",
       "seed_source_url": "https://tgmarket.io/countries/bd/news",
       "first_seen_utc": "2026-11-18T15:23:39.388565+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
       "title": "Nucleus 71 - Official",
       "description": "বঙ্গবন্ধু - মুক্তিযুদ্ধ - বাংলাদেশ 🇧🇩",
@@ -1709,11 +2360,73 @@
       "discovery_notes": "TGScope Ukraine catalogue lists Odesa INFO. Verify regional focus and whether incident reports are independently sourced.",
       "seed_source_url": "https://tgscope.io/telegram-channels-by-country/ukraine",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "Одесса INFO ⚓️ 🇺🇦 Новости | Одеса",
       "description": "🔞 Самые важные новости Одессы и области .Только Одесская аудитория❗️\n⚡️Реклама ➡️ @ua_4499\n\n⚡️Предложить новость АНОНИМНО / сотрудничество ➡️ @Odinfo_bot\n\n➡️ Ссылка на канал https://t.me/+_osZLpRD48c3ODYy",
+      "accessible": true,
+      "review_status": "UNREVIEWED_CANDIDATE",
+      "collection_status": "NOT_ENABLED",
+      "enabled_for_collection": false
+    },
+    {
+      "username": "osint613",
+      "candidate_url": "https://t.me/osint613",
+      "discovery_regions": [
+        "MENA/global"
+      ],
+      "discovery_languages": [
+        "en"
+      ],
+      "discovery_queries": [
+        "TG Market public Bangladesh news directory"
+      ],
+      "discovery_providers": [
+        "tgmarket_public_directory"
+      ],
+      "candidate_category": "osint_commentary_candidate",
+      "source_class": "osint_commentary_candidate",
+      "source_affiliation": "OSINT613_self_identified",
+      "source_identity_status": "public_telegram_preview_observed",
+      "discovery_notes": "Public preview identifies this as the official Telegram channel of OSINT613, covering Middle East, US and global geopolitics. Treat posts as leads; verify original sourcing, media provenance and incident details.",
+      "seed_source_url": "https://t.me/s/osint613",
+      "first_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "directory_source_urls": [],
+      "accessible": true,
+      "title": "Open Source Intel",
+      "description": "Official TG of OSINT613 \n\nMonitoring Real Time News & Open Source Intelligence\n\nMiddle East — US — Global Geopolitics\n\n🌐 osint613.com\n🐦 x.com/osint613",
+      "review_status": "UNREVIEWED_CANDIDATE",
+      "collection_status": "NOT_ENABLED",
+      "enabled_for_collection": false
+    },
+    {
+      "username": "outpostosint",
+      "candidate_url": "https://t.me/outpostosint",
+      "discovery_regions": [
+        "Global"
+      ],
+      "discovery_languages": [
+        "en"
+      ],
+      "discovery_queries": [
+        "TG Market public Bangladesh news directory"
+      ],
+      "discovery_providers": [
+        "tgmarket_public_directory"
+      ],
+      "candidate_category": "military_affairs_commentary_candidate",
+      "source_class": "military_affairs_commentary_candidate",
+      "source_affiliation": "reference_folder_source_identity_or_affiliation_unassessed",
+      "source_identity_status": "public_directory_match_requires_manual_identity_confirmation",
+      "discovery_notes": "Telemetrio profile matches The Outpost and describes military affairs, diplomacy, military history and intelligence topics. Public directory match; verify exact channel preview before collection.",
+      "seed_source_url": "https://t.me/outpostosint",
+      "first_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "directory_source_urls": [],
+      "accessible": true,
+      "title": "Telegram: Contact @outpostosint",
+      "description": "",
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -1740,11 +2453,11 @@
       "discovery_notes": "TG Market lists this as a People Media-related channel. Check relationship to @peoplemedianews and avoid double-counting syndicated posts.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "U Kyaw Soe Oo",
       "description": "News and Media (People Media)",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -1771,11 +2484,11 @@
       "discovery_notes": "TG Market Myanmar news directory lists People Media. Confirm publisher identity, editorial standards and relationship to similarly named channels.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "People Media",
       "description": "https://www.peoplemediamyanmar.com/",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -1802,11 +2515,11 @@
       "discovery_notes": "TG Market Myanmar news directory lists People's Spring. Confirm official publisher links and distinguish its editorial coverage from movement-originated claims.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "People's Spring",
       "description": "People's Spring ကို အတွေ့အကြုံရင့် သတင်းသမားတွေက စုစည်းတင်ဆက်နေတာဖြစ်ပါတယ်။\n\nFacebook >> https://www.facebook.com/LuduNwayOo\nYoutube >> https://www.youtube.com/@peoplespring\nWebsite >> https://www.ludunwayoo.com/",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -1833,11 +2546,11 @@
       "discovery_notes": "Telemetrio profile identifies PIB Fact Check. Verify official PIB cross-link; institutional fact-checks should be assessed through their cited evidence.",
       "seed_source_url": "https://telemetr.io/en/channels/1559076845-pib_factcheck",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "PIB Fact Check",
       "description": "Countering misinformation on Govt. policies/schemes. \n\nSuspect a Govt. related news to be fake? Send it to us at +918799711259/socialmedia@pib.gov.in",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -1864,11 +2577,11 @@
       "discovery_notes": "TG Market Myanmar news directory lists Popular Journal. Verify publisher identity and whether it offers original local reporting.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "Popular Journal",
       "description": "https://www.popularmyanmar.com/      \n\nhttps://www.youtube.com/c/PopularJournalOfficial",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -1895,11 +2608,11 @@
       "discovery_notes": "TG Market Myanmar news directory lists PAN/Positive Angle News. Verify operator, editorial standards and recent public activity.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "PAN",
       "description": "တိကျမှန်ကန် PAN \n\nViber 📬 09772979725\nEmail 💌 positiveanglenews.pans\n\n@PAN\n\nMyanmar Local Media. PAN is the offical media. PAN media is used on online platforms such as YouTube, Telegram, TikTok ,  VK and Viber Channel. Wellcome to PAN.",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -1926,11 +2639,11 @@
       "discovery_notes": "TGScope Palestine catalogue lists Ramallah Mix as a high-reach local news channel. Verify operator, editorial independence and incident sourcing.",
       "seed_source_url": "https://tgscope.io/telegram-channels-by-country/palestine",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "Ramallah Mix - رام الله مكس",
       "description": "موقع رام الله مكس الرسمي www.rmix.ps",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -1957,11 +2670,73 @@
       "discovery_notes": "TGScope Palestine catalogue lists a Ramallah news channel. Verify identity, activity and sourcing.",
       "seed_source_url": "https://tgscope.io/telegram-channels-by-country/palestine",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "رام الله الاخباري",
       "description": "في 28/11/2014 تأسس موقع رام الله الاخباري و دأب على نشر الاخبار على مدار الساعة و يعتبر موقع رام الله الاخباري من اكثر المواقع في بفلسطين التي يزورها القراء و متابعو الاخبار في الاراضي الفلسطينية حيث يزور الموقع شهرياً اكثر من مليون , و يقدم موقع رام الله",
+      "accessible": true,
+      "review_status": "UNREVIEWED_CANDIDATE",
+      "collection_status": "NOT_ENABLED",
+      "enabled_for_collection": false
+    },
+    {
+      "username": "relentl",
+      "candidate_url": "https://t.me/relentl",
+      "discovery_regions": [
+        "Global/South Asia"
+      ],
+      "discovery_languages": [
+        "bn"
+      ],
+      "discovery_queries": [
+        "TG Market public Bangladesh news directory"
+      ],
+      "discovery_providers": [
+        "tgmarket_public_directory"
+      ],
+      "candidate_category": "independent_security_commentary_candidate",
+      "source_class": "independent_security_commentary_candidate",
+      "source_affiliation": "reference_folder_source_identity_or_affiliation_unassessed",
+      "source_identity_status": "public_directory_or_telegram_preview_match_requires_review",
+      "discovery_notes": "TG Market profile matches Revan M and describes an independent security analyst; last post recorded 24 Jun 2026, so stale/inactive status needs review.",
+      "seed_source_url": "https://t.me/relentl",
+      "first_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "directory_source_urls": [],
+      "accessible": true,
+      "title": "Revan M",
+      "description": "Independent Security Analyst.\nTracking Conflict in SA, MENA, Eastern Europe.\nMuslim.",
+      "review_status": "UNREVIEWED_CANDIDATE",
+      "collection_status": "NOT_ENABLED",
+      "enabled_for_collection": false
+    },
+    {
+      "username": "ResistanceNewsUrdu",
+      "candidate_url": "https://t.me/ResistanceNewsUrdu",
+      "discovery_regions": [
+        "MENA/South Asia"
+      ],
+      "discovery_languages": [
+        "ur"
+      ],
+      "discovery_queries": [
+        "TG Market public Bangladesh news directory"
+      ],
+      "discovery_providers": [
+        "tgmarket_public_directory"
+      ],
+      "candidate_category": "advocacy_conflict_commentary_candidate",
+      "source_class": "advocacy_conflict_commentary_candidate",
+      "source_affiliation": "reference_folder_source_identity_or_affiliation_unassessed",
+      "source_identity_status": "public_directory_or_telegram_preview_match_requires_review",
+      "discovery_notes": "Telegram preview matches exact title/handle; self-description focuses on resistance-axis updates in West Asia.",
+      "seed_source_url": "https://t.me/ResistanceNewsUrdu",
+      "first_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "directory_source_urls": [],
+      "accessible": true,
+      "title": "Resistance News - Urdu",
+      "description": "پوری دنیا میں مزاحمتی مہور کے اپڈیٹس کا احاطہ کرنا جس میں بنیادی توجہ مغربی ایشیا 🇮🇷🇮🇶🇾🇪🇱🇧🇵🇸 پر ہے۔\n\nt.me/ResistanceNewsUrdu?direct",
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -1988,11 +2763,135 @@
       "discovery_notes": "TGScope Ukraine catalogue lists Rezident. Treat as a political/war commentary source with unverified affiliation and claims; not independent corroboration.",
       "seed_source_url": "https://tgscope.io/telegram-channels-by-country/ukraine",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "Резидент",
       "description": "Мы расскажем для чего создают иллюзию обмана и кто стоит за всеми процессами в обществе. Для связи по всем вопросам Rezidentukr@proton.me",
+      "accessible": true,
+      "review_status": "UNREVIEWED_CANDIDATE",
+      "collection_status": "NOT_ENABLED",
+      "enabled_for_collection": false
+    },
+    {
+      "username": "rezistancetrench",
+      "candidate_url": "https://t.me/rezistancetrench",
+      "discovery_regions": [
+        "MENA/global"
+      ],
+      "discovery_languages": [
+        "en"
+      ],
+      "discovery_queries": [
+        "TG Market public Bangladesh news directory"
+      ],
+      "discovery_providers": [
+        "tgmarket_public_directory"
+      ],
+      "candidate_category": "movement_aligned_mirror_candidate",
+      "source_class": "movement_aligned_mirror_candidate",
+      "source_affiliation": "self_described_ResistanceTrench_mirror",
+      "source_identity_status": "public_telegram_preview_observed",
+      "discovery_notes": "Public preview describes this as an official mirror that automatically copies posts from a main channel restricted in some regions. Treat as a mirror, not an independent source; trace each post to its original channel.",
+      "seed_source_url": "https://t.me/RezistanceTrench",
+      "first_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "directory_source_urls": [],
+      "accessible": true,
+      "title": "ResistanceTrench mirror",
+      "description": "Official mirror of ResistanceTrench channel. Our main channel was restricted in EU countries. Main channel posts are automatically copied into mirror channel.\n\nContact us via @ResistanceTrench_bot\nNew Discussion group: @ResistanceTrenchGC2",
+      "review_status": "UNREVIEWED_CANDIDATE",
+      "collection_status": "NOT_ENABLED",
+      "enabled_for_collection": false
+    },
+    {
+      "username": "rnintel",
+      "candidate_url": "https://t.me/rnintel",
+      "discovery_regions": [
+        "North America/global"
+      ],
+      "discovery_languages": [
+        "en"
+      ],
+      "discovery_queries": [
+        "TG Market public Bangladesh news directory"
+      ],
+      "discovery_providers": [
+        "tgmarket_public_directory"
+      ],
+      "candidate_category": "political_commentary_aggregator_candidate",
+      "source_class": "political_commentary_aggregator_candidate",
+      "source_affiliation": "Rerum_Novarum_self_described_nationalist_perspective",
+      "source_identity_status": "public_telegram_preview_observed",
+      "discovery_notes": "Public preview explicitly describes the channel as an intelligence aggregator from a nationalist perspective. Preserve that declared perspective in analysis; verify underlying reports independently.",
+      "seed_source_url": "https://t.me/s/rnintel",
+      "first_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "directory_source_urls": [],
+      "accessible": true,
+      "title": "Rerum Novarum // Intel, Breaking News, and Alerts 🇺🇸",
+      "description": "Rerum Novarum is an intelligence aggregator from a nationalist perspective. We provide our readers with a mixture of breaking news and geopolitical commentary.\n\nOwned by Stage Fright\n\nContact us:\nrerumnovarumintel@gmail.com",
+      "review_status": "UNREVIEWED_CANDIDATE",
+      "collection_status": "NOT_ENABLED",
+      "enabled_for_collection": false
+    },
+    {
+      "username": "rybar_in_english",
+      "candidate_url": "https://t.me/rybar_in_english",
+      "discovery_regions": [
+        "Global/Eurasia"
+      ],
+      "discovery_languages": [
+        "en"
+      ],
+      "discovery_queries": [
+        "TG Market public Bangladesh news directory"
+      ],
+      "discovery_providers": [
+        "tgmarket_public_directory"
+      ],
+      "candidate_category": "conflict_analysis_candidate",
+      "source_class": "conflict_analysis_candidate",
+      "source_affiliation": "Rybar_English_channel_self_identified",
+      "source_identity_status": "public_telegram_preview_observed",
+      "discovery_notes": "Public preview describes this as Rybar's official English Telegram channel. Conflict analysis and battlefield claims are perspective-specific and require independent corroboration.",
+      "seed_source_url": "https://t.me/rybar_in_english",
+      "first_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "directory_source_urls": [],
+      "accessible": true,
+      "title": "Rybar in English",
+      "description": "Rybar’s official English Telegram channel\n\nFind us on X: https://x.com/rybar_en\n\nFeedback: @rybar_feedback_bot",
+      "review_status": "UNREVIEWED_CANDIDATE",
+      "collection_status": "NOT_ENABLED",
+      "enabled_for_collection": false
+    },
+    {
+      "username": "societyuncensored",
+      "candidate_url": "https://t.me/societyuncensored",
+      "discovery_regions": [
+        "Global"
+      ],
+      "discovery_languages": [
+        "en"
+      ],
+      "discovery_queries": [
+        "TG Market public Bangladesh news directory"
+      ],
+      "discovery_providers": [
+        "tgmarket_public_directory"
+      ],
+      "candidate_category": "commentary_candidate",
+      "source_class": "commentary_candidate",
+      "source_affiliation": "publisher_identity_unassessed",
+      "source_identity_status": "public_telegram_preview_observed",
+      "discovery_notes": "Public preview confirms the channel title but provides limited publisher information. Review authorship, topic scope, repost patterns and sourcing before any monitoring decision.",
+      "seed_source_url": "https://t.me/SocietyUncensored",
+      "first_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "directory_source_urls": [],
+      "accessible": true,
+      "title": "Society - Uncensored",
+      "description": "@SocietyUncensored",
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -2019,11 +2918,11 @@
       "discovery_notes": "TG Market Myanmar news directory lists Star-MM. Verify identity and whether it is an original newsroom or aggregator.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "Star-MM",
       "description": "For Malaysia News@ Myanmar News",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -2050,7 +2949,7 @@
       "discovery_notes": "Directory-listed Bangla politics/student-movement channel. Operator, affiliation and source provenance are unverified.",
       "seed_source_url": "https://tgmarket.io/countries/bd/news",
       "first_seen_utc": "2026-11-18T15:23:39.388565+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
       "title": "Bangla Politics",
       "description": "Join our channel to get updates on all the news happening in Bangladesh after the July 24th movement and share it with your friends.\n\n#খবর #news #নিউজ #নির্বাচন২০২৬ #iranwarnews #Israelwarnews",
@@ -2081,11 +2980,42 @@
       "discovery_notes": "Directory-listed student movement channel. Treat as an actor-originated source for statements and mobilisation, not independent incident corroboration.",
       "seed_source_url": "https://tgmarket.io/countries/bd/news",
       "first_seen_utc": "2026-11-18T15:23:39.388565+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
       "title": "বৈষম্যবিরোধী ছাত্র আন্দোলন (অফিসিয়াল)",
       "description": "",
       "accessible": true,
+      "review_status": "UNREVIEWED_CANDIDATE",
+      "collection_status": "NOT_ENABLED",
+      "enabled_for_collection": false
+    },
+    {
+      "username": "TasawwufOfficial",
+      "candidate_url": "https://t.me/TasawwufOfficial",
+      "discovery_regions": [
+        "Bangladesh/global"
+      ],
+      "discovery_languages": [
+        "bn"
+      ],
+      "discovery_queries": [
+        "TG Market public Bangladesh news directory"
+      ],
+      "discovery_providers": [
+        "tgmarket_public_directory"
+      ],
+      "candidate_category": "religious_community_candidate",
+      "source_class": "religious_community_candidate",
+      "source_affiliation": "reference_folder_source_identity_or_affiliation_unassessed",
+      "source_identity_status": "public_directory_or_telegram_preview_match_requires_review",
+      "discovery_notes": "Telegram Register exact title match; self-description says non-political, non-profit awareness initiative. Not a conflict/news source by default.",
+      "seed_source_url": "https://t.me/TasawwufOfficial",
+      "first_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "directory_source_urls": [],
+      "accessible": true,
+      "title": "Tasawwuf - তাসাউফ",
+      "description": "তাসাউফ সম্পূর্ণ অরাজনৈতিক ও অলাভজনক একটি উদ্যোগ।এটি কোনো দল,গোষ্ঠী বা সংগঠন, কারো সাথে যুক্ত না।তাসাউফ ,আমাদের সমাজে ছড়িয়ে পড়া অশ্লীলতা,বিশেষ করে পর্নোগ্রাফির ভয়াবতা সম্পর্কে সচেতনা সৃষ্টির একটি প্ল্যাটফর্ম মাত্র।\n🔘 FB: www.facebook.com/tasawwufofficial",
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -2112,11 +3042,42 @@
       "discovery_notes": "TG Market channel profile lists Thanlyin Media among related local sources. Verify identity, locality and original reporting.",
       "seed_source_url": "https://tgmarket.io/c/khitthitnews",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "Thanlyin Media",
       "description": "Thanlyin Media မှ ကြိုဆိုပါတယ်။ နေ့စဥ်နောက်ဆုံးရ သတင်းတွေကိုအချိန်နဲ့တပြေးညီ တင်ဆက်ပေးပါမည်။",
+      "accessible": true,
+      "review_status": "UNREVIEWED_CANDIDATE",
+      "collection_status": "NOT_ENABLED",
+      "enabled_for_collection": false
+    },
+    {
+      "username": "thecockroachchannel",
+      "candidate_url": "https://t.me/thecockroachchannel",
+      "discovery_regions": [
+        "India"
+      ],
+      "discovery_languages": [
+        "hi"
+      ],
+      "discovery_queries": [
+        "TG Market public Bangladesh news directory"
+      ],
+      "discovery_providers": [
+        "tgmarket_public_directory"
+      ],
+      "candidate_category": "political_party_and_movement_actor_candidate",
+      "source_class": "political_party_and_movement_actor_candidate",
+      "source_affiliation": "self_described_official_Cockroach_Janta_Party_channel",
+      "source_identity_status": "public_preview_matches_self_description",
+      "discovery_notes": "Self-described official party channel, with political commentary, protest coverage and mobilisation posts. Treat as an actor/supporter source; verify event claims independently.",
+      "seed_source_url": "https://t.me/s/thecockroachchannel",
+      "first_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "directory_source_urls": [],
+      "accessible": true,
+      "title": "Cockroach Janta Party",
+      "description": "This is the official channel of cockroach janta party",
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -2143,11 +3104,11 @@
       "discovery_notes": "TG Market lists Western News and related Rakhine/Arakan media references. Confirm exact operator, regional focus and affiliation.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "Western News",
       "description": "Western News သတင်းဌာနသည် မတရားမှုများနှင့် လူ့အခွင့်ရေးချိုးဖောက်ခံရမှုများကို သတင်းမီဒီယာဂုဏ်သိက္ခာနှင့် အညီ စောင့်ကြည့် စုံစမ်းဖော်ထုတ်တင်ပြသည့် မြန်မာနိုင်ငံအခြေစိုက် သတင်းဌာနတစ်ခုဖြစ်သည်။",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -2174,11 +3135,11 @@
       "discovery_notes": "TGScope Ukraine catalogue lists Times of Ukraine. Verify publisher identity and editorial independence; screen conflict posts for tactical details.",
       "seed_source_url": "https://tgscope.io/telegram-channels-by-country/ukraine",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "Times of Ukraine: Новини | Україна",
       "description": "Політичне та незалежне медіа, якому довіряють.\n\n\nСпівпраця — @tu_marketer\n\nНадіслати новину — @tu_national_bot",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -2205,11 +3166,42 @@
       "discovery_notes": "Directory-listed news channel. Publisher identity, editorial standards, activity and original reporting are unverified.",
       "seed_source_url": "https://tgmarket.io/countries/bd/news",
       "first_seen_utc": "2026-11-18T15:23:39.388565+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
       "title": "𝗧𝗶𝗺𝗲𝘀 𝗼𝗳 𝗕𝗮𝗻𝗴𝗹𝗮𝗱𝗲𝘀𝗵",
       "description": "যুদ্ধ, সংঘাত, রাজনীতি, ইসলাম, নিউজ বিশ্লেষণ ||\nদেশ-বিদেশের সকল সংবাদের পূর্নাঙ্গ প্লাটফর্ম \"𝗧𝗶𝗺𝗲𝘀 𝗼𝗳 𝗕𝗮𝗻𝗴𝗹𝗮𝗱𝗲𝘀𝗵\" এ আপনাকে স্বাগতম।\nচ্যানেল লিংক ⤵️ https://t.me/+-ugHjfXOamw0NmNl",
       "accessible": true,
+      "review_status": "UNREVIEWED_CANDIDATE",
+      "collection_status": "NOT_ENABLED",
+      "enabled_for_collection": false
+    },
+    {
+      "username": "TimesOfEra",
+      "candidate_url": "https://t.me/TimesOfEra",
+      "discovery_regions": [
+        "Bangladesh"
+      ],
+      "discovery_languages": [
+        "bn"
+      ],
+      "discovery_queries": [
+        "TG Market public Bangladesh news directory"
+      ],
+      "discovery_providers": [
+        "tgmarket_public_directory"
+      ],
+      "candidate_category": "news_candidate",
+      "source_class": "news_candidate",
+      "source_affiliation": "reference_folder_source_identity_or_affiliation_unassessed",
+      "source_identity_status": "public_directory_or_telegram_preview_match_requires_review",
+      "discovery_notes": "Telegram Register lists exact channel title and handle; verify current editorial identity and activity.",
+      "seed_source_url": "https://t.me/TimesOfEra",
+      "first_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "directory_source_urls": [],
+      "accessible": true,
+      "title": "Times Of Era",
+      "description": "দেশ, জাতি, মুসলিম উম্মাহ, ফিলিস্তিন ইস্যু সহ বিশ্বের সকল গুরুত্বপূর্ণ বিষয় সম্পর্কে খবরাখবর এবং বিশ্লেষণ ধর্মী পর্যালোচনা পেতে চোখ রাখুন আমাদের চ্যানেলে [Times Of Era]",
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -2236,11 +3228,11 @@
       "discovery_notes": "TGScope Ukraine country catalogue lists this large Ukrainian news channel. Review original reporting, ownership, reposts and any operationally sensitive conflict content.",
       "seed_source_url": "https://tgscope.io/telegram-channels-by-country/ukraine",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "Труха⚡️Україна",
       "description": "⚡️Актуальні події України.\n✌️З питань реклами:\n@Tr_PromoUa_bot\n\nІдентифікатор медіа – R40-06805\nДетальніше https://telegra.ph/TruhaUkraina-01-16\n\n👇🏻Надіслати контент:\n@truexausend_bot\n\nПосилання для друзів: https://t.me/+bGpZFNsAYzAxNTli\n\nКонтент 21+",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -2267,11 +3259,11 @@
       "discovery_notes": "TGScope Ukraine catalogue lists Ukraine Online. Review editorial identity, political alignment and reposting before use.",
       "seed_source_url": "https://tgscope.io/telegram-channels-by-country/ukraine",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "Україна Online: Новини | Політика",
       "description": "Інсайди, політика, новини  — все в одному місці\n\nСпівпраця — @anonimnoua",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -2298,11 +3290,11 @@
       "discovery_notes": "TG Market Myanmar directory lists Voice of Myanmar. Verify publisher identity and whether this account is the outlet's official public feed.",
       "seed_source_url": "https://tgmarket.io/countries/mm/news",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "Voice of Myanmar",
       "description": "ONLINE MEDIA",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -2329,11 +3321,104 @@
       "discovery_notes": "TGScope Ukraine catalogue lists Real War/Ukraine news. Treat as an unverified conflict aggregator; exclude granular real-time troop or targeting information.",
       "seed_source_url": "https://tgscope.io/telegram-channels-by-country/ukraine",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "Реальна Війна | Україна | Новини",
       "description": "Новини, зведення з фронту, ключові події – розповідаємо про все, що потрібно знати в Україні.\n\n\nДля зв’язку – @media_ua\n\nНадіслати контент – @voynarealnews_bot",
+      "accessible": true,
+      "review_status": "UNREVIEWED_CANDIDATE",
+      "collection_status": "NOT_ENABLED",
+      "enabled_for_collection": false
+    },
+    {
+      "username": "warcabinet",
+      "candidate_url": "https://t.me/warcabinet",
+      "discovery_regions": [
+        "Global"
+      ],
+      "discovery_languages": [
+        "en"
+      ],
+      "discovery_queries": [
+        "TG Market public Bangladesh news directory"
+      ],
+      "discovery_providers": [
+        "tgmarket_public_directory"
+      ],
+      "candidate_category": "conflict_commentary_candidate",
+      "source_class": "conflict_commentary_candidate",
+      "source_affiliation": "publisher_identity_unverified",
+      "source_identity_status": "public_telegram_preview_and_directory_observed",
+      "discovery_notes": "Public profile describes reporting, battlefield analysis and intelligence-driven conflict coverage. Publisher identity and editorial standards are not independently established; treat as an aggregator/commentary lead.",
+      "seed_source_url": "https://t.me/warcabinet",
+      "first_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "directory_source_urls": [],
+      "accessible": true,
+      "title": "WarCabinet",
+      "description": "WarCabinet delivers timely reporting, battlefield analysis, and intelligence-driven coverage of global conflicts. From breaking developments to strategic assessments, we provide the context behind the headlines.\n\nContact/Feedback: @WarCabinetBot",
+      "review_status": "UNREVIEWED_CANDIDATE",
+      "collection_status": "NOT_ENABLED",
+      "enabled_for_collection": false
+    },
+    {
+      "username": "world24x7hr",
+      "candidate_url": "https://t.me/world24x7hr",
+      "discovery_regions": [
+        "Global"
+      ],
+      "discovery_languages": [
+        "en"
+      ],
+      "discovery_queries": [
+        "TG Market public Bangladesh news directory"
+      ],
+      "discovery_providers": [
+        "tgmarket_public_directory"
+      ],
+      "candidate_category": "news_aggregator_candidate",
+      "source_class": "news_aggregator_candidate",
+      "source_affiliation": "reference_folder_source_identity_or_affiliation_unassessed",
+      "source_identity_status": "public_directory_or_telegram_preview_match_requires_review",
+      "discovery_notes": "Telegram preview matches exact title and handle; global news feed.",
+      "seed_source_url": "https://t.me/world24x7hr",
+      "first_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "directory_source_urls": [],
+      "accessible": true,
+      "title": "World24x7hr",
+      "description": "We share real events and news happening globally, some of which may be disturbing to certain viewers sometimes. We don't share any illegal stuff.\nhttps://paypal.me/world24x7hr\nhttps://coff.ee/world24x7hr\n\nSponsored/promo post/Cross promo/Report - @boiyaah",
+      "review_status": "UNREVIEWED_CANDIDATE",
+      "collection_status": "NOT_ENABLED",
+      "enabled_for_collection": false
+    },
+    {
+      "username": "worldwarreport",
+      "candidate_url": "https://t.me/worldwarreport",
+      "discovery_regions": [
+        "Palestine/global"
+      ],
+      "discovery_languages": [
+        "bn"
+      ],
+      "discovery_queries": [
+        "TG Market public Bangladesh news directory"
+      ],
+      "discovery_providers": [
+        "tgmarket_public_directory"
+      ],
+      "candidate_category": "conflict_news_aggregator_candidate",
+      "source_class": "conflict_news_aggregator_candidate",
+      "source_affiliation": "reference_folder_source_identity_or_affiliation_unassessed",
+      "source_identity_status": "public_directory_or_telegram_preview_match_requires_review",
+      "discovery_notes": "TG Market profile matches title; Bangla conflict-news aggregator with last post recorded 14 Nov 2026.",
+      "seed_source_url": "https://t.me/worldwarreport",
+      "first_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
+      "directory_source_urls": [],
+      "accessible": true,
+      "title": "World War Report | Middle East Gaza",
+      "description": "Beyond the Headlines • Open Source Intelligence • Real-Time Tracking of Global Conflicts • Military Operations • Battlefield Developments • Strategic Geopolitical Movements • We Share War Picture And Videos\n\n\nAdmin Contact: t.me/WorldWarReport?direct",
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
@@ -2360,11 +3445,11 @@
       "discovery_notes": "TG Market channel profile lists Yangon Division News 2025. Check whether the name, date and current publisher identity are consistent.",
       "seed_source_url": "https://tgmarket.io/c/khitthitnews",
       "first_seen_utc": "2026-11-18T16:02:00.015632+00:00",
-      "last_seen_utc": "2026-11-18T16:02:00.015632+00:00",
+      "last_seen_utc": "2026-11-18T16:18:11.293772+00:00",
       "directory_source_urls": [],
-      "accessible": true,
       "title": "Yangon Division News 2025",
       "description": "ရန်ကုန်တိုင်းဒေသကြီးသတင်းများကို တိကျမှန်ကန်စွာဖော်ပြပေးလျှက်ရှိပြီး ရန်ကုန်တိုင်းအစိုးရအဖွဲ့ဆောင်ရွက်ချက်များ၏ဂုဏ်တစ်ရပ်ကိုမြှင့်တင်မယ်။",
+      "accessible": true,
       "review_status": "UNREVIEWED_CANDIDATE",
       "collection_status": "NOT_ENABLED",
       "enabled_for_collection": false
