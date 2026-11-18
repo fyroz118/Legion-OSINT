@@ -46,3 +46,6 @@ requirements.txt
 ```
 
 This is not a validated intelligence product and does not guarantee comprehensive Telegram coverage, accurate geolocation, or verified incident reporting.
+
+## Beginner Android setup
+See [ANDROID_SETUP.md](ANDROID_SETUP.md) for a step-by-step Pydroid 3 guide. The repository also includes `app/setup_check.py` and `run_preflight.py` for a local configuration check. The checker reports whether required settings are present but never prints their values.
