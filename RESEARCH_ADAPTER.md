@@ -12,7 +12,7 @@ Legion-OSINT uses the Tavily Search API as its first configurable public-web dis
 ## What it does not do
 - It does not search every website or every post on X, Facebook, YouTube or Telegram.
 - Public social posts are returned only when indexed and surfaced by the provider; direct platform API adapters are separate work.
-- Provider publication-date filters do not prove the incident happened on that date.
+- Search date filters use provider publication dates; known timestamps are normalized to Asia/Dhaka for the reporting-day check. A publication date still does not prove the incident happened on that date. Undated results are retained but their date remains unknown.
 - Search ranking is not verification. Search results are leads, not incidents or facts.
 - It does not automatically upgrade evidence status, assign confidence or produce a verified report.
 
