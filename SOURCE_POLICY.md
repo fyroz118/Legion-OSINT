@@ -58,6 +58,15 @@ The active collector allowlist is `config/channels.json`. The wider source regis
 - [OSINTdefender](https://t.me/s/osintdefender): public page confirmed, but coverage can include granular military and weapons information. Not enabled for automated ingestion.
 - [Molfar](https://t.me/molfar_global): surfaced in a third-party catalogue; direct identity and current public access require confirmation.
 
+
+## Political parties, movements and partisan networks
+
+Political-party and movement channels are deliberately included as a source class, including official party accounts, state/regional units, media cells, student/youth wings, elected representatives, activists and supporter networks. Examples of search coverage include Bangladesh Awami League, BNP and Jamaat-e-Islami; India's BJP, Indian National Congress, AAP, CPI(M), DMK, TDP and other regional parties/movements; and equivalent networks in other regions.
+
+Classify these as **political actor sources** unless there is clear evidence that the account is an independent newsroom. Record the claimed party, wing, office or movement relationship separately from whether the account is authentic. A party channel is useful evidence of that party's own statements, mobilisation and public messaging; it is not independent corroboration of its allegations or descriptions of events. Do not infer membership, beliefs or political affiliation of private individuals from follows, reposts or channel membership.
+
+The candidate seed pool stores party, movement, state-media, local-news and community leads with an unverified identity status. Every candidate remains disabled until an analyst confirms the public page, account control where possible, recent activity, source role, bias and safety profile.
+
 ## Expansion standard
 
 For every candidate, verify the exact public Telegram username/page, operator or affiliation where knowable, languages, geographic scope, current activity, content safety, and bias/reliability notes. Seek local and regional unofficial sources first, then add official institutions for parallel confirmation. Never invent channel handles or activate candidates based only on directory listings.
