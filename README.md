@@ -57,3 +57,10 @@ The collector reads enabled usernames in [config/channels.json](config/channels.
 - Disclose inaccessible channels and language/geographic gaps; never claim comprehensive coverage.
 
 Other repository components include a separate Telegram bot and older authenticated collection/review modules; they are not used by this workflow. Actions artifacts are retained for 14 days. Never commit secrets, session strings or database files.
+
+
+## Automated free Telegram channel discovery
+
+Use [Discover Telegram channel candidates](../../actions/workflows/discover-telegram-channels.yml) to run a no-secret, no-login discovery pass. It searches public DuckDuckGo HTML index results for Telegram channel links across Bangladesh-first multilingual regional queries, deduplicates usernames, checks up to 250 public channel previews, and uploads CSV/JSON candidate registries as a 30-day artifact.
+
+**Important:** this is search-engine-index discovery, not Telegram's authenticated global channel search. Index coverage is incomplete and biased. Candidates are labelled `UNREVIEWED_CANDIDATE`, source class/affiliation remain unknown, and `enabled_for_collection=false`. It never modifies `config/channels.json` or auto-promotes candidates. Review and verify a candidate before enabling it. The discovery workflow is separate from daily report collection and requires no Gemini key, Telegram credentials, bot token or paid API.
