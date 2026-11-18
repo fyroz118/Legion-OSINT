@@ -46,7 +46,7 @@ def build_query_plan(report_date, max_queries=None):
             {"region": region, "language_scope": language, "query": unofficial,
              "source_focus": "unofficial_public", "claim_type": "EVENT_NEWS"},
             {"region": region, "language_scope": language, "query": official,
-             "source_focus": "official_institutional", "claim_type": "EVENT_NEWS"},
+             "source_focus": "unofficial_public" if region == "Global misinformation" else "official_institutional", "claim_type": "EVENT_NEWS"},
             {"region": region, "language_scope": language, "query": rumour,
              "source_focus": "unofficial_public", "claim_type": "RUMOUR_WATCH"},
         ])
@@ -55,8 +55,8 @@ def build_query_plan(report_date, max_queries=None):
          "source_focus": "unofficial_public", "claim_type": "EVENT_NEWS"},
         {"region": "Bangladesh", "language_scope": "bn", "query": "বাংলাদেশ আজ গুজব ভাইরাল দাবি যাচাই স্থানীয় সংবাদ",
          "source_focus": "unofficial_public", "claim_type": "RUMOUR_WATCH"},
-        {"region": "Bangladesh", "language_scope": "bn+en", "query": "Bangladesh district upazila official police administration incident update",
-         "source_focus": "official_institutional", "claim_type": "EVENT_NEWS"},
+        {"region": "Bangladesh", "language_scope": "bn+en", "query": "Bangladesh district upazila local reporters incident update eyewitness",
+         "source_focus": "unofficial_public", "claim_type": "EVENT_NEWS"},
     ])
     # Additional 40-query expansion for sessions explicitly configured above the 60-query default.
     # The 28:12 focus mix preserves the 70:30 discovery-attention target at the 100-query cap.
