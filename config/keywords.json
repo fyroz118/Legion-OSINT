@@ -1,0 +1,28 @@
+{
+  "bangladesh": [
+    "Bangladesh",
+    "ঢাকা",
+    "চট্টগ্রাম",
+    "রাজশাহী",
+    "খুলনা",
+    "সহিংসতা",
+    "সংঘর্ষ",
+    "বিক্ষোভ",
+    "নিহত",
+    "আহত",
+    "অবরোধ"
+  ],
+  "global": [
+    "armed clash",
+    "airstrike",
+    "shelling",
+    "communal violence",
+    "protest",
+    "riot",
+    "displacement",
+    "coup",
+    "border clash",
+    "attack on journalists",
+    "political violence"
+  ]
+}
