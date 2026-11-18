@@ -1,47 +1,33 @@
 # Legion-OSINT deployment
 
-## Recommended: on-demand Telegram + Gemini workflow (no VPS)
+## Recommended: on-demand public Telegram + Gemini workflow (no VPS)
 
-The recommended mode for occasional reporting is the manual GitHub Actions workflow at `.github/workflows/on-demand-research.yml`. A temporary GitHub-hosted runner starts only when manually triggered and shuts down after the report artifacts are created.
+The manual GitHub Actions workflow starts a temporary runner only when triggered. It reads configured public Telegram channel preview pages and uses Gemini for synthesis. No persistent host or Telegram account session is required.
 
 ### One-time setup
 
-1. Obtain Telegram API ID and API hash through Telegram's official developer portal.
-2. Install Python 3.11 and project dependencies on a trusted local environment.
-3. Run `python scripts/export_telegram_session.py`. Complete the Telegram login in that local terminal. The script prints a Telethon StringSession.
-4. Treat the session string as a full account credential. Never send it in chat, commit it, or store it in a public file. Revoke it in Telegram if exposed.
-5. Open the GitHub repository's **Settings → Secrets and variables → Actions** and add:
-   - `TELEGRAM_API_ID`
-   - `TELEGRAM_API_HASH`
-   - `TELETHON_SESSION_STRING`
-   - `GEMINI_API_KEY`
+1. Create a Gemini API key at https://aistudio.google.com/app/apikey.
+2. In the GitHub repository, open **Settings → Secrets and variables → Actions**.
+3. Add a repository secret named `GEMINI_API_KEY`. Never put the key in chat, workflow inputs or committed files.
 
-Do not add these values as workflow inputs or commit them to the repository.
+No Telegram developer portal, API ID/hash, Telethon StringSession, local terminal setup or VPS is required.
 
 ### Run a report
 
 1. Open **Actions → Run Legion-OSINT on demand → Run workflow**.
 2. Enter the reporting date in `YYYY-MM-DD` (Asia/Dhaka).
-3. Choose the maximum recent messages inspected per configured channel: 100, 300 or 500.
-4. Start the workflow and download the artifact named `legion-osint-telegram-gemini-YYYY-MM-DD`.
+3. Choose 100, 300 or 500 as the maximum number of messages inspected per configured public channel.
+4. Start the workflow and download `legion-osint-public-telegram-gemini-YYYY-MM-DD`.
 
-Artifacts:
-- `daily_intelligence_report.md`: Gemini-assisted ten-section report.
-- `individual_source_briefs.md`: source-specific Telegram post briefs.
-- `telegram_posts.csv`: collected-post register.
-- `collection_summary.json`: channel counts and errors.
+Artifacts: ten-section report, individual source briefs, CSV evidence register and JSON coverage summary.
 
 ### Coverage and verification limits
 
-- This workflow uses Telethon and Gemini only. It does not use Tavily or perform general web search.
-- It reads configured accessible public channels in `config/channels.json` and also runs 18 event-keyword global searches across Telegram's publicly indexed chats. Each global query is capped at 50 results. Global search can discover posts outside the configured list, but it is query-dependent, indexed and not exhaustive.
-- The collector inspects only the most recent configured number of messages per channel and retains posts published on the requested date in Asia/Dhaka.
-- The Telethon StringSession is highly sensitive. Anyone possessing it may access the associated Telegram account. Use a dedicated account if appropriate, restrict repository access, and revoke the session if compromised.
-- Gemini summarises and structures supplied posts; it is not an independent fact-checker. Treat posts as claims, label rumours, and corroborate independently before publication.
-- The workflow does not fabricate a 50-brief quota. If the configured sources yield fewer posts, fewer briefs are produced.
-- Artifacts are retained for 14 days. The workflow uses a temporary database; analyst review state is not preserved between runs.
-- The optional Telegram command bot is not started by this workflow.
+- Collection uses public Telegram preview pages for configured channels only.
+- It does not use authenticated Telegram access or Telegram global search; it does not directly search X, Facebook, YouTube or general news websites.
+- Public preview history and pagination may be incomplete or change; pages may be unavailable or rate-limited.
+- Gemini structures supplied posts but is not an independent fact-checker. Treat posts as claims, label rumours and corroborate independently.
+- The workflow does not fabricate a 50-brief quota.
+- Artifacts are retained for 14 days; the database is temporary and analyst review state is not preserved.
 
-## Optional persistent deployment
-
-A VPS is not required for the on-demand workflow. A persistent Linux host is only needed if continuous Telegram collection or an always-available Telegram command bot is later desired. Do not provision a server unless that requirement changes.
+A VPS is unnecessary unless continuous collection or an always-available Telegram bot becomes a requirement.
