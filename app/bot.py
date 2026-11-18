@@ -8,7 +8,8 @@ from telegram.ext import Application, CommandHandler
 from app.database import initialize, count_posts, search_posts, source_mix_counts
 from app.gemini_assistant import ask
 from app.report_builder import build_report_draft
-from app.research import (run_research, get_research_leads, get_research_coverage,\n                          review_queue, review_lead, link_reviewed_lead_to_incident)
+from app.research import (run_research, get_research_leads, get_research_coverage,
+                          review_queue, review_lead, link_reviewed_lead_to_incident)
 
 load_dotenv()
 TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "")
@@ -327,7 +328,8 @@ def main():
         ("start", start), ("help", help_cmd), ("status", status),
         ("daily", daily), ("bangladesh", bangladesh),
         ("search", search_cmd), ("ask", ask_cmd), ("report", report_cmd),
-        ("research", research_cmd), ("briefs", briefs_cmd), ("leads", leads_cmd), ("coverage", coverage_cmd),\n        ("reviewqueue", reviewqueue_cmd), ("reviewlead", reviewlead_cmd), ("linklead", linklead_cmd)
+        ("research", research_cmd), ("briefs", briefs_cmd), ("leads", leads_cmd), ("coverage", coverage_cmd),
+        ("reviewqueue", reviewqueue_cmd), ("reviewlead", reviewlead_cmd), ("linklead", linklead_cmd)
     ]:
         app.add_handler(CommandHandler(name, fn))
     app.run_polling(drop_pending_updates=True)
