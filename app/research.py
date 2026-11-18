@@ -50,7 +50,27 @@ def build_query_plan(report_date, max_queries=None):
             {"region": region, "language_scope": language, "query": rumour,
              "source_focus": "unofficial_public", "claim_type": "RUMOUR_WATCH"},
         ])
-    # 19 regions/topics x 3 = 57; add three Bangladesh-specific local-language searches.
+    # Additional 40-query expansion for sessions explicitly configured above the 60-query default.
+    # The 28:12 focus mix preserves the 70:30 discovery-attention target at the 100-query cap.
+    for index, (region, language, *_rest) in enumerate(REGION_QUERIES):
+        plan.append({
+            "region": region, "language_scope": language,
+            "query": f"{region} local journalist eyewitness community monitor incident update today",
+            "source_focus": "unofficial_public", "claim_type": "EVENT_NEWS"
+        })
+        if index < 9:
+            plan.append({
+                "region": region, "language_scope": language,
+                "query": f"{region} rumour watch unverified viral allegation fact check today",
+                "source_focus": "unofficial_public", "claim_type": "RUMOUR_WATCH"
+            })
+        if index < 12:
+            plan.append({
+                "region": region, "language_scope": language,
+                "query": f"{region} government police UN institutional official situation update today",
+                "source_focus": "official_institutional", "claim_type": "EVENT_NEWS"
+            })
+    # The base plan is 60; 40 expansion queries are appended for opt-in high-volume runs.
     plan.extend([
         {"region": "Bangladesh", "language_scope": "bn", "query": "বাংলাদেশ আজ জেলা উপজেলা স্থানীয় সংঘর্ষ বিক্ষোভ হামলা প্রত্যক্ষদর্শী সংবাদ",
          "source_focus": "unofficial_public", "claim_type": "EVENT_NEWS"},
