@@ -83,7 +83,7 @@ def main():
     temporary.write_text(json.dumps(payload, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     temporary.replace(DEST)
     print(json.dumps({
-        "feed": str(DEST.relative_to(ROOT)),
+        "feed": str(DEST.relative_to(ROOT)) if DEST.is_relative_to(ROOT) else str(DEST),
         "posts": len(posts),
         "configured_channels": len(channels),
         "collection_errors": len(errors),
