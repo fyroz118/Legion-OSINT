@@ -1,0 +1,10 @@
+{
+  "channels": [
+    {
+      "username": "REPLACE_WITH_REVIEWED_PUBLIC_CHANNEL",
+      "priority": "bangladesh",
+      "language": "unknown",
+      "notes": "Placeholder only. Replace with an accessible public channel you have reviewed."
+    }
+  ]
+}
