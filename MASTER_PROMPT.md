@@ -4,7 +4,7 @@
 
 The on-demand workflow reads **public Telegram web preview pages** for the finite channel list in `config/channels.json`, then uses **Gemini** to organise and synthesise evidence. No Telegram account session, Telegram API ID/hash, Telegram global search, Tavily or general web search is used.
 
-Collection is limited to configured public channels and whatever history Telegram exposes through public preview pages at run time. Pagination is bounded. The workflow does not directly search X, Facebook, YouTube or news websites. Never claim comprehensive platform or global coverage.
+Collection is limited to the 13 configured public channels in `config/channels.json` and whatever history Telegram exposes through public preview pages at run time. The expanded registry prioritises Bangladesh and adds South Asian conflict monitoring plus Ukrainian official and independent media. Pagination is bounded. Per-channel diagnostics record parsed preview posts, timestamps, report-date matches, preview date range and stop reason. The workflow does not directly search X, Facebook, YouTube or news websites. Never claim comprehensive platform or global coverage.
 
 ## Reporting objective
 
@@ -31,7 +31,7 @@ Preserve the original Telegram channel/message URL, publication timestamp in Asi
 
 Distinguish publication date from incident date. If incident date, location, actors, casualty figures or attribution are absent, mark them unknown. Do not infer them.
 
-Treat every post as a claim or lead, not a verified fact. Gemini is an analysis assistant, not an independent fact-checker. Reposts and copied statements are not independent corroboration. Seek separate source provenance before calling reports corroborated.
+Treat every post as a claim or lead, not a verified fact. Gemini is an analysis assistant, not an independent fact-checker. Transient rate-limit and service-overload errors receive bounded exponential-backoff retries; persistent failures trigger an evidence-preservation fallback. Reposts and copied statements are not independent corroboration. Seek separate source provenance before calling reports corroborated.
 
 Rumours and allegations may be included with a clear **UNVERIFIED RUMOUR** or **DISPUTED** label, original source link, timestamp and known verification gaps. Inclusion does not endorse the claim. Keyword flags are review prompts, not reliable rumour classification.
 
