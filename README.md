@@ -51,3 +51,34 @@ A default 60-query basic session may consume up to 60 basic search credits. It c
 
 ## Setup
 See CLOUD_DEPLOYMENT.md. Set TAVILY_API_KEY, TELEGRAM_BOT_TOKEN and TELEGRAM_ALLOWED_USER_IDS in private deployment environment variables. Never commit credentials or Telegram session files. No live search, cloud deployment or 24/7 uptime is claimed until credentials and runtime are configured and tested.
+
+## Analyst incident workflow
+
+The incident ledger is human-gated. A source lead must first be marked `REVIEWED` and assigned an analyst-reviewed source class. Then create an incident draft:
+
+```text
+/incidentdraft LEAD_ID INCIDENT_ID COUNTRY CATEGORY SOURCE_GROUP description words...
+```
+
+Use a stable source-group label for the original publisher/outlet (for example `local-outlet-a`). This is a manual independence assessment; syndicated copies of one original report must not be counted as independent corroboration. The command creates a `DRAFT` incident with `UNVERIFIED` status and attaches the reviewed lead as its first source.
+
+Attach further reviewed sources to the existing incident:
+
+```text
+/linklead LEAD_ID INCIDENT_ID corroboration
+/linklead LEAD_ID INCIDENT_ID contradiction
+```
+
+Assign each source's independence group based on provenance when maintaining the ledger. A source-role label does not itself prove independence or truth.
+
+Review workflow records:
+
+```text
+/incidentqueue YYYY-MM-DD
+/approveincident INCIDENT_ID approved rationale words...
+/approveincident INCIDENT_ID rejected rationale words...
+```
+
+Approval is only permission to include an incident record in the report. It does not upgrade `verification_status`, confidence, or factual certainty. The report builder includes only `APPROVED` workflow records; `DRAFT` and `REJECTED` records are excluded. Rumours must remain explicitly labelled as unverified. Do not approve an item merely because multiple outlets repeat the same original claim.
+
+Existing incident rows are migrated into the workflow as `DRAFT` on first initialization, so prior records are not silently published.
