@@ -513,7 +513,7 @@
       "default_evidence_status": "UNVERIFIED",
       "enabled": true,
       "notes": "Reference-folder source. Public preview identifies this as the official Telegram channel of OSINT613, covering Middle East, US and global geopolitics. Treat posts as leads; verify original sourcing, media provenance and incident details.",
-      "source_class": "osint_commentary_candidate",
+      "source_class": "unofficial",
       "monitoring_weight": "high",
       "baseline_reference": true,
       "baseline_display_name": "Open Source Intel"
@@ -527,7 +527,7 @@
       "default_evidence_status": "UNVERIFIED",
       "enabled": true,
       "notes": "Reference-folder source. Public preview describes this as Rybar's official English Telegram channel. Conflict analysis and battlefield claims are perspective-specific and require independent corroboration.",
-      "source_class": "conflict_analysis_candidate",
+      "source_class": "unofficial",
       "monitoring_weight": "standard",
       "baseline_reference": true,
       "baseline_display_name": "Rybar in English"
@@ -541,7 +541,7 @@
       "default_evidence_status": "UNVERIFIED",
       "enabled": true,
       "notes": "Reference-folder source. Public channel index and Telegram preview identify the exact title and handle; viewpoint-specific geopolitical commentary.",
-      "source_class": "geopolitical_commentary_candidate",
+      "source_class": "other",
       "monitoring_weight": "standard",
       "baseline_reference": true,
       "baseline_display_name": "Grandmasters of Geopolitics"
@@ -555,7 +555,7 @@
       "default_evidence_status": "UNVERIFIED",
       "enabled": true,
       "notes": "Reference-folder source. Public preview identifies ISN as a digital news network covering global and Indian affairs, OSINT and political developments.",
-      "source_class": "independent_osint_media_candidate",
+      "source_class": "unofficial",
       "monitoring_weight": "standard",
       "baseline_reference": true,
       "baseline_display_name": "India Sentinel Network"
@@ -569,7 +569,7 @@
       "default_evidence_status": "UNVERIFIED",
       "enabled": true,
       "notes": "Reference-folder source. User supplied exact channel URL; public Telegram preview confirms STRIKEMAP, a conflict-intelligence aggregator focused on Iran, Israel, Lebanon and the Middle East, describing AI-enrichment from 50+ sources. Aggregated claims require provenance checks and independent corroboration.",
-      "source_class": "conflict_osint_aggregator_candidate",
+      "source_class": "unofficial",
       "monitoring_weight": "high",
       "baseline_reference": true,
       "baseline_display_name": "STRRIKEMAP"
@@ -583,7 +583,7 @@
       "default_evidence_status": "UNVERIFIED",
       "enabled": true,
       "notes": "Reference-folder source. A public channel named Muslim Ummah / Worldwide Muslim Ummah Update exists at this handle, but multiple similarly named channels exist; identity match to the user's folder remains provisional.",
-      "source_class": "religious_news_aggregator_candidate",
+      "source_class": "other",
       "monitoring_weight": "standard",
       "baseline_reference": true,
       "baseline_display_name": "Muslim Ummah"
@@ -597,7 +597,7 @@
       "default_evidence_status": "UNVERIFIED",
       "enabled": true,
       "notes": "Reference-folder source. Public Telegram preview identifies Intel Slava as a Russian news aggregator covering conflicts and geopolitics; perspective-specific aggregator.",
-      "source_class": "conflict_news_aggregator_candidate",
+      "source_class": "unofficial",
       "monitoring_weight": "standard",
       "baseline_reference": true,
       "baseline_display_name": "Intel Slava"
@@ -611,7 +611,7 @@
       "default_evidence_status": "UNVERIFIED",
       "enabled": true,
       "notes": "Reference-folder source. Public profile describes reporting, battlefield analysis and intelligence-driven conflict coverage. Publisher identity and editorial standards are not independently established; treat as an aggregator/commentary lead.",
-      "source_class": "conflict_commentary_candidate",
+      "source_class": "unofficial",
       "monitoring_weight": "standard",
       "baseline_reference": true,
       "baseline_display_name": "WarCabinet"
@@ -625,7 +625,7 @@
       "default_evidence_status": "UNVERIFIED",
       "enabled": true,
       "notes": "Reference-folder source. Public preview links to english.almayadeen.net and identifies the channel as Al Mayadeen English. Preserve its regional/editorial perspective and corroborate event claims independently.",
-      "source_class": "regional_media_candidate",
+      "source_class": "unknown",
       "monitoring_weight": "standard",
       "baseline_reference": true,
       "baseline_display_name": "AlMayadeen - English"
@@ -639,7 +639,7 @@
       "default_evidence_status": "UNVERIFIED",
       "enabled": true,
       "notes": "Reference-folder source. Public preview describes an English-language Middle East/Iran/US news feed and includes forwarded material from other channels. Do not confuse it with the separate Al-Haq human-rights organisation; trace claims to original sources.",
-      "source_class": "conflict_news_aggregator_candidate",
+      "source_class": "unofficial",
       "monitoring_weight": "standard",
       "baseline_reference": true,
       "baseline_display_name": "AlHaq News - Iran-US War Updates"
@@ -653,7 +653,7 @@
       "default_evidence_status": "UNVERIFIED",
       "enabled": true,
       "notes": "Reference-folder source. Public preview identifies the channel and uses the slogan 'Read the news they hide from you'. Publisher identity, editorial standards and sourcing are unverified; classify as commentary/aggregator pending review.",
-      "source_class": "geopolitical_commentary_candidate",
+      "source_class": "other",
       "monitoring_weight": "standard",
       "baseline_reference": true,
       "baseline_display_name": "Geopolitics Prime"
@@ -667,7 +667,7 @@
       "default_evidence_status": "UNVERIFIED",
       "enabled": true,
       "notes": "Reference-folder source. Exact public URL supplied by user. Public preview/indexing did not independently establish channel identity or editorial role; retain as an unverified user-supplied source lead pending analyst review.",
-      "source_class": "unclassified_public_source_candidate",
+      "source_class": "unknown",
       "monitoring_weight": "standard",
       "baseline_reference": true,
       "baseline_display_name": "ECHO | ایکو"
@@ -681,7 +681,7 @@
       "default_evidence_status": "UNVERIFIED",
       "enabled": true,
       "notes": "Reference-folder source. Public preview confirms the channel title but provides limited publisher information. Review authorship, topic scope, repost patterns and sourcing before any monitoring decision.",
-      "source_class": "commentary_candidate",
+      "source_class": "unofficial",
       "monitoring_weight": "standard",
       "baseline_reference": true,
       "baseline_display_name": "Society - Uncensored"
@@ -695,7 +695,7 @@
       "default_evidence_status": "UNVERIFIED",
       "enabled": true,
       "notes": "Reference-folder source. Exact public Telegram title/username match; self-description uses adversarial framing and exposes alleged enemies/infiltrators. Treat as advocacy/viewpoint source; claims require independent corroboration.",
-      "source_class": "geopolitical_advocacy_commentary_candidate",
+      "source_class": "other",
       "monitoring_weight": "standard",
       "baseline_reference": true,
       "baseline_display_name": "Enemy Watch - Official"
@@ -709,7 +709,7 @@
       "default_evidence_status": "UNVERIFIED",
       "enabled": true,
       "notes": "Reference-folder source. Public Telegram preview matches the exact channel; mixed news, commentary and personal posts.",
-      "source_class": "news_commentary_candidate",
+      "source_class": "unofficial",
       "monitoring_weight": "high",
       "baseline_reference": true,
       "baseline_display_name": "Mediterranean Man"
@@ -723,7 +723,7 @@
       "default_evidence_status": "UNVERIFIED",
       "enabled": true,
       "notes": "Reference-folder source. Public preview identifies DD Geopolitics and its multipolar-world framing. Treat as viewpoint-specific commentary/aggregation; trace factual claims and forwarded posts to original sources.",
-      "source_class": "geopolitical_conflict_commentary_candidate",
+      "source_class": "other",
       "monitoring_weight": "high",
       "baseline_reference": true,
       "baseline_display_name": "DD Geopolitics"
@@ -737,7 +737,7 @@
       "default_evidence_status": "UNVERIFIED",
       "enabled": true,
       "notes": "Reference-folder source. Public preview describes the channel as pro-resistance research and analysis. Treat as an advocacy/viewpoint source, not independent corroboration; verify claims against primary and independent sources.",
-      "source_class": "advocacy_research_commentary_candidate",
+      "source_class": "other",
       "monitoring_weight": "standard",
       "baseline_reference": true,
       "baseline_display_name": "Basira Press"
@@ -751,7 +751,7 @@
       "default_evidence_status": "UNVERIFIED",
       "enabled": true,
       "notes": "Reference-folder source. Public preview explicitly describes the channel as an intelligence aggregator from a nationalist perspective. Preserve that declared perspective in analysis; verify underlying reports independently.",
-      "source_class": "political_commentary_aggregator_candidate",
+      "source_class": "other",
       "monitoring_weight": "standard",
       "baseline_reference": true,
       "baseline_display_name": "Rerum Novarum | Intel, Breaking News, and Alerts"
@@ -765,7 +765,7 @@
       "default_evidence_status": "UNVERIFIED",
       "enabled": true,
       "notes": "Reference-folder source. Public Telegram index identifies The American Majority; geopolitics/philosophy commentary. Distinguish from unrelated similarly named forex-signal channel.",
-      "source_class": "political_commentary_candidate",
+      "source_class": "other",
       "monitoring_weight": "standard",
       "baseline_reference": true,
       "baseline_display_name": "The American Majority"
@@ -779,7 +779,7 @@
       "default_evidence_status": "UNVERIFIED",
       "enabled": true,
       "notes": "Reference-folder source. Public preview describes this as an official mirror that automatically copies posts from a main channel restricted in some regions. Treat as a mirror, not an independent source; trace each post to its original channel.",
-      "source_class": "movement_aligned_mirror_candidate",
+      "source_class": "other",
       "monitoring_weight": "standard",
       "baseline_reference": true,
       "baseline_display_name": "ResistanceTrench mirror"
@@ -793,7 +793,7 @@
       "default_evidence_status": "UNVERIFIED",
       "enabled": true,
       "notes": "Reference-folder source. Telegram Register exact title match; self-description says non-political, non-profit awareness initiative. Not a conflict/news source by default.",
-      "source_class": "religious_community_candidate",
+      "source_class": "other",
       "monitoring_weight": "standard",
       "baseline_reference": true,
       "baseline_display_name": "Tasawwuf - تصوف"
@@ -807,7 +807,7 @@
       "default_evidence_status": "UNVERIFIED",
       "enabled": true,
       "notes": "Reference-folder source. Telegram Register exact title match; politics/activism classification is model-assigned and should be treated as tentative.",
-      "source_class": "political_commentary_candidate",
+      "source_class": "other",
       "monitoring_weight": "standard",
       "baseline_reference": true,
       "baseline_display_name": "Asia Brief"
@@ -821,7 +821,7 @@
       "default_evidence_status": "UNVERIFIED",
       "enabled": true,
       "notes": "Reference-folder source. Telegram Register exact title match; self-description includes Indian affairs, geopolitics and opinion.",
-      "source_class": "political_commentary_candidate",
+      "source_class": "other",
       "monitoring_weight": "standard",
       "baseline_reference": true,
       "baseline_display_name": "Voice of India"
@@ -835,7 +835,7 @@
       "default_evidence_status": "UNVERIFIED",
       "enabled": true,
       "notes": "Reference-folder source. Telemetrio India politics directory lists INTEL SAGE. Review authorship, sourcing, repost patterns and political alignment; do not assume independent OSINT standards.",
-      "source_class": "independent_commentary_candidate",
+      "source_class": "unofficial",
       "monitoring_weight": "low",
       "baseline_reference": true,
       "baseline_display_name": "INTEL SAGE (Intel Monk)"
@@ -849,7 +849,7 @@
       "default_evidence_status": "UNVERIFIED",
       "enabled": true,
       "notes": "Reference-folder source. Telegram index exact title/handle match; strongly nationalist slogan in profile. Preserve viewpoint classification; verify claims independently.",
-      "source_class": "political_commentary_candidate",
+      "source_class": "other",
       "monitoring_weight": "standard",
       "baseline_reference": true,
       "baseline_display_name": "Hindustani Beast"
@@ -863,7 +863,7 @@
       "default_evidence_status": "UNVERIFIED",
       "enabled": true,
       "notes": "Reference-folder source. TG Market profile matches title; Bangla conflict-news aggregator with last post recorded 14 Nov 2026.",
-      "source_class": "conflict_news_aggregator_candidate",
+      "source_class": "unofficial",
       "monitoring_weight": "high",
       "baseline_reference": true,
       "baseline_display_name": "World War Report | Middle East Gaza"
@@ -877,7 +877,7 @@
       "default_evidence_status": "UNVERIFIED",
       "enabled": true,
       "notes": "Reference-folder source. Telegram preview matches exact title and handle; global news feed.",
-      "source_class": "news_aggregator_candidate",
+      "source_class": "unofficial",
       "monitoring_weight": "standard",
       "baseline_reference": true,
       "baseline_display_name": "World24x7hr"
@@ -891,7 +891,7 @@
       "default_evidence_status": "UNVERIFIED",
       "enabled": true,
       "notes": "Reference-folder source. Telegram Register lists exact channel title and handle; verify current editorial identity and activity.",
-      "source_class": "news_candidate",
+      "source_class": "unknown",
       "monitoring_weight": "standard",
       "baseline_reference": true,
       "baseline_display_name": "Times of Era"
@@ -905,7 +905,7 @@
       "default_evidence_status": "UNVERIFIED",
       "enabled": true,
       "notes": "Reference-folder source. Telemetrio profile matches The Outpost and describes military affairs, diplomacy, military history and intelligence topics. Public directory match; verify exact channel preview before collection.",
-      "source_class": "military_affairs_commentary_candidate",
+      "source_class": "unofficial",
       "monitoring_weight": "standard",
       "baseline_reference": true,
       "baseline_display_name": "The Outpost"
@@ -919,7 +919,7 @@
       "default_evidence_status": "UNVERIFIED",
       "enabled": true,
       "notes": "Reference-folder source. Telegram preview matches exact title/handle; self-description focuses on resistance-axis updates in West Asia.",
-      "source_class": "advocacy_conflict_commentary_candidate",
+      "source_class": "other",
       "monitoring_weight": "standard",
       "baseline_reference": true,
       "baseline_display_name": "Resistance News - Urdu"
@@ -933,7 +933,7 @@
       "default_evidence_status": "UNVERIFIED",
       "enabled": true,
       "notes": "Reference-folder source. User supplied exact channel URL; public Telegram preview identifies PoliticsGR as a geopolitical analysis channel publishing maps, election polls, infographics and analysis, and explicitly describes an illiberal/nationalist perspective in public directory metadata. Classify as viewpoint/analyst source, not neutral or independent confirmation.",
-      "source_class": "geopolitical_commentary_candidate",
+      "source_class": "other",
       "monitoring_weight": "high",
       "baseline_reference": true,
       "baseline_display_name": "PoliticaGR - Geopolitics"
@@ -947,7 +947,7 @@
       "default_evidence_status": "UNVERIFIED",
       "enabled": true,
       "notes": "Reference-folder source. Exact public URL supplied by user. Public preview/indexing did not independently establish channel identity, operator or editorial role; retain as an unverified user-supplied Bangladesh-language source lead pending analyst review.",
-      "source_class": "unclassified_bangladesh_language_source_candidate",
+      "source_class": "unknown",
       "monitoring_weight": "standard",
       "baseline_reference": true,
       "baseline_display_name": "সত্যের সন্ধান"
@@ -961,7 +961,7 @@
       "default_evidence_status": "UNVERIFIED",
       "enabled": true,
       "notes": "Reference-folder source. TG Market profile matches Revan M and describes an independent security analyst; last post recorded 24 Jun 2026, so stale/inactive status needs review.",
-      "source_class": "independent_security_commentary_candidate",
+      "source_class": "unofficial",
       "monitoring_weight": "high",
       "baseline_reference": true,
       "baseline_display_name": "Revan M"
@@ -975,7 +975,7 @@
       "default_evidence_status": "UNVERIFIED",
       "enabled": true,
       "notes": "Reference-folder source. Telegram Register lists exact title and handle; treat as advocacy/community actor source, not neutral corroboration.",
-      "source_class": "religious_advocacy_candidate",
+      "source_class": "other",
       "monitoring_weight": "high",
       "baseline_reference": true,
       "baseline_display_name": "DOAM বাংলা"
@@ -989,7 +989,7 @@
       "default_evidence_status": "UNVERIFIED",
       "enabled": true,
       "notes": "Reference-folder source. User supplied exact URL; public Telegram search result shows posts on the established News Box Bangla channel forwarding content attributed to @newsboxbangla02. This suggests a related or backup feed but does not independently prove common ownership; keep separate and verify relationship.",
-      "source_class": "bangladesh_news_or_commentary_candidate",
+      "source_class": "unofficial",
       "monitoring_weight": "high",
       "baseline_reference": true,
       "baseline_display_name": "News Box Bangla 2.0"
@@ -1003,7 +1003,7 @@
       "default_evidence_status": "UNVERIFIED",
       "enabled": true,
       "notes": "Reference-folder source. Public Telegram preview identifies International News Broadcasting Bangla; preserve its editorial/religious framing and corroborate.",
-      "source_class": "news_commentary_candidate",
+      "source_class": "unofficial",
       "monitoring_weight": "standard",
       "baseline_reference": true,
       "baseline_display_name": "INB বাংলা"
@@ -1017,7 +1017,7 @@
       "default_evidence_status": "UNVERIFIED",
       "enabled": true,
       "notes": "Reference-folder source. Telegram channel index lists Intel Republic @Intel_Republic12 among channels linked from Rerum Novarum; exact title/handle match, further preview review required.",
-      "source_class": "conflict_news_aggregator_candidate",
+      "source_class": "unofficial",
       "monitoring_weight": "standard",
       "baseline_reference": true,
       "baseline_display_name": "Intel Republic"
