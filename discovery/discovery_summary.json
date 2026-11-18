@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-18T16:26:07.856762+00:00",
+  "generated_at_utc": "2026-11-18T16:34:27.035767+00:00",
   "discovery_method": "Public web-index search plus public Telegram directory pages (TG Market, TGScope, Telemetrio) and unreviewed seed leads",
   "queries_attempted_per_provider": 84,
   "directory_diagnostics": {
@@ -89,12 +89,12 @@
   "providers_returning_telegram_links": 0,
   "total_query_errors": 3,
   "new_candidates_this_run": 0,
-  "directory_seed_candidates_loaded": 138,
-  "candidate_leads_loaded_this_run": 138,
-  "unique_candidates": 138,
+  "directory_seed_candidates_loaded": 143,
+  "candidate_leads_loaded_this_run": 143,
+  "unique_candidates": 143,
   "already_configured_channels": 37,
-  "unreviewed_not_enabled_candidates": 101,
-  "previews_checked_this_run": 138,
+  "unreviewed_not_enabled_candidates": 106,
+  "previews_checked_this_run": 143,
   "limitations": [
     "Public search-engine indexes are incomplete, ranking-biased and may block automated requests.",
     "This does not access Telegram global search or private channels.",
