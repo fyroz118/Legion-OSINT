@@ -29,11 +29,14 @@ def normalize_row(row, platform):
     source_url = (row.get("source_url") or row.get("url") or "").strip()
     if not username or not message_id or not text or not source_url.startswith("https://"):
         return None
+    source_platform = row.get("platform") or platform
+    publisher_name = row.get("publisher_name") or username
+    display_source = ("RSS: " + publisher_name) if source_platform == "RSS/Atom" else username
     return {
         "id": username + ":" + message_id,
-        "channel_username": username,
-        "publisher_name": row.get("publisher_name") or username,
-        "platform": row.get("platform") or platform,
+        "channel_username": display_source,
+        "publisher_name": publisher_name,
+        "platform": source_platform,
         "published_at": row.get("published_at") or None,
         "collected_at": row.get("collected_at") or None,
         "text": text[:MAX_TEXT],
