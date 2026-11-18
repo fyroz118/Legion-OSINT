@@ -69,7 +69,7 @@ Attach further reviewed sources to the existing incident:
 /linklead LEAD_ID INCIDENT_ID contradiction
 ```
 
-Assign each source's independence group based on provenance when maintaining the ledger. A source-role label does not itself prove independence or truth.
+Assign each source's independence group based on provenance when maintaining the ledger. A source-role label does not itself prove independence or truth. Corroboration/contradiction links require a manually assigned source-group label; groups must reflect original publisher provenance, not merely different URLs.
 
 Review workflow records:
 
