@@ -3,7 +3,8 @@ import json
 import os
 import urllib.error
 import urllib.request
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
+from zoneinfo import ZoneInfo
 from email.utils import parsedate_to_datetime
 from app.database import connect
 
@@ -62,7 +63,7 @@ def _call_tavily(query, report_date, max_results=5):
         "query": query, "topic": "news",
         "search_depth": os.getenv("TAVILY_SEARCH_DEPTH", "basic"),
         "max_results": max(1, min(int(max_results), 10)),
-        "start_date": report_date, "end_date": report_date,
+        "start_date": report_date, "end_date": (datetime.strptime(report_date, "%Y-%m-%d") + timedelta(days=1)).strftime("%Y-%m-%d"),
         "include_answer": False, "include_raw_content": False, "include_images": False,
         "include_published_date": True, "filter_by_published_date": False,
     }
@@ -91,6 +92,8 @@ def _publication_date_matches(value, report_date):
             parsed = parsedate_to_datetime(str(value))
         except (TypeError, ValueError, OverflowError):
             return True
+    if parsed.tzinfo is not None:
+        parsed = parsed.astimezone(ZoneInfo("Asia/Dhaka"))
     return parsed.date().isoformat() == report_date
 
 
