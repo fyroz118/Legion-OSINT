@@ -118,7 +118,9 @@
       "enabled": true,
       "notes": "Public conflict-news aggregator discovered through Telegram channel directory. Editorial independence, sourcing and political alignment are not independently established; use only as an unofficial lead source.",
       "source_class": "unknown",
-      "monitoring_weight": "high"
+      "monitoring_weight": "high",
+      "baseline_reference": true,
+      "baseline_display_name": "Conflict Watch Bangla - CWB"
     },
     {
       "username": "UkraineNow",
@@ -190,7 +192,9 @@
       "enabled": true,
       "notes": "Active Bangla news/commentary aggregator. Preview includes opinion and forwarded material; not an independently verified newsroom. Trace claims to original sources.",
       "source_class": "unknown",
-      "monitoring_weight": "standard"
+      "monitoring_weight": "standard",
+      "baseline_reference": true,
+      "baseline_display_name": "News Box Bangla"
     },
     {
       "username": "bnpbd_org",
@@ -358,7 +362,9 @@
       "enabled": true,
       "notes": "Active Middle East news/commentary channel that explicitly says it is not unbiased and focuses on Iran and the Resistance Axis. Treat as viewpoint-specific lead source; seek independent corroboration.",
       "source_class": "unknown",
-      "monitoring_weight": "high"
+      "monitoring_weight": "high",
+      "baseline_reference": true,
+      "baseline_display_name": "Middle East Spectator — MES"
     },
     {
       "username": "QudsNen",
