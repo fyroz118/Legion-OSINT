@@ -2,31 +2,33 @@
   "provider": "tavily",
   "date_timezone": "Asia/Dhaka",
   "default_max_queries": 60,
-  "default_results_per_query": 10,
   "max_queries_hard_limit": 100,
+  "default_results_per_query": 10,
+  "max_results_per_query": 10,
   "search_depth": "basic",
   "topic": "news",
-  "source_focus_allocation": {
-    "unofficial_public": 0.7,
-    "official_institutional": 0.3,
-    "note": "Query attention allocation only; source identity remains unknown until reviewed."
-  },
   "geographic_priorities": [
     "Bangladesh",
-    "South Asia",
+    "Indian subcontinent",
     "Middle East and North Africa",
-    "Europe",
-    "Sub-Saharan Africa",
-    "East and Southeast Asia",
-    "Americas",
-    "Central Asia and Caucasus"
+    "Global"
   ],
+  "source_attention_target": {
+    "unofficial_public": 0.7,
+    "official_institutional": 0.3,
+    "note": "Query-focus allocation only; actual source class remains unknown until reviewed."
+  },
+  "rumour_handling": {
+    "include": true,
+    "default_status": "UNVERIFIED",
+    "never_present_as_fact": true
+  },
   "notes": [
-    "The target is 50+ individual source-lead briefs when results support it; no padding or invented incidents.",
-    "Bangladesh queries are prioritized, followed by South Asia and MENA.",
-    "Public social posts and rumours are included when indexed and surfaced by the provider, but remain unverified leads.",
-    "No fixed Telegram channel list defines report coverage; configured channels are only one discovery input.",
-    "Date filters narrow publication search results but do not prove the underlying incident occurred on that date.",
-    "Platform indexing and APIs do not provide universal coverage."
+    "Bangladesh, South Asia and MENA receive priority; global monitoring remains enabled.",
+    "Configured Telegram channels are one discovery adapter, not the reporting boundary.",
+    "Search results are source-specific leads, not necessarily unique events.",
+    "Date filters concern publication date, not proof of incident date.",
+    "Public social posts appear only when indexed or accessible through configured providers.",
+    "Never pad results to meet the 50-brief target."
   ]
 }
