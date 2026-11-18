@@ -5,19 +5,155 @@
     "not_exhaustive": true,
     "activation_rule": "Only channels with a directly verified public t.me page, clear public-interest relevance, and documented source identity may be enabled.",
     "evidence_rule": "Every Telegram post is a lead, not a verified event. Preserve the original post URL and corroborate independently.",
-    "excluded_content": ["private groups or access-controlled channels","doxxing, private-person profiling, or targeting","real-time tactical targeting or granular live military movement feeds","channels promoting violence or providing operational instructions"],
+    "excluded_content": [
+      "private groups or access-controlled channels",
+      "doxxing, private-person profiling, or targeting",
+      "real-time tactical targeting or granular live military movement feeds",
+      "channels promoting violence or providing operational instructions"
+    ],
     "bias_review": "Record whether a source is independent, state-affiliated, partisan, advocacy-based, or unclear. Subscriber count is not credibility."
   },
   "enabled_sources": [
-    {"username":"bellingcat_en","url":"https://t.me/bellingcat_en","name":"Bellingcat EN","language":["en"],"coverage":["global"],"type":"investigative_osint","affiliation":"independent_investigative_group","assessment":"Specialist investigative OSINT publisher; strong for investigations and verification methods, not a comprehensive breaking-news feed.","status":"enabled","evidence_default":"UNVERIFIED"},
-    {"username":"BNONews","url":"https://t.me/BNONews","name":"BNO News","language":["en"],"coverage":["global"],"type":"breaking_news","affiliation":"independent_news_service","assessment":"Broad breaking-news coverage; use as an early lead and corroborate with primary sources and independent reporting.","status":"enabled","evidence_default":"UNVERIFIED"}
+    {
+      "username": "bellingcat_en",
+      "url": "https://t.me/bellingcat_en",
+      "name": "Bellingcat EN",
+      "language": [
+        "en"
+      ],
+      "coverage": [
+        "global"
+      ],
+      "type": "investigative_osint",
+      "affiliation": "independent_investigative_group",
+      "assessment": "Specialist investigative OSINT publisher; strong for investigations and verification methods, not a comprehensive breaking-news feed.",
+      "status": "enabled",
+      "evidence_default": "UNVERIFIED"
+    },
+    {
+      "username": "BNONews",
+      "url": "https://t.me/BNONews",
+      "name": "BNO News",
+      "language": [
+        "en"
+      ],
+      "coverage": [
+        "global"
+      ],
+      "type": "breaking_news",
+      "affiliation": "independent_news_service",
+      "assessment": "Broad breaking-news coverage; use as an early lead and corroborate with primary sources and independent reporting.",
+      "status": "enabled",
+      "evidence_default": "UNVERIFIED"
+    },
+    {
+      "username": "bdnews24telegram",
+      "url": "https://t.me/bdnews24telegram",
+      "name": "bdnews24.com",
+      "language": [
+        "bn",
+        "en"
+      ],
+      "coverage": [
+        "Bangladesh"
+      ],
+      "type": "national_news",
+      "affiliation": "newsroom",
+      "assessment": "Established Bangladeshi news publisher. Public preview showed an owner-inactivity warning; verify collector access and current posting cadence.",
+      "status": "enabled_with_monitoring_note",
+      "evidence_default": "UNVERIFIED"
+    },
+    {
+      "username": "prothomaloonline",
+      "url": "https://t.me/prothomaloonline",
+      "name": "Prothom Alo",
+      "language": [
+        "bn"
+      ],
+      "coverage": [
+        "Bangladesh"
+      ],
+      "type": "national_news",
+      "affiliation": "newsroom",
+      "assessment": "Public Telegram channel identifying itself as Prothom Alo's official channel.",
+      "status": "enabled",
+      "evidence_default": "UNVERIFIED"
+    },
+    {
+      "username": "RumorScanner",
+      "url": "https://t.me/RumorScanner",
+      "name": "Rumor Scanner",
+      "language": [
+        "bn"
+      ],
+      "coverage": [
+        "Bangladesh"
+      ],
+      "type": "fact_checking",
+      "affiliation": "independent_fact_checking_initiative",
+      "assessment": "Public channel identifies itself as a Bangladeshi independent fact-checking initiative. Treat individual fact-checks as sourced claims and inspect their cited evidence.",
+      "status": "enabled",
+      "evidence_default": "UNVERIFIED"
+    },
+    {
+      "username": "TheDailyStar",
+      "url": "https://t.me/TheDailyStar",
+      "name": "The Daily Star",
+      "language": [
+        "en"
+      ],
+      "coverage": [
+        "Bangladesh"
+      ],
+      "type": "national_news",
+      "affiliation": "newsroom",
+      "assessment": "Public Telegram channel for The Daily Star Bangladesh.",
+      "status": "enabled",
+      "evidence_default": "UNVERIFIED"
+    }
   ],
   "review_queue": [
-    {"username":"osintdefender","url":"https://t.me/s/osintdefender","name":"OSINTdefender","language":["en"],"coverage":["global"],"type":"defence_and_geopolitical_updates","status":"manual_review_required","reason":"Public page confirmed, but coverage can include granular military and weapons information. Not enabled for automated ingestion."},
-    {"username":"molfar_global","url":"https://t.me/molfar_global","name":"Molfar","language":["uk","en"],"coverage":["Ukraine","global"],"type":"investigative_osint","status":"manual_review_required","reason":"Surfaced in a third-party catalogue; direct identity and current public access require confirmation."}
+    {
+      "username": "osintdefender",
+      "url": "https://t.me/s/osintdefender",
+      "name": "OSINTdefender",
+      "language": [
+        "en"
+      ],
+      "coverage": [
+        "global"
+      ],
+      "type": "defence_and_geopolitical_updates",
+      "status": "manual_review_required",
+      "reason": "Public page confirmed, but coverage can include granular military and weapons information. Not enabled for automated ingestion."
+    },
+    {
+      "username": "molfar_global",
+      "url": "https://t.me/molfar_global",
+      "name": "Molfar",
+      "language": [
+        "uk",
+        "en"
+      ],
+      "coverage": [
+        "Ukraine",
+        "global"
+      ],
+      "type": "investigative_osint",
+      "status": "manual_review_required",
+      "reason": "Surfaced in a third-party catalogue; direct identity and current public access require confirmation."
+    }
   ],
   "discovery_references": [
-    {"name":"TGScope OSINT Telegram catalogue","url":"https://tgscope.io/topics/osint","note":"Third-party discovery catalogue; reported 88 public channels in its October 2026 OSINT hub. Not a verified whitelist."},
-    {"name":"WorldMonitor Telegram feed documentation","url":"https://worldmonitor.sibt.ai/docs/data-sources/","note":"Documents a 56-channel feed including official, state-affiliated, partisan, and belligerent-party sources. Do not copy indiscriminately."}
+    {
+      "name": "TGScope OSINT Telegram catalogue",
+      "url": "https://tgscope.io/topics/osint",
+      "note": "Third-party discovery catalogue; reported 88 public channels in its October 2026 OSINT hub. Not a verified whitelist."
+    },
+    {
+      "name": "WorldMonitor Telegram feed documentation",
+      "url": "https://worldmonitor.sibt.ai/docs/data-sources/",
+      "note": "Documents a 56-channel feed including official, state-affiliated, partisan, and belligerent-party sources. Do not copy indiscriminately."
+    }
   ]
 }
