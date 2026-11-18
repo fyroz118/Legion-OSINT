@@ -10,6 +10,13 @@
 - Approximate 70:30 query attention to unofficial/local/public social discovery vs official/institutional searches. Independent newsrooms remain distinct; do not infer source class from query focus or domain alone.
 - Search English, Bangla and relevant regional languages where provider indexing permits.
 
+## Candidate extraction and review interface
+- Convert each public-web source lead into a structured candidate using only the source title, snippet and stored metadata.
+- Preserve unknown incident date, precise location, actors and verification; do not infer them from publication date or query text.
+- Every extracted candidate remains UNVERIFIED_CANDIDATE until analyst review; extraction is not event verification.
+- Similar-title/token-overlap pairs are suggestions only, not duplicate decisions. Never auto-merge source leads or incidents.
+- Telegram review queue supports one-tap REVIEWED (not verified) and REJECTED decisions. Source class still requires explicit analyst assignment.
+
 ## Individual source brief
 Each source-specific brief contains report date, region, supported location, title, original URL, publication timestamp, collection timestamp, source class (unknown until reviewed), neutral claim summary, claim type (EVENT_NEWS or RUMOUR_WATCH), verification status, confidence only when assessed, known gaps and duplicate/related-source note. Default status is UNVERIFIED / UNREVIEWED. Source briefs are not automatically unique incidents.
 
