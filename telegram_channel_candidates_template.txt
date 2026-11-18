@@ -1,0 +1,5 @@
+# One public Telegram channel link per line.
+# You can add optional notes after a comma, but the simplest format is just the link.
+# Examples of format only (replace with real public channel links):
+# https://t.me/channelusername
+# @channelusername
