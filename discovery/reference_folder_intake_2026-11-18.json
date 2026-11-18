@@ -1,0 +1,256 @@
+{
+  "schema_version": 1,
+  "title": "Telegram reference-folder intake",
+  "source": "User-provided channel names transcribed from Telegram folder video",
+  "captured_at": "2026-11-18",
+  "handling": "Display names supplied by user. A username is included only where a public Telegram preview or existing Legion-OSINT registry entry was matched. Name-only entries remain unresolved and must not be guessed or enabled. All newly mapped sources are discovery leads, not verified facts.",
+  "counts": {
+    "total_names": 40,
+    "new_public_username_matches": 11,
+    "already_active": 3,
+    "already_in_candidate_pool": 1,
+    "username_unresolved": 25
+  },
+  "entries": [
+    {
+      "display_name": "Open Source Intel",
+      "username": "osint613",
+      "status": "NEW_CANDIDATE",
+      "notes": "Public preview confirms OSINT613; Middle East/US/global OSINT feed."
+    },
+    {
+      "display_name": "Rybar in English",
+      "username": "rybar_in_english",
+      "status": "NEW_CANDIDATE",
+      "notes": "Public preview calls it Rybar's official English channel."
+    },
+    {
+      "display_name": "Grandmasters of Geopolitics",
+      "username": null,
+      "status": "USERNAME_UNRESOLVED",
+      "notes": "Display name only; exact public handle not established."
+    },
+    {
+      "display_name": "India Sentinel Network",
+      "username": null,
+      "status": "USERNAME_UNRESOLVED",
+      "notes": "Display name only; exact public handle not established."
+    },
+    {
+      "display_name": "STRRIKEMAP",
+      "username": null,
+      "status": "USERNAME_UNRESOLVED",
+      "notes": "Display name only; exact public handle not established."
+    },
+    {
+      "display_name": "Muslim Ummah",
+      "username": null,
+      "status": "USERNAME_UNRESOLVED",
+      "notes": "Display name only; multiple possible matches."
+    },
+    {
+      "display_name": "Intel Slava",
+      "username": null,
+      "status": "USERNAME_UNRESOLVED",
+      "notes": "Likely similarly named channels exist; exact match not confirmed."
+    },
+    {
+      "display_name": "WarCabinet",
+      "username": "warcabinet",
+      "status": "NEW_CANDIDATE",
+      "notes": "Public preview and channel index match."
+    },
+    {
+      "display_name": "AlMayadeen - English",
+      "username": "almayadeenenglish",
+      "status": "NEW_CANDIDATE",
+      "notes": "Public preview links to english.almayadeen.net."
+    },
+    {
+      "display_name": "AlHaq News - Iran-US War Updates",
+      "username": "alhaqnews",
+      "status": "NEW_CANDIDATE",
+      "notes": "Exact public preview match; distinct from Al-Haq human-rights organisation."
+    },
+    {
+      "display_name": "Geopolitics Prime",
+      "username": "geopolitics_prime",
+      "status": "NEW_CANDIDATE",
+      "notes": "Exact public preview match."
+    },
+    {
+      "display_name": "ECHO | ایکو",
+      "username": null,
+      "status": "USERNAME_UNRESOLVED",
+      "notes": "Exact public handle not established."
+    },
+    {
+      "display_name": "Middle East Spectator — MES",
+      "username": "Middle_East_Spectator",
+      "status": "ALREADY_ACTIVE",
+      "notes": "Already configured in config/channels.json."
+    },
+    {
+      "display_name": "Society - Uncensored",
+      "username": "SocietyUncensored",
+      "status": "NEW_CANDIDATE",
+      "notes": "Exact public preview match; publisher identity unclear."
+    },
+    {
+      "display_name": "Enemy Watch - Official",
+      "username": null,
+      "status": "USERNAME_UNRESOLVED",
+      "notes": "Exact public handle not established."
+    },
+    {
+      "display_name": "Mediterranean Man",
+      "username": null,
+      "status": "USERNAME_UNRESOLVED",
+      "notes": "Exact public handle not established."
+    },
+    {
+      "display_name": "DD Geopolitics",
+      "username": "ddgeopolitics",
+      "status": "NEW_CANDIDATE",
+      "notes": "Exact public preview match."
+    },
+    {
+      "display_name": "Basira Press",
+      "username": "basirapress",
+      "status": "NEW_CANDIDATE",
+      "notes": "Exact public preview match; self-described pro-resistance research/analysis."
+    },
+    {
+      "display_name": "Rerum Novarum | Intel, Breaking News, and Alerts",
+      "username": "rnintel",
+      "status": "NEW_CANDIDATE",
+      "notes": "Exact public preview match; self-described nationalist-perspective aggregator."
+    },
+    {
+      "display_name": "The American Majority",
+      "username": null,
+      "status": "USERNAME_UNRESOLVED",
+      "notes": "Exact public handle not established."
+    },
+    {
+      "display_name": "ResistanceTrench mirror",
+      "username": "RezistanceTrench",
+      "status": "NEW_CANDIDATE",
+      "notes": "Public preview spells username RezistanceTrench; self-described mirror."
+    },
+    {
+      "display_name": "Tasawwuf - تصوف",
+      "username": null,
+      "status": "USERNAME_UNRESOLVED",
+      "notes": "Exact public handle not established."
+    },
+    {
+      "display_name": "Asia Brief",
+      "username": null,
+      "status": "USERNAME_UNRESOLVED",
+      "notes": "Multiple possible matches; exact public handle not established."
+    },
+    {
+      "display_name": "Voice of India",
+      "username": null,
+      "status": "USERNAME_UNRESOLVED",
+      "notes": "Multiple possible matches; exact public handle not established."
+    },
+    {
+      "display_name": "INTEL SAGE (Intel Monk)",
+      "username": "intelsage",
+      "status": "ALREADY_IN_CANDIDATE_POOL",
+      "notes": "Already present as an unreviewed candidate in discovery/seed_candidates.json."
+    },
+    {
+      "display_name": "Hindustani Beast",
+      "username": null,
+      "status": "USERNAME_UNRESOLVED",
+      "notes": "Exact public handle not established."
+    },
+    {
+      "display_name": "World War Report | Middle East Gaza",
+      "username": null,
+      "status": "USERNAME_UNRESOLVED",
+      "notes": "Exact public handle not established."
+    },
+    {
+      "display_name": "World24x7hr",
+      "username": null,
+      "status": "USERNAME_UNRESOLVED",
+      "notes": "Exact public handle not established."
+    },
+    {
+      "display_name": "Times of Era",
+      "username": null,
+      "status": "USERNAME_UNRESOLVED",
+      "notes": "Exact public handle not established."
+    },
+    {
+      "display_name": "Conflict Watch Bangla - CWB",
+      "username": "Conflict_Watch_Bangla",
+      "status": "ALREADY_ACTIVE",
+      "notes": "Already configured in config/channels.json."
+    },
+    {
+      "display_name": "The Outpost",
+      "username": null,
+      "status": "USERNAME_UNRESOLVED",
+      "notes": "Exact public handle not established."
+    },
+    {
+      "display_name": "Resistance News - Urdu",
+      "username": null,
+      "status": "USERNAME_UNRESOLVED",
+      "notes": "Exact public handle not established."
+    },
+    {
+      "display_name": "PoliticaGR - Geopolitics",
+      "username": null,
+      "status": "USERNAME_UNRESOLVED",
+      "notes": "Exact public handle not established."
+    },
+    {
+      "display_name": "সত্যের সন্ধান",
+      "username": null,
+      "status": "USERNAME_UNRESOLVED",
+      "notes": "Exact public handle not established."
+    },
+    {
+      "display_name": "Revan M",
+      "username": null,
+      "status": "USERNAME_UNRESOLVED",
+      "notes": "Exact public handle not established."
+    },
+    {
+      "display_name": "DOAM বাংলা",
+      "username": null,
+      "status": "USERNAME_UNRESOLVED",
+      "notes": "Exact public handle not established."
+    },
+    {
+      "display_name": "News Box Bangla",
+      "username": "newsboxbangla",
+      "status": "ALREADY_ACTIVE",
+      "notes": "Already configured in config/channels.json."
+    },
+    {
+      "display_name": "News Box Bangla 2.0",
+      "username": null,
+      "status": "USERNAME_UNRESOLVED",
+      "notes": "Related display name does not establish whether it is a separate channel."
+    },
+    {
+      "display_name": "INB বাংলা",
+      "username": null,
+      "status": "USERNAME_UNRESOLVED",
+      "notes": "Exact public handle not established."
+    },
+    {
+      "display_name": "Intel Republic",
+      "username": null,
+      "status": "USERNAME_UNRESOLVED",
+      "notes": "Exact public handle not established."
+    }
+  ]
+}
