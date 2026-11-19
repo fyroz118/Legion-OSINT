@@ -1,7 +1,7 @@
 Command: .env
 ---
-# Set your Telegram numeric user ID after using /myid.
-OWNER_IDS = []
+# Legion-OSINT global configuration
+OWNER_IDS = [1569000384]
 FEED_URL = "https://raw.githubusercontent.com/fyroz118/Legion-OSINT/main/docs/feed/latest.json"
 
 ---
