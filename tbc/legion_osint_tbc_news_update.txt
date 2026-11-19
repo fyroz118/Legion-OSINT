@@ -558,6 +558,17 @@ if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
                                         snippet = " ".join(str(item.get("text", "")).split())[:240]
                                         lines.append("Candidate " + str(index + 1) + ": " + str(publisher) + " | " + str(item.get("published_at") or "time unknown") + " | " + snippet + " | " + str(item.get("source_url", "")))
                                 lines.append("")
+                            clusters = report.get("duplicate_text_clusters", [])
+                            lines.append("REPEATED-TEXT / REPOST CLUSTERS")
+                            lines.append("Detected clusters: " + str(len(clusters)) + ". These are text-similarity signals, not deduplicated incidents or independent corroboration.")
+                            for cluster_index, cluster in enumerate(clusters[:25]):
+                                lines.append("\\nCluster " + str(cluster_index + 1) + " | repeated posts: " + str(cluster.get("repost_count", 0)) + " | distinct sources: " + str(cluster.get("distinct_source_count", 0)))
+                                lines.append("Sources: " + ", ".join(cluster.get("source_names", [])[:10]))
+                                lines.append(str(cluster.get("text_excerpt", ""))[:260])
+                                for source_item in cluster.get("source_records", [])[:5]:
+                                    lines.append("- " + str(source_item.get("publisher_name") or source_item.get("channel_username") or "unknown") + " | " + str(source_item.get("source_url", "")))
+                            lines.append(str(report.get("duplicate_text_cluster_notice", "")))
+                            lines.append("")
                             lines.append("SOURCE LEADS — UNVERIFIED; NOT UNIQUE INCIDENTS")
                             records = report.get("source_records", [])
                             if not records:
