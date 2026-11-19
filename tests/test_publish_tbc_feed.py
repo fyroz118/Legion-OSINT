@@ -51,6 +51,40 @@ class PublishTbcFeedTests(unittest.TestCase):
             self.assertEqual(bangladesh["district_name_mentions"], {"Gazipur": 1})
             self.assertEqual(len(report["temporal_comparison"]), 8)
 
+    def test_precision_triage_rejects_entertainment_and_generic_commentary(self):
+        cases = [
+            "Call of Duty game progression tips: attack and defend the objective.",
+            "Open Eurasian Film Award ceremony held in Moscow.",
+            "Minister uses Friday sermons to raise awareness against sabotage.",
+            "Analyst discusses military strategy and missile range in a television interview.",
+            "Third-party vendor reports a cybersecurity breach affecting customer data."
+        ]
+        for body in cases:
+            with self.subTest(body=body):
+                result = publish_tbc_feed.triage_source_post({"text": body})
+                self.assertFalse(result["relevant"])
+                self.assertFalse(result["incident_candidate"])
+
+    def test_precision_triage_keeps_explicit_real_world_event_actions(self):
+        cases = [
+            ("Armed attack reported on a village; civilians injured.", "physical_incident_lead"),
+            ("Workers blocked the road and clashed with police.", "civil_unrest_event_lead"),
+            ("Police fired tear gas and dispersed protesters.", "civil_unrest_event_lead"),
+            ("Security forces arrested opposition activists during a raid.", "security_action_lead")
+        ]
+        for body, expected_type in cases:
+            with self.subTest(body=body):
+                result = publish_tbc_feed.triage_source_post({"text": body})
+                self.assertTrue(result["relevant"])
+                self.assertTrue(result["incident_candidate"])
+                self.assertEqual(result["record_type"], expected_type)
+
+    def test_threat_is_not_a_completed_incident_candidate(self):
+        result = publish_tbc_feed.triage_source_post({"text": "Group threatened to attack a government building."})
+        self.assertTrue(result["relevant"])
+        self.assertEqual(result["record_type"], "threat_or_mobilisation_lead")
+        self.assertFalse(result["incident_candidate"])
+
     def test_rejects_non_https_source_urls(self):
         row = {"channel_username":"bad", "message_id":"1", "text":"headline", "source_url":"http://example.org/a"}
         self.assertIsNone(publish_tbc_feed.normalize_row(row, "RSS/Atom"))
