@@ -93,7 +93,7 @@ RELEVANCE_RULES = {
         "state of emergency", "declared curfew", "imposed curfew",
         "mass arrest", "political activists arrested", "opposition activists detained",
         "security forces raided", "police raid", "crackdown on protesters",
-        "political prisoner", "police arrested", "security forces arrested", "activists arrested", "threatened retaliation", "threat of attack", "threatened an attack"
+        "political prisoner", "police arrested", "security forces arrested", "activists arrested", "threatened retaliation", "threat of attack", "threatened an attack", "threatened to attack"
     ],
     "civil_unrest_labour": [
         "protesters blocked", "workers blocked", "road blockade", "blocked the road",
