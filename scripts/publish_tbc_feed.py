@@ -69,7 +69,8 @@ RELEVANCE_RULES = {
     "political_security": [
         "political violence", "political attack", "assassination", "security operation",
         "police operation", "crackdown", "state of emergency", "curfew",
-        "detention", "arrested", "mass arrest", "political prisoner"
+        "detention", "arrested", "mass arrest", "political prisoner",
+        "threatened", "threat of attack", "vowed retaliation", "threatened retaliation"
     ],
     "civil_unrest_labour": [
         "protest", "demonstration", "rally", "march", "strike", "hartal",
@@ -664,11 +665,13 @@ def main():
         temporal_comparison = build_temporal_comparison(report_date, day_posts, ARCHIVE_DIR)
 
         intelligence_report = {
-            "schema_version": 2,
+            "schema_version": 3,
+            "report_version": 8,
+            "triage_version": 8,
             "report_date": report_date,
             "timezone": timezone_name,
             "generated_at": summary["generated_at"],
-            "title": "Legion-OSINT Daily Global Conflict, Bangladesh Political-Security and Communal-Risk Triage Report",
+            "title": "Legion-OSINT V8 Daily Global Conflict, Bangladesh Political-Security and Communal-Risk Triage Report",
             "classification": "Open-Source Intelligence — unverified source-lead assessment",
             "executive_assessment": {
                 "source_posts_in_daily_archive": len(day_posts),
@@ -765,6 +768,7 @@ def main():
             "incident_candidate_groups": candidate_groups,
             "incident_candidate_group_count": len(candidate_groups),
             "incident_candidate_grouping_notice": "Exact normalized text grouping only; not semantic event resolution or independent corroboration.",
+            "bangladesh_total_source_posts": len(region_posts.get("bangladesh", [])),
             "bangladesh_relevant_source_posts": bangladesh_relevant_count,
             "duplicate_text_clusters": duplicate_text_clusters,
             "duplicate_text_cluster_notice": "Repeated text is not incident deduplication and does not establish independent corroboration.",
