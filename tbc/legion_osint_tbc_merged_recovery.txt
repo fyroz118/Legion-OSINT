@@ -927,7 +927,17 @@ if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
 
                                 if section.get("source_records"):
                                     lines.append("Selected source records:")
-                                    for index, item in enumerate(section.get("source_records", [])[:60]):
+                                    record_limit = 8
+                                    heading = str(section.get("heading", ""))
+                                    if heading.startswith("2."):
+                                        record_limit = 20
+                                    elif heading.startswith("3."):
+                                        record_limit = 4
+                                    elif heading.startswith("4."):
+                                        record_limit = 10
+                                    elif heading.startswith("5."):
+                                        record_limit = 20
+                                    for index, item in enumerate(section.get("source_records", [])[:record_limit]):
                                         publisher = item.get("publisher_name") or item.get("channel_username") or "unknown source"
                                         body = " ".join(str(item.get("text", "")).split())[:360]
                                         lines.append("[" + str(index + 1) + "] " + str(publisher) + " | " + str(item.get("platform", "unknown")) + " | " + str(item.get("published_at") or "time unknown"))
@@ -963,11 +973,11 @@ if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
                             if current_chunk:
                                 chunks.append(current_chunk.rstrip())
 
-                            for chunk in chunks[:20]:
+                            for chunk in chunks[:25]:
                                 bot.sendMessage(chunk, disable_web_page_preview=True)
 
-                            if len(chunks) > 20:
-                                bot.sendMessage("The Telegram delivery was capped at 20 messages. The complete expanded report remains in the GitHub archive.")
+                            if len(chunks) > 25:
+                                bot.sendMessage("The Telegram delivery was capped at 25 messages. The complete expanded report remains in the GitHub archive.")
 
     except Exception:
         bot.sendMessage("Could not retrieve or format the expanded intelligence report. Check the archive file and TBC Error Logs.")
