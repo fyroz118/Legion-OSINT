@@ -59,41 +59,51 @@ def normalize_row(row, platform):
 
 # Conservative, transparent triage rules. These identify relevant source material,
 # not verified events, perpetrators, motives, or risk levels.
+# Precision-first rules: category relevance and event-action evidence are separate.
+# Broad words such as "military", "army", "war", "attack" or "arrested" alone
+# are deliberately insufficient to classify a source post as an incident.
 RELEVANCE_RULES = {
     "armed_conflict_security": [
-        "armed conflict", "armed attack", "attack on civilians", "attack on police", "attack on village", "attack on convoy", "attack on infrastructure", "airstrike", "air strike", "drone strike", "shelling",
-        "artillery", "missile", "military operation", "military", "army", "troops",
-        "soldier", "militant", "armed group", "war", "battlefield", "front line",
-        "ceasefire", "cross-border", "border clash", "security forces"
+        "armed conflict", "armed attack", "attack on civilians", "attack on police",
+        "attack on village", "attack on convoy", "attack on infrastructure",
+        "airstrike", "air strike", "drone strike", "shelling", "artillery strike",
+        "missile strike", "bombing", "explosion", "military operation",
+        "border clash", "cross-border attack", "clashes between troops",
+        "troops killed", "soldiers killed", "civilians killed", "civilian casualties"
     ],
     "political_security": [
-        "political violence", "political attack", "assassination", "security operation",
-        "police operation", "crackdown", "state of emergency", "curfew",
-        "detention", "arrested", "mass arrest", "political prisoner",
-        "threatened", "threat of attack", "vowed retaliation", "threatened retaliation"
+        "political violence", "political assassination", "assassination attempt",
+        "state of emergency", "declared curfew", "imposed curfew",
+        "mass arrest", "political activists arrested", "opposition activists detained",
+        "security forces raided", "police raid", "crackdown on protesters",
+        "political prisoner", "threatened retaliation", "threat of attack"
     ],
     "civil_unrest_labour": [
-        "protest", "demonstration", "rally", "march", "strike", "hartal",
-        "blockade", "riot", "civil unrest", "labour unrest", "labor unrest",
-        "workers protest", "student protest", "picket", "road blockade"
+        "protesters blocked", "workers blocked", "road blockade", "blocked the road",
+        "staged a protest", "held a protest", "clashed with police",
+        "police fired", "tear gas", "dispersed protesters", "riot broke out",
+        "demonstrators marched", "protesters marched", "workers' strike",
+        "workers strike", "general strike", "hartal", "violent protest"
     ],
     "communal_identity": [
         "communal violence", "sectarian violence", "religious violence",
         "mob attack", "lynching", "hate crime", "minority attack",
-        "temple attack", "mosque attack", "church attack", "religious site",
-        "ethnic violence", "identity-based attack"
+        "temple attack", "mosque attack", "church attack", "ethnic violence",
+        "identity-based attack", "attacked because of religion"
     ],
     "humanitarian_displacement": [
-        "mass displacement", "displaced civilians", "refugee camp", "internally displaced",
-        "humanitarian crisis", "civilian casualties", "mass casualties", "famine",
-        "forced evacuation", "shelter destroyed", "aid convoy", "humanitarian aid"
+        "mass displacement", "displaced civilians", "refugee camp attacked",
+        "internally displaced", "humanitarian crisis", "civilian casualties",
+        "mass casualties", "forced evacuation", "shelter destroyed",
+        "aid convoy attacked", "humanitarian aid blocked"
     ],
     "infrastructure_disruption": [
-        "power outage", "blackout", "power plant", "water supply disrupted",
+        "power outage", "blackout", "power plant attacked", "water supply disrupted",
         "hospital attacked", "school attacked", "bridge destroyed", "railway attacked",
-        "airport attacked", "port attacked", "fuel depot", "critical infrastructure",
-        "communications outage", "internet shutdown", "bank branch attacked",
-        "factory attacked", "transport disrupted"
+        "airport attacked", "port attacked", "fuel depot attacked",
+        "critical infrastructure attacked", "communications outage",
+        "internet shutdown", "bank branch attacked", "factory attacked",
+        "transport disrupted"
     ],
     "public_health_emergency": [
         "disease outbreak", "epidemic", "cholera outbreak", "dengue outbreak",
@@ -107,67 +117,47 @@ RELEVANCE_RULES = {
     ]
 }
 
-PHYSICAL_EVENT_TERMS = [
-    "attack", "attacked", "airstrike", "air strike", "shelling", "bombing",
-    "explosion", "blast", "killed", "dead", "fatalities", "wounded", "injured",
-    "abducted", "kidnapped", "arson", "burned", "set fire", "clash", "clashes",
-    "shot", "shooting", "fired on", "detained", "arrested", "displaced",
-    "destroyed", "damaged", "evacuated", "riot", "lynching", "blockade"
+PHYSICAL_INCIDENT_TERMS = [
+    "armed attack", "attack on civilians", "attack on police", "attack on village",
+    "attack on convoy", "attack on infrastructure", "airstrike", "air strike",
+    "drone strike", "shelling", "artillery strike", "missile strike", "bombing",
+    "explosion", "blast", "shot dead", "shot and killed", "shooting",
+    "fired on civilians", "civilians killed", "soldiers killed", "troops killed",
+    "wounded civilians", "civilians injured", "mass casualties", "lynching",
+    "mob attack", "hospital attacked", "school attacked", "bridge destroyed",
+    "airport attacked", "port attacked", "factory attacked", "power plant attacked",
+    "arson attack", "set fire to", "torched"
 ]
-
-BANGLADESH_DISTRICTS = [
-    "Bagerhat", "Bandarban", "Barguna", "Barishal", "Bhola", "Bogura",
-    "Brahmanbaria", "Chandpur", "Chapainawabganj", "Chattogram", "Chuadanga",
-    "Cumilla", "Cox's Bazar", "Dhaka", "Dinajpur", "Faridpur", "Feni",
-    "Gaibandha", "Gazipur", "Gopalganj", "Habiganj", "Jamalpur", "Jashore",
-    "Jhalokati", "Jhenaidah", "Joypurhat", "Khagrachhari", "Khulna",
-    "Kishoreganj", "Kurigram", "Kushtia", "Lakshmipur", "Lalmonirhat",
-    "Madaripur", "Magura", "Manikganj", "Meherpur", "Moulvibazar",
-    "Munshiganj", "Mymensingh", "Naogaon", "Narail", "Narayanganj",
-    "Narsingdi", "Natore", "Netrokona", "Nilphamari", "Noakhali", "Pabna",
-    "Panchagarh", "Patuakhali", "Pirojpur", "Rajbari", "Rajshahi", "Rangamati",
-    "Rangpur", "Satkhira", "Shariatpur", "Sherpur", "Sirajganj", "Sunamganj",
-    "Sylhet", "Tangail", "Thakurgaon"
-]
-
-
-def _phrase_hits(body, terms):
-    """Match whole phrases, avoiding substring errors such as 'war' in 'award'."""
-    hits = []
-    for term in terms:
-        pattern = r"(?<!\w)" + r"\s+".join(re.escape(part) for part in term.lower().split()) + r"(?!\w)"
-        if re.search(pattern, body):
-            hits.append(term)
-    return hits
-
-
 UNREST_ACTION_TERMS = [
     "staged a protest", "held a protest", "protesters blocked", "workers blocked",
     "road blockade", "blocked the road", "clashed with police", "clashed with",
     "police fired", "tear gas", "dispersed protesters", "riot broke out",
-    "demonstrators marched", "protesters marched", "set fire to", "torched",
-    "mob attacked", "mob assaulted"
+    "demonstrators marched", "protesters marched", "workers' strike",
+    "workers strike", "general strike", "hartal", "violent protest"
 ]
 SECURITY_ACTION_TERMS = [
-    "arrested", "detained", "raided", "police raid", "security operation",
-    "mass arrest", "abducted", "kidnapped"
+    "police arrested", "police detained", "security forces arrested",
+    "security forces detained", "activists arrested", "opposition activists detained",
+    "mass arrest", "police raid", "security forces raided", "abducted",
+    "kidnapped", "forcibly disappeared"
 ]
 THREAT_TERMS = [
     "threatened to attack", "threat of attack", "vowed retaliation",
     "threatened retaliation", "warned of attack", "threatened violence",
-    "called for an attack", "threatened"
+    "called for an attack", "called for violence"
 ]
-PHYSICAL_INCIDENT_TERMS = [
-    "armed attack", "attack", "attacked", "airstrike", "air strike", "shelling",
-    "bombing", "explosion", "blast", "killed", "fatalities", "wounded", "injured",
-    "arson", "burned", "shot", "shooting", "fired on", "destroyed", "damaged",
-    "lynching", "hospital attacked", "school attacked", "bridge destroyed",
-    "airport attacked", "port attacked"
+NON_EVENT_CONTEXT_TERMS = [
+    "call of duty", "video game", "gaming", "gameplay", "video games",
+    "film award", "film awards", "movie award", "movie awards",
+    "film festival", "actor wins", "actress wears", "fashion shoot",
+    "fashion week", "football game", "cricket match", "sports match",
+    "book launch", "album launch", "concert", "music award", "music awards"
 ]
 
 
 def triage_source_post(item):
     body = " ".join(str(item.get("text") or "").lower().split())
+    non_event_context = _phrase_hits(body, NON_EVENT_CONTEXT_TERMS)
     matched = []
     for category, terms in RELEVANCE_RULES.items():
         hits = _phrase_hits(body, terms)
@@ -177,18 +167,28 @@ def triage_source_post(item):
     unrest_hits = _phrase_hits(body, UNREST_ACTION_TERMS)
     security_hits = _phrase_hits(body, SECURITY_ACTION_TERMS)
     threat_hits = _phrase_hits(body, THREAT_TERMS)
-    # A threatened future attack is not a completed physical incident.
-    if threat_hits and not any(term != "attack" for term in physical_hits):
+
+    # Explicit entertainment/sport contexts suppress incidental keyword hits,
+    # unless the text also contains a strong, distinct real-world event phrase.
+    strong_real_world = any(term in physical_hits for term in (
+        "attack on civilians", "attack on police", "attack on village",
+        "attack on convoy", "civilians killed", "shot dead", "lynching"
+    ))
+    if non_event_context and not strong_real_world:
+        matched = []
         physical_hits = []
-    all_event_hits = list(dict.fromkeys(physical_hits + unrest_hits + security_hits))
-    if physical_hits:
+        unrest_hits = []
+        security_hits = []
+
+    # A future threat or political statement is not a completed physical event.
+    if threat_hits and not physical_hits:
+        record_type = "threat_or_mobilisation_lead"
+    elif physical_hits:
         record_type = "physical_incident_lead"
     elif unrest_hits:
         record_type = "civil_unrest_event_lead"
     elif security_hits:
         record_type = "security_action_lead"
-    elif threat_hits:
-        record_type = "threat_or_mobilisation_lead"
     elif any(category == "civil_unrest_labour" for category, _ in matched):
         record_type = "protest_or_mobilisation_notice"
     elif any(category == "political_security" for category, _ in matched):
@@ -197,8 +197,10 @@ def triage_source_post(item):
         record_type = "general_relevant_development"
     else:
         record_type = "low_relevance"
+
+    all_event_hits = list(dict.fromkeys(physical_hits + unrest_hits + security_hits))
     score = min(10, len(matched) * 2 + min(len(all_event_hits), 3) * 2)
-    incident_candidate = bool(matched and (physical_hits or unrest_hits or security_hits))
+    incident_candidate = bool(matched and all_event_hits)
     return {
         "relevant": bool(matched),
         "score": score,
@@ -209,10 +211,10 @@ def triage_source_post(item):
         "unrest_action_indicators": unrest_hits[:8],
         "security_action_indicators": security_hits[:8],
         "threat_indicators": threat_hits[:8],
+        "non_event_context_indicators": non_event_context[:4],
         "record_type": record_type,
         "incident_candidate": incident_candidate
     }
-
 
 def district_mentions(text):
     body = " " + str(text or "").lower() + " "
@@ -567,7 +569,8 @@ def main():
                 "monitoring_weight": item.get("monitoring_weight"),
                 "evidence_status": "UNVERIFIED",
                 "publication_datetime": item.get("published_at"),
-                "source_region": item.get("priority_region"),
+                "monitoring_region": item.get("priority_region"),
+                "event_location_status": "not independently geolocated; place names are text mentions only",
                 "record_type": triage["record_type"],
                 "physical_event_indicators": triage["physical_event_indicators"],
                 "unrest_action_indicators": triage["unrest_action_indicators"],
@@ -666,18 +669,20 @@ def main():
 
         intelligence_report = {
             "schema_version": 3,
-            "report_version": 8,
-            "triage_version": 8,
+            "report_version": 9,
+            "triage_version": 9,
             "report_date": report_date,
             "timezone": timezone_name,
             "generated_at": summary["generated_at"],
-            "title": "Legion-OSINT V8 Daily Global Conflict, Bangladesh Political-Security and Communal-Risk Triage Report",
+            "title": "Legion-OSINT V9 Precision-First Global Conflict and Bangladesh Political-Security Triage Report",
             "classification": "Open-Source Intelligence — unverified source-lead assessment",
             "executive_assessment": {
                 "source_posts_in_daily_archive": len(day_posts),
                 "relevant_source_posts": len(relevant_posts),
                 "excluded_as_low_relevance": excluded_posts,
                 "incident_candidate_source_posts": len(incident_candidates),
+                "incident_candidate_records_displayed": min(100, len(incident_candidates)),
+                "incident_candidate_records_omitted_from_register": max(0, len(incident_candidates) - 100),
                 "incident_candidate_exact_text_groups": len(candidate_groups),
                 "bangladesh_total_source_posts": len(region_posts.get("bangladesh", [])),
                 "bangladesh_relevant_source_posts": bangladesh_relevant_count,
@@ -685,6 +690,8 @@ def main():
                 "rss_articles": platform_counts.get("RSS/Atom", 0),
                 "regions_represented": len(region_posts),
                 "regions_with_relevant_leads": len(relevant_region_posts),
+                "regional_source_post_total_check": sum(len(values) for values in region_posts.values()),
+                "regional_counts_reconcile_to_archive": sum(len(values) for values in region_posts.values()) == len(day_posts),
                 "source_classes": source_class_counts,
                 "exact_duplicate_text_clusters": len(duplicate_text_clusters),
                 "cross_source_text_repetition_clusters": sum(1 for x in duplicate_text_clusters if x["distinct_source_count"] > 1),
@@ -733,7 +740,7 @@ def main():
                 },
                 {
                     "heading": "7. Incident register — candidate source leads",
-                    "text": "Candidates require analyst review and incident-level grouping. Multiple posts may describe one event; one post may contain multiple claims. The system does not promote these records to verified incidents.",
+                    "text": "Candidates require analyst review and incident-level grouping. Multiple posts may describe one event; one post may contain multiple claims. Candidate total is shown separately from the 100-record display cap. Political statements, generic military commentary and threats are not completed physical incidents unless an explicit event-action phrase is present. The system does not promote these records to verified incidents.",
                     "candidate_records": [report_post(p) for p in sorted(incident_candidates, key=lambda p: (str(p.get("priority_region") or "").lower() != "bangladesh", str(p.get("published_at") or "")), reverse=True)[:100]],
                     "candidate_groups": candidate_groups,
                     "candidate_grouping_notice": "Groups use exact normalized text only. Paraphrased claims are not automatically merged; analyst review is required."
@@ -774,12 +781,13 @@ def main():
             "duplicate_text_cluster_notice": "Repeated text is not incident deduplication and does not establish independent corroboration.",
             "source_records_selected": len(selected_report_posts),
             "source_records_available": len(day_posts),
+            "region_collection_counts": [{"region": region_labels.get(key, key.replace("_", " ").title()), "source_post_count": len(values), "relevant_source_post_count": len(relevant_region_posts.get(key, []))} for key, values in sorted(region_posts.items())],
             "relevant_source_records_available": len(relevant_posts),
             "incident_candidate_records_available": len(incident_candidates),
             "minimum_target_met": len(relevant_posts) >= 50,
             "source_records": [report_post(p) for p in selected_report_posts],
             "temporal_comparison": temporal_comparison,
-            "notice": "UNVERIFIED SOURCE LEADS. Deterministic keyword triage only; not AI-generated or independently verified event synthesis. No inference of guilt, central direction, religious motive or imminent violence. District names are text mentions, not geolocation. Verify original sources before reporting."
+            "notice": "UNVERIFIED SOURCE LEADS. Precision-first deterministic phrase triage only; not AI-generated or independently verified event synthesis. Generic military/political terms alone do not establish an incident. No inference of guilt, central direction, religious motive or imminent violence. Monitoring-region metadata is not event geolocation; district names are text mentions only. Verify original sources before reporting."
         }
         intelligence_path = page_dir / "intelligence_report.json"
         intelligence_tmp = intelligence_path.with_suffix(".tmp")
