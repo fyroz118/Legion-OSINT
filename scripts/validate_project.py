@@ -65,6 +65,19 @@ try:
 except (OSError, KeyError, TypeError, json.JSONDecodeError) as exc:
     errors.append(f"Invalid RSS source registry: {exc}")
 
+# Validate the manually deployed TBC V8 summary command as Python-compatible syntax.
+summary_command = ROOT / "tbc" / "summary_v8_command.txt"
+try:
+    command_text = summary_command.read_text(encoding="utf-8")
+    command_tree = ast.parse(command_text, filename=str(summary_command))
+    if any(isinstance(node, ast.While) for node in ast.walk(command_tree)):
+        errors.append("TBC V8 summary command must not contain while loops")
+    for required in ("Bangladesh relevant source posts:", "EXACT-TEXT GROUP:", "SEVEN-DAY TEMPORAL COMPARISON"):
+        if required not in command_text:
+            errors.append(f"TBC V8 summary command missing required output: {required}")
+except (OSError, SyntaxError) as exc:
+    errors.append(f"Invalid TBC V8 summary command: {exc}")
+
 if errors:
     for error in errors:
         print("FAIL:", error)
