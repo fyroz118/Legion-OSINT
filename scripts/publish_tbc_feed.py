@@ -301,7 +301,7 @@ def main():
         selected_report_posts = []
         seen_ids = set()
         region_order = sorted(region_posts, key=lambda key: (key != "bangladesh", -len(region_posts[key]), key))
-        for index in range(20):
+        for index in range(40):
             for region_key in region_order:
                 candidates = region_posts.get(region_key, [])
                 if index < len(candidates):
