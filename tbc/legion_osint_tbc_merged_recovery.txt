@@ -1,13 +1,35 @@
-Command: .env\n---\n# Legion-OSINT global configuration
-OWNER_IDS = [1569000384]
+Command: .env
+---
+# Set your Telegram numeric user ID after using /myid.
+OWNER_IDS = []
 FEED_URL = "https://raw.githubusercontent.com/fyroz118/Legion-OSINT/main/docs/feed/latest.json"
-\n---\n\nCommand: myid\n---\nbot.sendMessage("Your Telegram user ID: " + str(u) + "\nAdd this number to OWNER_IDS in the .env command, save it, then use /start.")\n---\n\nCommand: start\n---\nif str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+
+---
+
+Command: myid
+---
+bot.sendMessage("Your Telegram user ID: " + str(u) + "\nAdd this number to OWNER_IDS in the .env command, save it, then use /start.")
+---
+
+Command: start
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
     bot.sendMessage("Legion-OSINT private intelligence assistant is online.\nUse /help for commands.\nPublic Telegram and RSS/Atom items are unverified source leads until independently assessed.")
 else:
-    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")\n---\n\nCommand: help\n---\nif str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: help
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
     bot.sendMessage("/status — Telegram and RSS collection freshness/counts\n/daily — latest public Telegram posts\n/date YYYY-MM-DD [page] — browse daily Telegram + RSS/Atom archive\n/news — latest public RSS/Atom news headlines\n/bangladesh — Bangladesh source posts\n/search <words> — all words must match text, source, region or classification\n/leads — recent source leads\n/briefs — individual source briefs\n/coverage — Telegram channel and RSS publisher diagnostics\n/report — analyst-approved incident report\n/digest — latest unverified source-post digest\n/reviewqueue — unreviewed source posts\n/reviewlead ID | reviewed|rejected|duplicate | source_class | rationale\n/candidates — discovered channels awaiting review\n/discover — latest autonomous discovery results\n/discovery_status — discovery run status\n/addchannel USERNAME — approve candidate\n/rejectchannel USERNAME — reject candidate\n/incidentdraft POST_ID | INCIDENT_ID | COUNTRY | CATEGORY | DESCRIPTION\n/incidentqueue — incident drafts and inclusion status\n/approveincident INCIDENT_ID | approved|rejected | rationale\n/linklead POST_ID | INCIDENT_ID | lead|corroboration|contradiction\n/alerts_on — enable two-hourly alerts\n/alerts_off — disable alerts\n/summary [YYYY-MM-DD] — expanded daily global conflict and communal-risk intelligence report\n/ask and /research — not connected yet\n\nSource integrity: posts remain UNVERIFIED; publication time is not incident time; reposts are not independent corroboration. Approval permits report inclusion only and does not verify an event.")
 else:
-    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")\n---\n\nCommand: status\n---\nif str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: status
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
     try:
         response = HTTP.get(FEED_URL)
         if response.status_code != 200:
@@ -26,7 +48,12 @@ else:
     except Exception:
         bot.sendMessage("Could not read the collection feed. Check the GitHub Actions collection workflow and TBC Error Logs.")
 else:
-    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")\n---\n\nCommand: daily\n---\nif str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: daily
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
     try:
         response = HTTP.get(FEED_URL)
         if response.status_code != 200:
@@ -51,7 +78,12 @@ else:
     except Exception:
         bot.sendMessage("Feed unavailable. Try again later.")
 else:
-    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")\n---\n\nCommand: news\n---\nif str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: news
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
     try:
         response = HTTP.get(FEED_URL)
         if response.status_code != 200:
@@ -77,7 +109,12 @@ else:
     except Exception:
         bot.sendMessage("RSS news feed unavailable. Try again later.")
 else:
-    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")\n---\n\nCommand: bangladesh\n---\nif str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: bangladesh
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
     try:
         response = HTTP.get(FEED_URL)
         if response.status_code != 200:
@@ -103,7 +140,12 @@ else:
     except Exception:
         bot.sendMessage("Feed unavailable. Try again later.")
 else:
-    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")\n---\n\nCommand: leads\n---\nif str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: leads
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
     try:
         response = HTTP.get(FEED_URL)
         if response.status_code != 200:
@@ -129,7 +171,12 @@ else:
     except Exception:
         bot.sendMessage("Feed unavailable. Try again later.")
 else:
-    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")\n---\n\nCommand: briefs\n---\nif str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: briefs
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
     try:
         response = HTTP.get(FEED_URL)
         if response.status_code != 200:
@@ -155,7 +202,12 @@ else:
     except Exception:
         bot.sendMessage("Feed unavailable. Try again later.")
 else:
-    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")\n---\n\nCommand: candidates\n---\nif str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: candidates
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
     try:
         response = HTTP.get("https://raw.githubusercontent.com/fyroz118/Legion-OSINT/main/discovery/seed_candidates.json")
         if response.status_code != 200:
@@ -171,7 +223,12 @@ else:
     except Exception:
         bot.sendMessage("Candidate registry unavailable.")
 else:
-    bot.sendMessage("Access denied.")\n---\n\nCommand: search\n---\nif str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    bot.sendMessage("Access denied.")
+---
+
+Command: search
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
     raw_query = str(params or "").strip().lower()
     if not raw_query or raw_query == "none":
         bot.sendMessage("Usage: /search <words>\nExamples: /search Bangladesh protest | /search Hindustan | /search independent_media")
@@ -209,7 +266,12 @@ else:
         except Exception:
             bot.sendMessage("Feed unavailable. Try again later.")
 else:
-    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")\n---\n\nCommand: coverage\n---\nif str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: coverage
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
     try:
         response = HTTP.get(FEED_URL)
         if response.status_code != 200:
@@ -233,7 +295,12 @@ else:
     except Exception:
         bot.sendMessage("Coverage diagnostics unavailable.")
 else:
-    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")\n---\n\nCommand: report\n---\nif str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: report
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
     ids = Bot.getData("legion_incident_ids") or []
     approved = []
     draft_count = 0
@@ -261,7 +328,12 @@ else:
     lines.append("Publication time is not incident time. Reposts and same-publisher posts are not independent corroboration.")
     bot.sendMessage("\n".join(lines)[:3900], disable_web_page_preview=True)
 else:
-    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")\n---\n\nCommand: reviewqueue\n---\nif str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: reviewqueue
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
     try:
         response = HTTP.get(FEED_URL)
         if response.status_code != 200:
@@ -287,7 +359,12 @@ else:
     except Exception:
         bot.sendMessage("Review queue unavailable.")
 else:
-    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")\n---\n\nCommand: reviewlead\n---\nif str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: reviewlead
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
     parts = [x.strip() for x in str(params or "").split("|", 3)]
     if len(parts) < 4 or not parts[3]:
         bot.sendMessage("Usage: /reviewlead POST_ID | reviewed|rejected|duplicate | source_class\nAllowed classes: unofficial, independent_media, official, institutional, advocacy, unknown")
@@ -321,7 +398,12 @@ else:
             except Exception:
                 bot.sendMessage("Could not save review decision.")
 else:
-    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")\n---\n\nCommand: incidentdraft\n---\nif str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: incidentdraft
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
     parts = [x.strip() for x in str(params or "").split("|", 4)]
     if len(parts) < 5:
         bot.sendMessage("Usage: /incidentdraft POST_ID | INCIDENT_ID | COUNTRY | CATEGORY | DESCRIPTION")
@@ -362,7 +444,12 @@ else:
                 except Exception:
                     bot.sendMessage("Could not create incident draft.")
 else:
-    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")\n---\n\nCommand: incidentqueue\n---\nif str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: incidentqueue
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
     ids = Bot.getData("legion_incident_ids") or []
     if not ids:
         bot.sendMessage("No incident drafts stored.")
@@ -374,7 +461,12 @@ else:
                 lines.append("\n" + str(incident_id) + " | " + str(item.get("inclusion_status", "DRAFT")) + " | " + str(item.get("verification_status", "UNVERIFIED")) + "\n" + str(item.get("country", "Unknown")) + " | " + str(item.get("category", "Unknown")) + "\n" + str(item.get("description", ""))[:180])
         bot.sendMessage("\n".join(lines)[:3900])
 else:
-    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")\n---\n\nCommand: approveincident\n---\nif str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: approveincident
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
     parts = [x.strip() for x in str(params or "").split("|", 2)]
     if len(parts) < 3 or parts[1].lower() not in ["approved", "rejected"]:
         bot.sendMessage("Usage: /approveincident INCIDENT_ID | approved|rejected | rationale")
@@ -393,7 +485,12 @@ else:
             Bot.saveData("legion_incident_" + incident_id, item)
             bot.sendMessage("Inclusion decision saved: " + decision.upper() + ". This is not a verification decision; verification remains " + str(item.get("verification_status", "UNVERIFIED")) + ".")
 else:
-    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")\n---\n\nCommand: linklead\n---\nif str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: linklead
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
     parts = [x.strip() for x in str(params or "").split("|", 2)]
     if len(parts) < 2:
         bot.sendMessage("Usage: /linklead POST_ID | INCIDENT_ID | lead|corroboration|contradiction")
@@ -432,13 +529,28 @@ else:
             except Exception:
                 bot.sendMessage("Could not link source.")
 else:
-    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")\n---\n\nCommand: ask\n---\nif str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: ask
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
     bot.sendMessage("AI question-answering is not connected in this TBC build. No answer will be invented. The public-source search and evidence digest are available through /search and /report.")
 else:
-    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")\n---\n\nCommand: research\n---\nif str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: research
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
     bot.sendMessage("The GitHub research workflow is not yet connected to TBC. This command does not claim to have run external research. Existing scheduled Telegram collection remains separate.")
 else:
-    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")\n---\n\nCommand: alerts_on\n---\nif str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: alerts_on
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
     if User.getData("legion_alerts_enabled"):
         bot.sendMessage("Proactive alerts are already enabled. Use /alerts_off then /alerts_on only if you need to restart the schedule.")
     else:
@@ -459,11 +571,21 @@ else:
         except Exception:
             bot.sendMessage("Could not initialise alerts because the public feed is unavailable.")
 else:
-    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")\n---\n\nCommand: alerts_off\n---\nif str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: alerts_off
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
     User.saveData("legion_alerts_enabled", False)
     bot.sendMessage("Proactive alerts disabled. Any already scheduled check will exit without sending alerts.")
 else:
-    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")\n---\n\nCommand: alert_poll\n---\nif str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: alert_poll
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
     try:
         response = HTTP.get(FEED_URL)
         if response.status_code != 200:
@@ -507,8 +629,8 @@ else:
                         region = post.get("priority_region", "unknown")
                         platform = post.get("platform", "unknown")
                         body = " ".join(str(post.get("text", "")).split())[:360]
-                        lines.append("\\n[" + str(index + 1) + "] " + str(publisher) + " | " + str(region) + " | " + str(platform) + " | " + str(post.get("published_at") or "time unknown") + "\\n" + body + "\\n" + str(post.get("source_url", "")))
-                    bot.sendMessage("\\n".join(lines)[:3900], disable_web_page_preview=True)
+                        lines.append("\n[" + str(index + 1) + "] " + str(publisher) + " | " + str(region) + " | " + str(platform) + " | " + str(post.get("published_at") or "time unknown") + "\n" + body + "\n" + str(post.get("source_url", "")))
+                    bot.sendMessage("\n".join(lines)[:3900], disable_web_page_preview=True)
                 updated_seen = list(seen)
                 for post_id in alerted_ids:
                     if post_id not in updated_seen:
@@ -519,7 +641,12 @@ else:
         if User.getData("legion_alerts_enabled"):
             Bot.runCommandAfter(7200, "alert_poll")
 else:
-    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")\n---\n\nCommand: digest\n---\nif str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: digest
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
     try:
         response = HTTP.get(FEED_URL)
         if response.status_code != 200:
@@ -548,7 +675,12 @@ else:
     except Exception:
         bot.sendMessage("Could not build the evidence digest from the current feed.")
 else:
-    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")\n---\n\nCommand: date\n---\nif str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: date
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
     try:
         parts = str(params or "").strip().split()
         if len(parts) > 2:
@@ -617,7 +749,12 @@ else:
     except Exception as err:
         bot.sendMessage("Date command error: " + str(err)[:220] + ". Check TBC Error Logs.")
 else:
-    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")\n---\n\nCommand: discovery_status\n---\nif str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: discovery_status
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
     try:
         url = "https://raw.githubusercontent.com/fyroz118/Legion-OSINT/main/discovery/latest.json"
         response = HTTP.get(url)
@@ -629,7 +766,12 @@ else:
     except Exception:
         bot.sendMessage("Could not read discovery status. Try again after the next scheduled run.")
 else:
-    bot.sendMessage("Access denied.")\n---\n\nCommand: discover\n---\nif str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    bot.sendMessage("Access denied.")
+---
+
+Command: discover
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
     try:
         response = HTTP.get("https://raw.githubusercontent.com/fyroz118/Legion-OSINT/main/discovery/latest.json")
         if response.status_code != 200:
@@ -644,7 +786,12 @@ else:
     except Exception:
         bot.sendMessage("Discovery report unavailable.")
 else:
-    bot.sendMessage("Access denied.")\n---\n\nCommand: addchannel\n---\nif str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    bot.sendMessage("Access denied.")
+---
+
+Command: addchannel
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
     username = str(params or "").strip().lstrip("@")
     if not username or not username.replace("_", "").isalnum():
         bot.sendMessage("Usage: /addchannel USERNAME\nThis approves a candidate already in the discovery registry.")
@@ -662,7 +809,12 @@ else:
         except Exception:
             bot.sendMessage("Could not submit approval. Check GITHUB_TOKEN permissions and TBC HTTP support.")
 else:
-    bot.sendMessage("Access denied.")\n---\n\nCommand: rejectchannel\n---\nif str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    bot.sendMessage("Access denied.")
+---
+
+Command: rejectchannel
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
     username = str(params or "").strip().lstrip("@")
     if not username or not username.replace("_", "").isalnum():
         bot.sendMessage("Usage: /rejectchannel USERNAME")
@@ -680,7 +832,12 @@ else:
         except Exception:
             bot.sendMessage("Could not submit rejection. Check GITHUB_TOKEN permissions and TBC HTTP support.")
 else:
-    bot.sendMessage("Access denied.")\n---\n\nCommand: summary\n---\nif str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    bot.sendMessage("Access denied.")
+---
+
+Command: summary
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
     try:
         parts = str(params or "").strip().split()
         if len(parts) > 1:
@@ -710,7 +867,7 @@ else:
                             bot.sendMessage("The archive file is not the expanded intelligence report. No compact-summary fallback was used.")
                         else:
                             executive = report.get("executive_assessment", {})
-                            lines = ["LEGION-OSINT DAILY INTELLIGENCE SUMMARY — V3", "QUICK OVERVIEW: collection counts are source-post counts, not incident counts. All claims remain unverified until corroborated.", "Reporting date: " + str(report.get("report_date", report_date)) + " | Timezone: " + str(report.get("timezone", "Asia/Dhaka")), "Generated: " + str(report.get("generated_at", "unknown")), "Classification: " + str(report.get("classification", "unverified source-lead assessment")), "", "EXECUTIVE COLLECTION PICTURE", "Source posts/articles: " + str(executive.get("source_posts_in_daily_archive", 0)) + " | Telegram: " + str(executive.get("telegram_posts", 0)) + " | RSS/Atom: " + str(executive.get("rss_articles", 0)), "Regions represented: " + str(executive.get("regions_represented", 0)), "Selected source records: " + str(report.get("source_records_selected", 0)) + " of " + str(report.get("source_records_available", executive.get("source_posts_in_daily_archive", 0))), "Repeated-text clusters: " + str(executive.get("exact_duplicate_text_clusters", 0)), str(executive.get("key_caveat", "")), ""]
+                            lines = ["LEGION-OSINT DAILY INTELLIGENCE SUMMARY — V3", "Reporting date: " + str(report.get("report_date", report_date)) + " | Timezone: " + str(report.get("timezone", "Asia/Dhaka")), "Generated: " + str(report.get("generated_at", "unknown")), "Classification: " + str(report.get("classification", "unverified source-lead assessment")), "", "EXECUTIVE COLLECTION PICTURE", "Source posts/articles: " + str(executive.get("source_posts_in_daily_archive", 0)) + " | Telegram: " + str(executive.get("telegram_posts", 0)) + " | RSS/Atom: " + str(executive.get("rss_articles", 0)), "Regions represented: " + str(executive.get("regions_represented", 0)), "Repeated-text clusters: " + str(executive.get("exact_duplicate_text_clusters", 0)), "Selected source records: " + str(report.get("source_records_selected", 0)) + " of " + str(report.get("source_records_available", executive.get("source_posts_in_daily_archive", 0))), str(executive.get("key_caveat", "")), ""]
                             for section in report.get("report_sections", []):
                                 lines.append(str(section.get("heading", "")))
                                 lines.append(str(section.get("text", "")))
@@ -770,4 +927,5 @@ else:
     except Exception:
         bot.sendMessage("Could not retrieve or format the expanded intelligence report. Check the archive file and TBC Error Logs.")
 else:
-    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")\n---\n
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
