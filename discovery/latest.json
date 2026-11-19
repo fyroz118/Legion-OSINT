@@ -1,0 +1,17 @@
+{
+  "generated_at": "2026-11-19T00:19:55.061190+00:00",
+  "method": "Google News public RSS search results + unauthenticated Telegram public preview checks",
+  "queries_run": 9,
+  "new_channels_found": 0,
+  "auto_activated": [],
+  "review_required": [],
+  "activation_policy": "FULL_AUTOMATIC_PUBLIC_CHANNEL_ACTIVATION",
+  "errors": [],
+  "limitations": [
+    "Not Telegram global search; search-index coverage is incomplete.",
+    "Only public channel previews are inspected; no private groups or Telegram login.",
+    "All accessible public Telegram channels are activated automatically, including political, community and unknown sources; classifications are descriptive, not endorsements.",
+    "All collected posts remain UNVERIFIED until incident-level corroboration."
+  ],
+  "discoveries": []
+}
