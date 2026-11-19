@@ -6,10 +6,6 @@
   },
   "commands": [
     {
-      "command": ".env",
-      "code": "# Set your Telegram numeric user ID after using /myid.\nOWNER_IDS = []\nFEED_URL = \"https://raw.githubusercontent.com/fyroz118/Legion-OSINT/main/docs/feed/latest.json\"\n"
-    },
-    {
       "command": "myid",
       "code": "bot.sendMessage(\"Your Telegram user ID: \" + str(u) + \"\\nAdd this number to OWNER_IDS in the .env command, save it, then use /start.\")"
     },
@@ -140,6 +136,7 @@
       "tbc/legion_osint_tbc_import.json",
       "tbc/legion_osint_tbc_news_update.json"
     ],
-    "command_count": 32
+    "command_count": 31,
+    "configuration_note": "The .env configuration is intentionally excluded to protect the existing OWNER_IDS and FEED_URL settings. Preserve the current TBC .env configuration; do not replace it with an empty OWNER_IDS list."
   }
 }
