@@ -562,7 +562,7 @@ if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
                             lines.append("REPEATED-TEXT / REPOST CLUSTERS")
                             lines.append("Detected clusters: " + str(len(clusters)) + ". These are text-similarity signals, not deduplicated incidents or independent corroboration.")
                             for cluster_index, cluster in enumerate(clusters[:25]):
-                                lines.append("\\nCluster " + str(cluster_index + 1) + " | repeated posts: " + str(cluster.get("repost_count", 0)) + " | distinct sources: " + str(cluster.get("distinct_source_count", 0)))
+                                lines.append("\nCluster " + str(cluster_index + 1) + " | repeated posts: " + str(cluster.get("repost_count", 0)) + " | distinct sources: " + str(cluster.get("distinct_source_count", 0)))
                                 lines.append("Sources: " + ", ".join(cluster.get("source_names", [])[:10]))
                                 lines.append(str(cluster.get("text_excerpt", ""))[:260])
                                 for source_item in cluster.get("source_records", [])[:5]:
