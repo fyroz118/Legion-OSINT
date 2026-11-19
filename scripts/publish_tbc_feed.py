@@ -18,6 +18,23 @@ MAX_POSTS = 1800
 MAX_ARCHIVE_POSTS = 5000  # Bound the public feed; collection workflow publishes from main only.
 MAX_TEXT = 3000
 
+# Bangladesh's 64 administrative districts. Mentions are text matches only,
+# never proof that an incident occurred in that district.
+BANGLADESH_DISTRICTS = [
+    "Bagerhat", "Bandarban", "Barguna", "Barishal", "Bhola", "Bogura",
+    "Brahmanbaria", "Chandpur", "Chattogram", "Chuadanga", "Cox's Bazar",
+    "Cumilla", "Dhaka", "Dinajpur", "Faridpur", "Feni", "Gaibandha",
+    "Gazipur", "Gopalganj", "Habiganj", "Jamalpur", "Jashore", "Jhalokati",
+    "Jhenaidah", "Joypurhat", "Khagrachhari", "Khulna", "Kishoreganj",
+    "Kurigram", "Kushtia", "Lakshmipur", "Lalmonirhat", "Madaripur",
+    "Magura", "Manikganj", "Meherpur", "Moulvibazar", "Munshiganj",
+    "Mymensingh", "Naogaon", "Narail", "Narayanganj", "Narsingdi",
+    "Natore", "Netrokona", "Nilphamari", "Noakhali", "Pabna", "Panchagarh",
+    "Patuakhali", "Pirojpur", "Rajbari", "Rajshahi", "Rangamati",
+    "Rangpur", "Satkhira", "Shariatpur", "Sherpur", "Sirajganj",
+    "Sunamganj", "Sylhet", "Tangail", "Thakurgaon"
+]
+
 
 def read_csv(path):
     if not path.exists():
@@ -76,11 +93,13 @@ RELEVANCE_RULES = {
         "state of emergency", "declared curfew", "imposed curfew",
         "mass arrest", "political activists arrested", "opposition activists detained",
         "security forces raided", "police raid", "crackdown on protesters",
-        "political prisoner", "police arrested", "security forces arrested", "activists arrested", "threatened retaliation", "threat of attack"
+        "political prisoner", "police arrested", "security forces arrested", "activists arrested", "threatened retaliation", "threat of attack", "threatened an attack"
     ],
     "civil_unrest_labour": [
         "protesters blocked", "workers blocked", "road blockade", "blocked the road",
-        "staged a protest", "held a protest", "clashed with police",
+        "staged a protest", "held a protest", "announced protest",
+        "protest programme", "protest programmes", "workers began a protest",
+        "protest and blockade", "blockade over unpaid wages", "clashed with police",
         "police fired", "tear gas", "dispersed protesters", "riot broke out",
         "demonstrators marched", "protesters marched", "workers' strike",
         "workers strike", "general strike", "hartal", "violent protest"
@@ -130,6 +149,7 @@ PHYSICAL_INCIDENT_TERMS = [
 ]
 UNREST_ACTION_TERMS = [
     "staged a protest", "held a protest", "protesters blocked", "workers blocked",
+    "workers began a protest", "protest and blockade", "blockade over unpaid wages",
     "road blockade", "blocked the road", "clashed with police", "clashed with",
     "police fired", "tear gas", "dispersed protesters", "riot broke out",
     "demonstrators marched", "protesters marched", "workers' strike",
@@ -142,7 +162,7 @@ SECURITY_ACTION_TERMS = [
     "kidnapped", "forcibly disappeared"
 ]
 THREAT_TERMS = [
-    "threatened to attack", "threat of attack", "vowed retaliation",
+    "threatened to attack", "threatened an attack", "threat of attack", "vowed retaliation",
     "threatened retaliation", "warned of attack", "threatened violence",
     "called for an attack", "called for violence"
 ]
