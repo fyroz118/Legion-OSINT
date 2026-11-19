@@ -61,7 +61,7 @@ def normalize_row(row, platform):
 # not verified events, perpetrators, motives, or risk levels.
 RELEVANCE_RULES = {
     "armed_conflict_security": [
-        "armed conflict", "airstrike", "air strike", "drone strike", "shelling",
+        "armed conflict", "armed attack", "attack on civilians", "attack on police", "attack on village", "attack on convoy", "attack on infrastructure", "airstrike", "air strike", "drone strike", "shelling",
         "artillery", "missile", "military operation", "military", "army", "troops",
         "soldier", "militant", "armed group", "war", "battlefield", "front line",
         "ceasefire", "cross-border", "border clash", "security forces"
