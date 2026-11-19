@@ -360,7 +360,7 @@ def main():
         duplicate_groups = {}
         for item in day_posts:
             body = str(item.get("text") or "").lower()
-            normalized = re.sub(r"\\W+", " ", body, flags=re.UNICODE).strip()
+            normalized = re.sub(r"\W+", " ", body, flags=re.UNICODE).strip()
             if len(normalized) >= 100:
                 duplicate_groups.setdefault(normalized, []).append(item)
         duplicate_text_clusters = []
