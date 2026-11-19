@@ -192,6 +192,78 @@ def main():
             page_tmp = page_path.with_suffix(".tmp")
             page_tmp.write_text(json.dumps(page_payload, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
             page_tmp.replace(page_path)
+
+        # Build a compact, deterministic daily source-activity summary for TBC.
+        # Topic labels are keyword indicators, not verified incident classifications.
+        topic_terms = {
+            "Politics and governance": ["election", "government", "parliament", "minister", "political", "party", "court", "policy", "cabinet", "vote"],
+            "Conflict and security": ["attack", "armed", "military", "soldier", "clash", "explosion", "bomb", "security", "killed", "airstrike", "war"],
+            "Protests and labour unrest": ["protest", "demonstration", "strike", "rally", "march", "workers", "student movement", "shutdown", "hartal"],
+            "Communal and social violence": ["communal", "religious violence", "mob", "lynching", "riot", "sectarian", "arson", "vandalism"],
+            "Public health": ["outbreak", "disease", "health ministry", "hospital", "epidemic", "infection", "cholera", "dengue", "measles", "vaccination"],
+            "Disasters and environment": ["flood", "cyclone", "earthquake", "landslide", "fire", "storm", "heatwave", "drought", "pollution"],
+            "Economy and essential services": ["inflation", "price", "economy", "fuel", "power", "electricity", "blackout", "bank", "currency", "trade"]
+        }
+        topic_matches = {label: [] for label in topic_terms}
+        region_counts = {}
+        source_class_counts = {}
+        platform_counts = {"Telegram": 0, "RSS/Atom": 0}
+        for item in day_posts:
+            body = str(item.get("text") or "").lower()
+            platform = str(item.get("platform") or "Unknown")
+            region = str(item.get("priority_region") or "global")
+            source_class = str(item.get("source_class") or "unknown")
+            platform_counts[platform] = platform_counts.get(platform, 0) + 1
+            region_counts[region] = region_counts.get(region, 0) + 1
+            source_class_counts[source_class] = source_class_counts.get(source_class, 0) + 1
+            for label, terms in topic_terms.items():
+                if any(term in body for term in terms):
+                    topic_matches[label].append(item)
+        topic_indicators = []
+        for label, matches in topic_matches.items():
+            if matches:
+                topic_indicators.append({
+                    "topic": label,
+                    "matching_source_posts": len(matches),
+                    "representative_posts": [{
+                        "publisher_name": p.get("publisher_name"),
+                        "channel_username": p.get("channel_username"),
+                        "platform": p.get("platform"),
+                        "published_at": p.get("published_at"),
+                        "priority_region": p.get("priority_region"),
+                        "source_class": p.get("source_class"),
+                        "text": str(p.get("text") or "")[:500],
+                        "source_url": p.get("source_url")
+                    } for p in matches[:3]]
+                })
+        topic_indicators.sort(key=lambda x: x["matching_source_posts"], reverse=True)
+        summary_posts = sorted(day_posts, key=lambda p: (str(p.get("monitoring_weight", "")).lower() == "high", str(p.get("published_at") or "")), reverse=True)[:12]
+        daily_summary = {
+            "schema_version": 1,
+            "generated_at": summary["generated_at"],
+            "report_date": report_date,
+            "timezone": timezone_name,
+            "total_source_posts": len(day_posts),
+            "platform_counts": platform_counts,
+            "region_counts": region_counts,
+            "source_class_counts": source_class_counts,
+            "topic_indicators": topic_indicators,
+            "representative_posts": [{
+                "publisher_name": p.get("publisher_name"),
+                "channel_username": p.get("channel_username"),
+                "platform": p.get("platform"),
+                "published_at": p.get("published_at"),
+                "priority_region": p.get("priority_region"),
+                "source_class": p.get("source_class"),
+                "text": str(p.get("text") or "")[:500],
+                "source_url": p.get("source_url")
+            } for p in summary_posts],
+            "notice": "Automated keyword-based source-activity summary, not an AI-verified event synthesis. Topic matches can be false positives or miss relevant posts. Posts are unverified; repeated posts are not independent corroboration; publication time is not incident time; empty categories do not mean no events occurred."
+        }
+        summary_path = page_dir / "summary.json"
+        summary_tmp = summary_path.with_suffix(".tmp")
+        summary_tmp.write_text(json.dumps(daily_summary, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+        summary_tmp.replace(summary_path)
     except ValueError:
         raise SystemExit("Invalid report_date; refusing to publish a daily archive.")
 
