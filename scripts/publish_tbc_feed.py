@@ -55,6 +55,185 @@ def normalize_row(row, platform):
     }
 
 
+
+
+# Conservative, transparent triage rules. These identify relevant source material,
+# not verified events, perpetrators, motives, or risk levels.
+RELEVANCE_RULES = {
+    "armed_conflict_security": [
+        "armed conflict", "airstrike", "air strike", "drone strike", "shelling",
+        "artillery", "missile", "military operation", "military", "army", "troops",
+        "soldier", "militant", "armed group", "war", "battlefield", "front line",
+        "ceasefire", "cross-border", "border clash", "security forces"
+    ],
+    "political_security": [
+        "political violence", "political attack", "assassination", "security operation",
+        "police operation", "crackdown", "state of emergency", "curfew",
+        "detention", "arrested", "mass arrest", "political prisoner"
+    ],
+    "civil_unrest_labour": [
+        "protest", "demonstration", "rally", "march", "strike", "hartal",
+        "blockade", "riot", "civil unrest", "labour unrest", "labor unrest",
+        "workers protest", "student protest", "picket", "road blockade"
+    ],
+    "communal_identity": [
+        "communal violence", "sectarian violence", "religious violence",
+        "mob attack", "lynching", "hate crime", "minority attack",
+        "temple attack", "mosque attack", "church attack", "religious site",
+        "ethnic violence", "identity-based attack"
+    ],
+    "humanitarian_displacement": [
+        "mass displacement", "displaced civilians", "refugee camp", "internally displaced",
+        "humanitarian crisis", "civilian casualties", "mass casualties", "famine",
+        "forced evacuation", "shelter destroyed", "aid convoy", "humanitarian aid"
+    ],
+    "infrastructure_disruption": [
+        "power outage", "blackout", "power plant", "water supply disrupted",
+        "hospital attacked", "school attacked", "bridge destroyed", "railway attacked",
+        "airport attacked", "port attacked", "fuel depot", "critical infrastructure",
+        "communications outage", "internet shutdown", "bank branch attacked",
+        "factory attacked", "transport disrupted"
+    ],
+    "public_health_emergency": [
+        "disease outbreak", "epidemic", "cholera outbreak", "dengue outbreak",
+        "measles outbreak", "public health emergency", "mass poisoning",
+        "hospital overwhelmed", "health facility attacked", "vaccine emergency"
+    ],
+    "disaster_environment": [
+        "cyclone", "earthquake", "landslide", "flash flood", "flooding",
+        "wildfire", "industrial fire", "chemical spill", "dam failure",
+        "storm surge", "heat emergency", "disaster response"
+    ]
+}
+
+PHYSICAL_EVENT_TERMS = [
+    "attack", "attacked", "airstrike", "air strike", "shelling", "bombing",
+    "explosion", "blast", "killed", "dead", "fatalities", "wounded", "injured",
+    "abducted", "kidnapped", "arson", "burned", "set fire", "clash", "clashes",
+    "shot", "shooting", "fired on", "detained", "arrested", "displaced",
+    "destroyed", "damaged", "evacuated", "riot", "lynching", "blockade"
+]
+
+BANGLADESH_DISTRICTS = [
+    "Bagerhat", "Bandarban", "Barguna", "Barishal", "Bhola", "Bogura",
+    "Brahmanbaria", "Chandpur", "Chapainawabganj", "Chattogram", "Chuadanga",
+    "Cumilla", "Cox's Bazar", "Dhaka", "Dinajpur", "Faridpur", "Feni",
+    "Gaibandha", "Gazipur", "Gopalganj", "Habiganj", "Jamalpur", "Jashore",
+    "Jhalokati", "Jhenaidah", "Joypurhat", "Khagrachhari", "Khulna",
+    "Kishoreganj", "Kurigram", "Kushtia", "Lakshmipur", "Lalmonirhat",
+    "Madaripur", "Magura", "Manikganj", "Meherpur", "Moulvibazar",
+    "Munshiganj", "Mymensingh", "Naogaon", "Narail", "Narayanganj",
+    "Narsingdi", "Natore", "Netrokona", "Nilphamari", "Noakhali", "Pabna",
+    "Panchagarh", "Patuakhali", "Pirojpur", "Rajbari", "Rajshahi", "Rangamati",
+    "Rangpur", "Satkhira", "Shariatpur", "Sherpur", "Sirajganj", "Sunamganj",
+    "Sylhet", "Tangail", "Thakurgaon"
+]
+
+
+def triage_source_post(item):
+    body = " ".join(str(item.get("text") or "").lower().split())
+    matched = []
+    for category, terms in RELEVANCE_RULES.items():
+        hits = [term for term in terms if term in body]
+        if hits:
+            matched.append((category, hits[:4]))
+    event_hits = [term for term in PHYSICAL_EVENT_TERMS if term in body]
+    score = min(10, len(matched) * 2 + min(len(event_hits), 3) * 2)
+    return {
+        "relevant": bool(matched),
+        "score": score,
+        "categories": [x[0] for x in matched],
+        "reasons": [term for _, hits in matched for term in hits][:8],
+        "event_indicators": event_hits[:8],
+        "incident_candidate": bool(matched and event_hits)
+    }
+
+
+def district_mentions(text):
+    body = " " + str(text or "").lower() + " "
+    found = []
+    for district in BANGLADESH_DISTRICTS:
+        pattern = r"(?<![a-z])" + re.escape(district.lower()) + r"(?![a-z])"
+        if re.search(pattern, body):
+            found.append(district)
+    return found
+
+
+def source_identity(item):
+    platform = str(item.get("platform") or "").strip().lower()
+    publisher = str(item.get("publisher_name") or item.get("channel_username") or "unknown").strip().lower()
+    return platform + ":" + re.sub(r"\s+", " ", publisher)
+
+
+def build_repost_clusters(posts, report_post):
+    groups = {}
+    for item in posts:
+        body = str(item.get("text") or "").lower()
+        normalized = re.sub(r"\W+", " ", body, flags=re.UNICODE).strip()
+        if len(normalized) >= 100:
+            groups.setdefault(normalized, []).append(item)
+    clusters = []
+    for normalized, items in groups.items():
+        if len(items) < 2:
+            continue
+        identities = sorted(set(source_identity(x) for x in items))
+        names = sorted(set(str(x.get("publisher_name") or x.get("channel_username") or "unknown") for x in items))
+        clusters.append({
+            "repost_count": len(items),
+            "distinct_source_count": len(identities),
+            "source_names": names[:20],
+            "source_groups": identities[:20],
+            "repetition_type": "cross-source text repetition; independence unassessed" if len(identities) > 1 else "same-source repetition",
+            "text_excerpt": normalized[:280],
+            "source_records": [report_post(x) for x in sorted(items, key=lambda x: str(x.get("published_at") or ""), reverse=True)[:12]]
+        })
+    clusters.sort(key=lambda x: (x["distinct_source_count"], x["repost_count"]), reverse=True)
+    return clusters[:50]
+
+
+def read_json_file(path):
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError, TypeError):
+        return {}
+
+
+def build_temporal_comparison(report_date, current_posts, archive_dir):
+    current_triage = [(item, triage_source_post(item)) for item in current_posts]
+    current_relevant = [item for item, triage in current_triage if triage["relevant"]]
+    current_candidates = [item for item, triage in current_triage if triage["incident_candidate"]]
+    current_bd = [item for item in current_relevant if str(item.get("priority_region") or "").lower() == "bangladesh"]
+    result = [{
+        "date": report_date,
+        "collected_posts": len(current_posts),
+        "relevant_source_posts": len(current_relevant),
+        "incident_candidate_posts": len(current_candidates),
+        "bangladesh_relevant_posts": len(current_bd),
+        "comparison_status": "current reporting day"
+    }]
+    try:
+        base = date.fromisoformat(report_date)
+    except ValueError:
+        return result
+    for offset in range(1, 8):
+        prior_day = (base - timedelta(days=offset)).isoformat()
+        payload = read_json_file(archive_dir / (prior_day + ".json"))
+        prior_posts = payload.get("posts", []) if isinstance(payload, dict) else []
+        prior_triage = [(item, triage_source_post(item)) for item in prior_posts]
+        relevant = [item for item, triage in prior_triage if triage["relevant"]]
+        candidates = [item for item, triage in prior_triage if triage["incident_candidate"]]
+        bangladesh = [item for item in relevant if str(item.get("priority_region") or "").lower() == "bangladesh"]
+        result.append({
+            "date": prior_day,
+            "collected_posts": len(prior_posts),
+            "relevant_source_posts": len(relevant),
+            "incident_candidate_posts": len(candidates),
+            "bangladesh_relevant_posts": len(bangladesh),
+            "comparison_status": "archive available" if prior_posts else "no archive available"
+        })
+    return result
+
+
 def main():
     folders = sorted(p for p in OUTPUT.iterdir() if p.is_dir()) if OUTPUT.exists() else []
     if not folders:
@@ -266,24 +445,22 @@ def main():
         summary_tmp.write_text(json.dumps(daily_summary, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
         summary_tmp.replace(summary_path)
 
-        # Build a fuller source-driven daily intelligence report for the TBC /summary command.
-        # This is structured OSINT triage, not LLM-generated event verification or causal attribution.
+        # Build a relevance-filtered, Bangladesh-priority daily OSINT triage report.
+        # Rule-based labels are transparent review aids, not incident verification or risk forecasts.
         region_labels = {
-            "bangladesh": "Bangladesh",
-            "south asia": "South Asia",
-            "myanmar": "Myanmar",
-            "mena": "MENA",
-            "europe": "Europe and Ukraine",
-            "sub-saharan africa": "Sub-Saharan Africa",
-            "americas": "Americas",
-            "east/southeast asia": "East and Southeast Asia",
+            "bangladesh": "Bangladesh", "south asia": "South Asia", "myanmar": "Myanmar",
+            "mena": "MENA", "europe": "Europe and Ukraine", "sub-saharan africa": "Sub-Saharan Africa",
+            "americas": "Americas", "east/southeast asia": "East and Southeast Asia",
             "global": "Global / unassigned"
         }
         region_posts = {}
         for item in day_posts:
             region_key = str(item.get("priority_region") or "global").strip().lower()
             region_posts.setdefault(region_key, []).append(item)
+
         def report_post(item):
+            triage = triage_source_post(item)
+            districts = district_mentions(item.get("text", "")) if str(item.get("priority_region") or "").lower() == "bangladesh" else []
             return {
                 "id": item.get("id"),
                 "publisher_name": item.get("publisher_name"),
@@ -295,124 +472,198 @@ def main():
                 "source_affiliation": item.get("source_affiliation"),
                 "monitoring_weight": item.get("monitoring_weight"),
                 "evidence_status": "UNVERIFIED",
+                "relevance_score": triage["score"],
+                "relevance_categories": triage["categories"],
+                "relevance_reasons": triage["reasons"],
+                "incident_candidate": triage["incident_candidate"],
+                "district_mentions": districts,
                 "text": str(item.get("text") or "")[:900],
                 "source_url": item.get("source_url")
             }
-        # Broad coverage: retain up to 100 distinct source records, balancing regions before filling by recency.
+
+        triaged_posts = [(item, triage_source_post(item)) for item in day_posts]
+        relevant_posts = [item for item, triage in triaged_posts if triage["relevant"]]
+        incident_candidates = [item for item, triage in triaged_posts if triage["incident_candidate"]]
+        excluded_posts = len(day_posts) - len(relevant_posts)
+
+        # Select relevant records with Bangladesh first, then regional round-robin coverage.
+        relevant_region_posts = {}
+        for item in relevant_posts:
+            region_key = str(item.get("priority_region") or "global").strip().lower()
+            relevant_region_posts.setdefault(region_key, []).append(item)
+        for key in relevant_region_posts:
+            relevant_region_posts[key].sort(key=lambda p: str(p.get("published_at") or ""), reverse=True)
+        region_order = sorted(relevant_region_posts, key=lambda key: (key != "bangladesh", -len(relevant_region_posts[key]), key))
         selected_report_posts = []
         seen_ids = set()
-        region_order = sorted(region_posts, key=lambda key: (key != "bangladesh", -len(region_posts[key]), key))
-        for index in range(40):
+        max_records = 100
+        for index in range(100):
             for region_key in region_order:
-                candidates = region_posts.get(region_key, [])
+                candidates = relevant_region_posts.get(region_key, [])
                 if index < len(candidates):
                     item = candidates[index]
-                    if item.get("id") not in seen_ids and len(selected_report_posts) < 100:
+                    if item.get("id") not in seen_ids and len(selected_report_posts) < max_records:
                         selected_report_posts.append(item)
                         seen_ids.add(item.get("id"))
-        if len(selected_report_posts) < 100:
-            for item in sorted(day_posts, key=lambda p: str(p.get("published_at") or ""), reverse=True):
+        if len(selected_report_posts) < max_records:
+            for item in sorted(relevant_posts, key=lambda p: str(p.get("published_at") or ""), reverse=True):
                 if item.get("id") not in seen_ids:
                     selected_report_posts.append(item)
                     seen_ids.add(item.get("id"))
-                if len(selected_report_posts) >= 100:
+                if len(selected_report_posts) >= max_records:
                     break
-        # Keyword buckets are discovery aids only. A post can match more than one bucket.
-        report_buckets = {
-            "Political and governance developments": ["government", "minister", "election", "parliament", "party", "opposition", "court", "president", "prime minister", "political"],
-            "Armed conflict and security": ["attack", "airstrike", "drone", "military", "army", "soldier", "clash", "explosion", "bomb", "militant", "war", "missile"],
-            "Protests, labour and civil unrest": ["protest", "demonstration", "strike", "workers", "labour", "labor", "shutdown", "hartal", "blockade", "riot"],
-            "Communal and identity-related violence": ["communal", "sectarian", "religious violence", "mosque", "temple", "church", "lynching", "mob attack", "hate crime"],
-            "Public health and humanitarian": ["outbreak", "epidemic", "cholera", "dengue", "hospital", "displacement", "refugee", "famine", "malnutrition"],
-            "Infrastructure, economy and essential services": ["power plant", "electricity", "blackout", "fuel", "bank", "factory", "port", "railway", "airport", "shipping", "inflation"],
-            "Disasters and environment": ["flood", "cyclone", "earthquake", "landslide", "wildfire", "drought", "storm", "heatwave"]
-        }
+
+        report_buckets = {}
+        for item in relevant_posts:
+            triage = triage_source_post(item)
+            for category in triage["categories"]:
+                report_buckets.setdefault(category, []).append(item)
         bucket_results = []
-        for label, terms in report_buckets.items():
-            matches = []
-            for item in day_posts:
-                body = str(item.get("text") or "").lower()
-                if any(term in body for term in terms):
-                    matches.append(item)
-            if matches:
-                bucket_results.append({
-                    "section": label,
-                    "matching_source_posts": len(matches),
-                    "source_records": [report_post(p) for p in sorted(matches, key=lambda p: str(p.get("published_at") or ""), reverse=True)[:15]]
-                })
+        category_labels = {
+            "armed_conflict_security": "Armed conflict and security",
+            "political_security": "Political-security developments",
+            "civil_unrest_labour": "Protests, labour and civil unrest",
+            "communal_identity": "Communal and identity-related risk",
+            "humanitarian_displacement": "Humanitarian and displacement",
+            "infrastructure_disruption": "Infrastructure and essential-service disruption",
+            "public_health_emergency": "Public-health emergencies",
+            "disaster_environment": "Disasters and environment"
+        }
+        for category, matches in report_buckets.items():
+            bucket_results.append({
+                "section": category_labels.get(category, category),
+                "matching_source_posts": len(matches),
+                "source_records": [report_post(p) for p in sorted(matches, key=lambda p: str(p.get("published_at") or ""), reverse=True)[:20]]
+            })
         bucket_results.sort(key=lambda x: x["matching_source_posts"], reverse=True)
+
         region_sections = []
         for region_key in region_order:
-            records = region_posts[region_key]
+            records = relevant_region_posts[region_key]
             region_sections.append({
                 "region": region_labels.get(region_key, region_key.replace("_", " ").title()),
-                "source_post_count": len(records),
-                "source_records": [report_post(p) for p in sorted(records, key=lambda p: str(p.get("published_at") or ""), reverse=True)[:20]]
+                "source_post_count": len(region_posts.get(region_key, [])),
+                "relevant_source_post_count": len(records),
+                "source_records": [report_post(p) for p in records[:30]]
             })
-        incident_terms = ["killed", "dead", "injured", "wounded", "arrest", "detained", "arson", "burn", "fire", "bomb", "explosion", "attack", "clash", "abduct", "displaced", "blockade"]
-        incident_candidates = []
-        for item in sorted(day_posts, key=lambda p: str(p.get("published_at") or ""), reverse=True):
-            body = str(item.get("text") or "").lower()
-            if any(term in body for term in incident_terms):
-                incident_candidates.append(report_post(item))
-        # Detect exact/near-identical repost text after normalising punctuation and whitespace.
-        # This is a repost signal only; it does not establish that posts describe the same incident.
-        duplicate_groups = {}
-        for item in day_posts:
-            body = str(item.get("text") or "").lower()
-            normalized = re.sub(r"\W+", " ", body, flags=re.UNICODE).strip()
-            if len(normalized) >= 100:
-                duplicate_groups.setdefault(normalized, []).append(item)
-        duplicate_text_clusters = []
-        for normalized, items in duplicate_groups.items():
-            if len(items) < 2:
-                continue
-            source_names = sorted(set(str(x.get("publisher_name") or x.get("channel_username") or "unknown") for x in items))
-            duplicate_text_clusters.append({
-                "repost_count": len(items),
-                "distinct_source_count": len(source_names),
-                "source_names": source_names[:20],
-                "text_excerpt": normalized[:280],
-                "source_records": [report_post(x) for x in sorted(items, key=lambda x: str(x.get("published_at") or ""), reverse=True)[:12]]
-            })
-        duplicate_text_clusters.sort(key=lambda x: (x["repost_count"], x["distinct_source_count"]), reverse=True)
-        duplicate_text_clusters = duplicate_text_clusters[:50]
+
+        bangladesh_posts = relevant_region_posts.get("bangladesh", [])
+        bangladesh_category_counts = {}
+        bangladesh_district_counts = {}
+        for item in bangladesh_posts:
+            triage = triage_source_post(item)
+            for category in triage["categories"]:
+                bangladesh_category_counts[category] = bangladesh_category_counts.get(category, 0) + 1
+            for district in district_mentions(item.get("text", "")):
+                bangladesh_district_counts[district] = bangladesh_district_counts.get(district, 0) + 1
+
+        # Exact normalized text groups are repost indicators, never incident deduplication.
+        duplicate_text_clusters = build_repost_clusters(day_posts, report_post)
+        temporal_comparison = build_temporal_comparison(report_date, day_posts, ARCHIVE_DIR)
 
         intelligence_report = {
-            "schema_version": 1,
+            "schema_version": 2,
             "report_date": report_date,
             "timezone": timezone_name,
             "generated_at": summary["generated_at"],
-            "title": "Legion-OSINT Daily Global Conflict and Communal-Risk Early-Warning Report",
+            "title": "Legion-OSINT Daily Global Conflict, Bangladesh Political-Security and Communal-Risk Triage Report",
             "classification": "Open-Source Intelligence — unverified source-lead assessment",
             "executive_assessment": {
                 "source_posts_in_daily_archive": len(day_posts),
+                "relevant_source_posts": len(relevant_posts),
+                "excluded_as_low_relevance": excluded_posts,
+                "incident_candidate_source_posts": len(incident_candidates),
                 "telegram_posts": platform_counts.get("Telegram", 0),
                 "rss_articles": platform_counts.get("RSS/Atom", 0),
                 "regions_represented": len(region_posts),
+                "regions_with_relevant_leads": len(relevant_region_posts),
                 "source_classes": source_class_counts,
                 "exact_duplicate_text_clusters": len(duplicate_text_clusters),
-                "key_caveat": "This automated report organizes collected public-source material. It does not independently verify incidents, establish perpetrator attribution, determine motive, or synthesize a reliable event chronology."
+                "cross_source_text_repetition_clusters": sum(1 for x in duplicate_text_clusters if x["distinct_source_count"] > 1),
+                "key_caveat": "Relevance filtering is deterministic keyword triage. Counts describe source posts, not unique incidents. No claim is verified, and source repetition does not establish independent corroboration."
             },
             "report_sections": [
-                {"heading": "1. Executive assessment and collection picture", "text": "Daily source-volume and coverage indicators are descriptive counts of collected posts/articles, not incident counts or measures of conflict intensity."},
-                {"heading": "2. Bangladesh political-security and communal-risk watch", "text": "Bangladesh records are prioritised where present. Political violence, labour unrest, ordinary crime and religiously motivated targeting must be assessed separately; affiliation or motive is not inferred from keywords.", "source_records": [report_post(p) for p in sorted(region_posts.get("bangladesh", []), key=lambda p: str(p.get("published_at") or ""), reverse=True)[:40]]},
-                {"heading": "3. Regional and international conflict monitoring", "text": "Regional source leads are grouped below. Reposts and syndicated reports are not independent corroboration.", "regions": region_sections},
-                {"heading": "4. Communal violence and hate-crime tracker", "text": "No post is classified as a verified hate crime by keyword matching. Review the original source and establish protected-group targeting, motive, location and incident date before classification.", "source_records": [report_post(p) for p in sorted(day_posts, key=lambda p: str(p.get("published_at") or ""), reverse=True) if any(term in str(p.get("text") or "").lower() for term in ["communal", "sectarian", "religious violence", "mosque", "temple", "church", "lynching", "hate crime"])][:30]},
-                {"heading": "5. Social-media OSINT and emerging narratives", "text": "Telegram records are public-preview source leads. Treat eyewitness and unofficial posts as leads; verify original upload, geolocation, chronology, media provenance and independent corroboration.", "source_records": [report_post(p) for p in selected_report_posts if p.get("platform") == "Telegram"][:50]},
-                {"heading": "6. Topic and narrative indicators", "text": "Buckets below are overlapping keyword matches, not unique events, verified incidents, or evidence of coordination.", "topic_buckets": bucket_results},
-                {"heading": "7. Incident register — candidate leads", "text": "These are source-post candidates, not deduplicated incidents. Multiple posts may describe one event; one post may contain several claims. Verification status remains UNVERIFIED.", "candidate_records": incident_candidates[:60]},
-                {"heading": "8. Early-warning indicators and risk movement", "text": "Automated collection cannot assign defensible risk ratings or forecast violence. Analysts should assess changes against prior periods using corroborated incidents, actor capability, intent indicators, target selection and protective factors.", "watch_indicators": ["New verified fatalities or mass-casualty claims", "Repeated attacks on transport, health, energy or communications infrastructure", "Threats or mobilisation linked to identifiable targets", "Cross-district spread supported by independently sourced incidents", "Retaliatory mobilisation, communal targeting or displacement", "Arrests, curfews, emergency deployments and restrictions with verified scope"]},
-                {"heading": "9. Sources, bias and coverage limitations", "text": "Source class and affiliation are descriptive metadata and may be incomplete. Public Telegram previews and RSS/Atom feeds are bounded; absence of a post is not evidence of no event. Publication time is not incident time; repost volume is not corroboration."},
-                {"heading": "10. Overall intelligence judgement", "text": "This is a structured collection digest for analyst review, not an automated strategic judgement. A human analyst must reconcile conflicting claims, deduplicate posts into incidents, verify dates/locations/casualties, assess attribution and motive, and document confidence with reasons."}
+                {
+                    "heading": "1. Executive assessment and collection picture",
+                    "text": "The report separates total collection volume from relevance-filtered source leads. Relevance rules are transparent keyword indicators; they may produce false positives and false negatives. None of these counts is an incident count or a measure of conflict intensity.",
+                    "metrics": {
+                        "collected_posts": len(day_posts),
+                        "relevant_source_posts": len(relevant_posts),
+                        "excluded_low_relevance_posts": excluded_posts,
+                        "incident_candidate_source_posts": len(incident_candidates)
+                    }
+                },
+                {
+                    "heading": "2. Bangladesh political-security and communal-risk watch",
+                    "text": "Bangladesh leads are prioritised. Political violence, communal targeting, labour unrest, security operations, ordinary crime and public disorder must be distinguished through source review. District names below are text mentions only, not verified geolocation. No motive or affiliation is inferred.",
+                    "bangladesh_total_posts": len(region_posts.get("bangladesh", [])),
+                    "bangladesh_relevant_posts": len(bangladesh_posts),
+                    "category_counts": bangladesh_category_counts,
+                    "district_name_mentions": bangladesh_district_counts,
+                    "source_records": [report_post(p) for p in bangladesh_posts[:60]]
+                },
+                {
+                    "heading": "3. Regional and international conflict monitoring",
+                    "text": "Only relevance-filtered records are shown in regional lead lists. Regional assignment comes from source metadata and is not independent geolocation. Reposts and syndicated reporting are not independent corroboration.",
+                    "regions": region_sections
+                },
+                {
+                    "heading": "4. Communal violence and hate-crime review queue",
+                    "text": "These are keyword-triggered review leads only. Establish protected-group targeting, motive, location, incident date and credible evidence before classifying an event as communal violence or a hate crime.",
+                    "source_records": [report_post(p) for p in bangladesh_posts if "communal_identity" in triage_source_post(p)["categories"]][:40]
+                },
+                {
+                    "heading": "5. Social-media OSINT and source diversity",
+                    "text": "Public Telegram preview posts and unofficial accounts are leads, not verified facts. Prioritise original upload checks, geolocation, chronology, media provenance, publisher identity and independent corroboration. A second publisher repeating a claim is not automatically independent.",
+                    "source_records": [report_post(p) for p in selected_report_posts if p.get("platform") == "Telegram"][:60]
+                },
+                {
+                    "heading": "6. Topic and narrative indicators",
+                    "text": "Counts are overlapping relevance-category matches. They are not unique events, proof of coordination, or evidence of motive.",
+                    "topic_buckets": bucket_results
+                },
+                {
+                    "heading": "7. Incident register — candidate source leads",
+                    "text": "Candidates require analyst review and incident-level grouping. Multiple posts may describe one event; one post may contain multiple claims. The system does not promote these records to verified incidents.",
+                    "candidate_records": [report_post(p) for p in sorted(incident_candidates, key=lambda p: (str(p.get("priority_region") or "").lower() != "bangladesh", str(p.get("published_at") or "")), reverse=True)[:100]]
+                },
+                {
+                    "heading": "8. Repost and cross-source repetition analysis",
+                    "text": "Exact normalized text clusters identify repeated text only. Cross-source repetition is a corroboration lead, not proof of independent sourcing. Same-source repetition is not corroboration.",
+                    "clusters": duplicate_text_clusters
+                },
+                {
+                    "heading": "9. Temporal source-activity comparison",
+                    "text": "Daily counts compare collected and relevance-filtered posts in available rolling archives. These are reporting-volume indicators, not violence trends or forecasts. Missing archives are not zero-event days.",
+                    "daily_counts": temporal_comparison
+                },
+                {
+                    "heading": "10. Early-warning indicators and overall judgement",
+                    "text": "Automated collection cannot assign defensible risk ratings or forecast violence. Analysts should compare verified incidents over time and assess actor capability, intent indicators, target selection, geographic spread, response measures and protective factors.",
+                    "watch_indicators": [
+                        "New independently corroborated fatalities or mass-casualty claims",
+                        "Repeated attacks on transport, health, energy or communications infrastructure",
+                        "Threats or mobilisation linked to identifiable targets",
+                        "Cross-district spread supported by independently sourced incidents",
+                        "Retaliatory mobilisation, communal targeting or displacement",
+                        "Arrests, curfews, emergency deployments and restrictions with verified scope"
+                    ]
+                },
+                {
+                    "heading": "11. Sources, bias and coverage limitations",
+                    "text": "Source class and affiliation are descriptive metadata and may be incomplete. Public Telegram previews and RSS/Atom feeds are bounded; absence of a post is not evidence of no event. Publication time is not incident time. Relevance filtering can miss local-language reports or match unrelated text."
+                }
             ],
             "duplicate_text_clusters": duplicate_text_clusters,
-            "duplicate_text_cluster_notice": "Clusters identify repeated or near-identical text only. They are not deduplicated incidents, do not prove independent corroboration, and can contain unrelated reposts or miss paraphrased reports.",
+            "duplicate_text_cluster_notice": "Repeated text is not incident deduplication and does not establish independent corroboration.",
             "source_records_selected": len(selected_report_posts),
             "source_records_available": len(day_posts),
-            "minimum_target_met": len(day_posts) >= 50,
+            "relevant_source_records_available": len(relevant_posts),
+            "incident_candidate_records_available": len(incident_candidates),
+            "minimum_target_met": len(relevant_posts) >= 50,
             "source_records": [report_post(p) for p in selected_report_posts],
-            "notice": "UNVERIFIED SOURCE LEADS. This report is generated deterministically from collected public posts/articles. It is not an AI-generated or independently verified event synthesis. Keyword matches can be false positives or miss events. No inference of guilt, central direction, religious motive or imminent violence is made. Check original sources before reporting."
+            "temporal_comparison": temporal_comparison,
+            "notice": "UNVERIFIED SOURCE LEADS. Deterministic keyword triage only; not AI-generated or independently verified event synthesis. No inference of guilt, central direction, religious motive or imminent violence. District names are text mentions, not geolocation. Verify original sources before reporting."
         }
         intelligence_path = page_dir / "intelligence_report.json"
         intelligence_tmp = intelligence_path.with_suffix(".tmp")
