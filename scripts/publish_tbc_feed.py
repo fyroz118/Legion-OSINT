@@ -5,6 +5,7 @@ drafts, private identifiers and credentials are never published.
 """
 import csv
 import json
+import re
 from datetime import datetime, timezone, date
 from zoneinfo import ZoneInfo
 from pathlib import Path
@@ -354,6 +355,29 @@ def main():
             body = str(item.get("text") or "").lower()
             if any(term in body for term in incident_terms):
                 incident_candidates.append(report_post(item))
+        # Detect exact/near-identical repost text after normalising punctuation and whitespace.
+        # This is a repost signal only; it does not establish that posts describe the same incident.
+        duplicate_groups = {}
+        for item in day_posts:
+            body = str(item.get("text") or "").lower()
+            normalized = re.sub(r"\\W+", " ", body, flags=re.UNICODE).strip()
+            if len(normalized) >= 100:
+                duplicate_groups.setdefault(normalized, []).append(item)
+        duplicate_text_clusters = []
+        for normalized, items in duplicate_groups.items():
+            if len(items) < 2:
+                continue
+            source_names = sorted(set(str(x.get("publisher_name") or x.get("channel_username") or "unknown") for x in items))
+            duplicate_text_clusters.append({
+                "repost_count": len(items),
+                "distinct_source_count": len(source_names),
+                "source_names": source_names[:20],
+                "text_excerpt": normalized[:280],
+                "source_records": [report_post(x) for x in sorted(items, key=lambda x: str(x.get("published_at") or ""), reverse=True)[:12]]
+            })
+        duplicate_text_clusters.sort(key=lambda x: (x["repost_count"], x["distinct_source_count"]), reverse=True)
+        duplicate_text_clusters = duplicate_text_clusters[:50]
+
         intelligence_report = {
             "schema_version": 1,
             "report_date": report_date,
@@ -367,6 +391,7 @@ def main():
                 "rss_articles": platform_counts.get("RSS/Atom", 0),
                 "regions_represented": len(region_posts),
                 "source_classes": source_class_counts,
+                "exact_duplicate_text_clusters": len(duplicate_text_clusters),
                 "key_caveat": "This automated report organizes collected public-source material. It does not independently verify incidents, establish perpetrator attribution, determine motive, or synthesize a reliable event chronology."
             },
             "report_sections": [
@@ -381,6 +406,8 @@ def main():
                 {"heading": "9. Sources, bias and coverage limitations", "text": "Source class and affiliation are descriptive metadata and may be incomplete. Public Telegram previews and RSS/Atom feeds are bounded; absence of a post is not evidence of no event. Publication time is not incident time; repost volume is not corroboration."},
                 {"heading": "10. Overall intelligence judgement", "text": "This is a structured collection digest for analyst review, not an automated strategic judgement. A human analyst must reconcile conflicting claims, deduplicate posts into incidents, verify dates/locations/casualties, assess attribution and motive, and document confidence with reasons."}
             ],
+            "duplicate_text_clusters": duplicate_text_clusters,
+            "duplicate_text_cluster_notice": "Clusters identify repeated or near-identical text only. They are not deduplicated incidents, do not prove independent corroboration, and can contain unrelated reposts or miss paraphrased reports.",
             "source_records_selected": len(selected_report_posts),
             "source_records_available": len(day_posts),
             "minimum_target_met": len(day_posts) >= 50,
