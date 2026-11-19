@@ -264,6 +264,133 @@ def main():
         summary_tmp = summary_path.with_suffix(".tmp")
         summary_tmp.write_text(json.dumps(daily_summary, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
         summary_tmp.replace(summary_path)
+
+        # Build a fuller source-driven daily intelligence report for the TBC /summary command.
+        # This is structured OSINT triage, not LLM-generated event verification or causal attribution.
+        region_labels = {
+            "bangladesh": "Bangladesh",
+            "south asia": "South Asia",
+            "myanmar": "Myanmar",
+            "mena": "MENA",
+            "europe": "Europe and Ukraine",
+            "sub-saharan africa": "Sub-Saharan Africa",
+            "americas": "Americas",
+            "east/southeast asia": "East and Southeast Asia",
+            "global": "Global / unassigned"
+        }
+        region_posts = {}
+        for item in day_posts:
+            region_key = str(item.get("priority_region") or "global").strip().lower()
+            region_posts.setdefault(region_key, []).append(item)
+        def report_post(item):
+            return {
+                "id": item.get("id"),
+                "publisher_name": item.get("publisher_name"),
+                "channel_username": item.get("channel_username"),
+                "platform": item.get("platform"),
+                "published_at": item.get("published_at"),
+                "priority_region": item.get("priority_region"),
+                "source_class": item.get("source_class"),
+                "source_affiliation": item.get("source_affiliation"),
+                "monitoring_weight": item.get("monitoring_weight"),
+                "evidence_status": "UNVERIFIED",
+                "text": str(item.get("text") or "")[:900],
+                "source_url": item.get("source_url")
+            }
+        # Broad coverage: retain up to 100 distinct source records, balancing regions before filling by recency.
+        selected_report_posts = []
+        seen_ids = set()
+        region_order = sorted(region_posts, key=lambda key: (key != "bangladesh", -len(region_posts[key]), key))
+        for index in range(20):
+            for region_key in region_order:
+                candidates = region_posts.get(region_key, [])
+                if index < len(candidates):
+                    item = candidates[index]
+                    if item.get("id") not in seen_ids and len(selected_report_posts) < 100:
+                        selected_report_posts.append(item)
+                        seen_ids.add(item.get("id"))
+        if len(selected_report_posts) < 100:
+            for item in sorted(day_posts, key=lambda p: str(p.get("published_at") or ""), reverse=True):
+                if item.get("id") not in seen_ids:
+                    selected_report_posts.append(item)
+                    seen_ids.add(item.get("id"))
+                if len(selected_report_posts) >= 100:
+                    break
+        # Keyword buckets are discovery aids only. A post can match more than one bucket.
+        report_buckets = {
+            "Political and governance developments": ["government", "minister", "election", "parliament", "party", "opposition", "court", "president", "prime minister", "political"],
+            "Armed conflict and security": ["attack", "airstrike", "drone", "military", "army", "soldier", "clash", "explosion", "bomb", "militant", "war", "missile"],
+            "Protests, labour and civil unrest": ["protest", "demonstration", "strike", "workers", "labour", "labor", "shutdown", "hartal", "blockade", "riot"],
+            "Communal and identity-related violence": ["communal", "sectarian", "religious violence", "mosque", "temple", "church", "lynching", "mob attack", "hate crime"],
+            "Public health and humanitarian": ["outbreak", "epidemic", "cholera", "dengue", "hospital", "displacement", "refugee", "famine", "malnutrition"],
+            "Infrastructure, economy and essential services": ["power plant", "electricity", "blackout", "fuel", "bank", "factory", "port", "railway", "airport", "shipping", "inflation"],
+            "Disasters and environment": ["flood", "cyclone", "earthquake", "landslide", "wildfire", "drought", "storm", "heatwave"]
+        }
+        bucket_results = []
+        for label, terms in report_buckets.items():
+            matches = []
+            for item in day_posts:
+                body = str(item.get("text") or "").lower()
+                if any(term in body for term in terms):
+                    matches.append(item)
+            if matches:
+                bucket_results.append({
+                    "section": label,
+                    "matching_source_posts": len(matches),
+                    "source_records": [report_post(p) for p in sorted(matches, key=lambda p: str(p.get("published_at") or ""), reverse=True)[:15]]
+                })
+        bucket_results.sort(key=lambda x: x["matching_source_posts"], reverse=True)
+        region_sections = []
+        for region_key in region_order:
+            records = region_posts[region_key]
+            region_sections.append({
+                "region": region_labels.get(region_key, region_key.replace("_", " ").title()),
+                "source_post_count": len(records),
+                "source_records": [report_post(p) for p in sorted(records, key=lambda p: str(p.get("published_at") or ""), reverse=True)[:20]]
+            })
+        incident_terms = ["killed", "dead", "injured", "wounded", "arrest", "detained", "arson", "burn", "fire", "bomb", "explosion", "attack", "clash", "abduct", "displaced", "blockade"]
+        incident_candidates = []
+        for item in sorted(day_posts, key=lambda p: str(p.get("published_at") or ""), reverse=True):
+            body = str(item.get("text") or "").lower()
+            if any(term in body for term in incident_terms):
+                incident_candidates.append(report_post(item))
+        intelligence_report = {
+            "schema_version": 1,
+            "report_date": report_date,
+            "timezone": timezone_name,
+            "generated_at": summary["generated_at"],
+            "title": "Legion-OSINT Daily Global Conflict and Communal-Risk Early-Warning Report",
+            "classification": "Open-Source Intelligence — unverified source-lead assessment",
+            "executive_assessment": {
+                "source_posts_in_daily_archive": len(day_posts),
+                "telegram_posts": platform_counts.get("Telegram", 0),
+                "rss_articles": platform_counts.get("RSS/Atom", 0),
+                "regions_represented": len(region_posts),
+                "source_classes": source_class_counts,
+                "key_caveat": "This automated report organizes collected public-source material. It does not independently verify incidents, establish perpetrator attribution, determine motive, or synthesize a reliable event chronology."
+            },
+            "report_sections": [
+                {"heading": "1. Executive assessment and collection picture", "text": "Daily source-volume and coverage indicators are descriptive counts of collected posts/articles, not incident counts or measures of conflict intensity."},
+                {"heading": "2. Bangladesh political-security and communal-risk watch", "text": "Bangladesh records are prioritised where present. Political violence, labour unrest, ordinary crime and religiously motivated targeting must be assessed separately; affiliation or motive is not inferred from keywords.", "source_records": [report_post(p) for p in sorted(region_posts.get("bangladesh", []), key=lambda p: str(p.get("published_at") or ""), reverse=True)[:40]]},
+                {"heading": "3. Regional and international conflict monitoring", "text": "Regional source leads are grouped below. Reposts and syndicated reports are not independent corroboration.", "regions": region_sections},
+                {"heading": "4. Communal violence and hate-crime tracker", "text": "No post is classified as a verified hate crime by keyword matching. Review the original source and establish protected-group targeting, motive, location and incident date before classification.", "source_records": [report_post(p) for p in sorted(day_posts, key=lambda p: str(p.get("published_at") or ""), reverse=True) if any(term in str(p.get("text") or "").lower() for term in ["communal", "sectarian", "religious violence", "mosque", "temple", "church", "lynching", "hate crime"])][:30]},
+                {"heading": "5. Social-media OSINT and emerging narratives", "text": "Telegram records are public-preview source leads. Treat eyewitness and unofficial posts as leads; verify original upload, geolocation, chronology, media provenance and independent corroboration.", "source_records": [report_post(p) for p in selected_report_posts if p.get("platform") == "Telegram"][:50]},
+                {"heading": "6. Topic and narrative indicators", "text": "Buckets below are overlapping keyword matches, not unique events, verified incidents, or evidence of coordination.", "topic_buckets": bucket_results},
+                {"heading": "7. Incident register — candidate leads", "text": "These are source-post candidates, not deduplicated incidents. Multiple posts may describe one event; one post may contain several claims. Verification status remains UNVERIFIED.", "candidate_records": incident_candidates[:60]},
+                {"heading": "8. Early-warning indicators and risk movement", "text": "Automated collection cannot assign defensible risk ratings or forecast violence. Analysts should assess changes against prior periods using corroborated incidents, actor capability, intent indicators, target selection and protective factors.", "watch_indicators": ["New verified fatalities or mass-casualty claims", "Repeated attacks on transport, health, energy or communications infrastructure", "Threats or mobilisation linked to identifiable targets", "Cross-district spread supported by independently sourced incidents", "Retaliatory mobilisation, communal targeting or displacement", "Arrests, curfews, emergency deployments and restrictions with verified scope"]},
+                {"heading": "9. Sources, bias and coverage limitations", "text": "Source class and affiliation are descriptive metadata and may be incomplete. Public Telegram previews and RSS/Atom feeds are bounded; absence of a post is not evidence of no event. Publication time is not incident time; repost volume is not corroboration."},
+                {"heading": "10. Overall intelligence judgement", "text": "This is a structured collection digest for analyst review, not an automated strategic judgement. A human analyst must reconcile conflicting claims, deduplicate posts into incidents, verify dates/locations/casualties, assess attribution and motive, and document confidence with reasons."}
+            ],
+            "source_records_selected": len(selected_report_posts),
+            "source_records_available": len(day_posts),
+            "minimum_target_met": len(day_posts) >= 50,
+            "source_records": [report_post(p) for p in selected_report_posts],
+            "notice": "UNVERIFIED SOURCE LEADS. This report is generated deterministically from collected public posts/articles. It is not an AI-generated or independently verified event synthesis. Keyword matches can be false positives or miss events. No inference of guilt, central direction, religious motive or imminent violence is made. Check original sources before reporting."
+        }
+        intelligence_path = page_dir / "intelligence_report.json"
+        intelligence_tmp = intelligence_path.with_suffix(".tmp")
+        intelligence_tmp.write_text(json.dumps(intelligence_report, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+        intelligence_tmp.replace(intelligence_path)
     except ValueError:
         raise SystemExit("Invalid report_date; refusing to publish a daily archive.")
 
