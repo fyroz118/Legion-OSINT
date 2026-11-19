@@ -165,6 +165,33 @@ def main():
         archive_tmp = archive_path.with_suffix(".tmp")
         archive_tmp.write_text(json.dumps(archive_payload, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
         archive_tmp.replace(archive_path)
+
+        # Publish small page-sized files for chatbots with response-size/time limits.
+        # TBC fetches only one page (20 records) instead of downloading the full multi-MB archive.
+        page_dir = ARCHIVE_DIR / report_date
+        page_dir.mkdir(parents=True, exist_ok=True)
+        page_size = 20
+        total_pages = max(1, (len(day_posts) + page_size - 1) // page_size)
+        for page_number in range(1, total_pages + 1):
+            page_posts = day_posts[(page_number - 1) * page_size:page_number * page_size]
+            page_summary = dict(archive_summary)
+            page_summary.update({
+                "page": page_number,
+                "total_pages": total_pages,
+                "page_size": page_size,
+                "page_records": len(page_posts),
+                "total_records": len(day_posts)
+            })
+            page_payload = {
+                "schema_version": 1,
+                "generated_at": summary["generated_at"],
+                "summary": page_summary,
+                "posts": page_posts
+            }
+            page_path = page_dir / ("page-" + str(page_number) + ".json")
+            page_tmp = page_path.with_suffix(".tmp")
+            page_tmp.write_text(json.dumps(page_payload, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+            page_tmp.replace(page_path)
     except ValueError:
         raise SystemExit("Invalid report_date; refusing to publish a daily archive.")
 
