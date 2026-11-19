@@ -159,11 +159,10 @@ def _phrase_hits(body, terms):
     """Match whole phrases and avoid substring errors such as 'war' in 'award'."""
     hits = []
     for term in terms:
-        pattern = r"(?<!\\w)" + r"\\s+".join(re.escape(part) for part in term.lower().split()) + r"(?!\\w)"
+        pattern = r"(?<!\w)" + r"\s+".join(re.escape(part) for part in term.lower().split()) + r"(?!\w)"
         if re.search(pattern, body):
             hits.append(term)
     return hits
-
 
 def triage_source_post(item):
     body = " ".join(str(item.get("text") or "").lower().split())
