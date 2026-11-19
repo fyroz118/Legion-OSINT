@@ -17,15 +17,16 @@ class PublishTbcFeedTests(unittest.TestCase):
             with (day / "telegram_posts.csv").open("w", encoding="utf-8", newline="") as handle:
                 writer = csv.DictWriter(handle, fieldnames=fields)
                 writer.writeheader()
-                writer.writerow({"channel_username":"localreporter", "message_id":"77", "published_at":"2026-11-18T08:00:00Z", "collected_at":"2026-11-18T08:05:00Z", "text":"Public Telegram post", "source_url":"https://t.me/localreporter/77", "language":"bn", "priority_region":"bangladesh", "source_class":"unofficial", "source_type":"local_reporter", "source_affiliation":"unassessed", "monitoring_weight":"high", "publisher_name":"Local Reporter", "platform":"Telegram"})
+                writer.writerow({"channel_username":"localreporter", "message_id":"77", "published_at":"2026-11-18T08:00:00Z", "collected_at":"2026-11-18T08:05:00Z", "text":"Armed attack reported in Gazipur; three people were injured.", "source_url":"https://t.me/localreporter/77", "language":"bn", "priority_region":"bangladesh", "source_class":"unofficial", "source_type":"local_reporter", "source_affiliation":"unassessed", "monitoring_weight":"high", "publisher_name":"Local Reporter", "platform":"Telegram"})
             with (day / "news_articles.csv").open("w", encoding="utf-8", newline="") as handle:
                 writer = csv.DictWriter(handle, fieldnames=fields)
                 writer.writeheader()
-                writer.writerow({"channel_username":"daily_star_rss", "message_id":"abc", "published_at":"2026-11-18T09:00:00+06:00", "collected_at":"2026-11-18T09:05:00Z", "text":"RSS headline and excerpt", "source_url":"https://www.thedailystar.net/story", "language":"en", "priority_region":"bangladesh", "source_class":"independent_media", "source_type":"public_rss_article", "source_affiliation":"newsroom", "monitoring_weight":"high", "publisher_name":"The Daily Star", "platform":"RSS/Atom"})
+                writer.writerow({"channel_username":"daily_star_rss", "message_id":"abc", "published_at":"2026-11-18T09:00:00+06:00", "collected_at":"2026-11-18T09:05:00Z", "text":"Actress wears a bridal dress in a fashion photo shoot.", "source_url":"https://www.thedailystar.net/story", "language":"en", "priority_region":"bangladesh", "source_class":"independent_media", "source_type":"public_rss_article", "source_affiliation":"newsroom", "monitoring_weight":"high", "publisher_name":"The Daily Star", "platform":"RSS/Atom"})
             (day / "collection_summary.json").write_text(json.dumps({"report_date":"2026-11-18", "configured_channels":["localreporter"], "channel_diagnostics":{"localreporter":{"stop_reason":"date_boundary"}}, "collection_errors":[], "limitations":["preview only"]}), encoding="utf-8")
             (day / "news_collection_summary.json").write_text(json.dumps({"configured_sources":["daily_star_rss"], "source_diagnostics":{"daily_star_rss":{"status":"ok"}}, "limitations":["RSS only"]}), encoding="utf-8")
             destination = root / "docs" / "feed" / "latest.json"
-            with patch.object(publish_tbc_feed, "OUTPUT", root / "output"), patch.object(publish_tbc_feed, "DEST", destination):
+            archive_dir = root / "docs" / "feed" / "archive"
+            with patch.object(publish_tbc_feed, "OUTPUT", root / "output"), patch.object(publish_tbc_feed, "DEST", destination), patch.object(publish_tbc_feed, "ARCHIVE_DIR", archive_dir):
                 publish_tbc_feed.main()
             payload = json.loads(destination.read_text(encoding="utf-8"))
             self.assertEqual(len(payload["posts"]), 2)
@@ -38,6 +39,15 @@ class PublishTbcFeedTests(unittest.TestCase):
             self.assertEqual(payload["summary"]["configured_channels"], 1)
             self.assertEqual(payload["summary"]["collection_errors"], 0)
             self.assertNotIn("analyst_decisions", payload)
+            report_path = archive_dir / "2026-11-18" / "intelligence_report.json"
+            report = json.loads(report_path.read_text(encoding="utf-8"))
+            self.assertEqual(report["executive_assessment"]["relevant_source_posts"], 1)
+            self.assertEqual(report["executive_assessment"]["excluded_as_low_relevance"], 1)
+            self.assertEqual(report["executive_assessment"]["incident_candidate_source_posts"], 1)
+            bangladesh = next(section for section in report["report_sections"] if section["heading"].startswith("2."))
+            self.assertEqual(bangladesh["bangladesh_relevant_posts"], 1)
+            self.assertEqual(bangladesh["district_name_mentions"], {"Gazipur": 1})
+            self.assertEqual(len(report["temporal_comparison"]), 8)
 
     def test_rejects_non_https_source_urls(self):
         row = {"channel_username":"bad", "message_id":"1", "text":"headline", "source_url":"http://example.org/a"}
