@@ -1,0 +1,911 @@
+Command: .env
+---
+# Set your Telegram numeric user ID after using /myid.
+OWNER_IDS = []
+FEED_URL = "https://raw.githubusercontent.com/fyroz118/Legion-OSINT/main/docs/feed/latest.json"
+
+---
+
+Command: myid
+---
+bot.sendMessage("Your Telegram user ID: " + str(u) + "\nAdd this number to OWNER_IDS in the .env command, save it, then use /start.")
+---
+
+Command: start
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    bot.sendMessage("Legion-OSINT private intelligence assistant is online.\nUse /help for commands.\nPublic Telegram and RSS/Atom items are unverified source leads until independently assessed.")
+else:
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: help
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    bot.sendMessage("/status — Telegram and RSS collection freshness/counts\n/daily — latest public Telegram posts\n/date YYYY-MM-DD [page] — browse daily Telegram + RSS/Atom archive\n/news — latest public RSS/Atom news headlines\n/bangladesh — Bangladesh source posts\n/search <words> — all words must match text, source, region or classification\n/leads — recent source leads\n/briefs — individual source briefs\n/coverage — Telegram channel and RSS publisher diagnostics\n/report — analyst-approved incident report\n/digest — latest unverified source-post digest\n/reviewqueue — unreviewed source posts\n/reviewlead ID | reviewed|rejected|duplicate | source_class | rationale\n/candidates — discovered channels awaiting review\n/discover — latest autonomous discovery results\n/discovery_status — discovery run status\n/addchannel USERNAME — approve candidate\n/rejectchannel USERNAME — reject candidate\n/incidentdraft POST_ID | INCIDENT_ID | COUNTRY | CATEGORY | DESCRIPTION\n/incidentqueue — incident drafts and inclusion status\n/approveincident INCIDENT_ID | approved|rejected | rationale\n/linklead POST_ID | INCIDENT_ID | lead|corroboration|contradiction\n/alerts_on — enable two-hourly alerts\n/alerts_off — disable alerts\n/summary [YYYY-MM-DD] — expanded daily global conflict and communal-risk intelligence report\n/ask and /research — not connected yet\n\nSource integrity: posts remain UNVERIFIED; publication time is not incident time; reposts are not independent corroboration. Approval permits report inclusion only and does not verify an event.")
+else:
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: status
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    try:
+        response = HTTP.get(FEED_URL)
+        if response.status_code != 200:
+            bot.sendMessage("The public collection feed is temporarily unavailable. Try again later.")
+        else:
+            data = response.json()
+            posts = data.get("posts", [])
+            summary = data.get("summary", {})
+            tg_channels = summary.get("configured_telegram_channels", summary.get("configured_channels", 0))
+            rss_sources = summary.get("configured_rss_sources", 0)
+            tg_posts = summary.get("telegram_posts_in_snapshot", summary.get("posts_in_snapshot", len(posts)))
+            rss_posts = summary.get("rss_articles_in_snapshot", 0)
+            tg_errors = summary.get("telegram_collection_errors", summary.get("collection_errors", 0))
+            rss_errors = summary.get("rss_source_errors", 0)
+            bot.sendMessage("LEGION-OSINT STATUS\nSnapshot: " + str(summary.get("generated_at", data.get("generated_at", "unknown"))) + "\nReporting date: " + str(summary.get("report_date", "unknown")) + "\nTelegram channels: " + str(tg_channels) + " | Telegram posts: " + str(tg_posts) + " | Telegram errors: " + str(tg_errors) + "\nRSS publishers: " + str(rss_sources) + " | RSS articles: " + str(rss_posts) + " | RSS errors: " + str(rss_errors) + "\nMethod: public Telegram previews + configured public RSS/Atom headlines/excerpts. Coverage is finite, not comprehensive.")
+    except Exception:
+        bot.sendMessage("Could not read the collection feed. Check the GitHub Actions collection workflow and TBC Error Logs.")
+else:
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: daily
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    try:
+        response = HTTP.get(FEED_URL)
+        if response.status_code != 200:
+            bot.sendMessage("The public collection feed is temporarily unavailable. Try again later.")
+        else:
+            data = response.json()
+            posts = data.get("posts", [])
+            selected = []
+            for post in posts:
+                if post.get("platform", "Telegram") == "Telegram":
+                    selected.append(post)
+                if len(selected) >= 8:
+                    break
+            if not selected:
+                bot.sendMessage("LATEST PUBLIC TELEGRAM POSTS\nNo matching records in the latest snapshot.")
+            else:
+                lines = ["LATEST PUBLIC TELEGRAM POSTS", "All records: UNVERIFIED source leads."]
+                for post in selected:
+                    snippet = " ".join(str(post.get("text", "")).split())[:260]
+                    lines.append("\n" + str(post.get("publisher_name") or post.get("channel_username", "unknown")) + " | Telegram | " + str(post.get("published_at") or "publication time unknown") + "\n" + snippet + "\n" + str(post.get("source_url", "")))
+                bot.sendMessage("\n".join(lines)[:3900], disable_web_page_preview=True)
+    except Exception:
+        bot.sendMessage("Feed unavailable. Try again later.")
+else:
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: news
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    try:
+        response = HTTP.get(FEED_URL)
+        if response.status_code != 200:
+            bot.sendMessage("The public collection feed is temporarily unavailable. Try again later.")
+        else:
+            data = response.json()
+            posts = data.get("posts", [])
+            selected = []
+            for post in posts:
+                if post.get("platform") == "RSS/Atom" or post.get("source_type") == "public_rss_article":
+                    selected.append(post)
+                if len(selected) >= 10:
+                    break
+            if not selected:
+                bot.sendMessage("LATEST RSS/ATOM NEWS\nNo recent feed articles in the current snapshot.")
+            else:
+                lines = ["LATEST RSS/ATOM NEWS — UNVERIFIED SOURCE LEADS"]
+                for post in selected:
+                    publisher = post.get("publisher_name") or post.get("channel_username", "unknown")
+                    snippet = " ".join(str(post.get("text", "")).split())[:260]
+                    lines.append("\n" + str(publisher) + " | " + str(post.get("published_at") or "publication time unknown") + "\n" + snippet + "\n" + str(post.get("source_url", "")))
+                bot.sendMessage("\n".join(lines)[:3900], disable_web_page_preview=True)
+    except Exception:
+        bot.sendMessage("RSS news feed unavailable. Try again later.")
+else:
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: bangladesh
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    try:
+        response = HTTP.get(FEED_URL)
+        if response.status_code != 200:
+            bot.sendMessage("The public collection feed is temporarily unavailable. Try again later.")
+        else:
+            data = response.json()
+            posts = data.get("posts", [])
+            summary = data.get("summary", {})
+            selected = []
+            for post in posts:
+                if "bangladesh" in str(post.get("priority_region", "")).lower():
+                    selected.append(post)
+                if len(selected) >= 10:
+                    break
+            if not selected:
+                bot.sendMessage("BANGLADESH SOURCE LEADS\nNo matching records in the latest snapshot.")
+            else:
+                lines = ["BANGLADESH SOURCE LEADS", "All records: UNVERIFIED source leads."]
+                for post in selected:
+                    snippet = " ".join(str(post.get("text", "")).split())[:260]
+                    lines.append("\n" + str(post.get("publisher_name") or post.get("channel_username", "unknown")) + " | " + str(post.get("platform", "Telegram")) + " | " + str(post.get("published_at") or "publication time unknown") + "\n" + snippet + "\n" + str(post.get("source_url", "")))
+                bot.sendMessage("\n".join(lines)[:3900], disable_web_page_preview=True)
+    except Exception:
+        bot.sendMessage("Feed unavailable. Try again later.")
+else:
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: leads
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    try:
+        response = HTTP.get(FEED_URL)
+        if response.status_code != 200:
+            bot.sendMessage("The public collection feed is temporarily unavailable. Try again later.")
+        else:
+            data = response.json()
+            posts = data.get("posts", [])
+            summary = data.get("summary", {})
+            selected = []
+            for post in posts:
+                if True:
+                    selected.append(post)
+                if len(selected) >= 15:
+                    break
+            if not selected:
+                bot.sendMessage("RECENT SOURCE LEADS\nNo matching records in the latest snapshot.")
+            else:
+                lines = ["RECENT SOURCE LEADS", "All records: UNVERIFIED source leads."]
+                for post in selected:
+                    snippet = " ".join(str(post.get("text", "")).split())[:260]
+                    lines.append("\n" + str(post.get("publisher_name") or post.get("channel_username", "unknown")) + " | " + str(post.get("platform", "Telegram")) + " | " + str(post.get("published_at") or "publication time unknown") + "\n" + snippet + "\n" + str(post.get("source_url", "")))
+                bot.sendMessage("\n".join(lines)[:3900], disable_web_page_preview=True)
+    except Exception:
+        bot.sendMessage("Feed unavailable. Try again later.")
+else:
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: briefs
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    try:
+        response = HTTP.get(FEED_URL)
+        if response.status_code != 200:
+            bot.sendMessage("The public collection feed is temporarily unavailable. Try again later.")
+        else:
+            data = response.json()
+            posts = data.get("posts", [])
+            summary = data.get("summary", {})
+            selected = []
+            for post in posts:
+                if True:
+                    selected.append(post)
+                if len(selected) >= 6:
+                    break
+            if not selected:
+                bot.sendMessage("INDIVIDUAL SOURCE BRIEFS\nNo matching records in the latest snapshot.")
+            else:
+                lines = ["INDIVIDUAL SOURCE BRIEFS", "All records: UNVERIFIED source leads."]
+                for post in selected:
+                    snippet = " ".join(str(post.get("text", "")).split())[:260]
+                    lines.append("\n" + str(post.get("publisher_name") or post.get("channel_username", "unknown")) + " | " + str(post.get("platform", "Telegram")) + " | " + str(post.get("published_at") or "publication time unknown") + "\n" + snippet + "\n" + str(post.get("source_url", "")))
+                bot.sendMessage("\n".join(lines)[:3900], disable_web_page_preview=True)
+    except Exception:
+        bot.sendMessage("Feed unavailable. Try again later.")
+else:
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: candidates
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    try:
+        response = HTTP.get("https://raw.githubusercontent.com/fyroz118/Legion-OSINT/main/discovery/seed_candidates.json")
+        if response.status_code != 200:
+            bot.sendMessage("Candidate registry unavailable.")
+        else:
+            data = response.json()
+            items = data.get("candidates", [])
+            pending = [x for x in items if x.get("review_status") == "UNREVIEWED_CANDIDATE" and not x.get("enabled_for_collection", False)]
+            lines = ["LEGION-OSINT — LEGACY / EXCEPTION REVIEW QUEUE", "Pending candidates: " + str(len(pending)), "New accessible discoveries are auto-added. Manual override: /addchannel USERNAME | /rejectchannel USERNAME"]
+            for x in pending[:15]:
+                lines.append("\n@" + str(x.get("username", "")) + " | " + str(x.get("region", "unknown")) + " | " + str(x.get("candidate_category", "unknown")) + "\n" + str(x.get("seed_source_url", "")))
+            bot.sendMessage("\n".join(lines)[:3900], disable_web_page_preview=True)
+    except Exception:
+        bot.sendMessage("Candidate registry unavailable.")
+else:
+    bot.sendMessage("Access denied.")
+---
+
+Command: search
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    raw_query = str(params or "").strip().lower()
+    if not raw_query or raw_query == "none":
+        bot.sendMessage("Usage: /search <words>\nExamples: /search Bangladesh protest | /search Hindustan | /search independent_media")
+    else:
+        try:
+            query = raw_query.strip('"').strip("'")
+            terms = [term for term in query.split() if term]
+            response = HTTP.get(FEED_URL)
+            if response.status_code != 200:
+                bot.sendMessage("The public collection feed is temporarily unavailable. Try again later.")
+            else:
+                data = response.json()
+                posts = data.get("posts", [])
+                matches = []
+                for post in posts:
+                    fields = [
+                        post.get("text", ""), post.get("channel_username", ""),
+                        post.get("publisher_name", ""), post.get("platform", ""),
+                        post.get("source_class", ""), post.get("source_type", ""),
+                        post.get("source_affiliation", ""), post.get("priority_region", ""),
+                        post.get("language", "")
+                    ]
+                    haystack = " ".join(str(value or "") for value in fields).lower()
+                    if all(term in haystack for term in terms):
+                        matches.append(post)
+                    if len(matches) >= 8:
+                        break
+                if not matches:
+                    bot.sendMessage("No matching posts in the latest collected snapshot. This searches collected records only, not all Telegram posts.")
+                else:
+                    lines = ["SEARCH RESULTS — UNVERIFIED SOURCE LEADS", "All search terms matched; results are from the latest collected snapshot."]
+                    for post in matches:
+                        lines.append("\n" + str(post.get("publisher_name") or post.get("channel_username", "")) + " | " + str(post.get("platform", "Telegram")) + " | " + str(post.get("published_at") or "unknown") + "\n" + " ".join(str(post.get("text", "")).split())[:230] + "\n" + str(post.get("source_url", "")))
+                    bot.sendMessage("\n".join(lines)[:3900], disable_web_page_preview=True)
+        except Exception:
+            bot.sendMessage("Feed unavailable. Try again later.")
+else:
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: coverage
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    try:
+        response = HTTP.get(FEED_URL)
+        if response.status_code != 200:
+            bot.sendMessage("The public collection feed is temporarily unavailable. Try again later.")
+        else:
+            data = response.json()
+            summary = data.get("summary", {})
+            diagnostics = summary.get("channel_diagnostics", {})
+            rss_diagnostics = summary.get("rss_source_diagnostics", {})
+            lines = ["COLLECTION COVERAGE — " + str(summary.get("report_date", "unknown")),
+                "Telegram channels: " + str(summary.get("configured_telegram_channels", summary.get("configured_channels", 0))) + " | Telegram errors: " + str(summary.get("telegram_collection_errors", summary.get("collection_errors", 0))),
+                "RSS publishers: " + str(summary.get("configured_rss_sources", 0)) + " | RSS errors: " + str(summary.get("rss_source_errors", 0)),
+                "Telegram uses public previews; RSS uses public headlines/excerpts. Missing posts do not mean no events occurred."]
+            lines.append("\nTELEGRAM CHANNELS")
+            for name, detail in list(diagnostics.items())[:15]:
+                lines.append(str(name) + ": " + str(detail)[:140])
+            lines.append("\nRSS PUBLISHERS")
+            for name, detail in list(rss_diagnostics.items())[:10]:
+                lines.append(str(name) + ": " + str(detail)[:140])
+            bot.sendMessage("\n".join(lines)[:3900])
+    except Exception:
+        bot.sendMessage("Coverage diagnostics unavailable.")
+else:
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: report
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    ids = Bot.getData("legion_incident_ids") or []
+    approved = []
+    draft_count = 0
+    rejected_count = 0
+    for incident_id in ids:
+        item = Bot.getData("legion_incident_" + str(incident_id))
+        if item:
+            status = item.get("inclusion_status", "DRAFT")
+            if status == "APPROVED":
+                approved.append(item)
+            elif status == "REJECTED":
+                rejected_count += 1
+            else:
+                draft_count += 1
+    lines = ["LEGION-OSINT INCIDENT REPORT", "Inclusion: analyst-approved records only. Approval does not mean verification.", "Approved: " + str(len(approved)) + " | Draft: " + str(draft_count) + " | Rejected: " + str(rejected_count)]
+    if not approved:
+        lines.append("No approved incident records are currently available. This does not mean no incidents occurred.")
+    else:
+        for item in approved[-20:]:
+            lines.append("\n" + str(item.get("incident_id", "")) + " | " + str(item.get("country", "Unknown")) + " | " + str(item.get("category", "Unknown")))
+            lines.append("Verification: " + str(item.get("verification_status", "UNVERIFIED")) + " | Confidence: " + str(item.get("confidence", "Low")) + " | Risk: " + str(item.get("risk_level", "Low")))
+            lines.append(str(item.get("description", ""))[:300])
+            for source in item.get("sources", []):
+                lines.append("[" + str(source.get("source_role", "lead")) + "] " + str(source.get("source_class", "unknown")) + " | " + str(source.get("source_url", "")))
+    lines.append("Publication time is not incident time. Reposts and same-publisher posts are not independent corroboration.")
+    bot.sendMessage("\n".join(lines)[:3900], disable_web_page_preview=True)
+else:
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: reviewqueue
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    try:
+        response = HTTP.get(FEED_URL)
+        if response.status_code != 200:
+            bot.sendMessage("The public collection feed is temporarily unavailable. Try again later.")
+        else:
+            data = response.json()
+            posts = data.get("posts", [])
+            summary = data.get("summary", {})
+            pending = []
+            for post in posts:
+                decision = Bot.getData("legion_review_" + str(post.get("id", "")))
+                if not decision:
+                    pending.append(post)
+                if len(pending) >= 15:
+                    break
+            if not pending:
+                bot.sendMessage("No unreviewed posts in the current feed window.")
+            else:
+                lines = ["SOURCE REVIEW QUEUE — these are posts, not unique incidents."]
+                for post in pending:
+                    lines.append("\nID: " + str(post.get("id", "")) + "\n" + str(post.get("publisher_name") or post.get("channel_username", "")) + " | " + str(post.get("platform", "Telegram")) + " | " + str(post.get("published_at") or "unknown") + "\n" + " ".join(str(post.get("text", "")).split())[:180] + "\n" + str(post.get("source_url", "")))
+                bot.sendMessage("\n".join(lines)[:3900], disable_web_page_preview=True)
+    except Exception:
+        bot.sendMessage("Review queue unavailable.")
+else:
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: reviewlead
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    parts = [x.strip() for x in str(params or "").split("|", 3)]
+    if len(parts) < 4 or not parts[3]:
+        bot.sendMessage("Usage: /reviewlead POST_ID | reviewed|rejected|duplicate | source_class\nAllowed classes: unofficial, independent_media, official, institutional, advocacy, unknown")
+    else:
+        post_id = parts[0]
+        decision = parts[1].lower()
+        source_class = parts[2].lower()
+        rationale = parts[3]
+        allowed_classes = ["unofficial", "independent_media", "official", "institutional", "advocacy", "unknown"]
+        if decision not in ["reviewed", "rejected", "duplicate"] or source_class not in allowed_classes:
+            bot.sendMessage("Invalid decision or source class.")
+        else:
+            try:
+                response = HTTP.get(FEED_URL)
+                if response.status_code != 200:
+                    bot.sendMessage("The public collection feed is temporarily unavailable. Try again later.")
+                else:
+                    data = response.json()
+                    posts = data.get("posts", [])
+                    summary = data.get("summary", {})
+                    found = False
+                    for post in posts:
+                        if str(post.get("id", "")) == post_id:
+                            found = True
+                            break
+                    if not found:
+                        bot.sendMessage("Post ID not found in the current feed. It may have expired from the snapshot.")
+                    else:
+                        Bot.saveData("legion_review_" + post_id, {"status": decision.upper(), "source_class": source_class, "reviewed_by": str(u), "rationale": rationale, "feed_snapshot_at": str(data.get("generated_at", ""))})
+                        bot.sendMessage("Saved analyst decision: " + decision.upper() + ". This does not verify the underlying claim.")
+            except Exception:
+                bot.sendMessage("Could not save review decision.")
+else:
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: incidentdraft
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    parts = [x.strip() for x in str(params or "").split("|", 4)]
+    if len(parts) < 5:
+        bot.sendMessage("Usage: /incidentdraft POST_ID | INCIDENT_ID | COUNTRY | CATEGORY | DESCRIPTION")
+    else:
+        post_id, incident_id, country, category, description = parts
+        existing = Bot.getData("legion_incident_" + incident_id)
+        if existing:
+            bot.sendMessage("That incident ID already exists. Use a new ID; existing analyst records will not be overwritten.")
+        elif not incident_id or len(incident_id) > 64 or " " in incident_id:
+            bot.sendMessage("Use a unique incident ID of up to 64 characters without spaces.")
+        else:
+            review = Bot.getData("legion_review_" + post_id)
+            if not review or review.get("status") != "REVIEWED" or review.get("source_class") == "unknown":
+                bot.sendMessage("Only a REVIEWED post with an analyst-assigned source class can seed a draft.")
+            else:
+                try:
+                    response = HTTP.get(FEED_URL)
+                    if response.status_code != 200:
+                        bot.sendMessage("The public collection feed is temporarily unavailable. Try again later.")
+                    else:
+                        data = response.json()
+                        posts = data.get("posts", [])
+                        source = None
+                        for post in posts:
+                            if str(post.get("id", "")) == post_id:
+                                source = post
+                                break
+                        if not source:
+                            bot.sendMessage("Source post not found in current feed.")
+                        else:
+                            incident = {"incident_id": incident_id, "country": country, "category": category, "description": description, "verification_status": "UNVERIFIED", "confidence": "Low", "risk_level": "Low", "inclusion_status": "DRAFT", "approval_rationale": "", "sources": [{"post_id": post_id, "source_url": source.get("source_url"), "source_name": source.get("channel_username"), "source_class": review.get("source_class"), "source_role": "lead", "independence_group": source.get("channel_username")}]}
+                            Bot.saveData("legion_incident_" + incident_id, incident)
+                            ids = Bot.getData("legion_incident_ids") or []
+                            if incident_id not in ids:
+                                ids.append(incident_id)
+                            Bot.saveData("legion_incident_ids", ids)
+                            bot.sendMessage("Incident draft created. Verification remains UNVERIFIED; confidence and risk remain Low. No incident date or precise location was inferred.")
+                except Exception:
+                    bot.sendMessage("Could not create incident draft.")
+else:
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: incidentqueue
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    ids = Bot.getData("legion_incident_ids") or []
+    if not ids:
+        bot.sendMessage("No incident drafts stored.")
+    else:
+        lines = ["INCIDENT WORKFLOW QUEUE"]
+        for incident_id in ids[-20:]:
+            item = Bot.getData("legion_incident_" + str(incident_id))
+            if item:
+                lines.append("\n" + str(incident_id) + " | " + str(item.get("inclusion_status", "DRAFT")) + " | " + str(item.get("verification_status", "UNVERIFIED")) + "\n" + str(item.get("country", "Unknown")) + " | " + str(item.get("category", "Unknown")) + "\n" + str(item.get("description", ""))[:180])
+        bot.sendMessage("\n".join(lines)[:3900])
+else:
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: approveincident
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    parts = [x.strip() for x in str(params or "").split("|", 2)]
+    if len(parts) < 3 or parts[1].lower() not in ["approved", "rejected"]:
+        bot.sendMessage("Usage: /approveincident INCIDENT_ID | approved|rejected | rationale")
+    else:
+        incident_id, decision, rationale = parts
+        item = Bot.getData("legion_incident_" + incident_id)
+        if not item:
+            bot.sendMessage("Incident not found.")
+        elif not rationale:
+            bot.sendMessage("A rationale is required.")
+        elif decision.lower() == "approved" and not item.get("sources"):
+            bot.sendMessage("Cannot approve for report inclusion without an attached source.")
+        else:
+            item["inclusion_status"] = decision.upper()
+            item["approval_rationale"] = rationale
+            Bot.saveData("legion_incident_" + incident_id, item)
+            bot.sendMessage("Inclusion decision saved: " + decision.upper() + ". This is not a verification decision; verification remains " + str(item.get("verification_status", "UNVERIFIED")) + ".")
+else:
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: linklead
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    parts = [x.strip() for x in str(params or "").split("|", 2)]
+    if len(parts) < 2:
+        bot.sendMessage("Usage: /linklead POST_ID | INCIDENT_ID | lead|corroboration|contradiction")
+    else:
+        post_id, incident_id = parts[0], parts[1]
+        role = parts[2].lower() if len(parts) > 2 else "lead"
+        item = Bot.getData("legion_incident_" + incident_id)
+        review = Bot.getData("legion_review_" + post_id)
+        if not item or not review or review.get("status") != "REVIEWED" or role not in ["lead", "corroboration", "contradiction"]:
+            bot.sendMessage("Incident, reviewed source, or role is invalid.")
+        else:
+            try:
+                response = HTTP.get(FEED_URL)
+                if response.status_code != 200:
+                    bot.sendMessage("The public collection feed is temporarily unavailable. Try again later.")
+                else:
+                    data = response.json()
+                    posts = data.get("posts", [])
+                    summary = data.get("summary", {})
+                    source = None
+                    for post in posts:
+                        if str(post.get("id", "")) == post_id:
+                            source = post
+                            break
+                    if not source:
+                        bot.sendMessage("Source post not found in current feed.")
+                    else:
+                        exists = False
+                        for linked in item.get("sources", []):
+                            if linked.get("post_id") == post_id:
+                                exists = True
+                        if not exists:
+                            item["sources"].append({"post_id": post_id, "source_url": source.get("source_url"), "source_name": source.get("channel_username"), "source_class": review.get("source_class"), "source_role": role, "independence_group": source.get("channel_username")})
+                            Bot.saveData("legion_incident_" + incident_id, item)
+                        bot.sendMessage("Source link saved as " + role + ". Independence must be assessed; multiple posts from the same publisher are not independent corroboration.")
+            except Exception:
+                bot.sendMessage("Could not link source.")
+else:
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: ask
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    bot.sendMessage("AI question-answering is not connected in this TBC build. No answer will be invented. The public-source search and evidence digest are available through /search and /report.")
+else:
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: research
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    bot.sendMessage("The GitHub research workflow is not yet connected to TBC. This command does not claim to have run external research. Existing scheduled Telegram collection remains separate.")
+else:
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: alerts_on
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    if User.getData("legion_alerts_enabled"):
+        bot.sendMessage("Proactive alerts are already enabled. Use /alerts_off then /alerts_on only if you need to restart the schedule.")
+    else:
+        try:
+            response = HTTP.get(FEED_URL)
+            if response.status_code != 200:
+                bot.sendMessage("The public collection feed is temporarily unavailable. Try again later.")
+            else:
+                data = response.json()
+                posts = data.get("posts", [])
+                seen = []
+                for post in posts:
+                    seen.append(str(post.get("id", "")))
+                User.saveData("legion_alerts_enabled", True)
+                User.saveData("legion_alert_seen", seen[:1800])
+                Bot.runCommandAfter(7200, "alert_poll")
+                bot.sendMessage("Proactive alerts enabled. I will check the latest public-source snapshot every two hours. Existing posts are marked seen, so activation will not flood you with old records.")
+        except Exception:
+            bot.sendMessage("Could not initialise alerts because the public feed is unavailable.")
+else:
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: alerts_off
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    User.saveData("legion_alerts_enabled", False)
+    bot.sendMessage("Proactive alerts disabled. Any already scheduled check will exit without sending alerts.")
+else:
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: alert_poll
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    try:
+        response = HTTP.get(FEED_URL)
+        if response.status_code != 200:
+            bot.sendMessage("The public collection feed is temporarily unavailable. Try again later.")
+        else:
+            data = response.json()
+            posts = data.get("posts", [])
+            if User.getData("legion_alerts_enabled"):
+                seen = User.getData("legion_alert_seen") or []
+                new_posts = []
+                for post in posts:
+                    post_id = str(post.get("id", ""))
+                    if post_id and post_id not in seen:
+                        new_posts.append(post)
+                new_posts.sort(key=lambda p: str(p.get("published_at") or ""), reverse=True)
+                new_posts.sort(key=lambda p: (0 if "bangladesh" in str(p.get("priority_region", "")).lower() else 1, 0 if str(p.get("monitoring_weight", "")).lower() == "high" else 1))
+                alerted_ids = []
+                if new_posts:
+                    lines = ["LEGION-OSINT NEW SOURCE LEADS — UNVERIFIED"]
+                    for post in new_posts[:5]:
+                        post_id = str(post.get("id", ""))
+                        if post_id:
+                            alerted_ids.append(post_id)
+                        lines.append("\\n" + str(post.get("channel_username", "")) + " | " + str(post.get("published_at") or "unknown") + "\\n" + " ".join(str(post.get("text", "")).split())[:220] + "\\n" + str(post.get("source_url", "")))
+                    bot.sendMessage("\\n".join(lines)[:3900], disable_web_page_preview=True)
+                updated_seen = list(seen)
+                for post_id in alerted_ids:
+                    if post_id not in updated_seen:
+                        updated_seen.append(post_id)
+                User.saveData("legion_alert_seen", updated_seen[-1800:])
+                Bot.runCommandAfter(7200, "alert_poll")
+    except Exception:
+        if User.getData("legion_alerts_enabled"):
+            Bot.runCommandAfter(7200, "alert_poll")
+else:
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: digest
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    try:
+        response = HTTP.get(FEED_URL)
+        if response.status_code != 200:
+            bot.sendMessage("The public collection feed is temporarily unavailable. Try again later.")
+        else:
+            data = response.json()
+            posts = data.get("posts", [])
+            summary = data.get("summary", {})
+            bd = []
+            global_items = []
+            for post in posts:
+                if "bangladesh" in str(post.get("priority_region", "")).lower() and len(bd) < 5:
+                    bd.append(post)
+                elif len(global_items) < 5:
+                    global_items.append(post)
+                if len(bd) >= 5 and len(global_items) >= 5:
+                    break
+            lines = ["LEGION-OSINT PUBLIC-SOURCE DIGEST — " + str(summary.get("report_date", "unknown")), "DRAFT SNAPSHOT ONLY. Not a verified incident report. Empty sections do not indicate absence of events.", "Feed generated: " + str(summary.get("generated_at", "unknown")), "Telegram channels: " + str(summary.get("configured_telegram_channels", summary.get("configured_channels", 0))) + " | RSS publishers: " + str(summary.get("configured_rss_sources", 0)) + " | RSS errors: " + str(summary.get("rss_source_errors", 0)), "\nBANGLADESH SOURCE LEADS"]
+            for post in bd:
+                lines.append("- " + str(post.get("publisher_name") or post.get("channel_username", "unknown")) + " (" + str(post.get("platform", "Telegram")) + "): " + " ".join(str(post.get("text", "")).split())[:180] + " | " + str(post.get("source_url", "")))
+            lines.append("\nOTHER REGIONAL SOURCE LEADS")
+            for post in global_items:
+                lines.append("- " + " ".join(str(post.get("text", "")).split())[:180] + " | " + str(post.get("source_url", "")))
+            lines.append("\nAll posts remain UNVERIFIED. Publication time is not necessarily incident time; duplicate reposts are not independent corroboration.")
+            bot.sendMessage("\n".join(lines)[:3900], disable_web_page_preview=True)
+    except Exception:
+        bot.sendMessage("Could not build the evidence digest from the current feed.")
+else:
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: date
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    try:
+        parts = str(params or "").strip().split()
+        if len(parts) > 2:
+            bot.sendMessage("Usage: /date YYYY-MM-DD [page]\\nExample: /date 2026-11-19 1")
+        else:
+            raw_date = ""
+            if parts:
+                raw_date = parts[0]
+            else:
+                latest_response = HTTP.get(FEED_URL)
+                if latest_response.status_code != 200:
+                    bot.sendMessage("Could not determine the latest reporting date. Try /date YYYY-MM-DD.")
+                    raw_date = ""
+                else:
+                    latest_data = latest_response.json()
+                    raw_date = str(latest_data.get("summary", {}).get("report_date") or "")
+            if raw_date:
+                valid_date = len(raw_date) == 10 and raw_date[4] == "-" and raw_date[7] == "-" and (raw_date[:4] + raw_date[5:7] + raw_date[8:]).isdigit()
+                if valid_date:
+                    year = int(raw_date[:4])
+                    month = int(raw_date[5:7])
+                    day = int(raw_date[8:10])
+                    leap = year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
+                    month_days = [31, 29 if leap else 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+                    valid_date = year >= 1 and month >= 1 and month <= 12 and day >= 1 and day <= month_days[month - 1]
+                if not valid_date:
+                    bot.sendMessage("Invalid date. Use YYYY-MM-DD, for example /date 2026-11-19.")
+                else:
+                    page = 1
+                    if len(parts) == 2:
+                        if not parts[1].isdigit() or int(parts[1]) < 1:
+                            bot.sendMessage("Invalid page. Use a positive page number.")
+                            page = 0
+                        else:
+                            page = int(parts[1])
+                    if page > 0:
+                        page_url = "https://raw.githubusercontent.com/fyroz118/Legion-OSINT/main/docs/feed/archive/" + raw_date + "/page-" + str(page) + ".json"
+                        page_response = HTTP.get(page_url)
+                        if page_response.status_code == 200:
+                            page_data = page_response.json()
+                            page_posts = page_data.get("posts", [])
+                            page_summary = page_data.get("summary", {})
+                            total_pages = int(page_summary.get("total_pages") or 1)
+                            total_records = int(page_summary.get("total_records") or len(page_posts))
+                            if not page_posts:
+                                bot.sendMessage("This archive page contains no records.")
+                            else:
+                                lines = ["LEGION-OSINT — DAILY NEWS: " + raw_date,
+                                         "Page " + str(page) + "/" + str(total_pages) + " | Total records: " + str(total_records),
+                                         "Public Telegram + RSS/Atom source leads. UNVERIFIED; reposts are not independent corroboration."]
+                                for post in page_posts:
+                                    publisher = str(post.get("publisher_name") or post.get("channel_username") or "Unknown source")
+                                    platform = str(post.get("platform") or "Telegram")
+                                    stamp = str(post.get("published_at") or "time unknown")
+                                    body = " ".join(str(post.get("text") or "").split())[:190]
+                                    url = str(post.get("source_url") or "")
+                                    lines.append("\\n" + stamp + " | " + publisher + " | " + platform + "\\n" + body + "\\n" + url)
+                                message_text = "\\n".join(lines)
+                                bot.sendMessage(message_text[:3900], disable_web_page_preview=True)
+                                if page < total_pages:
+                                    bot.sendMessage("Next page: /date " + raw_date + " " + str(page + 1))
+                        elif page_response.status_code == 404:
+                            bot.sendMessage("Compact archive pages are not published for " + raw_date + " yet. They will appear after the next successful collection run. The old full archive is intentionally not downloaded because it can exceed TBC response limits.")
+                        else:
+                            bot.sendMessage("Archive page request failed (HTTP " + str(page_response.status_code) + "). Try again later.")
+    except Exception as err:
+        bot.sendMessage("Date command error: " + str(err)[:220] + ". Check TBC Error Logs.")
+else:
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
+
+Command: discovery_status
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    try:
+        url = "https://raw.githubusercontent.com/fyroz118/Legion-OSINT/main/discovery/latest.json"
+        response = HTTP.get(url)
+        if response.status_code != 200:
+            bot.sendMessage("Discovery report unavailable. The scheduled discovery workflow may not have completed yet.")
+        else:
+            d = response.json()
+            bot.sendMessage("LEGION-OSINT DISCOVERY STATUS\nGenerated: " + str(d.get("generated_at", "unknown")) + "\nNew discoveries: " + str(d.get("new_channels_found", 0)) + "\nAuto-activated: " + str(len(d.get("auto_activated", []))) + "\nLegacy/exception review queue: " + str(len(d.get("review_required", []))) + "\nScreening errors: " + str(len(d.get("errors", []))) + "\nPolicy: FULL AUTOMATIC activation of every accessible public channel preview, regardless of political/community/unknown classification. Not global Telegram search.")
+    except Exception:
+        bot.sendMessage("Could not read discovery status. Try again after the next scheduled run.")
+else:
+    bot.sendMessage("Access denied.")
+---
+
+Command: discover
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    try:
+        response = HTTP.get("https://raw.githubusercontent.com/fyroz118/Legion-OSINT/main/discovery/latest.json")
+        if response.status_code != 200:
+            bot.sendMessage("No discovery report is available yet.")
+        else:
+            d = response.json()
+            found = d.get("discoveries", [])
+            lines = ["LEGION-OSINT — LATEST DISCOVERY RUN", "New: " + str(d.get("new_channels_found", 0)) + " | Auto-activated: " + str(len(d.get("auto_activated", []))) + " | Legacy review queue: " + str(len(d.get("review_required", []))), "All discoveries are source leads, not verified news."]
+            for x in found[:12]:
+                lines.append("\n@" + str(x.get("username", "")) + " | " + str(x.get("region", "unknown")) + " | " + str(x.get("candidate_category", "unknown")) + " | " + str(x.get("review_status", "UNREVIEWED_CANDIDATE")) + "\n" + str(x.get("seed_source_url", "")))
+            bot.sendMessage("\n".join(lines)[:3900], disable_web_page_preview=True)
+    except Exception:
+        bot.sendMessage("Discovery report unavailable.")
+else:
+    bot.sendMessage("Access denied.")
+---
+
+Command: addchannel
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    username = str(params or "").strip().lstrip("@")
+    if not username or not username.replace("_", "").isalnum():
+        bot.sendMessage("Usage: /addchannel USERNAME\nThis approves a candidate already in the discovery registry.")
+    elif not GITHUB_TOKEN:
+        bot.sendMessage("GitHub decision token is not configured. Add GITHUB_TOKEN to the TBC environment before using this command.")
+    else:
+        try:
+            url = "https://api.github.com/repos/fyroz118/Legion-OSINT/dispatches"
+            payload = {"event_type": "channel_approve", "client_payload": {"username": username, "decision": "approve"}}
+            response = HTTP.post(url, headers={"Accept": "application/vnd.github+json", "Authorization": "Bearer " + GITHUB_TOKEN, "X-GitHub-Api-Version": "2022-11-28"}, json=payload)
+            if response.status_code == 204:
+                bot.sendMessage("Approval request submitted for @" + username + ". GitHub Actions will add it if it exists in the candidate registry. Check /discovery_status and /coverage after the workflow completes.")
+            else:
+                bot.sendMessage("GitHub rejected the approval request. Check token permissions and TBC Error Logs. HTTP " + str(response.status_code))
+        except Exception:
+            bot.sendMessage("Could not submit approval. Check GITHUB_TOKEN permissions and TBC HTTP support.")
+else:
+    bot.sendMessage("Access denied.")
+---
+
+Command: rejectchannel
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    username = str(params or "").strip().lstrip("@")
+    if not username or not username.replace("_", "").isalnum():
+        bot.sendMessage("Usage: /rejectchannel USERNAME")
+    elif not GITHUB_TOKEN:
+        bot.sendMessage("GitHub decision token is not configured. Add GITHUB_TOKEN to the TBC environment.")
+    else:
+        try:
+            url = "https://api.github.com/repos/fyroz118/Legion-OSINT/dispatches"
+            payload = {"event_type": "channel_reject", "client_payload": {"username": username, "decision": "reject"}}
+            response = HTTP.post(url, headers={"Accept": "application/vnd.github+json", "Authorization": "Bearer " + GITHUB_TOKEN, "X-GitHub-Api-Version": "2022-11-28"}, json=payload)
+            if response.status_code == 204:
+                bot.sendMessage("Rejection request submitted for @" + username + ". The candidate will remain in the registry as rejected and will not be activated.")
+            else:
+                bot.sendMessage("GitHub rejected the request. Check token permissions. HTTP " + str(response.status_code))
+        except Exception:
+            bot.sendMessage("Could not submit rejection. Check GITHUB_TOKEN permissions and TBC HTTP support.")
+else:
+    bot.sendMessage("Access denied.")
+---
+
+Command: summary
+---
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    try:
+        parts = str(params or "").strip().split()
+        if len(parts) > 1:
+            bot.sendMessage("Usage: /summary [YYYY-MM-DD]")
+        else:
+            report_date = parts[0] if parts else ""
+            if not report_date:
+                latest = HTTP.get(FEED_URL)
+                if latest.status_code != 200:
+                    bot.sendMessage("Could not determine the latest reporting date. Try /summary YYYY-MM-DD.")
+                    report_date = ""
+                else:
+                    latest_data = latest.json()
+                    report_date = str(latest_data.get("summary", {}).get("report_date", "")).strip()
+            if report_date:
+                valid_date = len(report_date) == 10 and report_date[4:5] == "-" and report_date[7:8] == "-" and report_date.replace("-", "").isdigit()
+                if not valid_date:
+                    bot.sendMessage("Invalid date. Use YYYY-MM-DD.")
+                else:
+                    url = "https://raw.githubusercontent.com/fyroz118/Legion-OSINT/main/docs/feed/archive/" + report_date + "/intelligence_report.json"
+                    response = HTTP.get(url)
+                    if response.status_code != 200:
+                        bot.sendMessage("EXPANDED INTELLIGENCE REPORT NOT FOUND for " + report_date + ". The compact summary.json is not a substitute. Check that the collection workflow completed after the report-generator update.")
+                    else:
+                        report = response.json()
+                        if not report.get("executive_assessment") or not report.get("report_sections"):
+                            bot.sendMessage("The archive file is not the expanded intelligence report. No compact-summary fallback was used.")
+                        else:
+                            executive = report.get("executive_assessment", {})
+                            lines = ["LEGION-OSINT EXPANDED DAILY INTELLIGENCE REPORT — V2", "Reporting date: " + str(report.get("report_date", report_date)) + " | Timezone: " + str(report.get("timezone", "Asia/Dhaka")), "Generated: " + str(report.get("generated_at", "unknown")), "Classification: " + str(report.get("classification", "unverified source-lead assessment")), "", "EXECUTIVE COLLECTION PICTURE", "Source posts/articles: " + str(executive.get("source_posts_in_daily_archive", 0)) + " | Telegram: " + str(executive.get("telegram_posts", 0)) + " | RSS/Atom: " + str(executive.get("rss_articles", 0)), "Regions represented: " + str(executive.get("regions_represented", 0)), "Selected source records: " + str(report.get("source_records_selected", 0)) + " of " + str(report.get("source_records_available", executive.get("source_posts_in_daily_archive", 0))), str(executive.get("key_caveat", "")), ""]
+                            for section in report.get("report_sections", []):
+                                lines.append(str(section.get("heading", "")))
+                                lines.append(str(section.get("text", "")))
+                                if section.get("regions"):
+                                    for region in section.get("regions", []):
+                                        lines.append("- " + str(region.get("region", "Unknown region")) + ": " + str(region.get("source_post_count", 0)) + " source posts; " + str(len(region.get("source_records", []))) + " displayed leads")
+                                if section.get("topic_buckets"):
+                                    for bucket in section.get("topic_buckets", []):
+                                        lines.append("- " + str(bucket.get("section", "")) + ": " + str(bucket.get("matching_source_posts", 0)) + " keyword-matched posts")
+                                if section.get("watch_indicators"):
+                                    for indicator in section.get("watch_indicators", []):
+                                        lines.append("- " + str(indicator))
+                                if section.get("candidate_records"):
+                                    candidates = section.get("candidate_records", [])
+                                    lines.append("Candidate incident-related source posts: " + str(len(candidates)) + " (not deduplicated or verified incidents)")
+                                    for index, item in enumerate(candidates[:40]):
+                                        publisher = item.get("publisher_name") or item.get("channel_username") or "unknown source"
+                                        snippet = " ".join(str(item.get("text", "")).split())[:240]
+                                        lines.append("Candidate " + str(index + 1) + ": " + str(publisher) + " | " + str(item.get("published_at") or "time unknown") + " | " + snippet + " | " + str(item.get("source_url", "")))
+                                lines.append("")
+                            clusters = report.get("duplicate_text_clusters", [])
+                            lines.append("REPEATED-TEXT / REPOST CLUSTERS")
+                            lines.append("Detected clusters: " + str(len(clusters)) + ". These are text-similarity signals, not deduplicated incidents or independent corroboration.")
+                            for cluster_index, cluster in enumerate(clusters[:25]):
+                                lines.append("\nCluster " + str(cluster_index + 1) + " | repeated posts: " + str(cluster.get("repost_count", 0)) + " | distinct sources: " + str(cluster.get("distinct_source_count", 0)))
+                                lines.append("Sources: " + ", ".join(cluster.get("source_names", [])[:10]))
+                                lines.append(str(cluster.get("text_excerpt", ""))[:260])
+                                for source_item in cluster.get("source_records", [])[:5]:
+                                    lines.append("- " + str(source_item.get("publisher_name") or source_item.get("channel_username") or "unknown") + " | " + str(source_item.get("source_url", "")))
+                            lines.append(str(report.get("duplicate_text_cluster_notice", "")))
+                            lines.append("")
+                            lines.append("SOURCE LEADS — UNVERIFIED; NOT UNIQUE INCIDENTS")
+                            records = report.get("source_records", [])
+                            if not records:
+                                lines.append("No source records were selected for this date.")
+                            for index, item in enumerate(records[:100]):
+                                publisher = item.get("publisher_name") or item.get("channel_username") or "unknown source"
+                                body = " ".join(str(item.get("text", "")).split())[:600]
+                                lines.append("\n[" + str(index + 1) + "] " + str(publisher) + " | " + str(item.get("platform", "unknown")) + " | " + str(item.get("published_at") or "publication time unknown"))
+                                lines.append("Region: " + str(item.get("priority_region", "unknown")) + " | Class: " + str(item.get("source_class", "unknown")) + " | Affiliation: " + str(item.get("source_affiliation", "unknown")) + " | Status: UNVERIFIED")
+                                lines.append(body)
+                                lines.append(str(item.get("source_url", "")))
+                            lines.append("\nSOURCE INTEGRITY AND LIMITATIONS")
+                            lines.append(str(report.get("notice", "All records are unverified source leads. Reposts are not independent corroboration; publication time is not incident time.")))
+                            full_text = "\n".join(lines)
+                            chunks = []
+                            while len(full_text) > 3500:
+                                cut = full_text.rfind("\n", 0, 3500)
+                                if cut < 1000:
+                                    cut = 3500
+                                chunks.append(full_text[:cut])
+                                full_text = full_text[cut:].lstrip()
+                            if full_text:
+                                chunks.append(full_text)
+                            for chunk in chunks:
+                                bot.sendMessage(chunk, disable_web_page_preview=True)
+    except Exception:
+        bot.sendMessage("Could not retrieve or format the expanded intelligence report. Check the archive file and TBC Error Logs.")
+else:
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
+---
