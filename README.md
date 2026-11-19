@@ -1,11 +1,13 @@
 # Legion-OSINT
 
+**Current reporting pipeline: V8 — typed source triage, Bangladesh count reconciliation, exact-text candidate grouping and explicit temporal archive status.**
+
 Bangladesh-priority, global public-source OSINT reporting. The collection workflow gathers public Telegram preview posts plus public RSS/Atom headlines and excerpts. The on-demand Gemini workflow can organise collected evidence and draft the report. It does not require a Telegram account session, Telegram API credentials, a VPS or Tavily.
 
 ## Reporting model
 
 - Bangladesh first, then South Asia, MENA and other regions represented in configured public channels.
-- Ten-section daily report, individual source-post briefs, CSV evidence register and JSON coverage summary.
+- Eleven-section daily report, individual source-post briefs, CSV evidence register and JSON coverage summary. V8 separates relevance, event type, incident-candidate source posts and exact-text candidate groups.
 - Target 50+ source briefs when configured channels expose enough relevant posts; never pad counts or treat multiple posts as unique incidents. The configured Telegram registry now contains 85 public channels spanning Bangladesh, Myanmar, Ukraine, the Middle East, Europe, East/Southeast Asia, Sri Lanka, Ethiopia and Latin America. It deliberately mixes independent newsrooms, official/institutional feeds, political-party actor channels and unverified OSINT/commentary aggregators; source affiliation and perspective are disclosed, not treated as proof of reliability.
 - Independent/local reporting receives attention, with official/institutional channels retained as a parallel source layer.
 - Rumours and allegations remain clearly labelled UNVERIFIED RUMOUR.

@@ -66,3 +66,8 @@ Import the updated command package to add `/date YYYY-MM-DD`. The collection wor
 - The search method uses public search-index RSS and public Telegram previews. It is not Telegram global search, has incomplete coverage and does not access private groups.
 
 Import the updated `tbc/legion_osint_tbc_news_update.json` or `.txt` package through Manage → Import Commands (merge/update). No GitHub write token is needed for automatic discovery or activation because GitHub Actions writes the registry directly. The TBC token is only needed for optional manual approve/reject overrides.
+
+
+## V8 expanded summary command
+
+The repository includes `summary_v8_command.txt` for the owner-only private-chat `/summary` command. It prints reconciled Bangladesh counts, record types, exact-text candidate groups and date-labelled temporal comparison rows. It contains no `while` loop and is designed for manual replacement of the existing `/summary` command. GitHub publication does not deploy this command to TBC; preserve the existing `.env` and webhook configuration.

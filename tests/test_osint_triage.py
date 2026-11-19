@@ -40,6 +40,52 @@ class OsintTriageTests(unittest.TestCase):
         self.assertEqual(clusters[0]["distinct_source_count"], 2)
         self.assertIn("independence unassessed", clusters[0]["repetition_type"])
 
+    def test_substring_war_match_does_not_flag_award(self):
+        item = {"text": "The award ceremony attracted international filmmakers."}
+        self.assertFalse(triage_source_post(item)["relevant"])
+
+    def test_protest_announcement_is_not_a_completed_incident(self):
+        item = {"text": "The party announced protest programmes for next month."}
+        triage = triage_source_post(item)
+        self.assertTrue(triage["relevant"])
+        self.assertFalse(triage["incident_candidate"])
+        self.assertEqual(triage["record_type"], "protest_or_mobilisation_notice")
+
+    def test_actual_unrest_action_is_a_candidate(self):
+        item = {"text": "Workers staged a protest and police fired tear gas."}
+        triage = triage_source_post(item)
+        self.assertTrue(triage["incident_candidate"])
+        self.assertEqual(triage["record_type"], "civil_unrest_event_lead")
+
+    def test_threat_is_not_mislabelled_as_completed_attack(self):
+        item = {"text": "The group threatened an attack on the facility."}
+        triage = triage_source_post(item)
+        self.assertTrue(triage["relevant"])
+        self.assertFalse(triage["incident_candidate"])
+        self.assertEqual(triage["record_type"], "threat_or_mobilisation_lead")
+
+    def test_exact_candidate_groups_retain_source_posts(self):
+        text = "A sufficiently detailed armed attack was reported near the central bridge, with several people injured. "
+        posts = [
+            {"text": text, "publisher_name": "Outlet A", "platform": "Telegram"},
+            {"text": text, "publisher_name": "Outlet B", "platform": "RSS/Atom"}
+        ]
+        groups = publish_tbc_feed.build_candidate_groups(posts, lambda item: item)
+        self.assertEqual(len(groups), 1)
+        self.assertEqual(groups[0]["source_post_count"], 2)
+        self.assertEqual(groups[0]["distinct_source_count"], 2)
+        self.assertIn("not corroboration", groups[0]["independence_assessment"])
+
+    def test_temporal_comparison_uses_dates_and_distinguishes_empty_archive(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            archive = Path(tmp)
+            (archive / "2026-11-18.json").write_text(json.dumps({"posts": []}), encoding="utf-8")
+            rows = publish_tbc_feed.build_temporal_comparison("2026-11-19", [], archive)
+            self.assertEqual(rows[0]["date"], "2026-11-19")
+            self.assertEqual(rows[1]["date"], "2026-11-18")
+            self.assertEqual(rows[1]["comparison_status"], "archive available")
+            self.assertEqual(rows[1]["collected_posts"], 0)
+
 
 if __name__ == "__main__":
     unittest.main()

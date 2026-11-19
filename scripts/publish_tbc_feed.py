@@ -130,22 +130,83 @@ BANGLADESH_DISTRICTS = [
 ]
 
 
+def _phrase_hits(body, terms):
+    """Match whole phrases, avoiding substring errors such as 'war' in 'award'."""
+    hits = []
+    for term in terms:
+        pattern = r"(?<!\\w)" + r"\\s+".join(re.escape(part) for part in term.lower().split()) + r"(?!\\w)"
+        if re.search(pattern, body):
+            hits.append(term)
+    return hits
+
+
+UNREST_ACTION_TERMS = [
+    "staged a protest", "held a protest", "protesters blocked", "workers blocked",
+    "road blockade", "blocked the road", "clashed with police", "clashed with",
+    "police fired", "tear gas", "dispersed protesters", "riot broke out",
+    "demonstrators marched", "protesters marched", "set fire to", "torched",
+    "mob attacked", "mob assaulted"
+]
+SECURITY_ACTION_TERMS = [
+    "arrested", "detained", "raided", "police raid", "security operation",
+    "mass arrest", "abducted", "kidnapped"
+]
+THREAT_TERMS = [
+    "threatened to attack", "threat of attack", "vowed retaliation",
+    "threatened retaliation", "warned of attack", "threatened violence",
+    "called for an attack", "threatened"
+]
+PHYSICAL_INCIDENT_TERMS = [
+    "armed attack", "attack", "attacked", "airstrike", "air strike", "shelling",
+    "bombing", "explosion", "blast", "killed", "fatalities", "wounded", "injured",
+    "arson", "burned", "shot", "shooting", "fired on", "destroyed", "damaged",
+    "lynching", "hospital attacked", "school attacked", "bridge destroyed",
+    "airport attacked", "port attacked"
+]
+
+
 def triage_source_post(item):
     body = " ".join(str(item.get("text") or "").lower().split())
     matched = []
     for category, terms in RELEVANCE_RULES.items():
-        hits = [term for term in terms if term in body]
+        hits = _phrase_hits(body, terms)
         if hits:
             matched.append((category, hits[:4]))
-    event_hits = [term for term in PHYSICAL_EVENT_TERMS if term in body]
-    score = min(10, len(matched) * 2 + min(len(event_hits), 3) * 2)
+    physical_hits = _phrase_hits(body, PHYSICAL_INCIDENT_TERMS)
+    unrest_hits = _phrase_hits(body, UNREST_ACTION_TERMS)
+    security_hits = _phrase_hits(body, SECURITY_ACTION_TERMS)
+    threat_hits = _phrase_hits(body, THREAT_TERMS)
+    all_event_hits = list(dict.fromkeys(physical_hits + unrest_hits + security_hits))
+    if physical_hits:
+        record_type = "physical_incident_lead"
+    elif unrest_hits:
+        record_type = "civil_unrest_event_lead"
+    elif security_hits:
+        record_type = "security_action_lead"
+    elif threat_hits:
+        record_type = "threat_or_mobilisation_lead"
+    elif any(category == "civil_unrest_labour" for category, _ in matched):
+        record_type = "protest_or_mobilisation_notice"
+    elif any(category == "political_security" for category, _ in matched):
+        record_type = "political_security_development"
+    elif matched:
+        record_type = "general_relevant_development"
+    else:
+        record_type = "low_relevance"
+    score = min(10, len(matched) * 2 + min(len(all_event_hits), 3) * 2)
+    incident_candidate = bool(matched and (physical_hits or unrest_hits or security_hits))
     return {
         "relevant": bool(matched),
         "score": score,
         "categories": [x[0] for x in matched],
         "reasons": [term for _, hits in matched for term in hits][:8],
-        "event_indicators": event_hits[:8],
-        "incident_candidate": bool(matched and event_hits)
+        "event_indicators": all_event_hits[:8],
+        "physical_event_indicators": physical_hits[:8],
+        "unrest_action_indicators": unrest_hits[:8],
+        "security_action_indicators": security_hits[:8],
+        "threat_indicators": threat_hits[:8],
+        "record_type": record_type,
+        "incident_candidate": incident_candidate
     }
 
 
@@ -191,6 +252,34 @@ def build_repost_clusters(posts, report_post):
     return clusters[:50]
 
 
+def build_candidate_groups(posts, report_post):
+    """Group exact repeated candidate text; this is not semantic incident deduplication."""
+    groups = {}
+    for item in posts:
+        triage = triage_source_post(item)
+        if not triage["incident_candidate"]:
+            continue
+        body = str(item.get("text") or "").lower()
+        normalized = re.sub(r"\\W+", " ", body, flags=re.UNICODE).strip()
+        if len(normalized) >= 80:
+            groups.setdefault(normalized, []).append(item)
+    output = []
+    for normalized, items in groups.items():
+        if len(items) < 2:
+            continue
+        identities = sorted(set(source_identity(item) for item in items))
+        output.append({
+            "group_id": "exact-candidate-" + str(len(output) + 1),
+            "grouping_basis": "exact normalized text only",
+            "source_post_count": len(items),
+            "distinct_source_count": len(identities),
+            "independence_assessment": "not assessed; repeated text is not corroboration",
+            "source_records": [report_post(item) for item in items]
+        })
+    output.sort(key=lambda group: group["source_post_count"], reverse=True)
+    return output[:100]
+
+
 def read_json_file(path):
     try:
         return json.loads(path.read_text(encoding="utf-8"))
@@ -223,13 +312,14 @@ def build_temporal_comparison(report_date, current_posts, archive_dir):
         relevant = [item for item, triage in prior_triage if triage["relevant"]]
         candidates = [item for item, triage in prior_triage if triage["incident_candidate"]]
         bangladesh = [item for item in relevant if str(item.get("priority_region") or "").lower() == "bangladesh"]
+        archive_exists = (archive_dir / (prior_day + ".json")).exists()
         result.append({
             "date": prior_day,
             "collected_posts": len(prior_posts),
             "relevant_source_posts": len(relevant),
             "incident_candidate_posts": len(candidates),
             "bangladesh_relevant_posts": len(bangladesh),
-            "comparison_status": "archive available" if prior_posts else "no archive available"
+            "comparison_status": "archive available" if archive_exists else "no archive available"
         })
     return result
 
@@ -472,6 +562,13 @@ def main():
                 "source_affiliation": item.get("source_affiliation"),
                 "monitoring_weight": item.get("monitoring_weight"),
                 "evidence_status": "UNVERIFIED",
+                "publication_datetime": item.get("published_at"),
+                "source_region": item.get("priority_region"),
+                "record_type": triage["record_type"],
+                "physical_event_indicators": triage["physical_event_indicators"],
+                "unrest_action_indicators": triage["unrest_action_indicators"],
+                "security_action_indicators": triage["security_action_indicators"],
+                "threat_indicators": triage["threat_indicators"],
                 "relevance_score": triage["score"],
                 "relevance_categories": triage["categories"],
                 "relevance_reasons": triage["reasons"],
@@ -559,6 +656,8 @@ def main():
 
         # Exact normalized text groups are repost indicators, never incident deduplication.
         duplicate_text_clusters = build_repost_clusters(day_posts, report_post)
+        candidate_groups = build_candidate_groups(incident_candidates, report_post)
+        bangladesh_relevant_count = len(bangladesh_posts)
         temporal_comparison = build_temporal_comparison(report_date, day_posts, ARCHIVE_DIR)
 
         intelligence_report = {
@@ -573,6 +672,9 @@ def main():
                 "relevant_source_posts": len(relevant_posts),
                 "excluded_as_low_relevance": excluded_posts,
                 "incident_candidate_source_posts": len(incident_candidates),
+                "incident_candidate_exact_text_groups": len(candidate_groups),
+                "bangladesh_total_source_posts": len(region_posts.get("bangladesh", [])),
+                "bangladesh_relevant_source_posts": bangladesh_relevant_count,
                 "telegram_posts": platform_counts.get("Telegram", 0),
                 "rss_articles": platform_counts.get("RSS/Atom", 0),
                 "regions_represented": len(region_posts),
@@ -590,7 +692,8 @@ def main():
                         "collected_posts": len(day_posts),
                         "relevant_source_posts": len(relevant_posts),
                         "excluded_low_relevance_posts": excluded_posts,
-                        "incident_candidate_source_posts": len(incident_candidates)
+                        "incident_candidate_source_posts": len(incident_candidates),
+                        "bangladesh_relevant_source_posts": bangladesh_relevant_count
                     }
                 },
                 {
@@ -625,7 +728,9 @@ def main():
                 {
                     "heading": "7. Incident register — candidate source leads",
                     "text": "Candidates require analyst review and incident-level grouping. Multiple posts may describe one event; one post may contain multiple claims. The system does not promote these records to verified incidents.",
-                    "candidate_records": [report_post(p) for p in sorted(incident_candidates, key=lambda p: (str(p.get("priority_region") or "").lower() != "bangladesh", str(p.get("published_at") or "")), reverse=True)[:100]]
+                    "candidate_records": [report_post(p) for p in sorted(incident_candidates, key=lambda p: (str(p.get("priority_region") or "").lower() != "bangladesh", str(p.get("published_at") or "")), reverse=True)[:100]],
+                    "candidate_groups": candidate_groups,
+                    "candidate_grouping_notice": "Groups use exact normalized text only. Paraphrased claims are not automatically merged; analyst review is required."
                 },
                 {
                     "heading": "8. Repost and cross-source repetition analysis",
@@ -654,6 +759,10 @@ def main():
                     "text": "Source class and affiliation are descriptive metadata and may be incomplete. Public Telegram previews and RSS/Atom feeds are bounded; absence of a post is not evidence of no event. Publication time is not incident time. Relevance filtering can miss local-language reports or match unrelated text."
                 }
             ],
+            "incident_candidate_groups": candidate_groups,
+            "incident_candidate_group_count": len(candidate_groups),
+            "incident_candidate_grouping_notice": "Exact normalized text grouping only; not semantic event resolution or independent corroboration.",
+            "bangladesh_relevant_source_posts": bangladesh_relevant_count,
             "duplicate_text_clusters": duplicate_text_clusters,
             "duplicate_text_cluster_notice": "Repeated text is not incident deduplication and does not establish independent corroboration.",
             "source_records_selected": len(selected_report_posts),

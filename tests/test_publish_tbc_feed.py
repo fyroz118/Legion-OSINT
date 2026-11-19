@@ -44,6 +44,8 @@ class PublishTbcFeedTests(unittest.TestCase):
             self.assertEqual(report["executive_assessment"]["relevant_source_posts"], 1)
             self.assertEqual(report["executive_assessment"]["excluded_as_low_relevance"], 1)
             self.assertEqual(report["executive_assessment"]["incident_candidate_source_posts"], 1)
+            self.assertEqual(report["executive_assessment"]["bangladesh_relevant_source_posts"], 1)
+            self.assertEqual(report["bangladesh_relevant_source_posts"], 1)
             bangladesh = next(section for section in report["report_sections"] if section["heading"].startswith("2."))
             self.assertEqual(bangladesh["bangladesh_relevant_posts"], 1)
             self.assertEqual(bangladesh["district_name_mentions"], {"Gazipur": 1})
