@@ -134,7 +134,7 @@ def _phrase_hits(body, terms):
     """Match whole phrases, avoiding substring errors such as 'war' in 'award'."""
     hits = []
     for term in terms:
-        pattern = r"(?<!\\w)" + r"\\s+".join(re.escape(part) for part in term.lower().split()) + r"(?!\\w)"
+        pattern = r"(?<!\w)" + r"\s+".join(re.escape(part) for part in term.lower().split()) + r"(?!\w)"
         if re.search(pattern, body):
             hits.append(term)
     return hits
@@ -176,6 +176,9 @@ def triage_source_post(item):
     unrest_hits = _phrase_hits(body, UNREST_ACTION_TERMS)
     security_hits = _phrase_hits(body, SECURITY_ACTION_TERMS)
     threat_hits = _phrase_hits(body, THREAT_TERMS)
+    # A threatened future attack is not a completed physical incident.
+    if threat_hits and not any(term != "attack" for term in physical_hits):
+        physical_hits = []
     all_event_hits = list(dict.fromkeys(physical_hits + unrest_hits + security_hits))
     if physical_hits:
         record_type = "physical_incident_lead"
@@ -260,7 +263,7 @@ def build_candidate_groups(posts, report_post):
         if not triage["incident_candidate"]:
             continue
         body = str(item.get("text") or "").lower()
-        normalized = re.sub(r"\\W+", " ", body, flags=re.UNICODE).strip()
+        normalized = re.sub(r"\W+", " ", body, flags=re.UNICODE).strip()
         if len(normalized) >= 80:
             groups.setdefault(normalized, []).append(item)
     output = []
