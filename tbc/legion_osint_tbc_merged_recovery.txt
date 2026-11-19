@@ -1,3 +1,11 @@
+Command: .env
+---
+# Legion-OSINT global configuration
+OWNER_IDS = [1569000384]
+FEED_URL = "https://raw.githubusercontent.com/fyroz118/Legion-OSINT/main/docs/feed/latest.json"
+
+---
+
 Command: myid
 ---
 bot.sendMessage("Your Telegram user ID: " + str(u) + "\nAdd this number to OWNER_IDS in the .env command, save it, then use /start.")
