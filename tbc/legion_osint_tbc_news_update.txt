@@ -335,16 +335,20 @@ if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
     try:
         parts = str(params or "").strip().split()
         if len(parts) > 2:
-            bot.sendMessage("Usage: /date YYYY-MM-DD [page]\nExample: /date 2026-11-18 2")
+            bot.sendMessage("Usage: /date YYYY-MM-DD [page]\\nExample: /date 2026-11-19 1")
         else:
-            feed_url = FEED_URL
-            feed_response = HTTP.get(feed_url)
-            if feed_response.status_code != 200:
-                bot.sendMessage("The collection feed is unavailable. Try again later.")
+            raw_date = ""
+            if parts:
+                raw_date = parts[0]
             else:
-                latest = feed_response.json()
-                raw_date = parts[0] if parts else str(latest.get("summary", {}).get("report_date") or "")
-                page = int(parts[1]) if len(parts) == 2 and parts[1].isdigit() else (1 if len(parts) == 1 else 0)
+                latest_response = HTTP.get(FEED_URL)
+                if latest_response.status_code != 200:
+                    bot.sendMessage("Could not determine the latest reporting date. Try /date YYYY-MM-DD.")
+                    raw_date = ""
+                else:
+                    latest_data = latest_response.json()
+                    raw_date = str(latest_data.get("summary", {}).get("report_date") or "")
+            if raw_date:
                 valid_date = len(raw_date) == 10 and raw_date[4] == "-" and raw_date[7] == "-" and (raw_date[:4] + raw_date[5:7] + raw_date[8:]).isdigit()
                 if valid_date:
                     year = int(raw_date[:4])
@@ -354,67 +358,47 @@ if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
                     month_days = [31, 29 if leap else 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
                     valid_date = year >= 1 and month >= 1 and month <= 12 and day >= 1 and day <= month_days[month - 1]
                 if not valid_date:
-                    bot.sendMessage("Usage: /date YYYY-MM-DD [page]\nExample: /date 2026-11-18 2")
-                elif page < 1:
-                    bot.sendMessage("Invalid page. Use a positive page number, for example /date 2026-11-18 2.")
+                    bot.sendMessage("Invalid date. Use YYYY-MM-DD, for example /date 2026-11-19.")
                 else:
-                    archive_url = "https://raw.githubusercontent.com/fyroz118/Legion-OSINT/main/docs/feed/archive/" + raw_date + ".json"
-                    response = HTTP.get(archive_url)
-                    is_fallback = False
-                    if response.status_code == 200:
-                        data = response.json()
-                        posts = data.get("posts", [])
-                        summary = data.get("summary", {})
-                        timezone_name = str(summary.get("archive_timezone") or summary.get("timezone") or "Asia/Dhaka")
-                    elif response.status_code == 404 and raw_date == str(latest.get("summary", {}).get("report_date") or ""):
-                        is_fallback = True
-                        data = latest
-                        posts = data.get("posts", [])
-                        summary = data.get("summary", {})
-                        timezone_name = str(summary.get("timezone") or "Asia/Dhaka")
-                        bot.sendMessage("Daily archive not published yet; showing matching records from the latest snapshot.")
-                    elif response.status_code == 404:
-                        posts = []
-                        timezone_name = "Asia/Dhaka"
-                    else:
-                        bot.sendMessage("The daily archive is temporarily unavailable. Try again later.")
-                        posts = None
-                    if posts is not None:
-                        if is_fallback:
-                            posts = [p for p in posts if str(p.get("published_at") or "").startswith(raw_date)]
-                        posts.sort(key=lambda item: str(item.get("published_at") or ""))
-                        if not posts:
-                            bot.sendMessage("No archived records found for " + raw_date + ". Older dates cannot be reconstructed if no archive was created on that date.")
+                    page = 1
+                    if len(parts) == 2:
+                        if not parts[1].isdigit() or int(parts[1]) < 1:
+                            bot.sendMessage("Invalid page. Use a positive page number.")
+                            page = 0
                         else:
-                            page_size = 20
-                            total_pages = (len(posts) + page_size - 1) // page_size
-                            if page > total_pages:
-                                bot.sendMessage("Page " + str(page) + " does not exist. Available pages: 1-" + str(total_pages) + ".")
+                            page = int(parts[1])
+                    if page > 0:
+                        page_url = "https://raw.githubusercontent.com/fyroz118/Legion-OSINT/main/docs/feed/archive/" + raw_date + "/page-" + str(page) + ".json"
+                        page_response = HTTP.get(page_url)
+                        if page_response.status_code == 200:
+                            page_data = page_response.json()
+                            page_posts = page_data.get("posts", [])
+                            page_summary = page_data.get("summary", {})
+                            total_pages = int(page_summary.get("total_pages") or 1)
+                            total_records = int(page_summary.get("total_records") or len(page_posts))
+                            if not page_posts:
+                                bot.sendMessage("This archive page contains no records.")
                             else:
-                                selected = posts[(page - 1) * page_size:page * page_size]
-                                lines = ["LEGION-OSINT — DAILY NEWS: " + raw_date, "Timezone: " + timezone_name + " | Total records: " + str(len(posts)), "Page " + str(page) + "/" + str(total_pages) + " | Records: " + str(len(selected)), "Telegram + RSS/Atom public-source leads. UNVERIFIED; multiple posts may refer to the same event."]
-                                for post in selected:
+                                lines = ["LEGION-OSINT — DAILY NEWS: " + raw_date,
+                                         "Page " + str(page) + "/" + str(total_pages) + " | Total records: " + str(total_records),
+                                         "Public Telegram + RSS/Atom source leads. UNVERIFIED; reposts are not independent corroboration."]
+                                for post in page_posts:
                                     publisher = str(post.get("publisher_name") or post.get("channel_username") or "Unknown source")
                                     platform = str(post.get("platform") or "Telegram")
                                     stamp = str(post.get("published_at") or "time unknown")
                                     body = " ".join(str(post.get("text") or "").split())[:190]
                                     url = str(post.get("source_url") or "")
                                     lines.append("\\n" + stamp + " | " + publisher + " | " + platform + "\\n" + body + "\\n" + url)
-                                current = "\\n".join(lines[:4])
-                                chunks = []
-                                for item in lines[4:]:
-                                    if len(current) + len(item) + 1 > 3800:
-                                        chunks.append(current)
-                                        current = "CONTINUED — " + raw_date + " | PAGE " + str(page)
-                                    current += "\\n" + item
-                                if current:
-                                    chunks.append(current)
-                                for chunk in chunks[:6]:
-                                    bot.sendMessage(chunk, disable_web_page_preview=True)
+                                message_text = "\\n".join(lines)
+                                bot.sendMessage(message_text[:3900], disable_web_page_preview=True)
                                 if page < total_pages:
-                                    bot.sendMessage("More records: /date " + raw_date + " " + str(page + 1))
-    except Exception:
-        bot.sendMessage("Date retrieval failed. Check TBC Error Logs; confirm HTTP access to raw.githubusercontent.com.")
+                                    bot.sendMessage("Next page: /date " + raw_date + " " + str(page + 1))
+                        elif page_response.status_code == 404:
+                            bot.sendMessage("Compact archive pages are not published for " + raw_date + " yet. They will appear after the next successful collection run. The old full archive is intentionally not downloaded because it can exceed TBC response limits.")
+                        else:
+                            bot.sendMessage("Archive page request failed (HTTP " + str(page_response.status_code) + "). Try again later.")
+    except Exception as err:
+        bot.sendMessage("Date command error: " + str(err)[:220] + ". Check TBC Error Logs.")
 else:
     bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
 ---
