@@ -68,6 +68,6 @@ Import the updated command package to add `/date YYYY-MM-DD`. The collection wor
 Import the updated `tbc/legion_osint_tbc_news_update.json` or `.txt` package through Manage → Import Commands (merge/update). No GitHub write token is needed for automatic discovery or activation because GitHub Actions writes the registry directly. The TBC token is only needed for optional manual approve/reject overrides.
 
 
-## V8 expanded summary command
+## V9 expanded summary command
 
-The repository includes `summary_v8_command.txt` for the owner-only private-chat `/summary` command. It prints reconciled Bangladesh counts, record types, exact-text candidate groups and date-labelled temporal comparison rows. It contains no `while` loop and is designed for manual replacement of the existing `/summary` command. GitHub publication does not deploy this command to TBC; preserve the existing `.env` and webhook configuration.
+The repository includes `summary_v9_command.txt` for the owner-only private-chat `/summary` command. It displays the full candidate-post total separately from the 100-record register cap, reports omitted records, shows the regional-count reconciliation flag, and prints record types plus matched physical-event, unrest, security-action and threat indicators. It contains no `while` loop and is designed for manual replacement of the existing `/summary` command. GitHub publication does not deploy this command to TBC: paste the V9 code into the existing command manually, and preserve the existing `.env` and webhook configuration.
