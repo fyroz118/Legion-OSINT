@@ -142,7 +142,8 @@ RELEVANCE_RULES = {
 PHYSICAL_INCIDENT_TERMS = [
     "armed attack", "attack on civilians", "attack on police", "attack on village",
     "attack on convoy", "attack on infrastructure", "airstrike", "air strike",
-    "drone strike", "shelling", "artillery strike", "missile strike", "bombing",
+    "drone strike", "shelling", "artillery strike", "missile strike", "missiles hit", "missile hit", "strike hit",
+    "bombed the", "bombed a", "bombed in", "bombed near", "struck the", "struck a", "struck in", "drone hit", "was hit by a missile", "was hit by a drone",
     "explosion", "blast", "shot dead", "shot and killed", "shooting",
     "fired on civilians", "civilians killed", "soldiers killed", "troops killed",
     "wounded civilians", "civilians injured", "mass casualties", "lynching",
