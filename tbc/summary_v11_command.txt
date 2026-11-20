@@ -32,6 +32,8 @@ if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
 
                         if not report.get("executive_assessment") or not report.get("report_sections"):
                             bot.sendMessage("Archive is not the expanded intelligence report.")
+                        elif str(report.get("report_version", "")) != "11":
+                            bot.sendMessage("The archive for " + report_date + " predates V11. Wait for the next collector/publisher run before using the V11 report. No V10 data will be relabelled as V11.")
                         else:
                             executive = report.get("executive_assessment", {})
                             lines = [
