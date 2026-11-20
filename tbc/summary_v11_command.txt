@@ -181,6 +181,17 @@ if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
                                     for group in section.get("candidate_groups", [])[:15]:
                                         lines.append("UPSTREAM EXACT-TEXT GROUP: " + str(group.get("group_id", "")) + " | posts: " + str(group.get("source_post_count", 0)) + " | distinct sources: " + str(group.get("distinct_source_count", 0)) + " | " + str(group.get("independence_assessment", "not assessed")))
 
+                                if section.get("threat_preparation_records"):
+                                    queue = section.get("threat_preparation_records", [])
+                                    lines.append("THREAT / PREPARATION REVIEW QUEUE — NOT COMPLETED INCIDENTS: " + str(len(queue)))
+                                    for queue_index, queue_item in enumerate(queue[:20]):
+                                        publisher = queue_item.get("publisher_name") or queue_item.get("channel_username") or "unknown source"
+                                        lines.append("Threat/preparation " + str(queue_index + 1) + ": " + str(publisher) + " | " + str(queue_item.get("published_at") or "time unknown"))
+                                        lines.append("Indicators: " + str(queue_item.get("threat_indicators", [])) + " | " + str(queue_item.get("preparation_indicators", [])))
+                                        lines.append("Claim types: " + str(queue_item.get("claim_types", [])))
+                                        lines.append(" ".join(str(queue_item.get("text", "")).split())[:240])
+                                        lines.append(str(queue_item.get("source_url", "")))
+
                                 lines.append("")
 
                             if not any("daily_counts" in section for section in report.get("report_sections", [])) and report.get("temporal_comparison"):
