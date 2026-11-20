@@ -1,0 +1,215 @@
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    try:
+        bot.sendMessage("Preparing the V10 analyst-review intelligence report...")
+        parts = str(params or "").strip().split()
+
+        if len(parts) > 1:
+            bot.sendMessage("Usage: /summary [YYYY-MM-DD]")
+        else:
+            report_date = parts[0] if parts else ""
+
+            if not report_date:
+                latest = HTTP.get(FEED_URL)
+                if latest.status_code != 200:
+                    bot.sendMessage("Could not determine the latest reporting date. Try /summary YYYY-MM-DD.")
+                else:
+                    latest_data = latest.json()
+                    report_date = str(latest_data.get("summary", {}).get("report_date", "")).strip()
+
+            if report_date:
+                valid_date = len(report_date) == 10 and report_date[4:5] == "-" and report_date[7:8] == "-" and report_date.replace("-", "").isdigit()
+
+                if not valid_date:
+                    bot.sendMessage("Invalid date. Use YYYY-MM-DD.")
+                else:
+                    url = "https://raw.githubusercontent.com/fyroz118/Legion-OSINT/main/docs/feed/archive/" + report_date + "/intelligence_report.json"
+                    response = HTTP.get(url)
+
+                    if response.status_code != 200:
+                        bot.sendMessage("EXPANDED INTELLIGENCE REPORT NOT FOUND for " + report_date + ". No compact-summary fallback is used.")
+                    else:
+                        report = response.json()
+
+                        if not report.get("executive_assessment") or not report.get("report_sections"):
+                            bot.sendMessage("Archive is not the expanded intelligence report.")
+                        else:
+                            executive = report.get("executive_assessment", {})
+                            lines = [
+                                "LEGION-OSINT DAILY INTELLIGENCE SUMMARY — V10",
+                                "Reporting date: " + str(report.get("report_date", report_date)) + " | Timezone: " + str(report.get("timezone", "Asia/Dhaka")),
+                                "Generated: " + str(report.get("generated_at", "unknown")) + " (timestamp as stored by collector)",
+                                "Classification: UNVERIFIED SOURCE-LEAD ASSESSMENT",
+                                "",
+                                "EXECUTIVE COLLECTION AND RELEVANCE PICTURE",
+                                "Collected posts: " + str(executive.get("source_posts_in_daily_archive", 0)),
+                                "Relevant source posts: " + str(executive.get("relevant_source_posts", 0)),
+                                "Excluded low-relevance: " + str(executive.get("excluded_as_low_relevance", 0)),
+                                "Upstream candidate source posts: " + str(executive.get("incident_candidate_source_posts", 0)),
+                                "Exact-text candidate groups: " + str(executive.get("incident_candidate_exact_text_groups", 0)),
+                                "Bangladesh total source posts: " + str(executive.get("bangladesh_total_source_posts", 0)),
+                                "Bangladesh relevant source posts: " + str(executive.get("bangladesh_relevant_source_posts", 0)),
+                                "Telegram: " + str(executive.get("telegram_posts", 0)) + " | RSS/Atom: " + str(executive.get("rss_articles", 0)),
+                                "Regions represented: " + str(executive.get("regions_represented", 0)) + " | Regions with relevant leads: " + str(executive.get("regions_with_relevant_leads", 0)),
+                                "Regional counts reconcile: " + str(executive.get("regional_counts_reconcile_to_archive", "not reported")) + " | Regional total: " + str(executive.get("regional_source_post_total_check", "not reported")),
+                                str(executive.get("key_caveat", "")),
+                                "",
+                                "V10 REVIEW RULE: physical incident, civil unrest, security action, threat/preparation and political commentary are separated. Same-source exact-text repeats are collapsed in the display only; no incident is verified.",
+                                ""
+                            ]
+
+                            for section in report.get("report_sections", []):
+                                heading = str(section.get("heading", ""))
+                                lines.append(heading)
+                                lines.append(str(section.get("text", "")))
+
+                                if section.get("metrics"):
+                                    metrics = section.get("metrics", {})
+                                    lines.append("Collected: " + str(metrics.get("collected_posts", 0)) + " | Relevant: " + str(metrics.get("relevant_source_posts", 0)) + " | Excluded: " + str(metrics.get("excluded_low_relevance_posts", 0)))
+
+                                if section.get("bangladesh_total_posts") is not None:
+                                    lines.append("Bangladesh total: " + str(section.get("bangladesh_total_posts", 0)) + " | Relevant: " + str(section.get("bangladesh_relevant_posts", 0)))
+                                    lines.append("Category counts: " + str(section.get("category_counts", {})))
+                                    lines.append("District-name mentions (not geolocation): " + str(section.get("district_name_mentions", {})))
+
+                                if section.get("regions"):
+                                    for region in section.get("regions", []):
+                                        lines.append("- " + str(region.get("region", "Unknown")) + ": " + str(region.get("source_post_count", 0)) + " total; " + str(region.get("relevant_source_post_count", 0)) + " relevant")
+
+                                if section.get("topic_buckets"):
+                                    for bucket in section.get("topic_buckets", []):
+                                        lines.append("- " + str(bucket.get("section", "")) + ": " + str(bucket.get("matching_source_posts", 0)) + " relevant posts")
+
+                                if section.get("clusters"):
+                                    for cluster_index, cluster in enumerate(section.get("clusters", [])[:15]):
+                                        lines.append("Text cluster " + str(cluster_index + 1) + " | posts: " + str(cluster.get("repost_count", 0)) + " | distinct source groups: " + str(cluster.get("distinct_source_count", 0)) + " | " + str(cluster.get("repetition_type", "")))
+                                        lines.append("Sources: " + ", ".join(cluster.get("source_names", [])[:8]))
+
+                                if section.get("daily_counts"):
+                                    for day in section.get("daily_counts", []):
+                                        day_label = str(day.get("date") or day.get("report_date") or "DATE MISSING")
+                                        lines.append("- " + day_label + ": collected " + str(day.get("collected_posts", 0)) + "; relevant " + str(day.get("relevant_source_posts", 0)) + "; candidates " + str(day.get("incident_candidate_posts", 0)) + "; Bangladesh relevant " + str(day.get("bangladesh_relevant_posts", 0)) + " [" + str(day.get("comparison_status", "status unavailable")) + "]")
+
+                                if section.get("watch_indicators"):
+                                    for indicator in section.get("watch_indicators", []):
+                                        lines.append("- " + str(indicator))
+
+                                if section.get("source_records"):
+                                    lines.append("Selected source records:")
+                                    record_limit = 8
+                                    if heading.startswith("2."):
+                                        record_limit = 20
+                                    elif heading.startswith("3."):
+                                        record_limit = 5
+                                    elif heading.startswith("4."):
+                                        record_limit = 10
+                                    elif heading.startswith("5."):
+                                        record_limit = 15
+                                    for index, item in enumerate(section.get("source_records", [])[:record_limit]):
+                                        publisher = item.get("publisher_name") or item.get("channel_username") or "unknown source"
+                                        body = " ".join(str(item.get("text", "")).split())[:320]
+                                        lines.append("[" + str(index + 1) + "] " + str(publisher) + " | " + str(item.get("platform", "unknown")) + " | " + str(item.get("published_at") or "time unknown"))
+                                        lines.append("Monitoring region (not event location): " + str(item.get("monitoring_region", item.get("priority_region", "unknown"))) + " | Type: " + str(item.get("record_type", "unclassified")) + " | Categories: " + str(item.get("relevance_categories", [])) + " | UNVERIFIED")
+                                        lines.append(body)
+                                        lines.append(str(item.get("source_url", "")))
+
+                                if section.get("candidate_records"):
+                                    raw_candidates = section.get("candidate_records", [])
+                                    physical = []
+                                    unrest = []
+                                    security = []
+                                    threats = []
+                                    excluded = []
+                                    unique_seen = {}
+                                    for item in raw_candidates:
+                                        body = " ".join(str(item.get("text", "")).lower().split())
+                                        physical_hits = item.get("physical_event_indicators", [])
+                                        unrest_hits = item.get("unrest_action_indicators", [])
+                                        security_hits = item.get("security_action_indicators", [])
+                                        threat_hits = item.get("threat_indicators", [])
+                                        future_context = any(term in body for term in ["preparation", "preparing for", "ready for a possible", "possible launch", "possible attack", "possible military action", "may launch", "could launch", "considering a", "not rushing into", "inbound", "anticipated arsenal", "planned strike", "plans to strike"])
+                                        if future_context:
+                                            bucket = "threat_or_preparation"
+                                        elif physical_hits:
+                                            bucket = "physical_incident_lead"
+                                        elif unrest_hits:
+                                            bucket = "civil_unrest_event_lead"
+                                        elif security_hits:
+                                            bucket = "security_action_lead"
+                                        elif threat_hits:
+                                            bucket = "threat_or_preparation"
+                                        else:
+                                            bucket = "excluded_commentary_or_unclassified"
+                                        source = str(item.get("publisher_name") or item.get("channel_username") or "unknown").lower()
+                                        normalized = " ".join(body.split())
+                                        dedupe_key = source + "|" + normalized
+                                        if dedupe_key in unique_seen:
+                                            unique_seen[dedupe_key]["repeat_count"] += 1
+                                            continue
+                                        entry = {"item": item, "repeat_count": 1}
+                                        unique_seen[dedupe_key] = entry
+                                        if bucket == "physical_incident_lead":
+                                            physical.append(entry)
+                                        elif bucket == "civil_unrest_event_lead":
+                                            unrest.append(entry)
+                                        elif bucket == "security_action_lead":
+                                            security.append(entry)
+                                        elif bucket == "threat_or_preparation":
+                                            threats.append(entry)
+                                        else:
+                                            excluded.append(entry)
+
+                                    lines.append("V10 CANDIDATE REVIEW — UPSTREAM TOTAL: " + str(executive.get("incident_candidate_source_posts", len(raw_candidates))) + " | raw records in archive: " + str(len(raw_candidates)))
+                                    lines.append("Physical-incident leads after V10 review: " + str(len(physical)))
+                                    lines.append("Civil-unrest event leads: " + str(len(unrest)))
+                                    lines.append("Security-action leads: " + str(len(security)))
+                                    lines.append("Threat/preparation leads (not completed incidents): " + str(len(threats)))
+                                    lines.append("Excluded commentary/unclassified records: " + str(len(excluded)))
+                                    lines.append("Same-source exact-text duplicates collapsed in display: " + str(len(raw_candidates) - len(unique_seen)))
+                                    lines.append("Note: grouping is exact-text and same-source only; paraphrases and cross-source independence require analyst review.")
+
+                                    for label, bucket_items in [("PHYSICAL INCIDENT LEADS", physical), ("CIVIL UNREST EVENT LEADS", unrest), ("SECURITY ACTION LEADS", security), ("THREAT / PREPARATION — NOT COMPLETED INCIDENTS", threats), ("EXCLUDED FROM INCIDENT REGISTER", excluded)]:
+                                        lines.append(label)
+                                        for index, entry in enumerate(bucket_items[:30]):
+                                            item = entry["item"]
+                                            publisher = item.get("publisher_name") or item.get("channel_username") or "unknown source"
+                                            snippet = " ".join(str(item.get("text", "")).split())[:300]
+                                            lines.append(str(index + 1) + ". " + str(publisher) + " | " + str(item.get("published_at") or "time unknown") + " | repeated same-source copies: " + str(entry["repeat_count"]))
+                                            lines.append(snippet)
+                                            lines.append(str(item.get("source_url", "")))
+
+                                    for group in section.get("candidate_groups", [])[:15]:
+                                        lines.append("UPSTREAM EXACT-TEXT GROUP: " + str(group.get("group_id", "")) + " | posts: " + str(group.get("source_post_count", 0)) + " | distinct sources: " + str(group.get("distinct_source_count", 0)) + " | " + str(group.get("independence_assessment", "not assessed")))
+
+                                lines.append("")
+
+                            if not any("daily_counts" in section for section in report.get("report_sections", [])) and report.get("temporal_comparison"):
+                                lines.append("SEVEN-DAY SOURCE-ACTIVITY COMPARISON")
+                                for day in report.get("temporal_comparison", []):
+                                    day_label = str(day.get("date") or day.get("report_date") or "DATE MISSING")
+                                    lines.append("- " + day_label + ": collected " + str(day.get("collected_posts", 0)) + "; relevant " + str(day.get("relevant_source_posts", 0)) + "; candidates " + str(day.get("incident_candidate_posts", 0)) + " [" + str(day.get("comparison_status", "status unavailable")) + "]")
+
+                            lines.append("SOURCE INTEGRITY AND LIMITATIONS")
+                            lines.append(str(report.get("notice", "All records are unverified source leads. Reposts are not independent corroboration; publication time is not incident time.")))
+                            full_text = "\n".join(lines)
+
+                            chunks = []
+                            current_chunk = ""
+                            for line in full_text.split("\n"):
+                                addition = line + "\n"
+                                if current_chunk and len(current_chunk) + len(addition) > 2800:
+                                    chunks.append(current_chunk.rstrip())
+                                    current_chunk = ""
+                                current_chunk += addition
+                            if current_chunk:
+                                chunks.append(current_chunk.rstrip())
+
+                            for chunk in chunks[:25]:
+                                bot.sendMessage(chunk, disable_web_page_preview=True)
+
+                            if len(chunks) > 25:
+                                bot.sendMessage("Telegram delivery capped at 25 messages. Full archive remains on GitHub.")
+
+    except Exception:
+        bot.sendMessage("Could not retrieve or format the expanded V10 report. Check the archive and TBC Error Logs.")
+else:
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
