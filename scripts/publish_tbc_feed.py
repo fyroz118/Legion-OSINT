@@ -85,7 +85,7 @@ RELEVANCE_RULES = {
         "armed conflict", "armed attack", "attack on civilians", "attack on police",
         "attack on village", "attack on convoy", "attack on infrastructure",
         "airstrike", "air strike", "drone strike", "shelling", "artillery strike",
-        "missile strike", "bombing", "explosion", "military operation",
+        "missile strike", "missiles hit", "missile hit", "strike hit", "bombed the", "bombed a", "bombed in", "bombed near", "struck the", "struck a", "struck in", "drone hit", "was hit by a missile", "was hit by a drone", "explosion", "military operation",
         "border clash", "cross-border attack", "clashes between troops",
         "troops killed", "soldiers killed", "civilians killed", "civilian casualties",
         "missile launch preparation", "strike preparation", "ready for a possible launch",
@@ -181,9 +181,23 @@ NON_EVENT_CONTEXT_TERMS = [
     "film award", "film awards", "movie award", "movie awards",
     "film festival", "actor wins", "actress wears", "fashion shoot",
     "fashion week", "football game", "cricket match", "sports match",
-    "book launch", "album launch", "concert", "music award", "music awards"
+    "book launch", "album launch", "concert", "music award", "music awards",
+    "weighs new strikes", "considering a new round of strikes", "considering new strikes",
+    "not rushing into a decision", "tehran summit", "at a seminar", "military analysis",
+    "analyst discusses", "political commentary"
 ]
 
+
+# Bangladesh recall layer: bilingual phrase triggers. These indicate review leads only.
+RELEVANCE_RULES["civil_unrest_labour"] += ["বিক্ষোভ", "প্রতিবাদ", "অবরোধ", "ধর্মঘট", "হরতাল", "শ্রমিক আন্দোলন", "ধাওয়া-পাল্টাধাওয়া", "ধাওয়া-পাল্টা ধাওয়া", "সংঘর্ষ", "পুলিশের সঙ্গে সংঘর্ষ"]
+RELEVANCE_RULES["political_security"] += ["রাজনৈতিক সংঘর্ষ", "রাজনৈতিক হামলা", "গ্রেপ্তার", "গ্রেফতার", "আটক", "পুলিশি অভিযান", "গুলি চালানো", "গুলিবিদ্ধ", "নিহত", "আহত"]
+RELEVANCE_RULES["communal_identity"] += ["সাম্প্রদায়িক হামলা", "সাম্প্রদায়িক হামলা", "মন্দিরে হামলা", "মসজিদে হামলা", "গির্জায় হামলা", "গির্জায় হামলা", "সংখ্যালঘুদের ওপর হামলা", "ধর্মীয় উপাসনালয়ে হামলা"]
+RELEVANCE_RULES["infrastructure_disruption"] += ["বিদ্যুৎ বিচ্ছিন্ন", "বিদ্যুৎ সরবরাহ বন্ধ", "সড়ক অবরোধ", "রেল চলাচল বন্ধ"]
+PHYSICAL_INCIDENT_TERMS += ["missiles hit", "missile hit", "strike hit", "bombed the", "bombed a", "bombed in", "bombed near", "struck the", "struck a", "struck in", "drone hit", "was hit by a missile", "was hit by a drone", "হামলা চালিয়েছে", "হামলা চালায়", "হামলা করেছে", "আক্রমণ করেছে", "গুলি চালিয়েছে", "গুলি চালায়", "গুলিতে নিহত", "গুলিবিদ্ধ", "বিস্ফোরণ ঘটেছে", "বোমা বিস্ফোরণ", "অগ্নিসংযোগ করেছে", "ভাঙচুর করেছে", "সংঘর্ষে নিহত", "সংঘর্ষে আহত"]
+UNREST_ACTION_TERMS += ["বিক্ষোভ করেছে", "বিক্ষোভ করেন", "বিক্ষোভ শুরু", "সড়ক অবরোধ", "রাস্তা অবরোধ", "অবরোধ করেছে", "অবরোধ করেন", "ধাওয়া-পাল্টাধাওয়া", "ধাওয়া-পাল্টা ধাওয়া", "সংঘর্ষে জড়ায়", "সংঘর্ষে জড়ায়", "পুলিশের সঙ্গে সংঘর্ষ", "শ্রমিকদের বিক্ষোভ"]
+SECURITY_ACTION_TERMS += ["গ্রেপ্তার করেছে", "গ্রেফতার করেছে", "আটক করেছে", "অভিযানে গ্রেপ্তার", "পুলিশ গ্রেপ্তার", "নিরাপত্তা বাহিনী গ্রেপ্তার"]
+THREAT_TERMS += ["হামলার হুমকি", "আক্রমণের হুমকি"]
+PREPARATION_TERMS += ["হামলার প্রস্তুতি", "আক্রমণের প্রস্তুতি", "হামলা চালানোর প্রস্তুতি"]
 
 def _phrase_hits(body, terms):
     """Match whole phrases and avoid substring errors such as 'war' in 'award'."""
@@ -266,6 +280,7 @@ def triage_source_post(item):
         "security_action_indicators": security_hits[:8],
         "threat_indicators": threat_hits[:8],
         "preparation_indicators": preparation_hits[:8],
+        "commentary_context_indicators": non_event_context[:6],
         "claim_types": claim_types,
         "non_event_context_indicators": non_event_context[:4],
         "record_type": record_type,
@@ -716,8 +731,9 @@ def main():
         bucket_results.sort(key=lambda x: x["matching_source_posts"], reverse=True)
 
         region_sections = []
-        for region_key in region_order:
-            records = relevant_region_posts[region_key]
+        all_region_order = list(region_labels.keys()) + sorted(set(region_posts) - set(region_labels))
+        for region_key in all_region_order:
+            records = relevant_region_posts.get(region_key, [])
             region_sections.append({
                 "region": region_labels.get(region_key, region_key.replace("_", " ").title()),
                 "source_post_count": len(region_posts.get(region_key, [])),
@@ -736,6 +752,8 @@ def main():
             "excluded_sample_limit": 30,
             "excluded_sample_count": min(30, len(bangladesh_excluded_posts)),
             "excluded_sample_notice": "Review sample of excluded Bangladesh posts to audit possible false negatives; not a statistically representative sensitivity estimate.",
+            "language_review": "Bengali and English phrase triggers enabled for Bangladesh; human review remains mandatory.",
+            "sensitivity_estimate": None,
             "excluded_sample_records": [report_post(item) for item in bangladesh_excluded_posts[:30]]
         }
         bangladesh_category_counts = {}
@@ -755,12 +773,12 @@ def main():
 
         intelligence_report = {
             "schema_version": 3,
-            "report_version": 11,
-            "triage_version": 11,
+            "report_version": 12,
+            "triage_version": 12,
             "report_date": report_date,
             "timezone": timezone_name,
             "generated_at": summary["generated_at"],
-            "title": "Legion-OSINT V11 Multi-Label Claim and Data-Quality Validation Report",
+            "title": "Legion-OSINT V12 Bangladesh Recall and Claim-Precision Validation Report",
             "classification": "Open-Source Intelligence — unverified source-lead assessment",
             "executive_assessment": {
                 "source_posts_in_daily_archive": len(day_posts),
@@ -768,6 +786,9 @@ def main():
                 "excluded_as_low_relevance": excluded_posts,
                 "incident_candidate_source_posts": len(incident_candidates),
                 "threat_preparation_source_posts": len(threat_preparation_posts),
+                "threat_preparation_claim_source_posts": sum(1 for _, triage in triaged_posts if triage["threat_indicators"] or triage["preparation_indicators"]),
+                "selected_source_records_displayed": min(100, len(selected_report_posts)),
+                "selected_source_records_omitted": max(0, len(relevant_posts) - min(100, len(selected_report_posts))),
                 "incident_candidate_records_displayed": min(100, len(incident_candidates)),
                 "incident_candidate_records_omitted_from_register": max(0, len(incident_candidates) - 100),
                 "incident_candidate_exact_text_groups": len(candidate_groups),
@@ -787,7 +808,7 @@ def main():
             "report_sections": [
                 {
                     "heading": "1. Executive assessment and collection picture",
-                    "text": "The report separates total collection volume from relevance-filtered source leads. Relevance rules are transparent keyword indicators; they may produce false positives and false negatives. None of these counts is an incident count or a measure of conflict intensity.",
+                    "text": "V12 adds Bengali-language Bangladesh review triggers and commentary-context suppression. Keyword matches remain review leads, not verified events; counts are source posts, not incidents.",
                     "metrics": {
                         "collected_posts": len(day_posts),
                         "relevant_source_posts": len(relevant_posts),
@@ -809,7 +830,9 @@ def main():
                 {
                     "heading": "3. Regional and international conflict monitoring",
                     "text": "Only relevance-filtered records are shown in regional lead lists. Regional assignment comes from source metadata and is not independent geolocation. Reposts and syndicated reporting are not independent corroboration.",
-                    "regions": region_sections
+                    "regions": region_sections,
+                    "all_regions_displayed": True,
+                    "region_display_note": "All configured monitoring regions are shown, including regions with zero relevant leads."
                 },
                 {
                     "heading": "4. Communal violence and hate-crime review queue",
