@@ -87,7 +87,9 @@ RELEVANCE_RULES = {
         "airstrike", "air strike", "drone strike", "shelling", "artillery strike",
         "missile strike", "bombing", "explosion", "military operation",
         "border clash", "cross-border attack", "clashes between troops",
-        "troops killed", "soldiers killed", "civilians killed", "civilian casualties"
+        "troops killed", "soldiers killed", "civilians killed", "civilian casualties",
+        "missile launch preparation", "strike preparation", "ready for a possible launch",
+        "missiles inbound", "cruise missiles inbound"
     ],
     "political_security": [
         "political violence", "political assassination", "assassination attempt",
