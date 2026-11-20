@@ -41,6 +41,8 @@ class PublishTbcFeedTests(unittest.TestCase):
             self.assertNotIn("analyst_decisions", payload)
             report_path = archive_dir / "2026-11-18" / "intelligence_report.json"
             report = json.loads(report_path.read_text(encoding="utf-8"))
+            self.assertEqual(report["report_version"], 11)
+            self.assertEqual(report["triage_version"], 11)
             self.assertEqual(report["executive_assessment"]["relevant_source_posts"], 1)
             self.assertEqual(report["executive_assessment"]["excluded_as_low_relevance"], 1)
             self.assertEqual(report["executive_assessment"]["incident_candidate_source_posts"], 1)
