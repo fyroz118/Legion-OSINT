@@ -41,8 +41,8 @@ class PublishTbcFeedTests(unittest.TestCase):
             self.assertNotIn("analyst_decisions", payload)
             report_path = archive_dir / "2026-11-18" / "intelligence_report.json"
             report = json.loads(report_path.read_text(encoding="utf-8"))
-            self.assertEqual(report["report_version"], 11)
-            self.assertEqual(report["triage_version"], 11)
+            self.assertEqual(report["report_version"], 12)
+            self.assertEqual(report["triage_version"], 12)
             self.assertEqual(report["executive_assessment"]["relevant_source_posts"], 1)
             self.assertEqual(report["executive_assessment"]["excluded_as_low_relevance"], 1)
             self.assertEqual(report["executive_assessment"]["incident_candidate_source_posts"], 1)
@@ -52,6 +52,9 @@ class PublishTbcFeedTests(unittest.TestCase):
             self.assertEqual(bangladesh["bangladesh_relevant_posts"], 1)
             self.assertEqual(bangladesh["district_name_mentions"], {"Gazipur": 1})
             self.assertEqual(len(report["temporal_comparison"]), 8)
+            region_section = next(section for section in report["report_sections"] if section["heading"].startswith("3."))
+            self.assertEqual(len(region_section["regions"]), 9)
+            self.assertTrue(region_section["all_regions_displayed"])
             audit = report["bangladesh_false_negative_audit"]
             self.assertEqual(audit["total_source_posts"], 2)
             self.assertEqual(audit["excluded_source_posts"], 1)
@@ -88,6 +91,20 @@ class PublishTbcFeedTests(unittest.TestCase):
                 self.assertTrue(result["relevant"])
                 self.assertTrue(result["incident_candidate"])
                 self.assertEqual(result["record_type"], expected_type)
+
+    def test_bangladesh_bengali_unrest_is_detected_for_review(self):
+        body = "থানার সামনে বিক্ষোভকে কেন্দ্র করে আ’লীগ-বিএনপির ধাওয়া-পাল্টাধাওয়া"
+        result = publish_tbc_feed.triage_source_post({"text": body})
+        self.assertTrue(result["relevant"])
+        self.assertTrue(result["incident_candidate"])
+        self.assertIn("civil_unrest_claim", result["claim_types"])
+
+    def test_political_commentary_is_not_a_physical_incident(self):
+        for body in ["Trump weighs new strikes on Iran as peace talks stall; he is considering a new round of strikes.", "Tehran summit: Environment a silent victim of US-Israeli war on Iran; economist spoke at a seminar."]:
+            with self.subTest(body=body):
+                result = publish_tbc_feed.triage_source_post({"text": body})
+                self.assertFalse(result["incident_candidate"])
+                self.assertNotEqual(result["record_type"], "physical_incident_lead")
 
     def test_threat_is_not_a_completed_incident_candidate(self):
         result = publish_tbc_feed.triage_source_post({"text": "Group threatened to attack a government building."})
