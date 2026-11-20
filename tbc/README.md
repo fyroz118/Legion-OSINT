@@ -68,6 +68,8 @@ Import the updated command package to add `/date YYYY-MM-DD`. The collection wor
 Import the updated `tbc/legion_osint_tbc_news_update.json` or `.txt` package through Manage → Import Commands (merge/update). No GitHub write token is needed for automatic discovery or activation because GitHub Actions writes the registry directly. The TBC token is only needed for optional manual approve/reject overrides.
 
 
-## V9 expanded summary command
+## V11 expanded analyst-review summary command
 
-The repository includes `summary_v9_command.txt` for the owner-only private-chat `/summary` command. It displays the full candidate-post total separately from the 100-record register cap, reports omitted records, shows the regional-count reconciliation flag, and prints record types plus matched physical-event, unrest, security-action and threat indicators. It contains no `while` loop and is designed for manual replacement of the existing `/summary` command. GitHub publication does not deploy this command to TBC: paste the V9 code into the existing command manually, and preserve the existing `.env` and webhook configuration.
+The repository includes `summary_v11_command.txt` for the owner-only private-chat `/summary` command. V11 displays multi-label claim types so physical-event claims are not hidden by preparation language, shows provisional source-lead IDs, reports the Bangladesh excluded-post audit sample, and labels partial-day comparisons. Category totals may overlap. Provisional IDs identify source posts, not unique incidents. It contains no `while` loop.
+
+GitHub publication does not deploy commands into Telebot Creator. For an existing installation, manually replace only the existing `/summary` command with the contents of `summary_v11_command.txt`. Preserve the existing `.env`, OWNER_IDS, FEED_URL and webhook configuration. Do not import the recovery package and do not run the personal Telegram bot workflow. The V11 collector/report code is validated separately by GitHub Actions; the TBC runtime still requires a manual smoke test.
