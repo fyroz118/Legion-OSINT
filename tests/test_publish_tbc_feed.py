@@ -50,6 +50,14 @@ class PublishTbcFeedTests(unittest.TestCase):
             self.assertEqual(bangladesh["bangladesh_relevant_posts"], 1)
             self.assertEqual(bangladesh["district_name_mentions"], {"Gazipur": 1})
             self.assertEqual(len(report["temporal_comparison"]), 8)
+            audit = report["bangladesh_false_negative_audit"]
+            self.assertEqual(audit["total_source_posts"], 2)
+            self.assertEqual(audit["excluded_source_posts"], 1)
+            self.assertEqual(audit["excluded_sample_count"], 1)
+            candidate_section = next(section for section in report["report_sections"] if section["heading"].startswith("7."))
+            candidate = candidate_section["candidate_records"][0]
+            self.assertTrue(candidate["provisional_incident_id"].startswith("PL-2026-11-18-"))
+            self.assertIn("unresolved single-source lead", candidate["incident_group_status"])
 
     def test_precision_triage_rejects_entertainment_and_generic_commentary(self):
         cases = [
