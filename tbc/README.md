@@ -77,6 +77,8 @@ GitHub publication does not deploy commands into Telebot Creator. For an existin
 
 ## V12 final analyst-review command and publisher
 
+See [the V12 methodology and validation notes](INTELLIGENCE_REPORT_V12.md).
+
 V12 adds Bengali-language Bangladesh phrase triggers, commentary-context suppression for completed-incident classification, explicit overlap/source-record counts, and all configured monitoring regions including zero-relevance regions. Phrase matches remain unverified review leads; no motive, perpetrator, event location, unique incident or risk rating is inferred.
 
 For the existing TBC bot, replace only `/summary` with `summary_v12_command.txt` after a V12 archive is published. The command refuses older archive versions. GitHub commits do not deploy into Telebot Creator. Preserve `.env`, OWNER_IDS, FEED_URL, webhook settings and alerts. Do not import the recovery package or run the personal Telegram bot workflow. A live TBC smoke test remains manual; no deployment is claimed.
