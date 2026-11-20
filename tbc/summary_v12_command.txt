@@ -33,11 +33,11 @@ if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
                         if not report.get("executive_assessment") or not report.get("report_sections"):
                             bot.sendMessage("Archive is not the expanded intelligence report.")
                         elif str(report.get("report_version", "")) != "12":
-                            bot.sendMessage("The archive for " + report_date + " predates V11. Wait for the next collector/publisher run before using the V11 report. No V10 data will be relabelled as V11.")
+                            bot.sendMessage("The archive for " + report_date + " predates V12. Wait for the next collector/publisher run before using the V12 report. No older-version data will be relabelled as V12.")
                         else:
                             executive = report.get("executive_assessment", {})
                             lines = [
-                                "LEGION-OSINT DAILY INTELLIGENCE SUMMARY — V11",
+                                "LEGION-OSINT DAILY INTELLIGENCE SUMMARY — V12",
                                 "Reporting date: " + str(report.get("report_date", report_date)) + " | Timezone: " + str(report.get("timezone", "Asia/Dhaka")),
                                 "Generated: " + str(report.get("generated_at", "unknown")) + " (timestamp as stored by collector)",
                                 "Classification: UNVERIFIED SOURCE-LEAD ASSESSMENT",
@@ -58,7 +58,7 @@ if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
                                 "Regional counts reconcile: " + str(executive.get("regional_counts_reconcile_to_archive", "not reported")) + " | Regional total: " + str(executive.get("regional_source_post_total_check", "not reported")),
                                 str(executive.get("key_caveat", "")),
                                 "",
-                                "V11 REVIEW RULE: claim types are multi-label. A post may contain an alleged physical event and a separate threat/preparation claim. Provisional lead IDs do not establish unique incidents.",
+                                "V12 REVIEW RULE: claim types are multi-label. A post may contain an alleged physical event and a separate threat/preparation claim. Provisional lead IDs do not establish unique incidents.",
                                 ""
                             ]
 
@@ -162,8 +162,8 @@ if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
                                         if not matched_bucket:
                                             excluded.append(entry)
 
-                                    lines.append("V11 CANDIDATE REVIEW — UPSTREAM TOTAL: " + str(executive.get("incident_candidate_source_posts", len(raw_candidates))) + " | raw records in archive: " + str(len(raw_candidates)))
-                                    lines.append("Physical-incident leads after V11 review: " + str(len(physical)))
+                                    lines.append("V12 CANDIDATE REVIEW — UPSTREAM TOTAL: " + str(executive.get("incident_candidate_source_posts", len(raw_candidates))) + " | raw records in archive: " + str(len(raw_candidates)))
+                                    lines.append("Physical-incident leads after V12 review: " + str(len(physical)))
                                     lines.append("Civil-unrest event leads: " + str(len(unrest)))
                                     lines.append("Security-action leads: " + str(len(security)))
                                     lines.append("Threat/preparation leads (not completed incidents): " + str(len(threats)))
@@ -227,6 +227,6 @@ if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
                                 bot.sendMessage("Telegram delivery capped at 25 messages. Full archive remains on GitHub.")
 
     except Exception:
-        bot.sendMessage("Could not retrieve or format the expanded V11 report. Check the archive and TBC Error Logs.")
+        bot.sendMessage("Could not retrieve or format the expanded V12 report. Check the archive and TBC Error Logs.")
 else:
     bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
