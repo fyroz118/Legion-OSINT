@@ -661,6 +661,7 @@ def main():
         triaged_posts = [(item, triage_source_post(item)) for item in day_posts]
         relevant_posts = [item for item, triage in triaged_posts if triage["relevant"]]
         incident_candidates = [item for item, triage in triaged_posts if triage["incident_candidate"]]
+        threat_preparation_posts = [item for item, triage in triaged_posts if (triage["threat_indicators"] or triage["preparation_indicators"]) and not triage["incident_candidate"]]
         excluded_posts = len(day_posts) - len(relevant_posts)
 
         # Select relevant records with Bangladesh first, then regional round-robin coverage.
@@ -766,6 +767,7 @@ def main():
                 "relevant_source_posts": len(relevant_posts),
                 "excluded_as_low_relevance": excluded_posts,
                 "incident_candidate_source_posts": len(incident_candidates),
+                "threat_preparation_source_posts": len(threat_preparation_posts),
                 "incident_candidate_records_displayed": min(100, len(incident_candidates)),
                 "incident_candidate_records_omitted_from_register": max(0, len(incident_candidates) - 100),
                 "incident_candidate_exact_text_groups": len(candidate_groups),
@@ -829,6 +831,7 @@ def main():
                     "text": "Candidates require analyst review and incident-level grouping. Multiple posts may describe one event; one post may contain multiple claims. Candidate total is shown separately from the 100-record display cap. Political statements, generic military commentary and threats are not completed physical incidents unless an explicit event-action phrase is present. The system does not promote these records to verified incidents.",
                     "candidate_records": [report_post(p) for p in sorted(incident_candidates, key=lambda p: (str(p.get("priority_region") or "").lower() != "bangladesh", str(p.get("published_at") or "")), reverse=True)[:100]],
                     "candidate_groups": candidate_groups,
+                    "threat_preparation_records": [report_post(p) for p in sorted(threat_preparation_posts, key=lambda p: str(p.get("published_at") or ""), reverse=True)[:100]],
                     "candidate_grouping_notice": "Groups use exact normalized text only. Paraphrased claims are not automatically merged; analyst review is required."
                 },
                 {
