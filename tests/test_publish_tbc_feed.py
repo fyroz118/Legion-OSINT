@@ -85,6 +85,39 @@ class PublishTbcFeedTests(unittest.TestCase):
         self.assertEqual(result["record_type"], "threat_or_mobilisation_lead")
         self.assertFalse(result["incident_candidate"])
 
+    def test_multi_label_keeps_physical_event_and_preparation_claims(self):
+        body = "Missile strike reported on the bridge; additional cruise missiles inbound."
+        result = publish_tbc_feed.triage_source_post({"text": body})
+        self.assertTrue(result["relevant"])
+        self.assertTrue(result["incident_candidate"])
+        self.assertIn("physical_incident_claim", result["claim_types"])
+        self.assertIn("threat_or_preparation_claim", result["claim_types"])
+        self.assertIn("missiles inbound", result["preparation_indicators"])
+
+    def test_preparation_only_is_relevant_but_not_a_completed_incident(self):
+        result = publish_tbc_feed.triage_source_post({
+            "text": "Seven bombers ready for a possible launch; missile launch preparation reported."
+        })
+        self.assertTrue(result["relevant"])
+        self.assertFalse(result["incident_candidate"])
+        self.assertIn("threat_or_preparation_claim", result["claim_types"])
+        self.assertEqual(result["record_type"], "threat_or_mobilisation_lead")
+
+    def test_partial_current_day_is_not_comparison_eligible(self):
+        from datetime import datetime
+        from zoneinfo import ZoneInfo
+        report_date = datetime.now(ZoneInfo("Asia/Dhaka")).date().isoformat()
+        result = publish_tbc_feed.build_temporal_comparison(
+            report_date,
+            [{"text": "Armed attack reported on a village.", "priority_region": "bangladesh",
+              "collected_at": report_date + "T03:00:00+00:00"}],
+            Path("/nonexistent/archive"),
+            "Asia/Dhaka"
+        )
+        self.assertEqual(result[0]["reporting_day_status"], "partial_day")
+        self.assertFalse(result[0]["comparison_eligible"])
+        self.assertIn("not directly comparable", result[0]["comparison_status"])
+
     def test_rejects_non_https_source_urls(self):
         row = {"channel_username":"bad", "message_id":"1", "text":"headline", "source_url":"http://example.org/a"}
         self.assertIsNone(publish_tbc_feed.normalize_row(row, "RSS/Atom"))
