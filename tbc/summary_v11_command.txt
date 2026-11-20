@@ -45,6 +45,7 @@ if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
                                 "Relevant source posts: " + str(executive.get("relevant_source_posts", 0)),
                                 "Excluded low-relevance: " + str(executive.get("excluded_as_low_relevance", 0)),
                                 "Upstream candidate source posts: " + str(executive.get("incident_candidate_source_posts", 0)),
+                                "Threat/preparation-only source posts: " + str(executive.get("threat_preparation_source_posts", 0)),
                                 "Exact-text candidate groups: " + str(executive.get("incident_candidate_exact_text_groups", 0)),
                                 "Bangladesh total source posts: " + str(executive.get("bangladesh_total_source_posts", 0)),
                                 "Bangladesh relevant source posts: " + str(executive.get("bangladesh_relevant_source_posts", 0)),
