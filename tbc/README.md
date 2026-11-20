@@ -72,7 +72,7 @@ Import the updated `tbc/legion_osint_tbc_news_update.json` or `.txt` package thr
 
 The repository includes `summary_v11_command.txt` for the owner-only private-chat `/summary` command. V11 displays multi-label claim types so physical-event claims are not hidden by preparation language, shows provisional source-lead IDs, reports the Bangladesh excluded-post audit sample, and labels partial-day comparisons. Category totals may overlap. Provisional IDs identify source posts, not unique incidents. It contains no `while` loop.
 
-GitHub publication does not deploy commands into Telebot Creator. For an existing installation, manually replace only the existing `/summary` command with the contents of `summary_v11_command.txt`. Preserve the existing `.env`, OWNER_IDS, FEED_URL and webhook configuration. Do not import the recovery package and do not run the personal Telegram bot workflow. The V11 collector/report code is validated separately by GitHub Actions; the TBC runtime still requires a manual smoke test.
+GitHub publication does not deploy commands into Telebot Creator. For an existing installation, manually replace only the existing `/summary` command with the contents of `summary_v11_command.txt`. Preserve the existing `.env`, OWNER_IDS, FEED_URL and webhook configuration. Do not import the recovery package and do not run the personal Telegram bot workflow. V12 collector/report changes have regression tests, but a successful GitHub Actions run and live TBC runtime test have not been confirmed. Do not claim V12 is fully validated or deployed until those checks pass.
 
 
 ## V12 final analyst-review command and publisher
