@@ -4,6 +4,7 @@ The feed contains public source material only. Analyst notes, decisions, inciden
 drafts, private identifiers and credentials are never published.
 """
 import csv
+import hashlib
 import json
 import re
 from datetime import datetime, timezone, date, timedelta
@@ -166,6 +167,13 @@ THREAT_TERMS = [
     "threatened retaliation", "warned of attack", "threatened violence",
     "called for an attack", "called for violence"
 ]
+PREPARATION_TERMS = [
+    "preparing for a strike", "strike preparation", "preparing a launch",
+    "ready for a possible launch", "possible launch", "missiles inbound",
+    "cruise missiles inbound", "may launch", "could launch", "plans to strike",
+    "planned strike", "possible attack", "possible military action",
+    "considering military action", "not rushing into a decision", "anticipated arsenal"
+]
 NON_EVENT_CONTEXT_TERMS = [
     "call of duty", "video game", "gaming", "gameplay", "video games",
     "film award", "film awards", "movie award", "movie awards",
@@ -185,6 +193,7 @@ def _phrase_hits(body, terms):
     return hits
 
 def triage_source_post(item):
+    """Return multi-label source-claim indicators; never verify an incident."""
     body = " ".join(str(item.get("text") or "").lower().split())
     non_event_context = _phrase_hits(body, NON_EVENT_CONTEXT_TERMS)
     matched = []
@@ -196,9 +205,10 @@ def triage_source_post(item):
     unrest_hits = _phrase_hits(body, UNREST_ACTION_TERMS)
     security_hits = _phrase_hits(body, SECURITY_ACTION_TERMS)
     threat_hits = _phrase_hits(body, THREAT_TERMS)
+    preparation_hits = _phrase_hits(body, PREPARATION_TERMS)
 
     # Explicit entertainment/sport contexts suppress incidental keyword hits,
-    # unless the text also contains a strong, distinct real-world event phrase.
+    # unless a strong, distinct real-world event phrase is also present.
     strong_real_world = any(term in physical_hits for term in (
         "attack on civilians", "attack on police", "attack on village",
         "attack on convoy", "civilians killed", "shot dead", "lynching"
@@ -208,16 +218,29 @@ def triage_source_post(item):
         physical_hits = []
         unrest_hits = []
         security_hits = []
+        threat_hits = []
+        preparation_hits = []
 
-    # A future threat or political statement is not a completed physical event.
-    if threat_hits and not physical_hits:
-        record_type = "threat_or_mobilisation_lead"
-    elif physical_hits:
+    # Preserve all supported claim types. Preparation language must not erase
+    # a separate alleged completed/ongoing physical event in the same post.
+    claim_types = []
+    if physical_hits:
+        claim_types.append("physical_incident_claim")
+    if unrest_hits:
+        claim_types.append("civil_unrest_claim")
+    if security_hits:
+        claim_types.append("security_action_claim")
+    if threat_hits or preparation_hits:
+        claim_types.append("threat_or_preparation_claim")
+
+    if physical_hits:
         record_type = "physical_incident_lead"
     elif unrest_hits:
         record_type = "civil_unrest_event_lead"
     elif security_hits:
         record_type = "security_action_lead"
+    elif threat_hits or preparation_hits:
+        record_type = "threat_or_mobilisation_lead"
     elif any(category == "civil_unrest_labour" for category, _ in matched):
         record_type = "protest_or_mobilisation_notice"
     elif any(category == "political_security" for category, _ in matched):
@@ -240,6 +263,8 @@ def triage_source_post(item):
         "unrest_action_indicators": unrest_hits[:8],
         "security_action_indicators": security_hits[:8],
         "threat_indicators": threat_hits[:8],
+        "preparation_indicators": preparation_hits[:8],
+        "claim_types": claim_types,
         "non_event_context_indicators": non_event_context[:4],
         "record_type": record_type,
         "incident_candidate": incident_candidate
@@ -322,18 +347,28 @@ def read_json_file(path):
         return {}
 
 
-def build_temporal_comparison(report_date, current_posts, archive_dir):
+def build_temporal_comparison(report_date, current_posts, archive_dir, timezone_name="Asia/Dhaka"):
     current_triage = [(item, triage_source_post(item)) for item in current_posts]
     current_relevant = [item for item, triage in current_triage if triage["relevant"]]
     current_candidates = [item for item, triage in current_triage if triage["incident_candidate"]]
     current_bd = [item for item in current_relevant if str(item.get("priority_region") or "").lower() == "bangladesh"]
+    collected_stamps = sorted(str(item.get("collected_at") or "").strip() for item in current_posts if str(item.get("collected_at") or "").strip())
+    try:
+        local_today = datetime.now(ZoneInfo(timezone_name)).date().isoformat()
+    except Exception:
+        local_today = datetime.now(timezone.utc).date().isoformat()
+    current_status = "partial_day" if report_date == local_today else "calendar_day_elapsed_completeness_unverified"
     result = [{
         "date": report_date,
         "collected_posts": len(current_posts),
         "relevant_source_posts": len(current_relevant),
         "incident_candidate_posts": len(current_candidates),
         "bangladesh_relevant_posts": len(current_bd),
-        "comparison_status": "current reporting day"
+        "collection_window_start": collected_stamps[0] if collected_stamps else None,
+        "collection_window_end": collected_stamps[-1] if collected_stamps else None,
+        "reporting_day_status": current_status,
+        "comparison_eligible": False,
+        "comparison_status": "partial current day; not directly comparable with a full-day archive" if current_status == "partial_day" else "calendar day elapsed; archive completeness unverified"
     }]
     try:
         base = date.fromisoformat(report_date)
@@ -354,7 +389,9 @@ def build_temporal_comparison(report_date, current_posts, archive_dir):
             "relevant_source_posts": len(relevant),
             "incident_candidate_posts": len(candidates),
             "bangladesh_relevant_posts": len(bangladesh),
-            "comparison_status": "archive available" if archive_exists else "no archive available"
+            "reporting_day_status": "archive_completeness_unknown" if archive_exists else "missing_archive",
+            "comparison_eligible": False,
+            "comparison_status": "archive available; collection completeness unverified" if archive_exists else "no archive available; not a zero-event day"
         })
     return result
 
@@ -601,6 +638,8 @@ def main():
                 "monitoring_region": item.get("priority_region"),
                 "event_location_status": "not independently geolocated; place names are text mentions only",
                 "record_type": triage["record_type"],
+                "claim_types": triage["claim_types"],
+                "preparation_indicators": triage["preparation_indicators"],
                 "physical_event_indicators": triage["physical_event_indicators"],
                 "unrest_action_indicators": triage["unrest_action_indicators"],
                 "security_action_indicators": triage["security_action_indicators"],
@@ -609,6 +648,9 @@ def main():
                 "relevance_categories": triage["categories"],
                 "relevance_reasons": triage["reasons"],
                 "incident_candidate": triage["incident_candidate"],
+                "provisional_incident_id": ("PL-" + str(report_date) + "-" + hashlib.sha256(str(item.get("id") or item.get("source_url") or "").encode("utf-8")).hexdigest()[:10].upper()) if triage["incident_candidate"] else None,
+                "incident_group_status": "unresolved single-source lead; not a unique verified incident" if triage["incident_candidate"] else None,
+                "incident_grouping_basis": "unique source-post identifier; no automatic cross-post incident merge" if triage["incident_candidate"] else None,
                 "district_mentions": districts,
                 "text": str(item.get("text") or "")[:900],
                 "source_url": item.get("source_url")
@@ -681,6 +723,18 @@ def main():
             })
 
         bangladesh_posts = relevant_region_posts.get("bangladesh", [])
+        bangladesh_all_posts = region_posts.get("bangladesh", [])
+        bangladesh_excluded_posts = [item for item in bangladesh_all_posts if not triage_source_post(item)["relevant"]]
+        bangladesh_excluded_posts.sort(key=lambda item: str(item.get("collected_at") or item.get("published_at") or ""), reverse=True)
+        bangladesh_audit = {
+            "total_source_posts": len(bangladesh_all_posts),
+            "relevant_source_posts": len(bangladesh_posts),
+            "excluded_source_posts": len(bangladesh_excluded_posts),
+            "excluded_sample_limit": 30,
+            "excluded_sample_count": min(30, len(bangladesh_excluded_posts)),
+            "excluded_sample_notice": "Review sample of excluded Bangladesh posts to audit possible false negatives; not a statistically representative sensitivity estimate.",
+            "excluded_sample_records": [report_post(item) for item in bangladesh_excluded_posts[:30]]
+        }
         bangladesh_category_counts = {}
         bangladesh_district_counts = {}
         for item in bangladesh_posts:
@@ -694,16 +748,16 @@ def main():
         duplicate_text_clusters = build_repost_clusters(day_posts, report_post)
         candidate_groups = build_candidate_groups(incident_candidates, report_post)
         bangladesh_relevant_count = len(bangladesh_posts)
-        temporal_comparison = build_temporal_comparison(report_date, day_posts, ARCHIVE_DIR)
+        temporal_comparison = build_temporal_comparison(report_date, day_posts, ARCHIVE_DIR, timezone_name)
 
         intelligence_report = {
             "schema_version": 3,
-            "report_version": 9,
-            "triage_version": 9,
+            "report_version": 11,
+            "triage_version": 11,
             "report_date": report_date,
             "timezone": timezone_name,
             "generated_at": summary["generated_at"],
-            "title": "Legion-OSINT V9 Precision-First Global Conflict and Bangladesh Political-Security Triage Report",
+            "title": "Legion-OSINT V11 Multi-Label Claim and Data-Quality Validation Report",
             "classification": "Open-Source Intelligence — unverified source-lead assessment",
             "executive_assessment": {
                 "source_posts_in_daily_archive": len(day_posts),
@@ -745,6 +799,7 @@ def main():
                     "bangladesh_relevant_posts": len(bangladesh_posts),
                     "category_counts": bangladesh_category_counts,
                     "district_name_mentions": bangladesh_district_counts,
+                    "false_negative_audit": bangladesh_audit,
                     "source_records": [report_post(p) for p in bangladesh_posts[:60]]
                 },
                 {
@@ -803,7 +858,9 @@ def main():
             ],
             "incident_candidate_groups": candidate_groups,
             "incident_candidate_group_count": len(candidate_groups),
-            "incident_candidate_grouping_notice": "Exact normalized text grouping only; not semantic event resolution or independent corroboration.",
+            "incident_candidate_grouping_notice": "Exact normalized text groups are repost indicators only. Each candidate receives a stable provisional lead ID; no cross-post merge is made without validated incident-time and event-location evidence.",
+            "bangladesh_false_negative_audit": bangladesh_audit,
+            "temporal_comparability_notice": "Current partial-day totals are not directly comparable with full-day archives. Historical archive availability does not prove complete collection.",
             "bangladesh_total_source_posts": len(region_posts.get("bangladesh", [])),
             "bangladesh_relevant_source_posts": bangladesh_relevant_count,
             "duplicate_text_clusters": duplicate_text_clusters,
