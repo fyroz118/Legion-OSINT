@@ -1,0 +1,55 @@
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    try:
+        bot.sendMessage("Preparing the Muslim-targeted hate and discrimination watch...")
+        parts = str(params or "").strip().split()
+        if len(parts) > 2:
+            bot.sendMessage("Usage: /hatewatch [YYYY-MM-DD] [incidents|propaganda|discrimination|tension]")
+        else:
+            report_date = ""
+            category_filter = ""
+            for part in parts:
+                if len(part) == 10 and part[4:5] == "-" and part[7:8] == "-" and part.replace("-", "").isdigit():
+                    report_date = part
+                else:
+                    category_filter = part.lower()
+            if not report_date:
+                latest = HTTP.get(FEED_URL)
+                if latest.status_code == 200:
+                    report_date = str(latest.json().get("summary", {}).get("report_date", "")).strip()
+            if not report_date:
+                bot.sendMessage("Could not determine the latest reporting date.")
+            else:
+                url = "https://raw.githubusercontent.com/fyroz118/Legion-OSINT/main/docs/feed/archive/" + report_date + "/intelligence_report.json"
+                response = HTTP.get(url)
+                if response.status_code != 200:
+                    bot.sendMessage("Hatewatch archive not found for " + report_date + ".")
+                else:
+                    report = response.json()
+                    watch = report.get("hatewatch", {})
+                    if str(watch.get("hatewatch_version", "")) != "1":
+                        bot.sendMessage("This archive predates Hatewatch v1. Wait for the next collector/publisher run; old data will not be relabelled.")
+                    else:
+                        labels = {"incidents":"hate_crime_incident","propaganda":"anti_muslim_propaganda","discrimination":"discrimination","tension":"communal_tension"}
+                        if category_filter and category_filter not in labels:
+                            bot.sendMessage("Use incidents, propaganda, discrimination or tension.")
+                        else:
+                            lines = ["LEGION-OSINT — MUSLIM-TARGETED HATEWATCH","Date: " + str(report.get("report_date", report_date)) + " | UNVERIFIED SOURCE LEADS",
+                                "Unique flagged source posts: " + str(watch.get("unique_flagged_source_posts", 0)),
+                                "Overlapping category matches: " + str(watch.get("total_category_matches", 0)), ""]
+                            shown = 0
+                            for section in watch.get("categories", []):
+                                key = str(section.get("category", ""))
+                                if category_filter and key != labels.get(category_filter):
+                                    continue
+                                lines.append(key + ": " + str(section.get("source_post_count", 0)) + " source posts")
+                                for item in section.get("records", [])[:5]:
+                                    if shown < 12:
+                                        lines.append("- " + str(item.get("publisher_name") or item.get("channel_username") or "unknown") + " | " + str(item.get("published_at") or "time unknown"))
+                                        lines.append("Matched: " + str(item.get("hatewatch", {}).get("matched_phrases", {})))
+                                        lines.append("UNVERIFIED: " + " ".join(str(item.get("text", "")).split())[:240])
+                                        lines.append(str(item.get("source_url", "")))
+                                        shown += 1
+                            lines.append("Review: verify target, event date, location, original evidence and independent corroboration. Criticism of religion is not automatically hate. Zero matches do not mean zero incidents.")
+                            bot.sendMessage("\\n".join(lines))
+    except Exception as e:
+        bot.sendMessage("Hatewatch error: " + str(e))
