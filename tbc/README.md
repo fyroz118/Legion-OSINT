@@ -82,3 +82,10 @@ See [the V12 methodology and validation notes](INTELLIGENCE_REPORT_V12.md).
 V12 adds Bengali-language Bangladesh phrase triggers, commentary-context suppression for completed-incident classification, explicit overlap/source-record counts, and all configured monitoring regions including zero-relevance regions. Phrase matches remain unverified review leads; no motive, perpetrator, event location, unique incident or risk rating is inferred.
 
 For the existing TBC bot, replace only `/summary` with `summary_v12_command.txt` after a V12 archive is published. The command refuses older archive versions. GitHub commits do not deploy into Telebot Creator. Preserve `.env`, OWNER_IDS, FEED_URL, webhook settings and alerts. Do not import the recovery package or run the personal Telegram bot workflow. A live TBC smoke test remains manual; no deployment is claimed.
+
+
+## Muslim-targeted Hatewatch v1
+
+The publisher now adds a separate `hatewatch` object to each expanded daily intelligence archive. It classifies public source posts into alleged hate-crime incidents, discrimination, anti-Muslim propaganda and communal tension using starter phrase lists in English, Bengali, Hindi and Urdu. These are unverified leads only; category counts overlap, and context/human review is mandatory. Collection remains limited to configured public Telegram previews and RSS/Atom sources; this does not add new sources or provide comprehensive South Asia coverage.
+
+For an existing Telebot Creator installation, create a new `/hatewatch` command using `hatewatch_tbc_command.txt`. This does not modify `/summary`, `.env`, owner settings or webhook configuration. GitHub changes do not deploy commands into TBC. The command will work only after the next publisher run generates an archive containing `hatewatch_version: 1`.
