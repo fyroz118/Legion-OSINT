@@ -87,7 +87,7 @@ class OsintTriageTests(unittest.TestCase):
             rows = publish_tbc_feed.build_temporal_comparison("2026-11-19", [], archive)
             self.assertEqual(rows[0]["date"], "2026-11-19")
             self.assertEqual(rows[1]["date"], "2026-11-18")
-            self.assertEqual(rows[1]["comparison_status"], "archive available")
+            self.assertEqual(rows[1]["comparison_status"], "archive available; collection completeness unverified")
             self.assertEqual(rows[1]["collected_posts"], 0)
 
 
