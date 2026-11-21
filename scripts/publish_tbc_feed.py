@@ -9,6 +9,7 @@ import json
 import re
 from datetime import datetime, timezone, date, timedelta
 from zoneinfo import ZoneInfo
+from scripts.hatewatch import build_hatewatch
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -674,6 +675,7 @@ def main():
                 "source_url": item.get("source_url")
             }
 
+        hatewatch_payload = build_hatewatch(day_posts, report_post)
         triaged_posts = [(item, triage_source_post(item)) for item in day_posts]
         relevant_posts = [item for item, triage in triaged_posts if triage["relevant"]]
         incident_candidates = [item for item, triage in triaged_posts if triage["incident_candidate"]]
@@ -885,6 +887,7 @@ def main():
                     "text": "Source class and affiliation are descriptive metadata and may be incomplete. Public Telegram previews and RSS/Atom feeds are bounded; absence of a post is not evidence of no event. Publication time is not incident time. Relevance filtering can miss local-language reports or match unrelated text."
                 }
             ],
+            "hatewatch": hatewatch_payload,
             "incident_candidate_groups": candidate_groups,
             "incident_candidate_group_count": len(candidate_groups),
             "incident_candidate_grouping_notice": "Exact normalized text groups are repost indicators only. Each candidate receives a stable provisional lead ID; no cross-post merge is made without validated incident-time and event-location evidence.",
