@@ -1,6 +1,6 @@
 if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
     try:
-        bot.sendMessage("Preparing the Muslim-targeted hate and discrimination watch...")
+        bot.sendMessage("Preparing Hatewatch v3...")
         parts = str(params or "").strip().split()
         if len(parts) > 2:
             bot.sendMessage("Usage: /hatewatch [YYYY-MM-DD] [incidents|propaganda|discrimination|tension]")
@@ -26,34 +26,58 @@ if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
                 else:
                     report = response.json()
                     watch = report.get("hatewatch", {})
-                    if str(watch.get("hatewatch_version", "")) != "2":
-                        bot.sendMessage("This archive predates Hatewatch v2. Wait for the next collector/publisher run; old data will not be relabelled.")
+                    if str(watch.get("hatewatch_version", "")) != "3":
+                        bot.sendMessage("This archive predates Hatewatch v3. Run after the next successful collector/publisher cycle.")
                     else:
                         labels = {"incidents":"hate_crime_incident","propaganda":"anti_muslim_propaganda","discrimination":"discrimination","tension":"communal_tension"}
                         if category_filter and category_filter not in labels:
                             bot.sendMessage("Use incidents, propaganda, discrimination or tension.")
                         else:
-                            lines = ["LEGION-OSINT — MUSLIM-TARGETED HATEWATCH","Date: " + str(report.get("report_date", report_date)) + " | UNVERIFIED SOURCE LEADS",
+                            lines = [
+                                "LEGION-OSINT - MUSLIM-TARGETED HATEWATCH v3",
+                                "Date: " + str(report.get("report_date", report_date)) + " | UNVERIFIED SOURCE LEADS",
                                 "Source posts screened: " + str(watch.get("source_posts_screened", 0)),
-                                "Unique flagged source posts: " + str(watch.get("unique_flagged_source_posts", 0)),
-                                "Overlapping category matches: " + str(watch.get("total_category_matches", 0)), ""]
+                                "Flagged source posts: " + str(watch.get("unique_flagged_source_posts", 0)),
+                                "Overlapping category matches: " + str(watch.get("total_category_matches", 0)),
+                                "Historical or retrospective posts: " + str(watch.get("historical_reference_source_posts", 0)),
+                                "Context-review posts: " + str(watch.get("context_review_source_posts", 0)),
+                                "Unique incident count: not automatically estimated",
+                                ""
+                            ]
                             shown = 0
                             for section in watch.get("categories", []):
                                 key = str(section.get("category", ""))
-                                if category_filter and key != labels.get(category_filter):
-                                    continue
-                                lines.append(key + ": " + str(section.get("source_post_count", 0)) + " source posts")
-                                for item in section.get("records", [])[:5]:
-                                    if shown < 12:
-                                        lines.append("- " + str(item.get("publisher_name") or item.get("channel_username") or "unknown") + " | " + str(item.get("published_at") or "time unknown"))
-                                        lines.append("Matched: " + str(item.get("hatewatch", {}).get("matched", {})))
-                                        lines.append("UNVERIFIED: " + " ".join(str(item.get("text", "")).split())[:240])
-                                        lines.append(str(item.get("source_url", "")))
-                                        shown += 1
-                            lines.append("Review: verify target, event date, location, original evidence and independent corroboration. Criticism of religion is not automatically hate. Zero matches do not mean zero incidents.")
+                                if not category_filter or key == labels.get(category_filter):
+                                    lines.append(key.replace("_", " ") + ": " + str(section.get("source_post_count", 0)) + " source posts")
+                                    for item in section.get("records", [])[:4]:
+                                        if shown < 12:
+                                            hw = item.get("hatewatch", {})
+                                            matched = hw.get("matched", {})
+                                            target_text = ", ".join([str(x.get("term", "")) for x in matched.get("target_terms", [])])
+                                            action_text = ", ".join([str(x.get("term", "")) for x in matched.get("action_terms", [])])
+                                            discrimination_text = ", ".join([str(x.get("term", "")) for x in matched.get("discrimination_terms", [])])
+                                            propaganda_text = ", ".join([str(x.get("term", "")) for x in matched.get("propaganda_terms", [])])
+                                            lines.append("- " + str(item.get("publisher_name") or item.get("channel_username") or "unknown") + " | published " + str(item.get("published_at") or "time unknown"))
+                                            lines.append("Review status: " + str(hw.get("classification_status", "unverified")).replace("_", " "))
+                                            lines.append("Event time: " + str(hw.get("event_time_status", "unspecified")).replace("_", " "))
+                                            if target_text:
+                                                lines.append("Target terms: " + target_text)
+                                            if action_text:
+                                                lines.append("Action terms: " + action_text)
+                                            if discrimination_text:
+                                                lines.append("Discrimination terms: " + discrimination_text)
+                                            if propaganda_text:
+                                                lines.append("Narrative terms: " + propaganda_text)
+                                            lines.append("UNVERIFIED: " + " ".join(str(item.get("text", "")).split())[:220])
+                                            lines.append(str(item.get("source_url", "")))
+                                            shown += 1
+                            lines.append("")
+                            lines.append("Method: exact-text duplicates may be grouped; similar reports are not automatically merged into incidents.")
+                            lines.append("Analyst review: verify target, conduct, event date, location, original evidence, motive claims and independent corroboration.")
+                            lines.append("A match is not proof of a hate crime. Zero matches do not mean zero incidents.")
                             chunk = ""
                             for line in lines:
-                                addition = line + "\\n"
+                                addition = line + "\n"
                                 if len(chunk) + len(addition) > 3500 and chunk:
                                     bot.sendMessage(chunk)
                                     chunk = addition
