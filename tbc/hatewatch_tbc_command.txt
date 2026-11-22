@@ -34,6 +34,7 @@ if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
                             bot.sendMessage("Use incidents, propaganda, discrimination or tension.")
                         else:
                             lines = ["LEGION-OSINT — MUSLIM-TARGETED HATEWATCH","Date: " + str(report.get("report_date", report_date)) + " | UNVERIFIED SOURCE LEADS",
+                                "Source posts screened: " + str(watch.get("source_posts_screened", 0)),
                                 "Unique flagged source posts: " + str(watch.get("unique_flagged_source_posts", 0)),
                                 "Overlapping category matches: " + str(watch.get("total_category_matches", 0)), ""]
                             shown = 0
