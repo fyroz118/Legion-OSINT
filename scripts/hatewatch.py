@@ -18,17 +18,17 @@ TARGETS = {
 }
 
 ACTIONS = {
-    "en": ["attack", "attacked", "assault", "assaulted", "lynch", "lynched", "killed", "murder", "murdered", "shot", "stabbed", "beaten", "beating", "torture", "tortured", "burned", "burnt", "torched", "set on fire", "vandal", "demolish", "demolished", "bulldoz", "evict", "forcibly removed", "abduct", "kidnap", "raped", "sexual violence", "threatened", "threat", "mob violence", "mob attack", "police firing", "detained", "arrested", "displaced"],
+    "en": ["attack", "attacked", "assault", "assaulted", "lynch", "lynched", "killed", "murder", "murdered", "shot", "stabbed", "beaten", "beating", "torture", "tortured", "burned", "burnt", "torched", "set on fire", "vandal", "demolish", "demolished", "bulldoz", "evict", "forcibly removed", "abduct", "kidnap", "raped", "sexual violence", "threatened", "threat", "mob violence", "mob attack", "police firing", "displaced"],
     "bn": ["হামলা", "আক্রমণ", "হত্যা", "খুন", "গুলি", "গুলিবিদ্ধ", "পিটিয়ে", "মারধর", "নির্যাতন", "অত্যাচার", "আগুন", "অগ্নিসংযোগ", "ভাঙচুর", "বুলডোজার", "উচ্ছেদ", "জোরপূর্বক", "অপহরণ", "ধর্ষণ", "হুমকি", "আটক", "গ্রেপ্তার", "গ্রেফতার", "বাড়িঘর ভাঙা", "বাস্তুচ্যুত"],
     "hi": ["हमला", "हमले", "हत्या", "मार डाला", "गोली", "पीटा", "मारपीट", "यातना", "प्रताड़ना", "आग लगा", "तोड़फोड़", "बुलडोजर", "उजाड़", "बेदखल", "अपहरण", "बलात्कार", "धमकी", "गिरफ्तार", "हिरासत", "विस्थापित"],
     "ur": ["حملہ", "قتل", "گولی", "مارا پیٹا", "تشدد", "ظلم", "آگ لگا", "توڑ پھوڑ", "بلڈوزر", "بے دخل", "اغوا", "زیادتی", "دھمکی", "گرفتار", "حراست", "بے گھر"],
 }
 
 DISCRIMINATION = {
-    "en": ["discriminat", "denied", "barred", "ban on", "banned", "excluded", "exclusion", "demolition", "bulldozer", "eviction", "citizenship", "voter list", "employment", "housing", "school", "hijab ban", "religious freedom", "state policy", "government order"],
-    "bn": ["বৈষম্য", "বঞ্চিত", "নিষিদ্ধ", "বের করে", "উচ্ছেদ", "বুলডোজার", "নাগরিকত্ব", "ভোটার তালিকা", "চাকরি", "শিক্ষা", "হিজাব", "সরকারি নির্দেশ", "নীতিমালা"],
-    "hi": ["भेदभाव", "वंचित", "प्रतिबंध", "बेदखल", "बुलडोजर", "नागरिकता", "मतदाता सूची", "नौकरी", "शिक्षा", "हिजाब", "सरकारी आदेश", "नीति"],
-    "ur": ["امتیاز", "محروم", "پابندی", "بے دخل", "بلڈوزر", "شہریت", "ووٹر فہرست", "ملازمت", "تعلیم", "حجاب", "سرکاری حکم", "پالیسی"],
+    "en": ["discriminat", "denied", "barred", "ban on", "banned", "excluded", "exclusion", "demolition", "bulldozer", "eviction", "citizenship", "voter list", "employment", "housing", "school", "hijab ban", "religious freedom", "state policy", "government order", "arbitrary detention", "mass arrest", "police violence", "state repression", "collective punishment", "mass expulsion", "crackdown", "police raid"],
+    "bn": ["বৈষম্য", "বঞ্চিত", "নিষিদ্ধ", "বের করে", "উচ্ছেদ", "বুলডোজার", "নাগরিকত্ব", "ভোটার তালিকা", "চাকরি", "শিক্ষা", "হিজাব", "সরকারি নির্দেশ", "নীতিমালা", "বিনা বিচারে আটক", "গণগ্রেপ্তার", "পুলিশি নির্যাতন", "রাষ্ট্রীয় দমন", "সমষ্টিগত শাস্তি", "গণউচ্ছেদ"],
+    "hi": ["भेदभाव", "वंचित", "प्रतिबंध", "बेदखल", "बुलडोजर", "नागरिकता", "मतदाता सूची", "नौकरी", "शिक्षा", "हिजाब", "सरकारी आदेश", "नीति", "मनमानी हिरासत", "सामूहिक गिरफ्तारी", "पुलिस हिंसा", "राज्य दमन", "सामूहिक सजा", "सामूहिक निष्कासन"],
+    "ur": ["امتیاز", "محروم", "پابندی", "بے دخل", "بلڈوزر", "شہریت", "ووٹر فہرست", "ملازمت", "تعلیم", "حجاب", "سرکاری حکم", "پالیسی", "غیر قانونی حراست", "اجتماعی گرفتاریاں", "پولیس تشدد", "ریاستی جبر", "اجتماعی سزا", "اجتماعی بے دخلی"],
 }
 
 PROPAGANDA = {
