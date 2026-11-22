@@ -1,0 +1,224 @@
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    try:
+        bot.sendMessage("Building the 10-section daily OSINT intelligence report...")
+        parts = str(params or "").strip().split()
+        if len(parts) > 1:
+            bot.sendMessage("Usage: /summary [YYYY-MM-DD]")
+        else:
+            report_date = parts[0] if parts else ""
+            if not report_date:
+                latest = HTTP.get(FEED_URL)
+                if latest.status_code != 200:
+                    bot.sendMessage("Could not determine the latest reporting date. Try /summary YYYY-MM-DD.")
+                else:
+                    report_date = str(latest.json().get("summary", {}).get("report_date", "")).strip()
+
+            valid_date = len(report_date) == 10 and report_date[4:5] == "-" and report_date[7:8] == "-" and report_date.replace("-", "").isdigit()
+            if not valid_date:
+                bot.sendMessage("Invalid or unavailable date. Use /summary YYYY-MM-DD.")
+            else:
+                url = "https://raw.githubusercontent.com/fyroz118/Legion-OSINT/main/docs/feed/archive/" + report_date + "/intelligence_report.json"
+                response = HTTP.get(url)
+                if response.status_code != 200:
+                    bot.sendMessage("Expanded daily archive not found for " + report_date + ". No headline-only fallback is used.")
+                else:
+                    report = response.json()
+                    if str(report.get("report_version", "")) != "12":
+                        bot.sendMessage("This command requires a V12 expanded archive. The available archive is older or has a different schema. Wait for the next successful collector/publisher run.")
+                    else:
+                        executive = report.get("executive_assessment", {})
+                        sections = report.get("report_sections", [])
+                        bd = {}
+                        regional = {}
+                        communal = {}
+                        topics = {}
+                        candidates = {}
+                        watch = {}
+                        for section in sections:
+                            heading = str(section.get("heading", ""))
+                            if heading.startswith("2."):
+                                bd = section
+                            elif heading.startswith("3."):
+                                regional = section
+                            elif heading.startswith("4."):
+                                communal = section
+                            elif heading.startswith("6."):
+                                topics = section
+                            elif heading.startswith("7."):
+                                candidates = section
+                            elif heading.startswith("10."):
+                                watch = section
+
+                        lines = [
+                            "MASTER DAILY OSINT INTELLIGENCE REPORT",
+                            "Project: Global Political, Conflict, Security and Social Stability Monitoring",
+                            "Classification: Open-Source Intelligence — unverified source-lead assessment",
+                            "Reporting date: " + str(report.get("report_date", report_date)),
+                            "Time zone: Asia/Dhaka (UTC+6) | Source timestamps shown as stored; not independently converted",
+                            "Generated: " + str(report.get("generated_at", "not recorded")),
+                            "",
+                            "SECTION 1 — EXECUTIVE SUMMARY",
+                            "Collection snapshot: " + str(executive.get("source_posts_in_daily_archive", 0)) + " source posts; " + str(executive.get("relevant_source_posts", 0)) + " relevant source posts; " + str(executive.get("incident_candidate_source_posts", 0)) + " incident-candidate source posts.",
+                            "Bangladesh: " + str(executive.get("bangladesh_total_source_posts", 0)) + " collected; " + str(executive.get("bangladesh_relevant_source_posts", 0)) + " relevance-filtered source posts.",
+                            "Platforms in this archive: Telegram " + str(executive.get("telegram_posts", 0)) + "; RSS/Atom " + str(executive.get("rss_articles", 0)) + ".",
+                            "This is an automated source-lead assessment, not a comprehensive investigation or verified event synthesis.",
+                            "Most significant collected leads are listed in the Bangladesh, regional and incident sections below. No event significance ranking is inferred from keyword counts.",
+                            "",
+                            "SECTION 2 — BANGLADESH INTELLIGENCE REPORT",
+                            str(bd.get("text", "No Bangladesh narrative text is available in this archive.")),
+                            "Bangladesh source posts: " + str(bd.get("bangladesh_total_posts", executive.get("bangladesh_total_source_posts", 0))) + "; relevant source posts: " + str(bd.get("bangladesh_relevant_posts", executive.get("bangladesh_relevant_source_posts", 0))) + ".",
+                            "Category indicators: " + str(bd.get("category_counts", {})),
+                            "District-name text mentions (not geolocation): " + str(bd.get("district_name_mentions", {}))
+                        ]
+
+                        bd_records = bd.get("source_records", [])
+                        if bd_records:
+                            lines.append("BANGLADESH SOURCE LEADS:")
+                            for index, item in enumerate(bd_records[:30]):
+                                publisher = item.get("publisher_name") or item.get("channel_username") or "unknown source"
+                                lines.append(str(index + 1) + ". " + str(publisher) + " | " + str(item.get("published_at") or "publication time unknown") + " | " + str(item.get("record_type", "relevant source lead")) + " | UNVERIFIED")
+                                lines.append("Text: " + " ".join(str(item.get("text", "")).split())[:360])
+                                lines.append("Location status: " + str(item.get("event_location_status", "not independently established")))
+                                lines.append("Source: " + str(item.get("source_url", "")))
+                        audit = bd.get("false_negative_audit", {})
+                        if audit:
+                            lines.append("BANGLADESH EXCLUDED-POST AUDIT: " + str(audit.get("excluded_sample_count", 0)) + " of " + str(audit.get("excluded_source_posts", 0)) + " excluded source posts sampled. " + str(audit.get("excluded_sample_notice", "")))
+
+                        lines.extend([
+                            "",
+                            "SECTION 3 — INTERNATIONAL CONFLICT AND SECURITY",
+                            str(regional.get("text", "No regional narrative text is available."))
+                        ])
+                        for region in regional.get("regions", []):
+                            lines.append("REGION: " + str(region.get("region", "Unspecified")) + " | collected " + str(region.get("source_post_count", 0)) + " | relevant " + str(region.get("relevant_source_post_count", 0)))
+                            for index, item in enumerate(region.get("source_records", [])[:5]):
+                                publisher = item.get("publisher_name") or item.get("channel_username") or "unknown source"
+                                lines.append("- " + str(publisher) + " | " + str(item.get("published_at") or "time unknown") + " | UNVERIFIED")
+                                lines.append("  " + " ".join(str(item.get("text", "")).split())[:260])
+                                lines.append("  " + str(item.get("source_url", "")))
+
+                        lines.extend([
+                            "",
+                            "SECTION 4 — COMMUNAL AND SOCIAL VIOLENCE",
+                            str(communal.get("text", "No separate communal-risk narrative is available."))
+                        ])
+                        hatewatch = report.get("hatewatch", {})
+                        if hatewatch:
+                            lines.append("HATEWATCH — Muslim-targeted hate/discrimination review leads; phrase matches only.")
+                            lines.append("Category counts: " + str(hatewatch.get("counts", {})))
+                            lines.append(str(hatewatch.get("notice", "All matches are UNVERIFIED and require human review.")))
+                            for category in hatewatch.get("categories", []):
+                                if category.get("source_post_count", 0):
+                                    lines.append("HATEWATCH CATEGORY: " + str(category.get("category", "")) + " | source posts: " + str(category.get("source_post_count", 0)))
+                                    for index, item in enumerate(category.get("records", [])[:5]):
+                                        lines.append("- " + str(item.get("publisher_name") or item.get("channel_username") or "unknown source") + " | " + str(item.get("published_at") or "time unknown") + " | UNVERIFIED")
+                                        lines.append("  " + " ".join(str(item.get("text", "")).split())[:260])
+                                        lines.append("  " + str(item.get("source_url", "")))
+                        else:
+                            lines.append("Hatewatch data is not present in this archive; absence is not evidence that no anti-Muslim incident occurred.")
+                        for item in communal.get("source_records", [])[:15]:
+                            lines.append("- " + str(item.get("publisher_name") or "unknown source") + " | " + " ".join(str(item.get("text", "")).split())[:260] + " | " + str(item.get("source_url", "")))
+
+                        lines.extend([
+                            "",
+                            "SECTION 5 — POLITICAL DEVELOPMENTS",
+                            "The archive has no separately verified political-development dataset. The following are relevance-filtered source leads, not confirmed party activities or institutional facts."
+                        ])
+                        political_records = []
+                        for item in report.get("source_records", []):
+                            cats = item.get("relevance_categories", [])
+                            if "political_security" in cats or "civil_unrest_labour" in cats:
+                                political_records.append(item)
+                        if political_records:
+                            for index, item in enumerate(political_records[:20]):
+                                lines.append(str(index + 1) + ". " + str(item.get("publisher_name") or "unknown source") + " | " + str(item.get("published_at") or "time unknown") + " | " + str(item.get("record_type", "source lead")) + " | UNVERIFIED")
+                                lines.append("  " + " ".join(str(item.get("text", "")).split())[:300])
+                                lines.append("  " + str(item.get("source_url", "")))
+                        else:
+                            lines.append("No political-security or civil-unrest source leads were selected by the current rule set.")
+
+                        lines.extend([
+                            "",
+                            "SECTION 6 — MISINFORMATION AND INFORMATION ENVIRONMENT",
+                            "The current collector does not perform reliable claim-level fact-checking or coordinated-network attribution. Do not interpret repeated text as proof of misinformation or coordination."
+                        ])
+                        cluster_section = {}
+                        for section in sections:
+                            if section.get("clusters") is not None:
+                                cluster_section = section
+                        clusters = cluster_section.get("clusters", [])
+                        if clusters:
+                            lines.append("REPEATED-TEXT REVIEW LEADS (not proof of coordination or falsehood):")
+                            for index, cluster in enumerate(clusters[:12]):
+                                lines.append(str(index + 1) + ". Repeated posts: " + str(cluster.get("repost_count", 0)) + " | distinct source groups: " + str(cluster.get("distinct_source_count", 0)) + " | " + str(cluster.get("repetition_type", "independence unassessed")))
+                                lines.append("Text excerpt: " + str(cluster.get("text_excerpt", ""))[:240])
+                                lines.append("Sources: " + ", ".join(cluster.get("source_names", [])[:8]))
+                        else:
+                            lines.append("No repeated-text clusters were recorded. Misinformation status: not systematically assessed.")
+
+                        lines.extend([
+                            "",
+                            "SECTION 7 — INCIDENT REGISTER",
+                            "Source-post candidates only. These are not unique, verified incidents. Date below is publication time where available, not necessarily incident time. Confidence is LOW pending analyst verification."
+                        ])
+                        candidate_records = candidates.get("candidate_records", [])
+                        if candidate_records:
+                            for index, item in enumerate(candidate_records[:40]):
+                                lines.append("PL-" + str(index + 1) + " | " + str(item.get("published_at") or "incident date unknown") + " | " + str(item.get("priority_region") or "region unknown") + " | " + str(item.get("record_type") or "candidate lead") + " | UNVERIFIED | LOW")
+                                lines.append("Incident claim: " + " ".join(str(item.get("text", "")).split())[:300])
+                                lines.append("Source: " + str(item.get("source_url", "")))
+                        else:
+                            lines.append("No source posts met the current incident-candidate rules. This does not establish that no incidents occurred.")
+
+                        lines.extend([
+                            "",
+                            "SECTION 8 — EARLY-WARNING ASSESSMENT",
+                            "Automated keyword triage does not assign Low/Moderate/High/Critical risk or forecast violence. The following are monitoring indicators, not assessed threats."
+                        ])
+                        for indicator in watch.get("watch_indicators", []):
+                            lines.append("- " + str(indicator))
+                        lines.append("No geographic risk rating or escalation forecast is issued without independently verified incident data, actor capability/intent evidence and a defined time horizon.")
+
+                        lines.extend([
+                            "",
+                            "SECTION 9 — SOURCE AND COVERAGE ASSESSMENT",
+                            "Source posts in archive: " + str(executive.get("source_posts_in_daily_archive", 0)) + "; relevant: " + str(executive.get("relevant_source_posts", 0)) + "; excluded by triage: " + str(executive.get("excluded_as_low_relevance", 0)) + ".",
+                            "Telegram: " + str(executive.get("telegram_posts", 0)) + "; RSS/Atom: " + str(executive.get("rss_articles", 0)) + ".",
+                            "Regions represented: " + str(executive.get("regions_represented", 0)) + "; regions with relevant leads: " + str(executive.get("regions_with_relevant_leads", 0)) + ".",
+                            "Selected source records: " + str(executive.get("selected_source_records_displayed", 0)) + "; omitted from selected-record display: " + str(executive.get("selected_source_records_omitted", 0)) + ".",
+                            "Regional counts reconcile: " + str(executive.get("regional_counts_reconcile_to_archive", "not reported")) + "."
+                        ])
+                        for region in regional.get("regions", []):
+                            lines.append("- " + str(region.get("region", "Unknown")) + ": " + str(region.get("source_post_count", 0)) + " total; " + str(region.get("relevant_source_post_count", 0)) + " relevant.")
+                        lines.append("Accessible source scope: configured public Telegram previews and configured RSS/Atom feeds only. X, Facebook and YouTube are not directly searched by this collector unless separately represented in configured RSS sources.")
+                        lines.append("Coverage is bounded and incomplete. Missing records, zero matches or inaccessible sources do not mean no events occurred.")
+                        lines.append(str(report.get("notice", "")))
+
+                        lines.extend([
+                            "",
+                            "SECTION 10 — OVERALL INTELLIGENCE JUDGMENT",
+                            "This automated report describes activity in a bounded source collection, not the full real-world security situation. It cannot establish incident truth, independent corroboration, causal relationships, propaganda coordination or imminent risk.",
+                            "Analyst priority: verify original media and source identity; establish incident date and precise location; separate event occurrence from claims about perpetrators, motive and casualties; corroborate through genuinely independent sources; and compare verified events across reporting periods.",
+                            "",
+                            "END OF DAILY OSINT REPORT"
+                        ])
+
+                        full_text = "\n".join(lines)
+                        chunks = []
+                        current_chunk = ""
+                        for line in full_text.split("\n"):
+                            addition = line + "\n"
+                            if current_chunk and len(current_chunk) + len(addition) > 2800:
+                                chunks.append(current_chunk.rstrip())
+                                current_chunk = ""
+                            current_chunk += addition
+                        if current_chunk:
+                            chunks.append(current_chunk.rstrip())
+                        for chunk in chunks[:25]:
+                            bot.sendMessage(chunk, disable_web_page_preview=True)
+                        if len(chunks) > 25:
+                            bot.sendMessage("Telegram message limit reached. Remaining detail is available in the GitHub daily archive.")
+    except Exception:
+        bot.sendMessage("Could not build the 10-section report. Check the daily archive and TBC Error Logs.")
+else:
+    bot.sendMessage("Access denied. Legion-OSINT is restricted to its owner in private chat.")
