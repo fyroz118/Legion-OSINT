@@ -42,7 +42,7 @@ class PublishTbcFeedTests(unittest.TestCase):
             report_path = archive_dir / "2026-11-18" / "intelligence_report.json"
             report = json.loads(report_path.read_text(encoding="utf-8"))
             self.assertEqual(report["report_version"], 12)
-            self.assertEqual(report["hatewatch"]["hatewatch_version"], 2)
+            self.assertEqual(report["hatewatch"]["hatewatch_version"], 3)
             self.assertEqual(report["hatewatch"]["unique_flagged_source_posts"], 0)
             self.assertEqual(report["triage_version"], 12)
             self.assertEqual(report["executive_assessment"]["relevant_source_posts"], 1)
