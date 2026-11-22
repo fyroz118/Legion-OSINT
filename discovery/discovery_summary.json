@@ -1,11 +1,11 @@
 {
-  "generated_at_utc": "2026-11-22T11:32:40.314689+00:00",
+  "generated_at_utc": "2026-11-22T19:44:17.855022+00:00",
   "discovery_method": "Public web-index search plus public Telegram directory pages (TG Market, TGScope, Telemetrio) and unreviewed seed leads",
   "queries_attempted_per_provider": 84,
   "directory_diagnostics": {
     "pages_attempted": 31,
-    "pages_with_candidates": 0,
-    "candidate_links_found": 0,
+    "pages_with_candidates": 2,
+    "candidate_links_found": 207,
     "errors": [
       {
         "url": "https://tgscope.io/telegram-channels-by-country/bangladesh",
@@ -29,16 +29,6 @@
       },
       {
         "url": "https://tgscope.io/telegram-channels-by-country/palestine",
-        "error": "HTTPError",
-        "detail": "HTTP Error 403: Forbidden"
-      },
-      {
-        "url": "https://telemetr.io/en/catalog/india/politics",
-        "error": "HTTPError",
-        "detail": "HTTP Error 403: Forbidden"
-      },
-      {
-        "url": "https://telemetr.io/en/catalog/bangladesh/politics",
         "error": "HTTPError",
         "detail": "HTTP Error 403: Forbidden"
       }
@@ -88,12 +78,12 @@
   },
   "providers_returning_telegram_links": 0,
   "total_query_errors": 3,
-  "new_candidates_this_run": 0,
+  "new_candidates_this_run": 182,
   "directory_seed_candidates_loaded": 146,
-  "candidate_leads_loaded_this_run": 146,
-  "unique_candidates": 329,
+  "candidate_leads_loaded_this_run": 328,
+  "unique_candidates": 331,
   "already_configured_channels": 149,
-  "unreviewed_not_enabled_candidates": 180,
+  "unreviewed_not_enabled_candidates": 182,
   "previews_checked_this_run": 250,
   "limitations": [
     "Public search-engine indexes are incomplete, ranking-biased and may block automated requests.",
