@@ -90,6 +90,126 @@
       "source_affiliation": "Bangladesh_digital_newsroom",
       "monitoring_weight": "standard",
       "enabled": true
+    },
+    {
+      "source_id": "google_news_india_muslim_rights_en",
+      "publisher_name": "Google News search — India Muslim rights and communal violence",
+      "feed_url": "https://news.google.com/rss/search?q=(Muslim+OR+mosque+OR+Islamophobia+OR+communal+violence+OR+lynching+OR+bulldozer)+India&hl=en-IN&gl=IN&ceid=IN:en",
+      "priority_region": "india",
+      "language": "en",
+      "source_class": "search_aggregator",
+      "source_affiliation": "Google News aggregated publisher links; underlying publisher varies by article",
+      "monitoring_weight": "high",
+      "enabled": true,
+      "monitoring_purpose": "Hatewatch discovery feed; each linked publisher and claim must be assessed individually."
+    },
+    {
+      "source_id": "google_news_india_muslim_rights_hi",
+      "publisher_name": "Google News search — India Muslim rights (Hindi)",
+      "feed_url": "https://news.google.com/rss/search?q=(मुस्लिम+OR+मस्जिद+OR+सांप्रदायिक+हिंसा+OR+लिंचिंग)+भारत&hl=hi&gl=IN&ceid=IN:hi",
+      "priority_region": "india",
+      "language": "hi",
+      "source_class": "search_aggregator",
+      "source_affiliation": "Google News aggregated publisher links; underlying publisher varies by article",
+      "monitoring_weight": "high",
+      "enabled": true,
+      "monitoring_purpose": "Hatewatch discovery feed; each linked publisher and claim must be assessed individually."
+    },
+    {
+      "source_id": "google_news_bangladesh_minority_rights",
+      "publisher_name": "Google News search — Bangladesh religious minority and Muslim community",
+      "feed_url": "https://news.google.com/rss/search?q=(মুসলিম+OR+মসজিদ+OR+সাম্প্রদায়িক+সহিংসতা+OR+ধর্মীয়+বৈষম্য)+বাংলাদেশ&hl=bn&gl=BD&ceid=BD:bn",
+      "priority_region": "bangladesh",
+      "language": "bn",
+      "source_class": "search_aggregator",
+      "source_affiliation": "Google News aggregated publisher links; underlying publisher varies by article",
+      "monitoring_weight": "high",
+      "enabled": true,
+      "monitoring_purpose": "Hatewatch discovery feed; each linked publisher and claim must be assessed individually."
+    },
+    {
+      "source_id": "google_news_pakistan_muslim_rights",
+      "publisher_name": "Google News search — Pakistan religious violence and rights",
+      "feed_url": "https://news.google.com/rss/search?q=(Muslim+OR+mosque+OR+sectarian+violence+OR+religious+discrimination)+Pakistan&hl=en-PK&gl=PK&ceid=PK:en",
+      "priority_region": "pakistan",
+      "language": "en",
+      "source_class": "search_aggregator",
+      "source_affiliation": "Google News aggregated publisher links; underlying publisher varies by article",
+      "monitoring_weight": "high",
+      "enabled": true,
+      "monitoring_purpose": "Hatewatch discovery feed; each linked publisher and claim must be assessed individually."
+    },
+    {
+      "source_id": "google_news_pakistan_urdu",
+      "publisher_name": "Google News search — Pakistan religious violence (Urdu)",
+      "feed_url": "https://news.google.com/rss/search?q=(مسلمان+OR+مسجد+OR+مذہبی+تشدد+OR+امتیاز)+پاکستان&hl=ur&gl=PK&ceid=PK:ur",
+      "priority_region": "pakistan",
+      "language": "ur",
+      "source_class": "search_aggregator",
+      "source_affiliation": "Google News aggregated publisher links; underlying publisher varies by article",
+      "monitoring_weight": "high",
+      "enabled": true,
+      "monitoring_purpose": "Hatewatch discovery feed; each linked publisher and claim must be assessed individually."
+    },
+    {
+      "source_id": "google_news_afghanistan_rights",
+      "publisher_name": "Google News search — Afghanistan religious and minority rights",
+      "feed_url": "https://news.google.com/rss/search?q=(Muslim+OR+religious+rights+OR+minority+persecution+OR+discrimination)+Afghanistan&hl=en&gl=AF&ceid=AF:en",
+      "priority_region": "afghanistan",
+      "language": "en",
+      "source_class": "search_aggregator",
+      "source_affiliation": "Google News aggregated publisher links; underlying publisher varies by article",
+      "monitoring_weight": "standard",
+      "enabled": true,
+      "monitoring_purpose": "Hatewatch discovery feed; each linked publisher and claim must be assessed individually."
+    },
+    {
+      "source_id": "google_news_sri_lanka_communal",
+      "publisher_name": "Google News search — Sri Lanka communal and religious violence",
+      "feed_url": "https://news.google.com/rss/search?q=(Muslim+OR+mosque+OR+anti-Muslim+OR+communal+violence)+Sri+Lanka&hl=en&gl=LK&ceid=LK:en",
+      "priority_region": "sri_lanka",
+      "language": "en",
+      "source_class": "search_aggregator",
+      "source_affiliation": "Google News aggregated publisher links; underlying publisher varies by article",
+      "monitoring_weight": "standard",
+      "enabled": true,
+      "monitoring_purpose": "Hatewatch discovery feed; each linked publisher and claim must be assessed individually."
+    },
+    {
+      "source_id": "google_news_nepal_communal",
+      "publisher_name": "Google News search — Nepal religious and communal rights",
+      "feed_url": "https://news.google.com/rss/search?q=(Muslim+OR+mosque+OR+religious+discrimination+OR+communal+violence)+Nepal&hl=en&gl=NP&ceid=NP:en",
+      "priority_region": "nepal",
+      "language": "en",
+      "source_class": "search_aggregator",
+      "source_affiliation": "Google News aggregated publisher links; underlying publisher varies by article",
+      "monitoring_weight": "standard",
+      "enabled": true,
+      "monitoring_purpose": "Hatewatch discovery feed; each linked publisher and claim must be assessed individually."
+    },
+    {
+      "source_id": "google_news_rohingya_myanmar",
+      "publisher_name": "Google News search — Rohingya and Myanmar rights",
+      "feed_url": "https://news.google.com/rss/search?q=(Rohingya+OR+Muslim+OR+religious+persecution)+Myanmar&hl=en&gl=MM&ceid=MM:en",
+      "priority_region": "myanmar",
+      "language": "en",
+      "source_class": "search_aggregator",
+      "source_affiliation": "Google News aggregated publisher links; underlying publisher varies by article",
+      "monitoring_weight": "standard",
+      "enabled": true,
+      "monitoring_purpose": "Hatewatch discovery feed; each linked publisher and claim must be assessed individually."
+    },
+    {
+      "source_id": "google_news_global_islamophobia",
+      "publisher_name": "Google News search — Global Islamophobia and anti-Muslim incidents",
+      "feed_url": "https://news.google.com/rss/search?q=(Islamophobia+OR+anti-Muslim+violence+OR+Muslim+discrimination+OR+mosque+attack)&hl=en&gl=US&ceid=US:en",
+      "priority_region": "global",
+      "language": "en",
+      "source_class": "search_aggregator",
+      "source_affiliation": "Google News aggregated publisher links; underlying publisher varies by article",
+      "monitoring_weight": "standard",
+      "enabled": true,
+      "monitoring_purpose": "Hatewatch discovery feed; each linked publisher and claim must be assessed individually."
     }
   ]
 }
