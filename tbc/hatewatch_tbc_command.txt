@@ -51,6 +51,15 @@ if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
                                         lines.append(str(item.get("source_url", "")))
                                         shown += 1
                             lines.append("Review: verify target, event date, location, original evidence and independent corroboration. Criticism of religion is not automatically hate. Zero matches do not mean zero incidents.")
-                            bot.sendMessage("\n".join(lines))
+                            chunk = ""
+                            for line in lines:
+                                addition = line + "\\n"
+                                if len(chunk) + len(addition) > 3500 and chunk:
+                                    bot.sendMessage(chunk)
+                                    chunk = addition
+                                else:
+                                    chunk = chunk + addition
+                            if chunk.strip():
+                                bot.sendMessage(chunk.rstrip())
     except Exception as e:
         bot.sendMessage("Hatewatch error: " + str(e))
