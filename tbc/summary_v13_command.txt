@@ -164,7 +164,7 @@ if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
                         candidate_records = candidates.get("candidate_records", [])
                         if candidate_records:
                             for index, item in enumerate(candidate_records[:40]):
-                                lines.append("PL-" + str(index + 1) + " | " + str(item.get("published_at") or "incident date unknown") + " | " + str(item.get("priority_region") or "region unknown") + " | " + str(item.get("record_type") or "candidate lead") + " | UNVERIFIED | LOW")
+                                lines.append(str(item.get("provisional_incident_id") or ("SOURCE-LEAD-" + str(index + 1))) + " | publication: " + str(item.get("published_at") or "time unknown") + " | " + str(item.get("priority_region") or "region unknown") + " | " + str(item.get("record_type") or "candidate lead") + " | UNVERIFIED | LOW")
                                 lines.append("Incident claim: " + " ".join(str(item.get("text", "")).split())[:300])
                                 lines.append("Source: " + str(item.get("source_url", "")))
                         else:
