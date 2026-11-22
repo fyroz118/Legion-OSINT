@@ -9,7 +9,10 @@ import json
 import re
 from datetime import datetime, timezone, date, timedelta
 from zoneinfo import ZoneInfo
-from hatewatch import build_hatewatch
+try:
+    from scripts.hatewatch import build_hatewatch
+except ModuleNotFoundError:
+    from hatewatch import build_hatewatch
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
