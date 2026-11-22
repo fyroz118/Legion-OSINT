@@ -94,7 +94,7 @@
     {
       "source_id": "google_news_india_muslim_rights_en",
       "publisher_name": "Google News search — India Muslim rights and communal violence",
-      "feed_url": "https://news.google.com/rss/search?q=(Muslim+OR+mosque+OR+Islamophobia+OR+communal+violence+OR+lynching+OR+bulldozer)+India&hl=en-IN&gl=IN&ceid=IN:en",
+      "feed_url": "https://news.google.com/rss/search?q=(Muslim%20OR%20mosque%20OR%20Islamophobia%20OR%20communal%20violence%20OR%20lynching%20OR%20bulldozer)%20India&hl=en-IN&gl=IN&ceid=IN:en",
       "priority_region": "india",
       "language": "en",
       "source_class": "search_aggregator",
@@ -106,7 +106,7 @@
     {
       "source_id": "google_news_india_muslim_rights_hi",
       "publisher_name": "Google News search — India Muslim rights (Hindi)",
-      "feed_url": "https://news.google.com/rss/search?q=(मुस्लिम+OR+मस्जिद+OR+सांप्रदायिक+हिंसा+OR+लिंचिंग)+भारत&hl=hi&gl=IN&ceid=IN:hi",
+      "feed_url": "https://news.google.com/rss/search?q=(%E0%A4%AE%E0%A5%81%E0%A4%B8%E0%A5%8D%E0%A4%B2%E0%A4%BF%E0%A4%AE%20OR%20%E0%A4%AE%E0%A4%B8%E0%A5%8D%E0%A4%9C%E0%A4%BF%E0%A4%A6%20OR%20%E0%A4%B8%E0%A4%BE%E0%A4%82%E0%A4%AA%E0%A5%8D%E0%A4%B0%E0%A4%A6%E0%A4%BE%E0%A4%AF%E0%A4%BF%E0%A4%95%20%E0%A4%B9%E0%A4%BF%E0%A4%82%E0%A4%B8%E0%A4%BE%20OR%20%E0%A4%B2%E0%A4%BF%E0%A4%82%E0%A4%9A%E0%A4%BF%E0%A4%82%E0%A4%97)%20%E0%A4%AD%E0%A4%BE%E0%A4%B0%E0%A4%A4&hl=hi&gl=IN&ceid=IN:hi",
       "priority_region": "india",
       "language": "hi",
       "source_class": "search_aggregator",
@@ -118,7 +118,7 @@
     {
       "source_id": "google_news_bangladesh_minority_rights",
       "publisher_name": "Google News search — Bangladesh religious minority and Muslim community",
-      "feed_url": "https://news.google.com/rss/search?q=(মুসলিম+OR+মসজিদ+OR+সাম্প্রদায়িক+সহিংসতা+OR+ধর্মীয়+বৈষম্য)+বাংলাদেশ&hl=bn&gl=BD&ceid=BD:bn",
+      "feed_url": "https://news.google.com/rss/search?q=(%E0%A6%AE%E0%A7%81%E0%A6%B8%E0%A6%B2%E0%A6%BF%E0%A6%AE%20OR%20%E0%A6%AE%E0%A6%B8%E0%A6%9C%E0%A6%BF%E0%A6%A6%20OR%20%E0%A6%B8%E0%A6%BE%E0%A6%AE%E0%A7%8D%E0%A6%AA%E0%A7%8D%E0%A6%B0%E0%A6%A6%E0%A6%BE%E0%A6%AF%E0%A6%BC%E0%A6%BF%E0%A6%95%20%E0%A6%B8%E0%A6%B9%E0%A6%BF%E0%A6%82%E0%A6%B8%E0%A6%A4%E0%A6%BE%20OR%20%E0%A6%A7%E0%A6%B0%E0%A7%8D%E0%A6%AE%E0%A7%80%E0%A6%AF%E0%A6%BC%20%E0%A6%AC%E0%A7%88%E0%A6%B7%E0%A6%AE%E0%A7%8D%E0%A6%AF)%20%E0%A6%AC%E0%A6%BE%E0%A6%82%E0%A6%B2%E0%A6%BE%E0%A6%A6%E0%A7%87%E0%A6%B6&hl=bn&gl=BD&ceid=BD:bn",
       "priority_region": "bangladesh",
       "language": "bn",
       "source_class": "search_aggregator",
@@ -130,7 +130,7 @@
     {
       "source_id": "google_news_pakistan_muslim_rights",
       "publisher_name": "Google News search — Pakistan religious violence and rights",
-      "feed_url": "https://news.google.com/rss/search?q=(Muslim+OR+mosque+OR+sectarian+violence+OR+religious+discrimination)+Pakistan&hl=en-PK&gl=PK&ceid=PK:en",
+      "feed_url": "https://news.google.com/rss/search?q=(Muslim%20OR%20mosque%20OR%20sectarian%20violence%20OR%20religious%20discrimination)%20Pakistan&hl=en-PK&gl=PK&ceid=PK:en",
       "priority_region": "pakistan",
       "language": "en",
       "source_class": "search_aggregator",
@@ -142,7 +142,7 @@
     {
       "source_id": "google_news_pakistan_urdu",
       "publisher_name": "Google News search — Pakistan religious violence (Urdu)",
-      "feed_url": "https://news.google.com/rss/search?q=(مسلمان+OR+مسجد+OR+مذہبی+تشدد+OR+امتیاز)+پاکستان&hl=ur&gl=PK&ceid=PK:ur",
+      "feed_url": "https://news.google.com/rss/search?q=(%D9%85%D8%B3%D9%84%D9%85%D8%A7%D9%86%20OR%20%D9%85%D8%B3%D8%AC%D8%AF%20OR%20%D9%85%D8%B0%DB%81%D8%A8%DB%8C%20%D8%AA%D8%B4%D8%AF%D8%AF%20OR%20%D8%A7%D9%85%D8%AA%DB%8C%D8%A7%D8%B2)%20%D9%BE%D8%A7%DA%A9%D8%B3%D8%AA%D8%A7%D9%86&hl=ur&gl=PK&ceid=PK:ur",
       "priority_region": "pakistan",
       "language": "ur",
       "source_class": "search_aggregator",
@@ -154,7 +154,7 @@
     {
       "source_id": "google_news_afghanistan_rights",
       "publisher_name": "Google News search — Afghanistan religious and minority rights",
-      "feed_url": "https://news.google.com/rss/search?q=(Muslim+OR+religious+rights+OR+minority+persecution+OR+discrimination)+Afghanistan&hl=en&gl=AF&ceid=AF:en",
+      "feed_url": "https://news.google.com/rss/search?q=(Muslim%20OR%20religious%20rights%20OR%20minority%20persecution%20OR%20discrimination)%20Afghanistan&hl=en&gl=AF&ceid=AF:en",
       "priority_region": "afghanistan",
       "language": "en",
       "source_class": "search_aggregator",
@@ -166,7 +166,7 @@
     {
       "source_id": "google_news_sri_lanka_communal",
       "publisher_name": "Google News search — Sri Lanka communal and religious violence",
-      "feed_url": "https://news.google.com/rss/search?q=(Muslim+OR+mosque+OR+anti-Muslim+OR+communal+violence)+Sri+Lanka&hl=en&gl=LK&ceid=LK:en",
+      "feed_url": "https://news.google.com/rss/search?q=(Muslim%20OR%20mosque%20OR%20anti-Muslim%20OR%20communal%20violence)%20Sri%20Lanka&hl=en&gl=LK&ceid=LK:en",
       "priority_region": "sri_lanka",
       "language": "en",
       "source_class": "search_aggregator",
@@ -178,7 +178,7 @@
     {
       "source_id": "google_news_nepal_communal",
       "publisher_name": "Google News search — Nepal religious and communal rights",
-      "feed_url": "https://news.google.com/rss/search?q=(Muslim+OR+mosque+OR+religious+discrimination+OR+communal+violence)+Nepal&hl=en&gl=NP&ceid=NP:en",
+      "feed_url": "https://news.google.com/rss/search?q=(Muslim%20OR%20mosque%20OR%20religious%20discrimination%20OR%20communal%20violence)%20Nepal&hl=en&gl=NP&ceid=NP:en",
       "priority_region": "nepal",
       "language": "en",
       "source_class": "search_aggregator",
@@ -190,7 +190,7 @@
     {
       "source_id": "google_news_rohingya_myanmar",
       "publisher_name": "Google News search — Rohingya and Myanmar rights",
-      "feed_url": "https://news.google.com/rss/search?q=(Rohingya+OR+Muslim+OR+religious+persecution)+Myanmar&hl=en&gl=MM&ceid=MM:en",
+      "feed_url": "https://news.google.com/rss/search?q=(Rohingya%20OR%20Muslim%20OR%20religious%20persecution)%20Myanmar&hl=en&gl=MM&ceid=MM:en",
       "priority_region": "myanmar",
       "language": "en",
       "source_class": "search_aggregator",
@@ -202,7 +202,7 @@
     {
       "source_id": "google_news_global_islamophobia",
       "publisher_name": "Google News search — Global Islamophobia and anti-Muslim incidents",
-      "feed_url": "https://news.google.com/rss/search?q=(Islamophobia+OR+anti-Muslim+violence+OR+Muslim+discrimination+OR+mosque+attack)&hl=en&gl=US&ceid=US:en",
+      "feed_url": "https://news.google.com/rss/search?q=(Islamophobia%20OR%20anti-Muslim%20violence%20OR%20Muslim%20discrimination%20OR%20mosque%20attack)&hl=en&gl=US&ceid=US:en",
       "priority_region": "global",
       "language": "en",
       "source_class": "search_aggregator",
