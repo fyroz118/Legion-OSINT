@@ -7,6 +7,7 @@ on:
       - "config/news_sources.json"
       - "scripts/collect_public_rss.py"
       - "scripts/collect_public_telegram.py"
+      - "scripts/hatewatch.py"
       - "scripts/publish_tbc_feed.py"
       - ".github/workflows/public-telegram-collection.yml"
   schedule:
