@@ -26,8 +26,8 @@ if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
                 else:
                     report = response.json()
                     watch = report.get("hatewatch", {})
-                    if str(watch.get("hatewatch_version", "")) != "1":
-                        bot.sendMessage("This archive predates Hatewatch v1. Wait for the next collector/publisher run; old data will not be relabelled.")
+                    if str(watch.get("hatewatch_version", "")) != "2":
+                        bot.sendMessage("This archive predates Hatewatch v2. Wait for the next collector/publisher run; old data will not be relabelled.")
                     else:
                         labels = {"incidents":"hate_crime_incident","propaganda":"anti_muslim_propaganda","discrimination":"discrimination","tension":"communal_tension"}
                         if category_filter and category_filter not in labels:
@@ -45,7 +45,7 @@ if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
                                 for item in section.get("records", [])[:5]:
                                     if shown < 12:
                                         lines.append("- " + str(item.get("publisher_name") or item.get("channel_username") or "unknown") + " | " + str(item.get("published_at") or "time unknown"))
-                                        lines.append("Matched: " + str(item.get("hatewatch", {}).get("matched_phrases", {})))
+                                        lines.append("Matched: " + str(item.get("hatewatch", {}).get("matched", {})))
                                         lines.append("UNVERIFIED: " + " ".join(str(item.get("text", "")).split())[:240])
                                         lines.append(str(item.get("source_url", "")))
                                         shown += 1
