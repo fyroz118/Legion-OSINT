@@ -89,3 +89,12 @@ For the existing TBC bot, replace only `/summary` with `summary_v12_command.txt`
 The publisher now adds a separate `hatewatch` object to each expanded daily intelligence archive. It classifies public source posts into alleged hate-crime incidents, discrimination, anti-Muslim propaganda and communal tension using starter phrase lists in English, Bengali, Hindi and Urdu. These are unverified leads only; category counts overlap, and context/human review is mandatory. Collection remains limited to configured public Telegram previews and RSS/Atom sources; this does not add new sources or provide comprehensive South Asia coverage.
 
 For an existing Telebot Creator installation, create a new `/hatewatch` command using `hatewatch_tbc_command.txt`. This does not modify `/summary`, `.env`, owner settings or webhook configuration. GitHub changes do not deploy commands into TBC. The command will work only after the next publisher run generates an archive containing `hatewatch_version: 1`.
+
+
+## Ten-section daily intelligence report formatter
+
+The former `/summary` command displayed the collector's internal 11-part triage schema rather than the requested ten-section intelligence-report layout. The replacement display command is `summary_v13_command.txt`. It reformats the existing V12 archive into the requested ten headings: executive summary, Bangladesh, international conflict/security, communal/social violence (including Hatewatch when present), political developments, information environment, incident register, early-warning assessment, source/coverage assessment, and overall judgment.
+
+This is a **report-layout and evidence-labeling fix**, not a new research engine. It only uses records already present in the daily archive. It does not independently search X, Facebook or YouTube; it does not perform full fact-checking, geolocation, event-level deduplication, independent corroboration, or risk forecasting. It explicitly marks unsupported sections as not assessed rather than inventing findings. Source timestamps remain as stored and are not guaranteed to be converted to Bangladesh Standard Time.
+
+For the existing TBC bot, replace only the existing `/summary` command with the complete contents of `summary_v13_command.txt`. Keep the command name `summary`. No `.env`, owner IDs, webhook, alert settings, collector or `/hatewatch` changes are required. GitHub publication does not deploy the command into TBC; a manual paste/save and TBC runtime test are still required.
