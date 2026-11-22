@@ -57,7 +57,11 @@ def norm(value):
 
 def find_terms(body, groups):
     found = []
-    for language, terms in groups.items():
+    if isinstance(groups, dict):
+        iterable = groups.items()
+    else:
+        iterable = [("und", groups)]
+    for language, terms in iterable:
         for term in terms:
             needle = norm(term)
             if needle and needle in body:
