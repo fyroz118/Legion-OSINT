@@ -27,7 +27,7 @@ concurrency:
 jobs:
   discover:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -38,6 +38,8 @@ jobs:
       - name: Test URL and HTML parsing
         run: python -c "import runpy; runpy.run_path('scripts/discover_telegram_channels.py', run_name='discovery_test')['self_test']()"
       - name: Discover public Telegram channel candidates
+        env:
+          MAX_PREVIEW_CHECKS: "1000"
         run: python scripts/discover_telegram_channels.py
       - name: Persist cumulative candidate registry
         if: success()
