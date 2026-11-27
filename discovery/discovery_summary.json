@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-26T23:57:52.885349+00:00",
+  "generated_at_utc": "2026-11-27T05:21:55.489110+00:00",
   "discovery_method": "Public web-index search plus public Telegram directory pages (TG Market, TGScope, Telemetrio) and unreviewed seed leads",
   "queries_attempted_per_provider": 84,
   "directory_diagnostics": {
@@ -94,12 +94,12 @@
   "unique_candidates": 331,
   "already_configured_channels": 149,
   "unreviewed_not_enabled_candidates": 182,
-  "previews_checked_this_run": 250,
+  "previews_checked_this_run": 331,
   "limitations": [
     "Public search-engine indexes are incomplete, ranking-biased and may block automated requests.",
     "This does not access Telegram global search or private channels.",
     "Discovery does not establish source identity, independence, reliability or current activity.",
-    "Only the first 250 candidates receive public preview checks per run.",
+    "Only the first 1000 candidates receive public preview checks per run.",
     "No candidate is automatically enabled in the active monitoring registry.",
     "Public directory pages expose only their public sample/top listings; full exports may be unavailable or paid.",
     "Directory country/category labels are approximate and must be checked against each channel profile.",
