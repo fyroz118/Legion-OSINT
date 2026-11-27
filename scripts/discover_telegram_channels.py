@@ -7,6 +7,7 @@ is required. Discovery is not verification; candidates are never auto-enabled.
 import csv
 import html
 import json
+import os
 import re
 import time
 from datetime import datetime, timezone
@@ -17,7 +18,7 @@ from urllib.request import Request, urlopen
 
 OUT = Path("discovery")
 UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/124 Safari/537.36"
-MAX_PREVIEW_CHECKS = 250
+MAX_PREVIEW_CHECKS = max(1, min(5000, int(os.environ.get("MAX_PREVIEW_CHECKS", "1000"))))
 QUERIES = [
     ("Bangladesh","bn","site:t.me/s/ বাংলাদেশ জেলা সংবাদ সাংবাদিক"),
     ("Bangladesh","bn","site:t.me বাংলাদেশ স্থানীয় সংবাদ জেলা প্রতিনিধি"),
@@ -482,7 +483,7 @@ def main():
         "Public search-engine indexes are incomplete, ranking-biased and may block automated requests.",
         "This does not access Telegram global search or private channels.",
         "Discovery does not establish source identity, independence, reliability or current activity.",
-        "Only the first 250 candidates receive public preview checks per run.",
+        f"Only the first {MAX_PREVIEW_CHECKS} candidates receive public preview checks per run.",
         "No candidate is automatically enabled in the active monitoring registry.",
     ]
     payload = {
