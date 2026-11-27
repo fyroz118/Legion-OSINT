@@ -2955,6 +2955,77 @@
       "source_class": "independent_media",
       "monitoring_weight": "high",
       "discovery_source_url": "https://t.me/s/indianexpress"
+    },
+    {
+      "username": "MyGovCoronaNewsdesk",
+      "priority": "south_asia",
+      "language": "en",
+      "source_type": "official_government_public_information",
+      "source_affiliation": "Government_of_India_MyGov",
+      "default_evidence_status": "UNVERIFIED",
+      "enabled": true,
+      "notes": "Official Government of India MyGov Telegram channel; public preview links to mygov.in and cross-links MyGovHindi. Institutional communications and claims are attributed to the issuing government, not independent confirmation.",
+      "source_class": "official_government",
+      "monitoring_weight": "standard",
+      "discovery_source_url": "https://t.me/s/MyGovCoronaNewsdesk"
+    },
+    {
+      "username": "MyGovHindi",
+      "priority": "south_asia",
+      "language": "hi",
+      "source_type": "official_government_public_information",
+      "source_affiliation": "Government_of_India_MyGov",
+      "default_evidence_status": "UNVERIFIED",
+      "enabled": true,
+      "notes": "Official Hindi-language MyGov channel; public preview identifies it as India's official MyGov Hindi channel and links to mygov.in. Government communications are actor-originated claims, not independent confirmation.",
+      "source_class": "official_government",
+      "monitoring_weight": "standard",
+      "discovery_source_url": "https://t.me/s/MyGovHindi"
+    },
+    {
+      "username": "DelhiPoliceOfficial",
+      "priority": "south_asia",
+      "language": "hi",
+      "source_type": "official_city_police_public_information",
+      "source_affiliation": "Delhi_Police",
+      "default_evidence_status": "UNVERIFIED",
+      "enabled": true,
+      "notes": "Official public Delhi Police Telegram channel. Police statements, arrests and incident descriptions must be attributed to Delhi Police and independently checked where material.",
+      "source_class": "official_government",
+      "monitoring_weight": "high",
+      "discovery_source_url": "https://t.me/s/DelhiPoliceOfficial"
+    },
+    {
+      "username": "azadirdak",
+      "priority": "bangladesh",
+      "language": "bn",
+      "source_type": "regional_local_news_candidate",
+      "source_affiliation": "Azadir_Dak_self_described_publication_directory_listed",
+      "default_evidence_status": "UNVERIFIED",
+      "enabled": true,
+      "notes": "Bangladesh Bengali-language local/news directory lead. Publisher identity, editorial independence and current posting activity require review; collect as an unverified local lead, not independent corroboration.",
+      "source_class": "unknown",
+      "monitoring_weight": "standard",
+      "candidate_region": "Bangladesh",
+      "candidate_category": "local_news_candidate",
+      "candidate_identity_status": "public_directory_listing_only",
+      "discovery_source_url": "https://t.me/azadirdak"
+    },
+    {
+      "username": "forishtongi",
+      "priority": "bangladesh",
+      "language": "bn",
+      "source_type": "regional_local_news_candidate",
+      "source_affiliation": "Forish_Tongi_self_described_publication_directory_listed",
+      "default_evidence_status": "UNVERIFIED",
+      "enabled": true,
+      "notes": "Bangladesh Bengali-language local/community news directory lead. Publisher identity, locality, editorial independence and current activity require review; posts are leads only.",
+      "source_class": "unknown",
+      "monitoring_weight": "standard",
+      "candidate_region": "Bangladesh",
+      "candidate_category": "local_news_candidate",
+      "candidate_identity_status": "public_directory_listing_only",
+      "discovery_source_url": "https://t.me/forishtongi"
     }
   ]
 }
