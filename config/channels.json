@@ -3010,22 +3010,6 @@
       "candidate_category": "local_news_candidate",
       "candidate_identity_status": "public_directory_listing_only",
       "discovery_source_url": "https://t.me/azadirdak"
-    },
-    {
-      "username": "forishtongi",
-      "priority": "bangladesh",
-      "language": "bn",
-      "source_type": "regional_local_news_candidate",
-      "source_affiliation": "Forish_Tongi_self_described_publication_directory_listed",
-      "default_evidence_status": "UNVERIFIED",
-      "enabled": true,
-      "notes": "Bangladesh Bengali-language local/community news directory lead. Publisher identity, locality, editorial independence and current activity require review; posts are leads only.",
-      "source_class": "unknown",
-      "monitoring_weight": "standard",
-      "candidate_region": "Bangladesh",
-      "candidate_category": "local_news_candidate",
-      "candidate_identity_status": "public_directory_listing_only",
-      "discovery_source_url": "https://t.me/forishtongi"
     }
   ]
 }
