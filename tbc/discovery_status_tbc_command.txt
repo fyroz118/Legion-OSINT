@@ -1,0 +1,48 @@
+if str(u) in [str(x) for x in OWNER_IDS] and message.chat.type == "private":
+    try:
+        response = HTTP.get("https://raw.githubusercontent.com/fyroz118/Legion-OSINT/main/discovery/telegram_channel_candidates.json")
+        if response.status_code != 200:
+            bot.sendMessage("Discovery registry is not available yet. Run the GitHub Actions workflow: Discover Telegram channel candidates.")
+        else:
+            data = response.json()
+            candidates = data.get("candidates", [])
+            lines = [
+                "LEGION-OSINT - PUBLIC TELEGRAM DISCOVERY",
+                "Generated UTC: " + str(data.get("generated_at_utc", "unknown")),
+                "Unique candidates: " + str(data.get("unique_candidates", len(candidates))),
+                "Already configured: " + str(data.get("already_configured_channels", 0)),
+                "Not enabled / awaiting review: " + str(data.get("unreviewed_not_enabled_candidates", 0)),
+                "Preview checks this run: " + str(data.get("previews_checked_this_run", 0)),
+                "New candidates this run: " + str(data.get("new_candidates_this_run", 0)),
+                "Directory seed candidates: " + str(data.get("directory_seed_candidates_loaded", 0)),
+                "",
+                "LATEST UNREVIEWED CANDIDATES"
+            ]
+            shown = 0
+            for item in candidates:
+                if item.get("collection_status") != "ACTIVE_ALLOWLIST" and shown < 15:
+                    regions = ", ".join(item.get("discovery_regions", []))
+                    lines.append("@" + str(item.get("username", "unknown")))
+                    lines.append("Title: " + str(item.get("title", "not available"))[:100])
+                    lines.append("Region: " + (regions or "unclassified"))
+                    lines.append("Type: " + str(item.get("source_class", "unknown")))
+                    lines.append("Preview accessible: " + str(item.get("accessible", "not checked")))
+                    lines.append("Review: " + str(item.get("review_status", "UNREVIEWED_CANDIDATE")))
+                    lines.append(str(item.get("candidate_url", "")))
+                    lines.append("")
+                    shown += 1
+            if shown == 0:
+                lines.append("No unreviewed candidates are currently listed.")
+            lines.append("IMPORTANT: Discovery candidates are not verified sources and are not enabled for collection. Review identity, location, activity, affiliation and reliability before adding any channel to config/channels.json.")
+            chunk = ""
+            for line in lines:
+                addition = line + "\n"
+                if len(chunk) + len(addition) > 3500 and chunk:
+                    bot.sendMessage(chunk)
+                    chunk = addition
+                else:
+                    chunk = chunk + addition
+            if chunk.strip():
+                bot.sendMessage(chunk.rstrip())
+    except Exception as e:
+        bot.sendMessage("Discovery status error: " + str(e))
